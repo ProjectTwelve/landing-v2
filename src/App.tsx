@@ -1,11 +1,10 @@
 import React from 'react';
-import logo from './assets/logo.svg';
-import './App.css';
+import { PageHome } from './pages/home/PageHome';
 
 function App() {
     return (
         <div className="app">
-            <img src={logo} className="app-logo" alt="logo" />
+            <PageHome />
         </div>
     );
 }
