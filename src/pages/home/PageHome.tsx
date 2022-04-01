@@ -53,7 +53,7 @@ export const PageHome: React.FC = () => {
         const loader = new GLTFLoader();
         // loader.setDRACOLoader(dracoLoader);
         loader.load(
-            require("../../assets/demo1.glb"),
+            require("../../assets/demo1/demo1.glb"),
             function (gltf) {
                 console.log(gltf);
                 const model = gltf.scene;
