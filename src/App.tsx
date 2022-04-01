@@ -1,5 +1,5 @@
-import React from 'react';
-import { PageHome } from './pages/home/PageHome';
+import React from "react";
+import { PageHome } from "./pages/home/PageHome";
 
 function App() {
     return (

@@ -1,11 +1,16 @@
-
 /** hack raf */
-const vendors = ['ms', 'moz', 'webkit', 'o'];
+const vendors = ["ms", "moz", "webkit", "o"];
 for (let x = 0; x < vendors.length && !window.requestAnimationFrame; x++) {
-    window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-    window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+    window.requestAnimationFrame = window[vendors[x] + "RequestAnimationFrame"];
+    window.cancelAnimationFrame =
+        window[vendors[x] + "CancelAnimationFrame"] ||
+        window[vendors[x] + "CancelRequestAnimationFrame"];
 }
 
-export function sleep (ms: number) {
+export function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export function getPublicAssetPath(path: string) {
+    return `${process.env.PUBLIC_URL}/${path}`;
 }
