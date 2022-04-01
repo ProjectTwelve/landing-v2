@@ -6,9 +6,9 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { getPublicAssetPath } from "../../utils";
-import { StyledPageHomeGL } from "./styled/StyledPageHomeGL";
+import { StyledPageTreeGL } from "./styled/StyledPageTreeGL";
 
-export const PageHomeGL: React.FC = () => {
+export const PageTreeGL: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -119,5 +119,5 @@ export const PageHomeGL: React.FC = () => {
         };
     }, []);
 
-    return <StyledPageHomeGL ref={containerRef} />;
+    return <StyledPageTreeGL ref={containerRef} />;
 };
