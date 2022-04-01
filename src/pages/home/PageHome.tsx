@@ -18,16 +18,16 @@ export const PageHome: React.FC = () => {
             return;
         }
 
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        const renderer = new THREE.WebGLRenderer();
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.outputEncoding = THREE.sRGBEncoding;
+        // renderer.outputEncoding = THREE.sRGBEncoding;
         container.appendChild(renderer.domElement);
 
         const pmremGenerator = new THREE.PMREMGenerator(renderer);
 
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xbfe3dd);
+        // scene.background = new THREE.Color(0xbfe3dd);
         scene.environment = pmremGenerator.fromScene(
             new RoomEnvironment(),
             0.04
