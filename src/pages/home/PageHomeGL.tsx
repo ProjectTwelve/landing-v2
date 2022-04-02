@@ -86,8 +86,8 @@ export const PageHomeGL: React.FC = () => {
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
-                model.position.set(0, -1.5, 0);
-                model.scale.set(2, 2, 2);
+                model.position.set(0, -2, 0);
+                model.scale.set(3, 3, 3);
                 scene.add(model);
 
                 mixer = new THREE.AnimationMixer(model);
