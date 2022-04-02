@@ -21,7 +21,7 @@ export const PageHomeGL: React.FC = () => {
 
         let mixer: THREE.AnimationMixer;
         const clock = new THREE.Clock();
-        const renderer = new THREE.WebGLRenderer();
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
 
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(container.clientWidth, container.clientHeight);
@@ -30,29 +30,29 @@ export const PageHomeGL: React.FC = () => {
 
         const scene = new THREE.Scene();
         const pmremGenerator = new THREE.PMREMGenerator(renderer);
-        scene.background = new THREE.Color(0x000000);
+        // scene.background = new THREE.Color(0x000000);
         // scene.background = new THREE.Color(0xbfe3dd);
-        scene.environment = pmremGenerator.fromScene(
-            new RoomEnvironment(),
-            0.04
-        ).texture;
+        // scene.environment = pmremGenerator.fromScene(
+        //     new RoomEnvironment(),
+        //     0.04
+        // ).texture;
 
         // const ambient = new THREE.AmbientLight(0xffffff, 0.1);
         // scene.add(ambient);
 
-        // const spotLight = new THREE.SpotLight(0xffffff, 1);
-        // spotLight.position.set(5, 2, 8);
-        // spotLight.angle = Math.PI / 4;
-        // spotLight.penumbra = 0.1;
-        // spotLight.decay = 2;
-        // spotLight.distance = 200;
-        // spotLight.castShadow = true;
-        // spotLight.shadow.mapSize.width = 512;
-        // spotLight.shadow.mapSize.height = 512;
-        // spotLight.shadow.camera.near = 10;
-        // spotLight.shadow.camera.far = 200;
-        // spotLight.shadow.focus = 1;
-        // scene.add(spotLight);
+        const spotLight = new THREE.SpotLight(0xffffff, 1);
+        spotLight.position.set(5, 2, 8);
+        spotLight.angle = Math.PI / 4;
+        spotLight.penumbra = 0.1;
+        spotLight.decay = 2;
+        spotLight.distance = 200;
+        spotLight.castShadow = true;
+        spotLight.shadow.mapSize.width = 512;
+        spotLight.shadow.mapSize.height = 512;
+        spotLight.shadow.camera.near = 10;
+        spotLight.shadow.camera.far = 200;
+        spotLight.shadow.focus = 1;
+        scene.add(spotLight);
 
         const camera = new THREE.PerspectiveCamera(
             40,
@@ -86,46 +86,47 @@ export const PageHomeGL: React.FC = () => {
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
-                model.position.set(0, 0, 0);
-                model.scale.set(1, 1, 1);
-                // scene.add(model);
+                model.position.set(0, -1.5, 0);
+                model.scale.set(2, 2, 2);
+                scene.add(model);
 
                 mixer = new THREE.AnimationMixer(model);
                 // mixer.clipAction(gltf.animations[0]).play();
-                let count = 0;
-                model.traverse(function (child: any) {
-                    if (child.isMesh) {
-                        const buffer = child.geometry.attributes.position;
 
-                        count += buffer.array.length;
-                    }
-                });
-                const combined = new Float32Array(count);
+                // let count = 0;
+                // model.traverse(function (child: any) {
+                //     if (child.isMesh) {
+                //         const buffer = child.geometry.attributes.position;
 
-                let offset = 0;
-                model.traverse(function (child: any) {
-                    if (child.isMesh) {
-                        const buffer = child.geometry.attributes.position;
-                        combined.set(buffer.array, offset);
-                        offset += buffer.array.length;
-                    }
-                });
+                //         count += buffer.array.length;
+                //     }
+                // });
+                // const combined = new Float32Array(count);
 
-                const positions = new THREE.BufferAttribute(combined, 3);
-                const geometry = new THREE.BufferGeometry();
-                geometry.setAttribute('position', positions.clone());
-                geometry.setAttribute('initialPosition', positions.clone());
-                const mesh = new THREE.Points(
-                    geometry,
-                    new THREE.PointsMaterial({
-                        size: 0.05,
-                        color: '#0099ff',
-                        transparent: true,
-                        blending: THREE.AdditiveBlending,
-                    })
-                );
-                mesh.scale.set(0.01, 0.01, 0.01);
-                scene.add(mesh);
+                // let offset = 0;
+                // model.traverse(function (child: any) {
+                //     if (child.isMesh) {
+                //         const buffer = child.geometry.attributes.position;
+                //         combined.set(buffer.array, offset);
+                //         offset += buffer.array.length;
+                //     }
+                // });
+
+                // const positions = new THREE.BufferAttribute(combined, 3);
+                // const geometry = new THREE.BufferGeometry();
+                // geometry.setAttribute('position', positions.clone());
+                // geometry.setAttribute('initialPosition', positions.clone());
+                // const mesh = new THREE.Points(
+                //     geometry,
+                //     new THREE.PointsMaterial({
+                //         size: 0.05,
+                //         color: '#0099ff',
+                //         transparent: true,
+                //         blending: THREE.AdditiveBlending,
+                //     })
+                // );
+                // mesh.scale.set(0.01, 0.01, 0.01);
+                // scene.add(mesh);
                 // const mesh = new THREE.Points(
                 //     get(gltf.scene.children, '0.children.4.geometry'),
                 //     new THREE.PointsMaterial({
