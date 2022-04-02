@@ -8,6 +8,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { getPublicAssetPath } from '../../utils';
 import { StyledPageHomeGL } from './styled/StyledPageHomeGL';
 import { gsap } from 'gsap';
+import { get } from 'lodash-es';
 
 export const PageHomeGL: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -29,7 +30,8 @@ export const PageHomeGL: React.FC = () => {
 
         const scene = new THREE.Scene();
         const pmremGenerator = new THREE.PMREMGenerator(renderer);
-        scene.background = new THREE.Color(0xbfe3dd);
+        scene.background = new THREE.Color(0x000000);
+        // scene.background = new THREE.Color(0xbfe3dd);
         scene.environment = pmremGenerator.fromScene(
             new RoomEnvironment(),
             0.04
@@ -86,10 +88,51 @@ export const PageHomeGL: React.FC = () => {
                 const model = gltf.scene;
                 model.position.set(0, 0, 0);
                 model.scale.set(1, 1, 1);
-                scene.add(model);
+                // scene.add(model);
 
                 mixer = new THREE.AnimationMixer(model);
                 // mixer.clipAction(gltf.animations[0]).play();
+                let count = 0;
+                model.traverse(function (child: any) {
+                    if (child.isMesh) {
+                        const buffer = child.geometry.attributes.position;
+
+                        count += buffer.array.length;
+                    }
+                });
+                const combined = new Float32Array(count);
+
+                let offset = 0;
+                model.traverse(function (child: any) {
+                    if (child.isMesh) {
+                        const buffer = child.geometry.attributes.position;
+                        combined.set(buffer.array, offset);
+                        offset += buffer.array.length;
+                    }
+                });
+
+                const positions = new THREE.BufferAttribute(combined, 3);
+                const geometry = new THREE.BufferGeometry();
+                geometry.setAttribute('position', positions.clone());
+                geometry.setAttribute('initialPosition', positions.clone());
+                const mesh = new THREE.Points(
+                    geometry,
+                    new THREE.PointsMaterial({
+                        size: 0.05,
+                        color: '#0099ff',
+                        transparent: true,
+                        blending: THREE.AdditiveBlending,
+                    })
+                );
+                mesh.scale.set(0.01, 0.01, 0.01);
+                scene.add(mesh);
+                // const mesh = new THREE.Points(
+                //     get(gltf.scene.children, '0.children.4.geometry'),
+                //     new THREE.PointsMaterial({
+                //         color: '#f00',
+                //     })
+                // );
+                // scene.add(mesh);
 
                 animate();
             },
