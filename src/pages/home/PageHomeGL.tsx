@@ -20,6 +20,7 @@ export const PageHomeGL: React.FC = () => {
         let mixer: THREE.AnimationMixer;
         const clock = new THREE.Clock();
         const renderer = new THREE.WebGLRenderer();
+
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(container.clientWidth, container.clientHeight);
         // renderer.outputEncoding = THREE.sRGBEncoding;
@@ -68,6 +69,10 @@ export const PageHomeGL: React.FC = () => {
         controls.enablePan = false;
         controls.enableDamping = true;
 
+        const pointer = new THREE.Vector2();
+        const radius = 100;
+        const raycaster = new THREE.Raycaster();
+
         // const dracoLoader = new DRACOLoader();
         // dracoLoader.setDecoderPath("js/libs/draco/gltf/");
 
@@ -108,14 +113,31 @@ export const PageHomeGL: React.FC = () => {
             const delta = clock.getDelta();
             mixer.update(delta);
             controls.update();
+
+            // raycaster.setFromCamera(pointer, camera);
+            // const intersects = raycaster.intersectObjects(
+            //     scene.children,
+            //     false
+            // );
+            // if (intersects.length > 0) {
+            //     console.log(intersects);
+            // } else {
+            // }
             renderer.render(scene, camera);
+        }
+
+        function onPointerMove(event) {
+            pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+            pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
         }
 
         const observer = new ResizeObserver(resize);
         observer.observe(container);
+        container.addEventListener("pointermove", onPointerMove);
         return () => {
             cancelAnimationFrame(frameId);
             observer.disconnect();
+            container.removeEventListener("pointermove", onPointerMove);
         };
     }, []);
 

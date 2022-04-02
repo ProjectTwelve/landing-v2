@@ -15,22 +15,16 @@
 
         "noImplicitReturns": true,
         "noImplicitThis": true,
-        "noImplicitAny": true,
+        "noImplicitAny": false,
         "suppressImplicitAnyIndexErrors": true,
         "forceConsistentCasingInFileNames": true,
         "target": "es5",
-        "lib": [
-            "dom",
-            "dom.iterable",
-            "esnext"
-        ],
+        "lib": ["dom", "dom.iterable", "esnext"],
         "allowSyntheticDefaultImports": true,
         "noFallthroughCasesInSwitch": true,
         "module": "esnext",
         "noEmit": true,
         "jsx": "react-jsx"
     },
-    "include": [
-        "src"
-    ]
+    "include": ["src"]
 }
