@@ -38,12 +38,11 @@ export const PageHomeGL: React.FC = () => {
         scene.add(ambient);
 
         const spotLight = new THREE.SpotLight(0xffffff, 1);
-        spotLight.position.set(0, 10, 35);
+        spotLight.position.set(5, 2, 8);
         spotLight.angle = Math.PI / 4;
         spotLight.penumbra = 0.1;
         spotLight.decay = 2;
         spotLight.distance = 200;
-
         spotLight.castShadow = true;
         spotLight.shadow.mapSize.width = 512;
         spotLight.shadow.mapSize.height = 512;
