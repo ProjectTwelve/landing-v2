@@ -1,12 +1,12 @@
-import React, { useRef, useEffect } from "react";
-import ResizeObserver from "resize-observer-polyfill";
-import * as THREE from "three";
-import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
-import { getPublicAssetPath } from "../../utils";
-import { StyledPageTreeGL } from "./styled/StyledPageTreeGL";
+import React, { useRef, useEffect } from 'react';
+import ResizeObserver from 'resize-observer-polyfill';
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+import { getPublicAssetPath } from '../../utils';
+import { StyledPageTreeGL } from './styled/StyledPageTreeGL';
 
 export const PageTreeGL: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -74,9 +74,9 @@ export const PageTreeGL: React.FC = () => {
         const loader = new GLTFLoader();
         // loader.setDRACOLoader(dracoLoader);
         loader.load(
-            getPublicAssetPath("assets/demo1/demo1.glb"),
+            getPublicAssetPath('assets/demo1/demo1.glb'),
             function (gltf) {
-                console.log("gltf", gltf);
+                console.log('gltf', gltf);
                 const model = gltf.scene;
                 model.position.set(0, 0, 0);
                 model.scale.set(1, 1, 1);
