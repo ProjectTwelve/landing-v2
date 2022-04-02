@@ -7,6 +7,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { getPublicAssetPath } from "../../utils";
 import { StyledPageHomeGL } from "./styled/StyledPageHomeGL";
+import { gsap } from "gsap";
 
 export const PageHomeGL: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -23,33 +24,33 @@ export const PageHomeGL: React.FC = () => {
 
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(container.clientWidth, container.clientHeight);
-        // renderer.outputEncoding = THREE.sRGBEncoding;
+        renderer.outputEncoding = THREE.sRGBEncoding;
         container.appendChild(renderer.domElement);
 
         const scene = new THREE.Scene();
-        // const pmremGenerator = new THREE.PMREMGenerator(renderer);
-        // scene.background = new THREE.Color(0xbfe3dd);
-        // scene.environment = pmremGenerator.fromScene(
-        //     new RoomEnvironment(),
-        //     0.04
-        // ).texture;
+        const pmremGenerator = new THREE.PMREMGenerator(renderer);
+        scene.background = new THREE.Color(0xbfe3dd);
+        scene.environment = pmremGenerator.fromScene(
+            new RoomEnvironment(),
+            0.04
+        ).texture;
 
-        const ambient = new THREE.AmbientLight(0xffffff, 0.1);
-        scene.add(ambient);
+        // const ambient = new THREE.AmbientLight(0xffffff, 0.1);
+        // scene.add(ambient);
 
-        const spotLight = new THREE.SpotLight(0xffffff, 1);
-        spotLight.position.set(5, 2, 8);
-        spotLight.angle = Math.PI / 4;
-        spotLight.penumbra = 0.1;
-        spotLight.decay = 2;
-        spotLight.distance = 200;
-        spotLight.castShadow = true;
-        spotLight.shadow.mapSize.width = 512;
-        spotLight.shadow.mapSize.height = 512;
-        spotLight.shadow.camera.near = 10;
-        spotLight.shadow.camera.far = 200;
-        spotLight.shadow.focus = 1;
-        scene.add(spotLight);
+        // const spotLight = new THREE.SpotLight(0xffffff, 1);
+        // spotLight.position.set(5, 2, 8);
+        // spotLight.angle = Math.PI / 4;
+        // spotLight.penumbra = 0.1;
+        // spotLight.decay = 2;
+        // spotLight.distance = 200;
+        // spotLight.castShadow = true;
+        // spotLight.shadow.mapSize.width = 512;
+        // spotLight.shadow.mapSize.height = 512;
+        // spotLight.shadow.camera.near = 10;
+        // spotLight.shadow.camera.far = 200;
+        // spotLight.shadow.focus = 1;
+        // scene.add(spotLight);
 
         const camera = new THREE.PerspectiveCamera(
             40,
@@ -78,6 +79,7 @@ export const PageHomeGL: React.FC = () => {
         const loader = new GLTFLoader();
         // loader.setDRACOLoader(dracoLoader);
         loader.load(
+            // getPublicAssetPath("assets/demo1/demo1.glb"),
             getPublicAssetPath("assets/demo1/demo1.glb"),
             function (gltf) {
                 console.log("gltf", gltf);
@@ -87,7 +89,7 @@ export const PageHomeGL: React.FC = () => {
                 scene.add(model);
 
                 mixer = new THREE.AnimationMixer(model);
-                mixer.clipAction(gltf.animations[0]).play();
+                // mixer.clipAction(gltf.animations[0]).play();
 
                 animate();
             },
@@ -133,6 +135,7 @@ export const PageHomeGL: React.FC = () => {
         const observer = new ResizeObserver(resize);
         observer.observe(container);
         container.addEventListener("pointermove", onPointerMove);
+
         return () => {
             cancelAnimationFrame(frameId);
             observer.disconnect();
