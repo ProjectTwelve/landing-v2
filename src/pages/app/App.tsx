@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Home } from './pages/home/Home';
+import { Home } from '../home/Home';
 
 const StyledApp = styled.div`
     width: 100%;
@@ -9,12 +9,10 @@ const StyledApp = styled.div`
     overflow: auto;
 `;
 
-function App() {
+export const App = () => {
     return (
         <StyledApp>
             <Home />
         </StyledApp>
     );
-}
-
-export default App;
+};

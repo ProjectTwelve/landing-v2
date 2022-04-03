@@ -7,9 +7,18 @@ import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { getPublicAssetPath } from '../../../utils';
-import { StyledHomeGL } from '../styled/StyledHomeGL';
 import { gsap } from 'gsap';
 import { get } from 'lodash-es';
+import styled from 'styled-components';
+
+export const StyledHomeGL = styled.div`
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+`;
 
 export const HomeGL: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
