@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { PageHomeGL } from './PageHomeGL';
-import { StyledPageHome } from './styled/StyledPageHome';
+import { HomeGL } from './components/HomeGL';
+import { StyledHome } from './styled/StyledHome';
 
-export const PageHome: React.FC = () => {
+export const Home: React.FC = () => {
     // useEffect(() => {
     //     //宇宙特效
     //     var canvas = document.getElementById('canvas')! as any,
@@ -234,7 +234,7 @@ export const PageHome: React.FC = () => {
         }
     }, []);
     return (
-        <StyledPageHome>
+        <StyledHome>
             <canvas
                 id='canvas'
                 style={{
@@ -245,7 +245,7 @@ export const PageHome: React.FC = () => {
                     height: '100%',
                 }}
             ></canvas>
-            <PageHomeGL />
-        </StyledPageHome>
+            <HomeGL />
+        </StyledHome>
     );
 };

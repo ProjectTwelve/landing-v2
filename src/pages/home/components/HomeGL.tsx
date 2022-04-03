@@ -3,14 +3,15 @@ import ResizeObserver from 'resize-observer-polyfill';
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-import { getPublicAssetPath } from '../../utils';
-import { StyledPageHomeGL } from './styled/StyledPageHomeGL';
+import { getPublicAssetPath } from '../../../utils';
+import { StyledHomeGL } from '../styled/StyledHomeGL';
 import { gsap } from 'gsap';
 import { get } from 'lodash-es';
 
-export const PageHomeGL: React.FC = () => {
+export const HomeGL: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -78,55 +79,89 @@ export const PageHomeGL: React.FC = () => {
         // const dracoLoader = new DRACOLoader();
         // dracoLoader.setDecoderPath("js/libs/draco/gltf/");
 
+        // new STLLoader().load(
+        //     getPublicAssetPath('assets/demo4.stl'),
+        //     (geometry) => {
+        //         console.log('geometry', );
+        //         //创建纹理
+        //         var material = new THREE.PointsMaterial({
+        //             color: 0xffffff,
+        //             size: 0.4,
+        //             opacity: 0.6,
+        //             transparent: true,
+        //             blending: THREE.AdditiveBlending,
+        //             depthTest: false,
+        //             map: generateSprite(),
+        //         });
+
+        //         var mesh = new THREE.Points(geometry, material);
+        //         mesh.rotation.x = -0.5 * Math.PI; //将模型摆正
+        //         mesh.scale.set(0.1, 0.1, 0.1); //缩放
+        //         geometry.center(); //居中显示
+        //         scene.add(mesh);
+        //     }
+        // );
+
         const loader = new GLTFLoader();
         // loader.setDRACOLoader(dracoLoader);
         loader.load(
             // getPublicAssetPath("assets/demo1/demo1.glb"),
-            getPublicAssetPath('assets/demo1/demo1.glb'),
+            getPublicAssetPath('assets/demo3/demo3.glb'),
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
                 model.position.set(0, -2, 0);
                 model.scale.set(3, 3, 3);
-                scene.add(model);
+                // scene.add(model);
 
                 mixer = new THREE.AnimationMixer(model);
                 // mixer.clipAction(gltf.animations[0]).play();
 
-                // let count = 0;
-                // model.traverse(function (child: any) {
-                //     if (child.isMesh) {
-                //         const buffer = child.geometry.attributes.position;
+                let count = 0;
+                model.traverse(function (child: any) {
+                    if (child.isMesh) {
+                        const buffer = child.geometry.attributes.position;
 
-                //         count += buffer.array.length;
-                //     }
-                // });
-                // const combined = new Float32Array(count);
+                        count += buffer.array.length;
+                    }
+                });
+                const combined = new Float32Array(count);
 
-                // let offset = 0;
-                // model.traverse(function (child: any) {
-                //     if (child.isMesh) {
-                //         const buffer = child.geometry.attributes.position;
-                //         combined.set(buffer.array, offset);
-                //         offset += buffer.array.length;
-                //     }
-                // });
+                let offset = 0;
+                model.traverse(function (child: any) {
+                    if (child.isMesh) {
+                        const buffer = child.geometry.attributes.position;
+                        combined.set(buffer.array, offset);
+                        offset += buffer.array.length;
+                    }
+                });
 
-                // const positions = new THREE.BufferAttribute(combined, 3);
-                // const geometry = new THREE.BufferGeometry();
-                // geometry.setAttribute('position', positions.clone());
-                // geometry.setAttribute('initialPosition', positions.clone());
-                // const mesh = new THREE.Points(
-                //     geometry,
-                //     new THREE.PointsMaterial({
-                //         size: 0.05,
-                //         color: '#0099ff',
-                //         transparent: true,
-                //         blending: THREE.AdditiveBlending,
-                //     })
-                // );
-                // mesh.scale.set(0.01, 0.01, 0.01);
-                // scene.add(mesh);
+                const positions = new THREE.BufferAttribute(combined, 3);
+                const geometry = new THREE.BufferGeometry();
+                geometry.setAttribute('position', positions.clone());
+                geometry.setAttribute('initialPosition', positions.clone());
+                geometry.center();
+                const mesh = new THREE.Points(
+                    geometry,
+                    // new THREE.PointsMaterial({
+                    //     size: 0.05,
+                    //     color: '#0099ff',
+                    //     transparent: true,
+                    //     blending: THREE.AdditiveBlending,
+                    // })
+                    new THREE.PointsMaterial({
+                        color: 0xffffff,
+                        size: 0.4,
+                        opacity: 0.6,
+                        transparent: true,
+                        blending: THREE.AdditiveBlending,
+                        depthTest: false,
+                        map: generateSprite(),
+                    })
+                );
+                mesh.scale.set(0.03, 0.03, 0.03);
+                // mesh.position.set(0, -2, 0);
+                scene.add(mesh);
                 // const mesh = new THREE.Points(
                 //     get(gltf.scene.children, '0.children.4.geometry'),
                 //     new THREE.PointsMaterial({
@@ -142,6 +177,34 @@ export const PageHomeGL: React.FC = () => {
                 console.error(e);
             }
         );
+
+        //使用canvas生成粒子的纹理
+        function generateSprite() {
+            var canvas = document.createElement('canvas');
+            canvas.width = 16;
+            canvas.height = 16;
+
+            var context = canvas.getContext('2d');
+            var gradient = context!.createRadialGradient(
+                canvas.width / 2,
+                canvas.height / 2,
+                0,
+                canvas.width / 2,
+                canvas.height / 2,
+                canvas.width / 2
+            );
+            gradient.addColorStop(0, 'rgba(255,255,255,1)');
+            gradient.addColorStop(0.2, 'rgba(0,255,255,1)');
+            gradient.addColorStop(0.4, 'rgba(0,0,64,1)');
+            gradient.addColorStop(1, 'rgba(0,0,0,1)');
+
+            context!.fillStyle = gradient;
+            context!.fillRect(0, 0, canvas.width, canvas.height);
+
+            var texture = new THREE.Texture(canvas);
+            texture.needsUpdate = true;
+            return texture;
+        }
 
         function resize() {
             if (!container) {
@@ -189,5 +252,5 @@ export const PageHomeGL: React.FC = () => {
         };
     }, []);
 
-    return <StyledPageHomeGL ref={containerRef} />;
+    return <StyledHomeGL ref={containerRef} />;
 };

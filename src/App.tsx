@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PageHome } from './pages/home/PageHome';
-import { PageTree } from './pages/tree/PageTree';
+import { Home } from './pages/home/Home';
 
 const StyledApp = styled.div`
     width: 100%;
@@ -13,8 +12,7 @@ const StyledApp = styled.div`
 function App() {
     return (
         <StyledApp>
-            <PageHome />
-            {/* <PageTree /> */}
+            <Home />
         </StyledApp>
     );
 }
