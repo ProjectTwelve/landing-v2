@@ -51,7 +51,7 @@ export const HomeGL: React.FC = () => {
         // scene.add(ambient);
 
         const spotLight = new THREE.SpotLight(0xffffff, 1);
-        spotLight.position.set(5, 2, 8);
+        spotLight.position.set(10, 14, 16);
         spotLight.angle = Math.PI / 4;
         spotLight.penumbra = 0.1;
         spotLight.decay = 2;
@@ -73,7 +73,7 @@ export const HomeGL: React.FC = () => {
         camera.position.set(5, 2, 8);
 
         const axesHelper = new THREE.AxesHelper(10);
-        scene.add(axesHelper);
+        // scene.add(axesHelper);
 
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.target.set(0, 0, 0);
@@ -115,62 +115,62 @@ export const HomeGL: React.FC = () => {
         // loader.setDRACOLoader(dracoLoader);
         loader.load(
             // getPublicAssetPath("assets/demo1/demo1.glb"),
-            getPublicAssetPath('assets/demo3/demo3.glb'),
+            getPublicAssetPath('assets/demo2/demo2.glb'),
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
                 model.position.set(0, -2, 0);
                 model.scale.set(3, 3, 3);
-                // scene.add(model);
+                scene.add(model);
 
                 mixer = new THREE.AnimationMixer(model);
-                // mixer.clipAction(gltf.animations[0]).play();
+                mixer.clipAction(gltf.animations[0]).play();
 
-                let count = 0;
-                model.traverse(function (child: any) {
-                    if (child.isMesh) {
-                        const buffer = child.geometry.attributes.position;
+                // let count = 0;
+                // model.traverse(function (child: any) {
+                //     if (child.isMesh) {
+                //         const buffer = child.geometry.attributes.position;
 
-                        count += buffer.array.length;
-                    }
-                });
-                const combined = new Float32Array(count);
+                //         count += buffer.array.length;
+                //     }
+                // });
+                // const combined = new Float32Array(count);
 
-                let offset = 0;
-                model.traverse(function (child: any) {
-                    if (child.isMesh) {
-                        const buffer = child.geometry.attributes.position;
-                        combined.set(buffer.array, offset);
-                        offset += buffer.array.length;
-                    }
-                });
+                // let offset = 0;
+                // model.traverse(function (child: any) {
+                //     if (child.isMesh) {
+                //         const buffer = child.geometry.attributes.position;
+                //         combined.set(buffer.array, offset);
+                //         offset += buffer.array.length;
+                //     }
+                // });
 
-                const positions = new THREE.BufferAttribute(combined, 3);
-                const geometry = new THREE.BufferGeometry();
-                geometry.setAttribute('position', positions.clone());
-                geometry.setAttribute('initialPosition', positions.clone());
-                geometry.center();
-                const mesh = new THREE.Points(
-                    geometry,
-                    // new THREE.PointsMaterial({
-                    //     size: 0.05,
-                    //     color: '#0099ff',
-                    //     transparent: true,
-                    //     blending: THREE.AdditiveBlending,
-                    // })
-                    new THREE.PointsMaterial({
-                        color: 0xffffff,
-                        size: 0.4,
-                        opacity: 0.6,
-                        transparent: true,
-                        blending: THREE.AdditiveBlending,
-                        depthTest: false,
-                        map: generateSprite(),
-                    })
-                );
-                mesh.scale.set(0.03, 0.03, 0.03);
-                // mesh.position.set(0, -2, 0);
-                scene.add(mesh);
+                // const positions = new THREE.BufferAttribute(combined, 3);
+                // const geometry = new THREE.BufferGeometry();
+                // geometry.setAttribute('position', positions.clone());
+                // geometry.setAttribute('initialPosition', positions.clone());
+                // geometry.center();
+                // const mesh = new THREE.Points(
+                //     geometry,
+                //     // new THREE.PointsMaterial({
+                //     //     size: 0.05,
+                //     //     color: '#0099ff',
+                //     //     transparent: true,
+                //     //     blending: THREE.AdditiveBlending,
+                //     // })
+                //     new THREE.PointsMaterial({
+                //         color: 0xffffff,
+                //         size: 0.4,
+                //         opacity: 0.6,
+                //         transparent: true,
+                //         blending: THREE.AdditiveBlending,
+                //         depthTest: false,
+                //         map: generateSprite(),
+                //     })
+                // );
+                // mesh.scale.set(0.03, 0.03, 0.03);
+                // // mesh.position.set(0, -2, 0);
+                // scene.add(mesh);
                 // const mesh = new THREE.Points(
                 //     get(gltf.scene.children, '0.children.4.geometry'),
                 //     new THREE.PointsMaterial({

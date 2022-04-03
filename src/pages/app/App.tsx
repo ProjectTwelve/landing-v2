@@ -6,13 +6,34 @@ const StyledApp = styled.div`
     width: 100%;
     height: 100%;
     position: relative;
-    overflow: auto;
+
+    .logo {
+        position: absolute;
+        width: 112px;
+        height: 55px;
+        left: 56px;
+        top: 57px;
+        background: url(${require('../../images/logo.png')});
+        z-index: 99;
+    }
+
+    .content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+    }
 `;
 
 export const App = () => {
     return (
         <StyledApp>
-            <Home />
+            <div className='logo'></div>
+            <div className='links'></div>
+            <div className='nav'></div>
+            <div className='content'>
+                <Home />
+            </div>
         </StyledApp>
     );
 };

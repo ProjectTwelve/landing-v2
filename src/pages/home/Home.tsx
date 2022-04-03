@@ -143,6 +143,7 @@ export const Home: React.FC = () => {
         var num = 100;
         var stars = [] as any[];
         var rnd;
+        var rnd1;
 
         canvas = document.getElementById('canvas');
         canvas.width = WINDOW_WIDTH;
@@ -158,6 +159,7 @@ export const Home: React.FC = () => {
             var time = Math.round(Math.random() * 3000 + 33);
             setTimeout(function () {
                 rnd = Math.ceil(Math.random() * stars.length);
+                rnd1 = Math.ceil(Math.random() * stars.length);
                 liuxing();
             }, time);
         }
@@ -168,7 +170,7 @@ export const Home: React.FC = () => {
             // context.clearRect(0,0,WINDOW_WIDTH,WINDOW_HEIGHT)
             for (var i = 0; i < num; i++) {
                 var star = stars[i];
-                if (i == rnd) {
+                if (i === rnd || i === rnd1) {
                     star.vx = -2;
                     star.vy = 5;
                     context.beginPath();
