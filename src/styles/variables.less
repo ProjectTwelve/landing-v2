@@ -2,7 +2,7 @@
     position: absolute;
     left: 50%;
 }
-.f-hoveropa(@op: 0.8) {
+.f-hover-opa(@op: 0.8) {
     transition: opacity 0.3s;
     &:hover {
         opacity: @op;
@@ -19,13 +19,6 @@
     left: 0;
     top: 0;
 }
-.f-align(@width, @height) {
-    .f-pal50;
-    top: 50%;
-    width: @width;
-    height: @height;
-    margin: -(@height / 2) 0 0 - (@width / 2);
-}
 .bgCommon(@img) {
     background-image: url('../images/@{img}');
     background-repeat: no-repeat;
@@ -34,6 +27,13 @@
     .bgCommon(@img);
     width: image-width('../images/@{img}');
     height: image-height('../images/@{img}');
+}
+.f-align(@width, @height) {
+    .f-pal50;
+    top: 50%;
+    width: @width;
+    height: @height;
+    margin: -(@height / 2) 0 0 - (@width / 2);
 }
 .f-alignImg(@img) {
     .bgCommon(@img);
