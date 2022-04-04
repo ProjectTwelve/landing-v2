@@ -72,6 +72,10 @@ export const AvatarGL: React.FC = () => {
         controls.enablePan = false;
         controls.enableDamping = true;
         controls.enableZoom = false;
+        controls.minPolarAngle = Math.PI * 0.5;
+        controls.maxPolarAngle = Math.PI * 0.5;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 10;
 
         const pointer = new THREE.Vector2();
         const radius = 100;
@@ -116,7 +120,7 @@ export const AvatarGL: React.FC = () => {
                 scene.add(model);
 
                 mixer = new THREE.AnimationMixer(model);
-                mixer.clipAction(gltf.animations[0]).play();
+                // mixer.clipAction(gltf.animations[0]).play();
 
                 // let count = 0;
                 // model.traverse(function (child: any) {
