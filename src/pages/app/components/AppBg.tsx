@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
+import './AppBg.less';
 
-export function useRenderAppBg(containerRef: React.RefObject<HTMLDivElement>) {
+export const AppBg: React.FC = () => {
+    const containerRef = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         const container = containerRef.current;
         if (!container) {
@@ -132,4 +135,6 @@ export function useRenderAppBg(containerRef: React.RefObject<HTMLDivElement>) {
             }
         }
     }, [containerRef.current]);
-}
+
+    return <div className='app-bg' ref={containerRef} />;
+};

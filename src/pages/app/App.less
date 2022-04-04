@@ -1,23 +1,30 @@
-@import '../..//styles/variables.less';
+@import '../../styles/variables.less';
 
 .app {
     width: 100%;
     height: 100%;
     position: relative;
 
-    .app-bg {
-        .f-pseudo();
-        z-index: 1;
-        > canvas {
-            .f-pseudo();
-        }
-    }
-
     .logo {
         position: absolute;
         .bgFull('logo.png');
         left: 56px;
         top: 57px;
+        z-index: 99;
+    }
+
+    .links {
+        position: absolute;
+        .bgFull('links.png');
+        right: 55px;
+        top: 60px;
+        z-index: 99;
+    }
+
+    .nav {
+        .f-alignImg('nav.png');
+        left: auto;
+        right: 55px;
         z-index: 99;
     }
 

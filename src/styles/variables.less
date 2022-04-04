@@ -19,12 +19,12 @@
     left: 0;
     top: 0;
 }
-.bgCommon(@img) {
+.bg(@img) {
     background-image: url('../images/@{img}');
     background-repeat: no-repeat;
 }
 .bgFull(@img) {
-    .bgCommon(@img);
+    .bg(@img);
     width: image-width('../images/@{img}');
     height: image-height('../images/@{img}');
 }
@@ -33,10 +33,10 @@
     top: 50%;
     width: @width;
     height: @height;
-    margin: -(@height / 2) 0 0 - (@width / 2);
+    margin: (@height / -2) 0 0 (@width / -2);
 }
 .f-alignImg(@img) {
-    .bgCommon(@img);
+    .bg(@img);
     .f-align(image-width('../images/@{img}'), image-height('../images/@{img}'));
 }
 

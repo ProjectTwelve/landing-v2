@@ -9,9 +9,9 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { getPublicAssetPath } from '../../../utils';
 import { gsap } from 'gsap';
 import { get } from 'lodash-es';
-import './HomeGL.less';
+import './AvatarGL.less';
 
-export const HomeGL: React.FC = () => {
+export const AvatarGL: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -253,5 +253,5 @@ export const HomeGL: React.FC = () => {
         };
     }, []);
 
-    return <div className='home-gl' ref={containerRef} />;
+    return <div className='avatar-gl' ref={containerRef} />;
 };
