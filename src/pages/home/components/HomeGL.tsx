@@ -9,16 +9,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { getPublicAssetPath } from '../../../utils';
 import { gsap } from 'gsap';
 import { get } from 'lodash-es';
-import styled from 'styled-components';
-
-export const StyledHomeGL = styled.div`
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    position: absolute;
-    left: 0;
-    top: 0;
-`;
+import './HomeGL.less';
 
 export const HomeGL: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -261,5 +252,5 @@ export const HomeGL: React.FC = () => {
         };
     }, []);
 
-    return <StyledHomeGL ref={containerRef} />;
+    return <div className='home-gl' ref={containerRef} />;
 };

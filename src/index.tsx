@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOMClient from 'react-dom/client';
-import './styles/reset.css';
-import './styles/index.css';
+import './styles/reset.less';
+import './styles/index.less';
 import './utils';
 import { App } from './pages/app/App';
 

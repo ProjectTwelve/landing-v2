@@ -1,12 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { HomeGL } from './components/HomeGL';
-import styled from 'styled-components';
-
-export const StyledHome = styled.div`
-    width: 100%;
-    height: 100%;
-    position: relative;
-`;
+import './Home.less';
 
 export const Home: React.FC = () => {
     // useEffect(() => {
@@ -242,7 +236,7 @@ export const Home: React.FC = () => {
         }
     }, []);
     return (
-        <StyledHome>
+        <div className='home'>
             <canvas
                 id='canvas'
                 style={{
@@ -254,6 +248,6 @@ export const Home: React.FC = () => {
                 }}
             ></canvas>
             <HomeGL />
-        </StyledHome>
+        </div>
     );
 };
