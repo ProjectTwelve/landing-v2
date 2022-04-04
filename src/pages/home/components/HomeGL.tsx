@@ -33,27 +33,27 @@ export const HomeGL: React.FC = () => {
         const pmremGenerator = new THREE.PMREMGenerator(renderer);
         // scene.background = new THREE.Color(0x000000);
         // scene.background = new THREE.Color(0xbfe3dd);
-        // scene.environment = pmremGenerator.fromScene(
-        //     new RoomEnvironment(),
-        //     0.04
-        // ).texture;
+        scene.environment = pmremGenerator.fromScene(
+            new RoomEnvironment(),
+            0.04
+        ).texture;
 
         // const ambient = new THREE.AmbientLight(0xffffff, 0.1);
         // scene.add(ambient);
 
-        const spotLight = new THREE.SpotLight(0xffffff, 1);
-        spotLight.position.set(10, 14, 16);
-        spotLight.angle = Math.PI / 4;
-        spotLight.penumbra = 0.1;
-        spotLight.decay = 2;
-        spotLight.distance = 200;
-        spotLight.castShadow = true;
-        spotLight.shadow.mapSize.width = 512;
-        spotLight.shadow.mapSize.height = 512;
-        spotLight.shadow.camera.near = 10;
-        spotLight.shadow.camera.far = 200;
-        spotLight.shadow.focus = 1;
-        scene.add(spotLight);
+        // const spotLight = new THREE.SpotLight(0xffffff, 1);
+        // spotLight.position.set(10, 14, 16);
+        // spotLight.angle = Math.PI / 4;
+        // spotLight.penumbra = 0.1;
+        // spotLight.decay = 2;
+        // spotLight.distance = 200;
+        // spotLight.castShadow = true;
+        // spotLight.shadow.mapSize.width = 512;
+        // spotLight.shadow.mapSize.height = 512;
+        // spotLight.shadow.camera.near = 10;
+        // spotLight.shadow.camera.far = 200;
+        // spotLight.shadow.focus = 1;
+        // scene.add(spotLight);
 
         const camera = new THREE.PerspectiveCamera(
             40,
@@ -77,8 +77,8 @@ export const HomeGL: React.FC = () => {
         const radius = 100;
         const raycaster = new THREE.Raycaster();
 
-        // const dracoLoader = new DRACOLoader();
-        // dracoLoader.setDecoderPath("js/libs/draco/gltf/");
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath(getPublicAssetPath('assets/draco/gltf/'));
 
         // new STLLoader().load(
         //     getPublicAssetPath('assets/demo4.stl'),
@@ -104,15 +104,14 @@ export const HomeGL: React.FC = () => {
         // );
 
         const loader = new GLTFLoader();
-        // loader.setDRACOLoader(dracoLoader);
+        loader.setDRACOLoader(dracoLoader);
         loader.load(
-            // getPublicAssetPath("assets/demo1/demo1.glb"),
-            getPublicAssetPath('assets/demo2/demo2.glb'),
+            getPublicAssetPath('assets/demo1/demo1.glb'),
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
-                model.position.set(0, -2, 0);
-                model.scale.set(3, 3, 3);
+                model.position.set(1, 0.3, 0);
+                model.scale.set(0.01, 0.01, 0.01);
                 scene.add(model);
 
                 mixer = new THREE.AnimationMixer(model);
