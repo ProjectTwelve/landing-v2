@@ -64,7 +64,7 @@ export const HomeGL: React.FC = () => {
 
         const tipsDiv2 = document.createElement('div');
         tipsDiv2.className = 'gl-tips';
-        tipsDiv2.textContent = '我是提示 2222222';
+        tipsDiv2.textContent = 'Tips：点击返回';
         const tipsLabel2 = new CSS2DObject(tipsDiv2);
         tipsLabel2.position.set(-1.35, 0.4, 1.4);
         scene.add(tipsLabel2);
