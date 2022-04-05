@@ -209,7 +209,8 @@ export const HomeGL: React.FC = () => {
                     y: pos.y * 2,
                     z: pos.z * 2,
                     onComplete: () => {
-                        camera.layers.enable(1);
+                        pos.equals(buttonLabel2.position) &&
+                            camera.layers.enable(1);
                         labelRenderer.domElement.addEventListener(
                             'pointerup',
                             handleResetCamera
