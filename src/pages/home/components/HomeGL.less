@@ -3,4 +3,33 @@
 .home-gl {
     .f-pseudo();
     overflow: hidden;
+
+    > canvas,
+    > div {
+        .f-pseudo();
+    }
+
+    .gl-button {
+        background: #fff;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 16px;
+        border-radius: 50%;
+        cursor: pointer;
+        text-align: center;
+        .f-hover-opa();
+    }
+
+    .gl-tips {
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 4px;
+        padding: 10px;
+        // width: 200px;
+        height: 100px;
+        font-size: 30px;
+        color: #fff;
+        line-height: 100px;
+        margin-left: 160px;
+    }
 }
