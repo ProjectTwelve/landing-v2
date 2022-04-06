@@ -38,11 +38,11 @@ export const AvatarGL: React.FC = () => {
         //     0.04
         // ).texture;
 
-        // const ambient = new THREE.AmbientLight(0xffffff, 0.1);
-        // scene.add(ambient);
+        const ambient = new THREE.AmbientLight(0xffffff, 0.1);
+        scene.add(ambient);
 
-        const spotLight = new THREE.SpotLight(0xffffff, 1);
-        spotLight.position.set(10, 14, 16);
+        // const spotLight = new THREE.SpotLight(0xffffff, 1);
+        // spotLight.position.set(-10, -14, -16);
         // spotLight.angle = Math.PI / 4;
         // spotLight.penumbra = 0.1;
         // spotLight.decay = 2;
@@ -53,7 +53,7 @@ export const AvatarGL: React.FC = () => {
         // spotLight.shadow.camera.near = 10;
         // spotLight.shadow.camera.far = 200;
         // spotLight.shadow.focus = 1;
-        scene.add(spotLight);
+        // scene.add(spotLight);
 
         const camera = new THREE.PerspectiveCamera(
             40,
@@ -227,11 +227,11 @@ export const AvatarGL: React.FC = () => {
             mixer.update(delta);
             controls.update();
 
-            spotLight.position.set(
-                camera.position.x,
-                camera.position.y,
-                camera.position.z
-            );
+            // spotLight.position.set(
+            //     camera.position.x,
+            //     camera.position.y,
+            //     camera.position.z
+            // );
 
             // raycaster.setFromCamera(pointer, camera);
             // const intersects = raycaster.intersectObjects(
