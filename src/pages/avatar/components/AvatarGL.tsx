@@ -32,14 +32,14 @@ export const AvatarGL: React.FC = () => {
         const pmremGenerator = new THREE.PMREMGenerator(renderer);
         // scene.background = new THREE.Color(0x000000);
         // scene.background = new THREE.Color(0xbfe3dd);
-        scene.environment = pmremGenerator.fromScene(
-            new RoomEnvironment(),
-            0.02
-        ).texture;
+        // scene.environment = pmremGenerator.fromScene(
+        //     new RoomEnvironment(),
+        //     0.02
+        // ).texture;
 
         // const ambient = new THREE.AmbientLight(0xffffff, 0.1);
         // scene.add(ambient);
-        // scene.add(new THREE.HemisphereLight(0x443333, 0x222233, 4));
+        scene.add(new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6));
 
         // const spotLight = new THREE.SpotLight(0xffffff, 1);
         // spotLight.position.set(-10, -14, -16);
