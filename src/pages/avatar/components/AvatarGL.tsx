@@ -106,72 +106,73 @@ export const AvatarGL: React.FC = () => {
         //         scene.add(mesh);
         //     }
         // );
-
+        const isParticle = false;
         let mixer: THREE.AnimationMixer;
         const loader = new GLTFLoader();
         // loader.setDRACOLoader(dracoLoader);
         loader.load(
             // getPublicAssetPath('assets/avatar/avatar-normal.glb'),
             // getPublicAssetPath('assets/avatar/avatar-particle.glb'),
-            getPublicAssetPath('assets/avatar/avatar-lowpoly.glb'),
-            // getPublicAssetPath('assets/avatar/avatar-cartoon.glb'),
+            // getPublicAssetPath('assets/avatar/avatar-lowpoly.glb'),
+            getPublicAssetPath('assets/avatar/avatar-cartoon.glb'),
             function (gltf) {
                 console.log('gltf2', gltf);
                 const model = gltf.scene;
                 model.position.set(0, -2, 0);
                 model.scale.set(3, 3, 3);
-                scene.add(model);
-
                 mixer = new THREE.AnimationMixer(model);
                 // mixer.clipAction(gltf.animations[0])?.play();
+                if (!isParticle) {
+                    scene.add(model);
+                } else {
+                    let count = 0;
+                    model.traverse(function (child: any) {
+                        if (child.isMesh) {
+                            const buffer = child.geometry.attributes.position;
+                            console.log('child', child.name, child);
 
-                // let count = 0;
-                // model.traverse(function (child: any) {
-                //     if (child.isMesh) {
-                //         const buffer = child.geometry.attributes.position;
-                //         console.log('child', child.name, child);
+                            count += buffer.array.length;
+                        }
+                    });
+                    const combined = new Float32Array(count);
+                    // console.log('combined', combined);
 
-                //         count += buffer.array.length;
-                //     }
-                // });
-                // const combined = new Float32Array(count);
-                // // console.log('combined', combined);
+                    let offset = 0;
+                    model.traverse(function (child: any) {
+                        if (child.isMesh) {
+                            const buffer = child.geometry.attributes.position;
+                            combined.set(buffer.array, offset);
+                            offset += buffer.array.length;
+                        }
+                    });
 
-                // let offset = 0;
-                // model.traverse(function (child: any) {
-                //     if (child.isMesh) {
-                //         const buffer = child.geometry.attributes.position;
-                //         combined.set(buffer.array, offset);
-                //         offset += buffer.array.length;
-                //     }
-                // });
-
-                // const positions = new THREE.BufferAttribute(combined, 3);
-                // const geometry = new THREE.BufferGeometry();
-                // geometry.setAttribute('position', positions.clone());
-                // geometry.setAttribute('initialPosition', positions.clone());
-                // geometry.center();
-                // const mesh = new THREE.Points(
-                //     geometry,
-                //     // new THREE.PointsMaterial({
-                //     //     size: 0.05,
-                //     //     color: '#0099ff',
-                //     //     transparent: true,
-                //     //     blending: THREE.AdditiveBlending,
-                //     // })
-                //     new THREE.PointsMaterial({
-                //         color: 0xffffff,
-                //         size: 0.02,
-                //         opacity: 0.6,
-                //         transparent: true,
-                //         blending: THREE.AdditiveBlending,
-                //         depthTest: false,
-                //         map: generateSprite(),
-                //     })
-                // );
-                // mesh.scale.set(0.03, 0.03, 0.03);
-                // // mesh.position.set(0, -2, 0);
-                // scene.add(mesh);
+                    const positions = new THREE.BufferAttribute(combined, 3);
+                    const geometry = new THREE.BufferGeometry();
+                    geometry.setAttribute('position', positions.clone());
+                    geometry.setAttribute('initialPosition', positions.clone());
+                    geometry.center();
+                    const mesh = new THREE.Points(
+                        geometry,
+                        // new THREE.PointsMaterial({
+                        //     size: 0.05,
+                        //     color: '#0099ff',
+                        //     transparent: true,
+                        //     blending: THREE.AdditiveBlending,
+                        // })
+                        new THREE.PointsMaterial({
+                            color: 0xffffff,
+                            size: 0.02,
+                            opacity: 0.6,
+                            transparent: true,
+                            blending: THREE.AdditiveBlending,
+                            depthTest: false,
+                            map: generateSprite(),
+                        })
+                    );
+                    mesh.scale.set(0.03, 0.03, 0.03);
+                    // mesh.position.set(0, -2, 0);
+                    scene.add(mesh);
+                }
 
                 animate();
             },
