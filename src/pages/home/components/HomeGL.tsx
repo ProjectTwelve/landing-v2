@@ -118,11 +118,13 @@ export const HomeGL: React.FC = () => {
         const raycaster = new THREE.Raycaster();
 
         const dracoLoader = new DRACOLoader();
-        dracoLoader.setDecoderPath(getPublicAssetPath('assets/draco/gltf/'));
+        dracoLoader.setDecoderPath(
+            getPublicAssetPath('assets/lib-draco/gltf/')
+        );
         const loader = new GLTFLoader();
         loader.setDRACOLoader(dracoLoader);
         loader.load(
-            getPublicAssetPath('assets/demo1/demo1.glb'),
+            getPublicAssetPath('assets/home/home.glb'),
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;

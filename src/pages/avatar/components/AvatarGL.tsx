@@ -20,7 +20,6 @@ export const AvatarGL: React.FC = () => {
             return;
         }
 
-        let mixer: THREE.AnimationMixer;
         const clock = new THREE.Clock();
         const renderer = new THREE.WebGLRenderer({ alpha: true });
 
@@ -33,13 +32,14 @@ export const AvatarGL: React.FC = () => {
         const pmremGenerator = new THREE.PMREMGenerator(renderer);
         // scene.background = new THREE.Color(0x000000);
         // scene.background = new THREE.Color(0xbfe3dd);
-        // scene.environment = pmremGenerator.fromScene(
-        //     new RoomEnvironment(),
-        //     0.04
-        // ).texture;
+        scene.environment = pmremGenerator.fromScene(
+            new RoomEnvironment(),
+            0.02
+        ).texture;
 
-        const ambient = new THREE.AmbientLight(0xffffff, 0.1);
-        scene.add(ambient);
+        // const ambient = new THREE.AmbientLight(0xffffff, 0.1);
+        // scene.add(ambient);
+        // scene.add(new THREE.HemisphereLight(0x443333, 0x222233, 4));
 
         // const spotLight = new THREE.SpotLight(0xffffff, 1);
         // spotLight.position.set(-10, -14, -16);
@@ -82,7 +82,7 @@ export const AvatarGL: React.FC = () => {
         const raycaster = new THREE.Raycaster();
 
         // const dracoLoader = new DRACOLoader();
-        // dracoLoader.setDecoderPath("js/libs/draco/gltf/");
+        // dracoLoader.setDecoderPath("js/libs/lib-draco/gltf/");
 
         // new STLLoader().load(
         //     getPublicAssetPath('assets/demo4.stl'),
@@ -107,30 +107,35 @@ export const AvatarGL: React.FC = () => {
         //     }
         // );
 
+        let mixer: THREE.AnimationMixer;
         const loader = new GLTFLoader();
         // loader.setDRACOLoader(dracoLoader);
         loader.load(
-            // getPublicAssetPath("assets/demo1/demo1.glb"),
-            getPublicAssetPath('assets/demo2/demo2.glb'),
+            // getPublicAssetPath('assets/avatar/avatar-normal.glb'),
+            // getPublicAssetPath('assets/avatar/avatar-particle.glb'),
+            getPublicAssetPath('assets/avatar/avatar-lowpoly.glb'),
+            // getPublicAssetPath('assets/avatar/avatar-cartoon.glb'),
             function (gltf) {
-                console.log('gltf', gltf);
+                console.log('gltf2', gltf);
                 const model = gltf.scene;
                 model.position.set(0, -2, 0);
                 model.scale.set(3, 3, 3);
                 scene.add(model);
 
                 mixer = new THREE.AnimationMixer(model);
-                // mixer.clipAction(gltf.animations[0]).play();
+                // mixer.clipAction(gltf.animations[0])?.play();
 
                 // let count = 0;
                 // model.traverse(function (child: any) {
                 //     if (child.isMesh) {
                 //         const buffer = child.geometry.attributes.position;
+                //         console.log('child', child.name, child);
 
                 //         count += buffer.array.length;
                 //     }
                 // });
                 // const combined = new Float32Array(count);
+                // // console.log('combined', combined);
 
                 // let offset = 0;
                 // model.traverse(function (child: any) {
@@ -156,7 +161,7 @@ export const AvatarGL: React.FC = () => {
                 //     // })
                 //     new THREE.PointsMaterial({
                 //         color: 0xffffff,
-                //         size: 0.4,
+                //         size: 0.02,
                 //         opacity: 0.6,
                 //         transparent: true,
                 //         blending: THREE.AdditiveBlending,
@@ -166,13 +171,6 @@ export const AvatarGL: React.FC = () => {
                 // );
                 // mesh.scale.set(0.03, 0.03, 0.03);
                 // // mesh.position.set(0, -2, 0);
-                // scene.add(mesh);
-                // const mesh = new THREE.Points(
-                //     get(gltf.scene.children, '0.children.4.geometry'),
-                //     new THREE.PointsMaterial({
-                //         color: '#f00',
-                //     })
-                // );
                 // scene.add(mesh);
 
                 animate();
