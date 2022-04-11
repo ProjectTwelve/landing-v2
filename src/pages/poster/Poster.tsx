@@ -52,11 +52,11 @@ export const Poster: React.FC = () => {
         <div className='poster' ref={containerRef}>
             <div className='poster__bg' ref={bgRef}>
                 <div
-                    data-depth-x='0'
+                    data-depth-x='0.05'
                     className='poster__img poster__img--1'
                 ></div>
                 <div
-                    data-depth-x='-0.15'
+                    data-depth-x='-0.1'
                     className='poster__img poster__img--2'
                 ></div>
                 <div
@@ -64,11 +64,11 @@ export const Poster: React.FC = () => {
                     className='poster__img poster__img--3'
                 ></div>
                 <div
-                    data-depth='-0.2'
+                    data-depth='-0.13'
                     className='poster__img poster__img--4'
                 ></div>
                 <div
-                    data-depth='0.3'
+                    data-depth='0.15'
                     className='poster__img poster__img--5'
                 ></div>
             </div>
