@@ -5,10 +5,30 @@
     height: 100%;
     position: relative;
     overflow: hidden;
-
     &__bg {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    &__img {
         .f-pseudo();
-        .bg('poster/bg.png');
-        background-size: cover;
+        background-size: auto 100%;
+        background-position: center;
+        &--1 {
+            .bg('poster/1.png');
+        }
+        &--2 {
+            .bg('poster/2.png');
+        }
+        &--3 {
+            .bg('poster/3.png');
+        }
+        &--4 {
+            .bg('poster/4.png');
+        }
+        &--5 {
+            .bg('poster/5.png');
+        }
     }
 }

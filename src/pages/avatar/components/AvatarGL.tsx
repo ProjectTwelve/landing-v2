@@ -106,15 +106,15 @@ export const AvatarGL: React.FC = () => {
         //         scene.add(mesh);
         //     }
         // );
-        const isParticle = false;
+        const isParticle = true;
         let mixer: THREE.AnimationMixer;
         const loader = new GLTFLoader();
         // loader.setDRACOLoader(dracoLoader);
         loader.load(
             // getPublicAssetPath('assets/avatar/avatar-normal.glb'),
-            // getPublicAssetPath('assets/avatar/avatar-particle.glb'),
+            getPublicAssetPath('assets/avatar/avatar-particle.glb'),
             // getPublicAssetPath('assets/avatar/avatar-lowpoly.glb'),
-            getPublicAssetPath('assets/avatar/avatar-cartoon.glb'),
+            // getPublicAssetPath('assets/avatar/avatar-cartoon.glb'),
             function (gltf) {
                 console.log('gltf2', gltf);
                 const model = gltf.scene;
