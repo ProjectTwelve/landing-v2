@@ -7,7 +7,7 @@ import { About } from '../about/About';
 import { Loading } from '../loading/Loading';
 
 export enum PageType {
-    Loading,
+    Loading = 1,
     Home,
     Avatar,
     Tree,

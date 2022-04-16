@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { Fragment, useRef, useState } from 'react';
 import { AppBg } from './components/AppBg';
 import './App.less';
 import classnames from 'classnames';
@@ -12,10 +12,20 @@ export const App = () => {
             <AppBg />
             <div className='content'>
                 {CONTENT_PAGES.map((p, i) => {
-                    return <>{p.Content}</>;
+                    return (
+                        p.Content &&
+                        p.type && (
+                            <Fragment key={`${p.type}-${i}`}>
+                                {p.type === current && p.Content}
+                            </Fragment>
+                        )
+                    );
                 })}
             </div>
-            <div className='logo'></div>
+            <div
+                className='logo'
+                onClick={() => setCurrent(PageType.Home)}
+            ></div>
             <div className='nav'>
                 {CONTENT_PAGES.map((p, i) => {
                     return (
@@ -24,7 +34,7 @@ export const App = () => {
                                 key={`${p.type}-${i}`}
                                 className={classnames(
                                     'nav__item',
-                                    current === p.type && 'active'
+                                    p.type === current && 'active'
                                 )}
                                 onClick={() => p.type && setCurrent(p.type)}
                             >
