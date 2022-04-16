@@ -12,8 +12,6 @@ export const App = () => {
         <div className='app'>
             <AppBg />
             <div className='logo'></div>
-            <div className='links'></div>
-            <div className='nav'></div>
             <div className='content'>
                 <Home />
                 <Avatar />

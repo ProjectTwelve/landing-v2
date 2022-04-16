@@ -41,8 +41,9 @@
 }
 .bgFull2x(@img) {
     .bg(@img);
-    width: image-width('../assets/@{img}') / 2;
-    height: image-height('../assets/@{img}') / 2;
+    width: (image-width('../assets/@{img}') / 2);
+    height: (image-height('../assets/@{img}') / 2);
+    background-size: 100%;
 }
 .f-alignImg2x(@img) {
     .bg(@img);

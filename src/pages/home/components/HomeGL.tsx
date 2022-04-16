@@ -120,18 +120,19 @@ export const HomeGL: React.FC = () => {
         const dracoLoader = new DRACOLoader();
         dracoLoader.setDecoderPath(getPublicAssetPath('files/lib-draco/gltf/'));
         const loader = new GLTFLoader();
-        loader.setDRACOLoader(dracoLoader);
+        // loader.setDRACOLoader(dracoLoader);
         loader.load(
-            getPublicAssetPath('files/home/home.glb'),
+            // getPublicAssetPath('files/home/home.gltf'),
+            getPublicAssetPath('files/avatar/avatar-particle.glb'),
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
-                model.position.set(1, 0.3, 0);
-                model.scale.set(0.01, 0.01, 0.01);
+                model.position.set(0, 0, 0);
+                model.scale.set(0.5, 0.5, 0.5);
                 scene.add(model);
 
                 mixer = new THREE.AnimationMixer(model);
-                mixer.clipAction(gltf.animations[0]).play();
+                // mixer.clipAction(gltf.animations[0]).play();
                 animate();
             },
             void 0,
