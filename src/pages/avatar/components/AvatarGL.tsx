@@ -85,7 +85,7 @@ export const AvatarGL: React.FC = () => {
         // dracoLoader.setDecoderPath("js/libs/lib-draco/gltf/");
 
         // new STLLoader().load(
-        //     getPublicAssetPath('assets/demo4.stl'),
+        //     getPublicAssetPath('files/demo4.stl'),
         //     (geometry) => {
         //         console.log('geometry', );
         //         //创建纹理
@@ -111,11 +111,11 @@ export const AvatarGL: React.FC = () => {
         const loader = new GLTFLoader();
         // loader.setDRACOLoader(dracoLoader);
         loader.load(
-            // getPublicAssetPath('assets/avatar/avatar-normal.glb'),
-            // getPublicAssetPath('assets/avatar/avatar-particle.glb'),
-            // getPublicAssetPath('assets/avatar/avatar-lowpoly.glb'),
-            // getPublicAssetPath('assets/avatar/avatar-cartoon.glb'),
-            getPublicAssetPath('assets/avatar/avatar-dokv.glb'),
+            // getPublicAssetPath('files/avatar/avatar-normal.glb'),
+            // getPublicAssetPath('files/avatar/avatar-particle.glb'),
+            // getPublicAssetPath('files/avatar/avatar-lowpoly.glb'),
+            // getPublicAssetPath('files/avatar/avatar-cartoon.glb'),
+            getPublicAssetPath('files/avatar/avatar-dokv.glb'),
             function (gltf) {
                 console.log('gltf2', gltf);
                 const model = gltf.scene;

@@ -20,13 +20,13 @@
     top: 0;
 }
 .bg(@img) {
-    background-image: url('../images/@{img}');
+    background-image: url('../assets@{img}');
     background-repeat: no-repeat;
 }
 .bgFull(@img) {
     .bg(@img);
-    width: image-width('../images/@{img}');
-    height: image-height('../images/@{img}');
+    width: image-width('../assets@{img}');
+    height: image-height('../assets@{img}');
 }
 .f-align(@width, @height) {
     .f-pal50;
@@ -37,7 +37,7 @@
 }
 .f-alignImg(@img) {
     .bg(@img);
-    .f-align(image-width('../images/@{img}'), image-height('../images/@{img}'));
+    .f-align(image-width('../assets@{img}'), image-height('../assets@{img}'));
 }
 
 .animate-item(@i, @count, @time, @transform: translate3d(0, 1.4rem, 0), @during: 0.6s)
