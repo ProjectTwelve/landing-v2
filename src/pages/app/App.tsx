@@ -6,6 +6,7 @@ import { PageType, CONTENT_PAGES } from './App.config';
 
 export const App = () => {
     const [current, setCurrent] = useState(PageType.Loading);
+    const [musicPlaying, setMusicPlaying] = useState(true);
 
     return (
         <div className='app'>
@@ -47,7 +48,18 @@ export const App = () => {
             <div className='coming-btn'></div>
             <div className='footer'>
                 <div className='footer__info'></div>
-                <div className='footer__audio audio-btn'></div>
+                <div
+                    className={classnames(
+                        'footer__audio',
+                        'audio-btn',
+                        musicPlaying && 'active'
+                    )}
+                    onClick={() => setMusicPlaying(!musicPlaying)}
+                >
+                    <i className='footer__audio-item'></i>
+                    <i className='footer__audio-item'></i>
+                    <i className='footer__audio-item'></i>
+                </div>
             </div>
         </div>
     );

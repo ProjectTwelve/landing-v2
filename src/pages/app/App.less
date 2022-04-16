@@ -4,6 +4,7 @@
     width: 100%;
     height: 100%;
     position: relative;
+    min-width: 1250px;
 
     .content {
         position: relative;
@@ -78,5 +79,67 @@
         z-index: 99;
         cursor: not-allowed;
         .f-hover-opa;
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 60px;
+        right: 60px;
+        z-index: 99;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        &__info {
+            .bgFull2x('app/footer-info@2x.png');
+        }
+
+        &__audio {
+            margin-left: 35px;
+            display: flex;
+            cursor: pointer;
+            .f-hover-opa;
+            position: relative;
+
+            // 用于扩大可触摸范围
+            &::before {
+                content: '';
+                .f-pseudo;
+                transform: scale(1.8, 1.8);
+            }
+
+            &-item {
+                display: block;
+                width: 11px;
+                height: 29px;
+                background: #00cce6;
+                transform: scale(1, 0.2);
+                transform-origin: center bottom;
+                opacity: 0.8;
+                margin-right: 3px;
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+
+            &.active .footer__audio-item {
+                animation: musicplay 0.6s infinite alternate;
+                &:nth-child(1) {
+                    animation-delay: 0s;
+                }
+                &:nth-child(2) {
+                    animation-delay: -0.2s;
+                }
+                &:nth-child(3) {
+                    animation-delay: -0.3s;
+                }
+            }
+        }
+    }
+}
+
+@keyframes musicplay {
+    100% {
+        transform: scale(1, 1);
     }
 }

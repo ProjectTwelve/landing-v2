@@ -7,6 +7,170 @@
     overflow: hidden;
 
     &__info {
-        .f-alignImg('about/info.png');
+        .f-alignImg2x('about/info@2x.png');
+        // info位置
+        transform: translate(10px, -150px);
+
+        &-item {
+            position: absolute;
+        }
+        &-name {
+            position: absolute;
+            font-size: 22px;
+            line-height: 22px;
+            color: #fff;
+            top: 50%;
+            transform: translate(0, -50%);
+            white-space: nowrap;
+            &--left {
+                right: 16px;
+                &.about__info-name--remote {
+                    right: 22px;
+                }
+            }
+            &--right {
+                left: 16px;
+                &.about__info-name--remote {
+                    left: 22px;
+                }
+            }
+        }
+    }
+
+    &__helper {
+        position: absolute;
+        left: 78px;
+        bottom: 88px;
+
+        &-item {
+            display: flex;
+            align-items: center;
+            letter-spacing: 1px;
+            font-size: 22px;
+            line-height: 22px;
+            color: #fff;
+            margin-top: 22px;
+
+            .about__dot--office {
+                margin-right: 10px;
+            }
+            .about__dot--remote {
+                margin-right: 15px;
+            }
+        }
+    }
+
+    &__dot {
+        display: block;
+        position: relative;
+        border-radius: 50%;
+
+        &--office {
+            width: 11px;
+            height: 11px;
+            background: #1ee3ff;
+        }
+
+        &--remote {
+            width: 10px;
+            height: 10px;
+            background: #2372ff;
+            &::before {
+                content: '';
+                .f-align(24px, 24px);
+                border-radius: 50%;
+                background: #2372ff;
+                opacity: 0.34;
+            }
+
+            & > b {
+                .f-align(24px, 24px);
+                border-radius: 50%;
+                box-sizing: border-box;
+                border: 2px solid #2372ff;
+                animation: aboutdot 2s infinite;
+            }
+        }
+    }
+
+    &__partner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        bottom: 90px;
+        z-index: 10;
+        &-dot {
+            margin: 0 26px;
+            .bgFull('about/partner-dot.png');
+            &--right {
+                transform: rotate(180deg);
+            }
+        }
+        &-item {
+            margin: 0 26px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.3s;
+            background-position: center;
+            border-radius: 50%;
+
+            &--1 {
+                .bgFull2x('about/partner-1@2x.png');
+                &::after {
+                    .bgFull2x('about/partner-1-text@2x.png');
+                }
+            }
+            &--2 {
+                .bgFull2x('about/partner-2@2x.png');
+                &::after {
+                    .bgFull2x('about/partner-2-text@2x.png');
+                }
+            }
+            &--3 {
+                .bgFull2x('about/partner-3@2x.png');
+                &::after {
+                    .bgFull2x('about/partner-3-text@2x.png');
+                }
+            }
+            &::before {
+                content: '';
+                .f-pseudo;
+                border-radius: 50%;
+                background: #000;
+                opacity: 0.5;
+                transition: 0.3s;
+            }
+            &::after {
+                position: absolute;
+                content: '';
+                top: 98px;
+                left: -14px;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+
+            &:hover,
+            &.active {
+                // background-size: 103%;
+                &::before {
+                    opacity: 0;
+                }
+            }
+            &.active {
+                &::after {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
+
+@keyframes aboutdot {
+    100% {
+        transform: scale(3, 3);
+        opacity: 0;
     }
 }

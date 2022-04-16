@@ -37,10 +37,26 @@ export const HomeGL: React.FC = () => {
         const pmremGenerator = new THREE.PMREMGenerator(renderer);
         // scene.background = new THREE.Color(0x000000);
         // scene.background = new THREE.Color(0xbfe3dd);
-        scene.environment = pmremGenerator.fromScene(
-            new RoomEnvironment(),
-            0.04
-        ).texture;
+        // scene.environment = pmremGenerator.fromScene(
+        //     new RoomEnvironment(),
+        //     0.04
+        // ).texture;
+        const ambient = new THREE.AmbientLight(0xffffff, 0.1);
+        scene.add(ambient);
+
+        // const spotLight = new THREE.SpotLight(0xffffff, 1);
+        // spotLight.position.set(10, 14, 16);
+        // spotLight.angle = Math.PI / 4;
+        // spotLight.penumbra = 0.1;
+        // spotLight.decay = 2;
+        // spotLight.distance = 200;
+        // spotLight.castShadow = true;
+        // spotLight.shadow.mapSize.width = 512;
+        // spotLight.shadow.mapSize.height = 512;
+        // spotLight.shadow.camera.near = 10;
+        // spotLight.shadow.camera.far = 200;
+        // spotLight.shadow.focus = 1;
+        // scene.add(spotLight);
 
         const labelRenderer = new CSS2DRenderer();
         labelRenderer.setSize(container.clientWidth, container.clientHeight);
@@ -78,23 +94,6 @@ export const HomeGL: React.FC = () => {
         scene.add(buttonLabel3);
         buttonLabel3.layers.set(0);
 
-        // const ambient = new THREE.AmbientLight(0xffffff, 0.1);
-        // scene.add(ambient);
-
-        // const spotLight = new THREE.SpotLight(0xffffff, 1);
-        // spotLight.position.set(10, 14, 16);
-        // spotLight.angle = Math.PI / 4;
-        // spotLight.penumbra = 0.1;
-        // spotLight.decay = 2;
-        // spotLight.distance = 200;
-        // spotLight.castShadow = true;
-        // spotLight.shadow.mapSize.width = 512;
-        // spotLight.shadow.mapSize.height = 512;
-        // spotLight.shadow.camera.near = 10;
-        // spotLight.shadow.camera.far = 200;
-        // spotLight.shadow.focus = 1;
-        // scene.add(spotLight);
-
         const camera = new THREE.PerspectiveCamera(
             40,
             container.clientWidth / container.clientHeight,
@@ -105,7 +104,7 @@ export const HomeGL: React.FC = () => {
         camera.layers.disable(1);
 
         const axesHelper = new THREE.AxesHelper(10);
-        // scene.add(axesHelper);
+        scene.add(axesHelper);
 
         const controls = new OrbitControls(camera, labelRenderer.domElement);
         controls.target.set(0, 0, 0);
@@ -113,6 +112,8 @@ export const HomeGL: React.FC = () => {
         controls.enablePan = false;
         controls.enableDamping = true;
         controls.enableZoom = false;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 1;
 
         const mousePointer = new THREE.Vector2();
         const raycaster = new THREE.Raycaster();
@@ -122,13 +123,13 @@ export const HomeGL: React.FC = () => {
         const loader = new GLTFLoader();
         // loader.setDRACOLoader(dracoLoader);
         loader.load(
-            // getPublicAssetPath('files/home/home.gltf'),
-            getPublicAssetPath('files/avatar/avatar-particle.glb'),
+            getPublicAssetPath('files/home/home.gltf'),
+            // getPublicAssetPath('files/avatar/avatar-particle.glb'),
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
-                model.position.set(0, 0, 0);
-                model.scale.set(0.5, 0.5, 0.5);
+                model.position.set(0, -3.1, 0);
+                model.scale.set(0.25, 0.25, 0.25);
                 scene.add(model);
 
                 mixer = new THREE.AnimationMixer(model);

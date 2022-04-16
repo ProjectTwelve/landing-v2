@@ -47,7 +47,8 @@
 }
 .f-alignImg2x(@img) {
     .bg(@img);
-    .f-align(image-width('../assets/@{img}') / 2, image-height('../assets/@{img}') / 2);
+    background-size: 100%;
+    .f-align((image-width('../assets/@{img}') / 2), (image-height('../assets/@{img}') / 2));
 }
 
 .animate-item(@i, @count, @time, @transform: translate3d(0, 1.4rem, 0), @during: 0.6s)
