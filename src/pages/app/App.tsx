@@ -5,6 +5,7 @@ import { Home } from '../home/Home';
 import { Avatar } from '../avatar/Avatar';
 import { Tree } from '../tree/Tree';
 import { Poster } from '../poster/Poster';
+import { About } from '../about/About';
 
 export const App = () => {
     return (
@@ -18,6 +19,7 @@ export const App = () => {
                 <Avatar />
                 <Tree />
                 <Poster />
+                <About />
             </div>
         </div>
     );
