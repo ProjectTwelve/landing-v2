@@ -20,17 +20,14 @@ export const Poster: React.FC = () => {
         const ratio = 4196 / 2160;
         if (containerSize) {
             if (containerSize.width / containerSize.height >= ratio) {
-                left = 0;
-                top = (containerSize.width / ratio - containerSize.height) / -2;
-                width = containerSize.width;
-                height = containerSize.width / ratio;
+                width = containerSize.width + 200;
+                height = width / ratio;
             } else {
-                left =
-                    (ratio * containerSize.height - containerSize.width) / -2;
-                top = 0;
-                width = ratio * containerSize.height;
-                height = containerSize.height;
+                height = containerSize.height + 160;
+                width = ratio * height;
             }
+            left = (width - containerSize.width) / -2;
+            top = (height - containerSize.height) / -2;
         }
         bgRef.current.style.left = `${left}px`;
         bgRef.current.style.top = `${top}px`;
@@ -53,10 +50,11 @@ export const Poster: React.FC = () => {
             <div className='poster__bg' ref={bgRef}>
                 <div
                     data-depth-x='0.05'
+                    data-depth-y='0.05'
                     className='poster__img poster__img--1'
                 ></div>
                 <div
-                    data-depth-x='-0.1'
+                    data-depth-x='-0.05'
                     className='poster__img poster__img--2'
                 ></div>
                 <div
@@ -64,11 +62,12 @@ export const Poster: React.FC = () => {
                     className='poster__img poster__img--3'
                 ></div>
                 <div
-                    data-depth='-0.13'
+                    data-depth='-0.08'
                     className='poster__img poster__img--4'
                 ></div>
                 <div
-                    data-depth='0.15'
+                    data-depth-x='0.08'
+                    data-depth-y='0.08'
                     className='poster__img poster__img--5'
                 ></div>
             </div>
