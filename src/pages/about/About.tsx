@@ -24,7 +24,9 @@ export const About: React.FC = () => {
                             >
                                 <b
                                     style={{
-                                        animationDelay: `${Math.random() * 2}s`,
+                                        animationDelay: `${
+                                            Math.random() * -2
+                                        }s`,
                                     }}
                                 ></b>
                             </i>
