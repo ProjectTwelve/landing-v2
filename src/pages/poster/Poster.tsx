@@ -21,11 +21,11 @@ export const Poster: React.FC = () => {
         if (containerSize) {
             if (containerSize.width / containerSize.height >= ratio) {
                 // 补充点宽高，防止视差滚动时露馅
-                width = containerSize.width + 100;
+                width = containerSize.width + 80;
                 height = width / ratio;
             } else {
                 // 补充点宽高，防止视差滚动时露馅
-                height = containerSize.height + 70;
+                height = containerSize.height + 60;
                 width = ratio * height;
             }
             left = (width - containerSize.width) / -2;
@@ -51,8 +51,8 @@ export const Poster: React.FC = () => {
         <div className='poster' ref={containerRef}>
             <div className='poster__bg' ref={bgRef}>
                 <div
-                    data-depth-x='0.1'
-                    data-depth-y='0.1'
+                    data-depth-x='0.075'
+                    data-depth-y='0.075'
                     className='poster__img poster__img--1'
                 ></div>
                 <div

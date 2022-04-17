@@ -48,7 +48,37 @@ export const CONTENT_PAGES = [
     },
     {
         type: null,
-        NavText: <>COMMUNITY</>,
+        NavText: (
+            <div className='nav-community-wrap'>
+                COMMUNITY
+                <div className='nav-community'>
+                    <a
+                        href='https://twitter.com/_p12_'
+                        target='_blank'
+                        className='nav-community__item nav-community__item--twitter'
+                    >
+                        <i></i>
+                        Twitter
+                    </a>
+                    <a
+                        href='https://discord.com/invite/EMrbsZPbxs'
+                        target='_blank'
+                        className='nav-community__item nav-community__item--discord'
+                    >
+                        <i></i>
+                        Discord
+                    </a>
+                    <a
+                        href='https://t.me/project_twelve'
+                        target='_blank'
+                        className='nav-community__item nav-community__item--telegram'
+                    >
+                        <i></i>
+                        Telegram
+                    </a>
+                </div>
+            </div>
+        ),
         Content: null,
     },
 ];

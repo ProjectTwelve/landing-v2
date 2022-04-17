@@ -35,7 +35,8 @@ export const App = () => {
                                 key={`${p.type}-${i}`}
                                 className={classnames(
                                     'nav__item',
-                                    p.type === current && 'active'
+                                    p.type === current && 'active',
+                                    !p.Content && 'nav__item--no-content'
                                 )}
                                 onClick={() => p.type && setCurrent(p.type)}
                             >

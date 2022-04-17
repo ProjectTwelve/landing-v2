@@ -62,6 +62,12 @@
                 background-color: #fff;
             }
 
+            &--no-content {
+                &::after {
+                    display: none;
+                }
+            }
+
             &:hover,
             &.active {
                 &::after {
@@ -135,6 +141,61 @@
                 }
             }
         }
+    }
+}
+
+.nav-community {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translate(-50%, 4px);
+    background: rgba(70, 69, 69, 0.6);
+    overflow: hidden;
+    box-sizing: border-box;
+    height: 0;
+    transition: height 0.3s;
+
+    &__item {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        color: #fff;
+        font-size: 16px;
+        line-height: 42px;
+        padding: 0 26px 0 26px;
+
+        &:hover {
+            opacity: 0.8;
+        }
+
+        > i {
+            display: block;
+            margin-right: 10px;
+        }
+
+        &--twitter {
+            margin-top: 8px;
+        }
+
+        &--twitter > i {
+            .bgFull2x('app/icon-twitter@2x.png');
+        }
+        &--discord > i {
+            .bgFull2x('app/icon-discord@2x.png');
+        }
+        &--telegram > i {
+            .bgFull2x('app/icon-telegram@2x.png');
+        }
+    }
+
+    &-wrap {
+        position: relative;
+    }
+}
+
+.nav__item:hover {
+    .nav-community {
+        height: (42px * 3 + 8px * 2);
     }
 }
 
