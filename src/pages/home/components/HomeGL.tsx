@@ -72,13 +72,16 @@ export const HomeGL: React.FC = () => {
 
         const pointerData = [
             {
-                position: new THREE.Vector3(1.4, 2, 1.3),
+                position: new THREE.Vector3(3.1, -1, 0),
             },
             {
-                position: new THREE.Vector3(-1.35, 0.4, 1.4),
+                position: new THREE.Vector3(0.2, 3.3, -1.4),
             },
             {
-                position: new THREE.Vector3(0, -1.5, 1.4),
+                position: new THREE.Vector3(0.2, -0.8, 3.3),
+            },
+            {
+                position: new THREE.Vector3(-3, 0.6, -0.2),
             },
         ];
         const pointersRemoveHandle = pointerData.map((p) => {
@@ -182,7 +185,7 @@ export const HomeGL: React.FC = () => {
                 z: oldCameraPos.z,
                 onComplete: () => {
                     controls.enabled = true;
-                    controls.autoRotate = true;
+                    // controls.autoRotate = true;
                 },
             });
             labelRenderer.domElement.removeEventListener(

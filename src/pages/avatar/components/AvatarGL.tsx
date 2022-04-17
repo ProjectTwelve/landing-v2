@@ -100,7 +100,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         controls.minPolarAngle = Math.PI * 0.5;
         controls.maxPolarAngle = Math.PI * 0.5;
         controls.autoRotate = true;
-        controls.autoRotateSpeed = 10;
+        controls.autoRotateSpeed = 2;
 
         const pointer = new THREE.Vector2();
         const radius = 100;
@@ -117,8 +117,9 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             getPublicAssetPath('files/avatar/avatar-normal.glb'),
             function (gltf) {
                 const model = gltf.scene;
-                model.position.set(0, -2, 0);
-                model.scale.set(3, 3, 3);
+                model.position.set(0, -2.9, 0);
+                model.scale.set(3.6, 3.6, 3.6);
+                model.rotation.y = Math.PI * 1.7;
                 modelActionMap[AvatarType.NORMAL] = () => {
                     scene.add(model);
                     mixer = new THREE.AnimationMixer(model);
@@ -134,8 +135,8 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             getPublicAssetPath('files/avatar/avatar-cartoon.glb'),
             function (gltf) {
                 const model = gltf.scene;
-                model.position.set(0, -2, 0);
-                model.scale.set(3, 3, 3);
+                model.position.set(0, -3.18, 0);
+                model.scale.set(3.5, 3.5, 3.5);
                 modelActionMap[AvatarType.CARTOON] = () => {
                     scene.add(model);
                     mixer = new THREE.AnimationMixer(model);
@@ -151,8 +152,8 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             getPublicAssetPath('files/avatar/avatar-dokv.glb'),
             function (gltf) {
                 const model = gltf.scene;
-                model.position.set(0, -2, 0);
-                model.scale.set(3, 3, 3);
+                model.position.set(0, -3.7, 0);
+                model.scale.set(3.1, 3.1, 3.1);
                 modelActionMap[AvatarType.DOKV] = () => {
                     scene.add(model);
                     mixer = new THREE.AnimationMixer(model);
