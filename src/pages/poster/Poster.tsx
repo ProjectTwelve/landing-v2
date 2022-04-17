@@ -21,11 +21,11 @@ export const Poster: React.FC = () => {
         if (containerSize) {
             if (containerSize.width / containerSize.height >= ratio) {
                 // 补充点宽高，防止视差滚动时露馅
-                width = containerSize.width + 80;
+                width = containerSize.width + 60;
                 height = width / ratio;
             } else {
                 // 补充点宽高，防止视差滚动时露馅
-                height = containerSize.height + 60;
+                height = containerSize.height + 30;
                 width = ratio * height;
             }
             left = (width - containerSize.width) / -2;

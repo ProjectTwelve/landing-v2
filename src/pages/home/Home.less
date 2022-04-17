@@ -1,5 +1,77 @@
+@import '../../styles/variables.less';
+
 .home {
     width: 100%;
     height: 100%;
     position: relative;
+
+    &__info {
+        position: absolute;
+        z-index: 10;
+        top: 50%;
+        transform: translate(0, -50%);
+        left: 60px;
+    }
+
+    &__slogan {
+        .bgFull2x('home/slogan@2x.png');
+        margin-left: -14px;
+    }
+
+    &__subtitle {
+        font-size: 70px;
+        color: #fff;
+        line-height: 84px;
+        margin-top: 16px;
+        margin-bottom: 30px;
+    }
+    &__text {
+        font-size: 27px;
+        line-height: 27px;
+        color: #fff;
+
+        &-block {
+            display: inline-block;
+            width: 14px;
+            height: 2px;
+            background: #00d628;
+            margin-left: 20px;
+        }
+    }
+
+    &__small-text-1 {
+        font-size: 16px;
+        line-height: 18px;
+        margin-top: 12px;
+        margin-bottom: 17px;
+        font-family: LucidaGrande;
+        color: #fff;
+        opacity: 0.6;
+    }
+    &__small-text-2 {
+        font-size: 16px;
+        font-family: LucidaGrande;
+        color: #fff;
+        line-height: 18px;
+        opacity: 0.6;
+        margin-bottom: 45px;
+    }
+
+    &__btn {
+        .bgFull2x('avatar/arrow-1@2x.png');
+        cursor: pointer;
+
+        &--right {
+            transform: rotate(180deg);
+            margin-left: 28px;
+        }
+
+        &:hover {
+            .bgFull2x('avatar/arrow-2@2x.png');
+        }
+
+        &-wrap {
+            display: flex;
+        }
+    }
 }
