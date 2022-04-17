@@ -62,38 +62,6 @@ export const HomeGL: React.FC = () => {
         labelRenderer.setSize(container.clientWidth, container.clientHeight);
         container.appendChild(labelRenderer.domElement);
 
-        const buttonDiv1 = document.createElement('div');
-        buttonDiv1.className = 'gl-button';
-        buttonDiv1.textContent = '1';
-        const buttonLabel1 = new CSS2DObject(buttonDiv1);
-        buttonLabel1.position.set(1.4, 2, 1.3);
-        scene.add(buttonLabel1);
-        buttonLabel1.layers.set(0);
-
-        const buttonDiv2 = document.createElement('div');
-        buttonDiv2.className = 'gl-button';
-        buttonDiv2.textContent = '2';
-        const buttonLabel2 = new CSS2DObject(buttonDiv2);
-        buttonLabel2.position.set(-1.35, 0.4, 1.4);
-        scene.add(buttonLabel2);
-        buttonLabel2.layers.set(0);
-
-        const tipsDiv2 = document.createElement('div');
-        tipsDiv2.className = 'gl-tips';
-        tipsDiv2.textContent = 'Tips：点击返回';
-        const tipsLabel2 = new CSS2DObject(tipsDiv2);
-        tipsLabel2.position.set(-1.35, 0.4, 1.4);
-        scene.add(tipsLabel2);
-        tipsLabel2.layers.set(1);
-
-        const buttonDiv3 = document.createElement('div');
-        buttonDiv3.className = 'gl-button';
-        buttonDiv3.textContent = '3';
-        const buttonLabel3 = new CSS2DObject(buttonDiv3);
-        buttonLabel3.position.set(0, -1.5, 1.4);
-        scene.add(buttonLabel3);
-        buttonLabel3.layers.set(0);
-
         const camera = new THREE.PerspectiveCamera(
             40,
             container.clientWidth / container.clientHeight,
@@ -101,7 +69,33 @@ export const HomeGL: React.FC = () => {
             100
         );
         camera.position.set(5, 2, 8);
-        camera.layers.disable(1);
+
+        const pointerData = [
+            {
+                position: new THREE.Vector3(1.4, 2, 1.3),
+            },
+            {
+                position: new THREE.Vector3(-1.35, 0.4, 1.4),
+            },
+            {
+                position: new THREE.Vector3(0, -1.5, 1.4),
+            },
+        ];
+        const pointersRemoveHandle = pointerData.map((p) => {
+            const btn = document.createElement('div');
+            btn.className = 'gl-pointer';
+            const label = new CSS2DObject(btn);
+            label.position.set(p.position.x, p.position.y, p.position.z);
+            scene.add(label);
+            label.layers.set(1);
+
+            const handle = getHandleMouseClick(p);
+            btn.addEventListener('mousedown', handle);
+            return () => {
+                btn.removeEventListener('mousedown', handle);
+            };
+        });
+        camera.layers.enable(1);
 
         const axesHelper = new THREE.AxesHelper(10);
         scene.add(axesHelper);
@@ -112,7 +106,7 @@ export const HomeGL: React.FC = () => {
         controls.enablePan = false;
         controls.enableDamping = true;
         controls.enableZoom = false;
-        controls.autoRotate = true;
+        // controls.autoRotate = true;
         controls.autoRotateSpeed = 1;
 
         const mousePointer = new THREE.Vector2();
@@ -170,10 +164,11 @@ export const HomeGL: React.FC = () => {
             mousePointer.x = (event.clientX / window.innerWidth) * 2 - 1;
             mousePointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
         }
+        function handleMouseDown(event) {}
 
         let oldCameraPos = camera.position;
         function handleResetCamera() {
-            camera.layers.disable(1);
+            camera.layers.enable(1);
             gsap.to(controls.target, {
                 duration: 0.8,
                 x: 0,
@@ -187,6 +182,7 @@ export const HomeGL: React.FC = () => {
                 z: oldCameraPos.z,
                 onComplete: () => {
                     controls.enabled = true;
+                    controls.autoRotate = true;
                 },
             });
             labelRenderer.domElement.removeEventListener(
@@ -195,10 +191,13 @@ export const HomeGL: React.FC = () => {
             );
         }
 
-        function getHandleMouseClick(pos: THREE.Vector3) {
+        function getHandleMouseClick(data: typeof pointerData[number]) {
+            const pos = data.position;
             return (event) => {
+                camera.layers.disable(1);
                 oldCameraPos = camera.position.clone();
                 controls.enabled = false;
+                controls.autoRotate = false;
                 gsap.to(controls.target, {
                     duration: 0.8,
                     x: pos.x,
@@ -211,8 +210,6 @@ export const HomeGL: React.FC = () => {
                     y: pos.y * 2,
                     z: pos.z * 2,
                     onComplete: () => {
-                        pos.equals(buttonLabel2.position) &&
-                            camera.layers.enable(1);
                         labelRenderer.domElement.addEventListener(
                             'pointerup',
                             handleResetCamera
@@ -239,17 +236,11 @@ export const HomeGL: React.FC = () => {
                 // );
             };
         }
-        const handleMouseClick1 = getHandleMouseClick(buttonLabel1.position);
-        const handleMouseClick2 = getHandleMouseClick(buttonLabel2.position);
-        const handleMouseClick3 = getHandleMouseClick(buttonLabel3.position);
 
         const observer = new ResizeObserver(resize);
         observer.observe(container);
         renderer.domElement.addEventListener('pointermove', handleMouseMove);
-        buttonDiv1.addEventListener('mousedown', handleMouseClick1);
-        buttonDiv2.addEventListener('mousedown', handleMouseClick2);
-        buttonDiv3.addEventListener('mousedown', handleMouseClick3);
-
+        labelRenderer.domElement.addEventListener('mousedown', handleMouseDown);
         return () => {
             cancelAnimationFrame(frameId);
             observer.disconnect();
@@ -257,9 +248,11 @@ export const HomeGL: React.FC = () => {
                 'pointermove',
                 handleMouseMove
             );
-            buttonDiv1.removeEventListener('mousedown', handleMouseClick1);
-            buttonDiv2.removeEventListener('mousedown', handleMouseClick2);
-            buttonDiv3.removeEventListener('mousedown', handleMouseClick3);
+            labelRenderer.domElement.removeEventListener(
+                'mousedown',
+                handleMouseDown
+            );
+            pointersRemoveHandle.forEach((removeHandle) => removeHandle());
             labelRenderer.domElement.removeEventListener(
                 'pointerup',
                 handleResetCamera
