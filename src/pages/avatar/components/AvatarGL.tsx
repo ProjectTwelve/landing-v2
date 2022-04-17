@@ -1,4 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React, {
+    useRef,
+    useEffect,
+    forwardRef,
+    useImperativeHandle,
+} from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
@@ -10,9 +15,27 @@ import { getPublicAssetPath } from '../../../utils';
 import { gsap } from 'gsap';
 import { get } from 'lodash-es';
 import './AvatarGL.less';
+import { AvatarType } from '../Avatar.config';
 
-export const AvatarGL: React.FC = () => {
+export interface AvatarGLRef {
+    switchTo: (type: AvatarType | null) => void;
+}
+
+export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const needAnimateTypeRef = useRef<AvatarType | null>(null);
+    const animatedTypeRef = useRef<AvatarType | null>(null);
+    const animatedTypeHandleOffRef = useRef<Function | null>(null);
+
+    useImperativeHandle(
+        ref,
+        () => ({
+            switchTo: (type) => {
+                needAnimateTypeRef.current = type;
+            },
+        }),
+        []
+    );
 
     useEffect(() => {
         const container = containerRef.current;
@@ -20,6 +43,8 @@ export const AvatarGL: React.FC = () => {
             return;
         }
 
+        let frameId: number = 0;
+        let mixer: THREE.AnimationMixer | null;
         const clock = new THREE.Clock();
         const renderer = new THREE.WebGLRenderer({ alpha: true });
 
@@ -81,150 +106,82 @@ export const AvatarGL: React.FC = () => {
         const radius = 100;
         const raycaster = new THREE.Raycaster();
 
+        const modelActionMap: Partial<
+            Record<AvatarType, () => () => void>
+        > = {};
+
         // const dracoLoader = new DRACOLoader();
         // dracoLoader.setDecoderPath("js/libs/lib-draco/gltf/");
-
-        // new STLLoader().load(
-        //     getPublicAssetPath('files/demo4.stl'),
-        //     (geometry) => {
-        //         console.log('geometry', );
-        //         //创建纹理
-        //         var material = new THREE.PointsMaterial({
-        //             color: 0xffffff,
-        //             size: 0.4,
-        //             opacity: 0.6,
-        //             transparent: true,
-        //             blending: THREE.AdditiveBlending,
-        //             depthTest: false,
-        //             map: generateSprite(),
-        //         });
-
-        //         var mesh = new THREE.Points(geometry, material);
-        //         mesh.rotation.x = -0.5 * Math.PI; //将模型摆正
-        //         mesh.scale.set(0.1, 0.1, 0.1); //缩放
-        //         geometry.center(); //居中显示
-        //         scene.add(mesh);
-        //     }
-        // );
-        const isParticle = false;
-        let mixer: THREE.AnimationMixer;
-        const loader = new GLTFLoader();
         // loader.setDRACOLoader(dracoLoader);
-        loader.load(
+        new GLTFLoader().load(
             getPublicAssetPath('files/avatar/avatar-normal.glb'),
-            // getPublicAssetPath('files/avatar/avatar-particle.glb'),
-            // getPublicAssetPath('files/avatar/avatar-lowpoly.glb'),
-            // getPublicAssetPath('files/avatar/avatar-cartoon.glb'),
-            // getPublicAssetPath('files/avatar/avatar-dokv.glb'),
             function (gltf) {
-                console.log('gltf2', gltf);
                 const model = gltf.scene;
                 model.position.set(0, -2, 0);
                 model.scale.set(3, 3, 3);
-                mixer = new THREE.AnimationMixer(model);
-                // mixer.clipAction(gltf.animations?.[0])?.play();
-                if (!isParticle) {
+                modelActionMap[AvatarType.NORMAL] = () => {
                     scene.add(model);
-                } else {
-                    let count = 0;
-                    model.traverse(function (child: any) {
-                        if (child.isMesh) {
-                            const buffer = child.geometry.attributes.position;
-                            console.log('child', child.name, child);
-
-                            count += buffer.array.length;
-                        }
-                    });
-                    const combined = new Float32Array(count);
-                    // console.log('combined', combined);
-
-                    let offset = 0;
-                    model.traverse(function (child: any) {
-                        if (child.isMesh) {
-                            const buffer = child.geometry.attributes.position;
-                            combined.set(buffer.array, offset);
-                            offset += buffer.array.length;
-                        }
-                    });
-
-                    const positions = new THREE.BufferAttribute(combined, 3);
-                    const geometry = new THREE.BufferGeometry();
-                    geometry.setAttribute('position', positions.clone());
-                    geometry.setAttribute('initialPosition', positions.clone());
-                    geometry.center();
-                    const mesh = new THREE.Points(
-                        geometry,
-                        // new THREE.PointsMaterial({
-                        //     size: 0.05,
-                        //     color: '#0099ff',
-                        //     transparent: true,
-                        //     blending: THREE.AdditiveBlending,
-                        // })
-                        new THREE.PointsMaterial({
-                            color: 0xffffff,
-                            size: 0.02,
-                            opacity: 0.6,
-                            transparent: true,
-                            blending: THREE.AdditiveBlending,
-                            depthTest: false,
-                            map: generateSprite(),
-                        })
-                    );
-                    mesh.scale.set(0.03, 0.03, 0.03);
-                    // mesh.position.set(0, -2, 0);
-                    scene.add(mesh);
-                }
-
-                animate();
-            },
-            void 0,
-            function (e) {
-                console.error(e);
+                    mixer = new THREE.AnimationMixer(model);
+                    // mixer.clipAction(gltf.animations?.[0])?.play();
+                    return () => {
+                        mixer = null;
+                        scene.remove(model);
+                    };
+                };
+            }
+        );
+        new GLTFLoader().load(
+            getPublicAssetPath('files/avatar/avatar-cartoon.glb'),
+            function (gltf) {
+                const model = gltf.scene;
+                model.position.set(0, -2, 0);
+                model.scale.set(3, 3, 3);
+                modelActionMap[AvatarType.CARTOON] = () => {
+                    scene.add(model);
+                    mixer = new THREE.AnimationMixer(model);
+                    // mixer.clipAction(gltf.animations?.[0])?.play();
+                    return () => {
+                        mixer = null;
+                        scene.remove(model);
+                    };
+                };
+            }
+        );
+        new GLTFLoader().load(
+            getPublicAssetPath('files/avatar/avatar-dokv.glb'),
+            function (gltf) {
+                const model = gltf.scene;
+                model.position.set(0, -2, 0);
+                model.scale.set(3, 3, 3);
+                modelActionMap[AvatarType.DOKV] = () => {
+                    scene.add(model);
+                    mixer = new THREE.AnimationMixer(model);
+                    mixer.clipAction(gltf.animations?.[0])?.play();
+                    return () => {
+                        mixer = null;
+                        scene.remove(model);
+                    };
+                };
             }
         );
 
-        //使用canvas生成粒子的纹理
-        function generateSprite() {
-            var canvas = document.createElement('canvas');
-            canvas.width = 16;
-            canvas.height = 16;
-
-            var context = canvas.getContext('2d');
-            var gradient = context!.createRadialGradient(
-                canvas.width / 2,
-                canvas.height / 2,
-                0,
-                canvas.width / 2,
-                canvas.height / 2,
-                canvas.width / 2
-            );
-            gradient.addColorStop(0, 'rgba(255,255,255,1)');
-            gradient.addColorStop(0.2, 'rgba(0,255,255,1)');
-            gradient.addColorStop(0.4, 'rgba(0,0,64,1)');
-            gradient.addColorStop(1, 'rgba(0,0,0,1)');
-
-            context!.fillStyle = gradient;
-            context!.fillRect(0, 0, canvas.width, canvas.height);
-
-            var texture = new THREE.Texture(canvas);
-            texture.needsUpdate = true;
-            return texture;
-        }
-
-        function resize() {
-            if (!container) {
-                return;
-            }
-            camera.aspect = container.clientWidth / container.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(container.clientWidth, container.clientHeight);
-        }
-        let frameId: number;
+        animate();
 
         function animate() {
             frameId = requestAnimationFrame(animate);
+            if (animatedTypeRef.current !== needAnimateTypeRef.current) {
+                const loaded =
+                    needAnimateTypeRef.current &&
+                    modelActionMap[needAnimateTypeRef.current];
+                // 等加载完再做动作
+                if (loaded) {
+                    animatedTypeHandleOffRef.current?.();
+                    animatedTypeHandleOffRef.current = loaded?.() || null;
+                    animatedTypeRef.current = needAnimateTypeRef.current;
+                }
+            }
             const delta = clock.getDelta();
-            mixer.update(delta);
+            mixer?.update(delta);
             controls.update();
 
             // spotLight.position.set(
@@ -245,6 +202,15 @@ export const AvatarGL: React.FC = () => {
             renderer.render(scene, camera);
         }
 
+        function resize() {
+            if (!container) {
+                return;
+            }
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+
         function onPointerMove(event) {
             pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
             pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -255,7 +221,6 @@ export const AvatarGL: React.FC = () => {
         container.addEventListener('pointermove', onPointerMove);
 
         return () => {
-            console.log(2);
             cancelAnimationFrame(frameId);
             observer.disconnect();
             container.removeEventListener('pointermove', onPointerMove);
@@ -264,4 +229,4 @@ export const AvatarGL: React.FC = () => {
     }, []);
 
     return <div className='avatar-gl' ref={containerRef} />;
-};
+});

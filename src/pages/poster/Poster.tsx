@@ -20,10 +20,12 @@ export const Poster: React.FC = () => {
         const ratio = 4196 / 2160;
         if (containerSize) {
             if (containerSize.width / containerSize.height >= ratio) {
-                width = containerSize.width + 200;
+                // 补充点宽高，防止视差滚动时露馅
+                width = containerSize.width + 100;
                 height = width / ratio;
             } else {
-                height = containerSize.height + 160;
+                // 补充点宽高，防止视差滚动时露馅
+                height = containerSize.height + 70;
                 width = ratio * height;
             }
             left = (width - containerSize.width) / -2;

@@ -1,0 +1,58 @@
+export const LOCATION_INFO = [
+    {
+        type: 'office',
+        name: 'Shanghai',
+        x: 1612,
+        y: 737,
+        namePosition: 'right',
+    },
+    {
+        type: 'office',
+        name: 'Hangzhou',
+        x: 1591,
+        y: 754,
+        namePosition: 'left',
+    },
+    {
+        type: 'office',
+        name: 'Singapore',
+        x: 1563,
+        y: 905,
+        namePosition: 'left',
+    },
+    {
+        type: 'remote',
+        name: 'Berkeley,CA',
+        x: 267,
+        y: 651,
+        namePosition: 'left',
+    },
+    {
+        type: 'remote',
+        name: 'Los Angeles,CA',
+        x: 295,
+        y: 714,
+        namePosition: 'left',
+    },
+    {
+        type: 'remote',
+        name: 'Charpel Hill,NC',
+        x: 519,
+        y: 623,
+        namePosition: 'right',
+    },
+    {
+        type: 'remote',
+        name: 'Penang',
+        x: 1489,
+        y: 865,
+        namePosition: 'left',
+    },
+    {
+        type: 'remote',
+        name: 'Korea',
+        x: 1706,
+        y: 672,
+        namePosition: 'left',
+    },
+];
