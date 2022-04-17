@@ -5,4 +5,35 @@
     height: 100%;
     position: relative;
     overflow: hidden;
+
+    &__info {
+        position: absolute;
+        z-index: 10;
+        top: 50%;
+        transform: translate(0, -50%);
+        left: 60px;
+    }
+
+    &__slogan {
+        .bgFull2x('avatar/slogan@2x.png');
+        margin-left: -14px;
+    }
+    &__btn {
+        .bgFull2x('avatar/arrow-1@2x.png');
+        cursor: pointer;
+
+        &--right {
+            transform: rotate(180deg);
+            margin-left: 28px;
+        }
+
+        &:hover {
+            .bgFull2x('avatar/arrow-2@2x.png');
+        }
+
+        &-wrap {
+            display: flex;
+            position: absolute;
+        }
+    }
 }
