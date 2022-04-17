@@ -19,7 +19,10 @@ export const Avatar: React.FC = () => {
             <div className='avatar__info'>
                 <div className='avatar__slogan'></div>
                 <div className='avatar__subtitle'>Game Character</div>
-                <div className='avatar__text'>NOMOCRAC</div>
+                <div className='avatar__text'>
+                    NOMOCRAC
+                    <i className='avatar__text-block'></i>
+                </div>
                 <div className='avatar__small-text-1'>
                     A Metaverse Economy Backbone.
                 </div>

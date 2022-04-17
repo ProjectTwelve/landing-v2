@@ -152,8 +152,8 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             getPublicAssetPath('files/avatar/avatar-dokv.glb'),
             function (gltf) {
                 const model = gltf.scene;
-                model.position.set(0, -3.7, 0);
-                model.scale.set(3.1, 3.1, 3.1);
+                model.position.set(0.2, -3.8, -1);
+                model.scale.set(3.2, 3.2, 3.2);
                 modelActionMap[AvatarType.DOKV] = () => {
                     scene.add(model);
                     mixer = new THREE.AnimationMixer(model);
@@ -229,5 +229,10 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         };
     }, []);
 
-    return <div className='avatar-gl' ref={containerRef} />;
+    return (
+        <>
+            <div className='avatar-gl' ref={containerRef} />
+            <div className='avatar-circle'></div>
+        </>
+    );
 });
