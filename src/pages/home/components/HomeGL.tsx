@@ -74,7 +74,7 @@ export const HomeGL: React.FC = () => {
             100
         );
         camera.position.set(-2.17, 9.396, 0.0408);
-
+        // 0.10 6.968 3.404
         const pointerData = [
             {
                 position: new THREE.Vector3(3.1, -1, 0),
@@ -121,7 +121,7 @@ export const HomeGL: React.FC = () => {
         controls.update();
         controls.enablePan = false;
         controls.enableDamping = true;
-        // controls.enableZoom = false;
+        controls.enableZoom = false;
         controls.autoRotate = true;
         controls.autoRotateSpeed = 1;
 

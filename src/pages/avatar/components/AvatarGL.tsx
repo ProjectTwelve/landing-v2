@@ -11,6 +11,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+// import { Fire } from 'three/examples/jsm/objects/Fire';
 import { getPublicAssetPath } from '../../../utils';
 import { gsap } from 'gsap';
 import { get } from 'lodash-es';
@@ -157,6 +158,8 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                 model.position.set(0.2, -3.8, -1);
                 model.scale.set(3.2, 3.2, 3.2);
                 modelActionMap[AvatarType.DOKV] = () => {
+                    // Fire
+
                     scene.add(model);
                     mixer = new THREE.AnimationMixer(model);
                     mixer.clipAction(gltf.animations?.[0])?.play();
