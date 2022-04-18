@@ -27,6 +27,8 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
     const animatedTypeRef = useRef<AvatarType | null>(null);
     const animatedTypeHandleOffRef = useRef<Function | null>(null);
 
+    const particleRef = useRef<HTMLCanvasElement>(null);
+
     useImperativeHandle(
         ref,
         () => ({
@@ -166,6 +168,35 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             }
         );
 
+        const imageUrls = new Array(150).fill(0).map((_, i) => {
+            return getPublicAssetPath(
+                `files/avatar/avatar-particle/${i + 1 + 40000}.jpg`
+            );
+        });
+        let particleImages: HTMLImageElement[] = [];
+        const imageLoader = new THREE.ImageLoader();
+        imageLoader.setCrossOrigin('anonymous');
+        Promise.all(
+            imageUrls.map((url) => new THREE.ImageLoader().load(url))
+        ).then((data) => {
+            console.log('loaded image success');
+            particleImages = data;
+            modelActionMap[AvatarType.PARTICLE] = () => {
+                controls.autoRotate = false;
+                if (particleRef.current) {
+                    particleRef.current.style.display = 'block';
+                    particleRef.current.width = 1920;
+                    particleRef.current.height = 1080;
+                }
+                return () => {
+                    controls.autoRotate = true;
+                    if (particleRef.current) {
+                        particleRef.current.style.display = 'none';
+                    }
+                };
+            };
+        });
+
         animate();
 
         function animate() {
@@ -180,6 +211,20 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                     animatedTypeHandleOffRef.current = loaded?.() || null;
                     animatedTypeRef.current = needAnimateTypeRef.current;
                 }
+            }
+            const particleContext = particleRef.current?.getContext('2d');
+            if (
+                animatedTypeRef.current === AvatarType.PARTICLE &&
+                particleContext &&
+                particleImages.length
+            ) {
+                const index = Math.floor(
+                    (((controls.getAzimuthalAngle() / Math.PI + 1) / 2) *
+                        particleImages.length +
+                        particleImages.length) %
+                        particleImages.length
+                );
+                particleContext.drawImage(particleImages[index], 0, 0);
             }
             const delta = clock.getDelta();
             mixer?.update(delta);
@@ -231,6 +276,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
 
     return (
         <>
+            <canvas className='avatar-particle' ref={particleRef}></canvas>
             <div className='avatar-gl' ref={containerRef} />
             <div className='avatar-circle'></div>
         </>
