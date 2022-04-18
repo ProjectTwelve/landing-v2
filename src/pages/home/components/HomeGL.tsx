@@ -24,6 +24,11 @@ export const HomeGL: React.FC = () => {
             return;
         }
 
+        gsap.set(container, {
+            x: container.offsetWidth * 0.17,
+            y: 0,
+        });
+
         let mixer: THREE.AnimationMixer;
         const clock = new THREE.Clock();
         const renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -68,20 +73,28 @@ export const HomeGL: React.FC = () => {
             1,
             100
         );
-        camera.position.set(5, 2, 8);
+        camera.position.set(-2.17, 9.396, 0.0408);
 
         const pointerData = [
             {
                 position: new THREE.Vector3(3.1, -1, 0),
+                cameraPosition: new THREE.Vector3(3.1, 7.16, -2.79),
+                lookPosition: new THREE.Vector3(3.27, -6.43, -0.022),
             },
             {
                 position: new THREE.Vector3(0.2, 3.3, -1.4),
+                cameraPosition: new THREE.Vector3(-0.11, 7.16, 3.66),
+                lookPosition: new THREE.Vector3(0.2, 3.3, -1.4),
             },
             {
                 position: new THREE.Vector3(0.2, -0.8, 3.3),
+                cameraPosition: new THREE.Vector3(-0.11, 7.16, 3.66),
+                lookPosition: new THREE.Vector3(0.2, -0.8, 3.3),
             },
             {
                 position: new THREE.Vector3(-3, 0.6, -0.2),
+                cameraPosition: new THREE.Vector3(-0.11, 7.16, 3.66),
+                lookPosition: new THREE.Vector3(-3, 0.6, -0.2),
             },
         ];
         const pointersRemoveHandle = pointerData.map((p) => {
@@ -101,15 +114,15 @@ export const HomeGL: React.FC = () => {
         camera.layers.enable(1);
 
         const axesHelper = new THREE.AxesHelper(10);
-        scene.add(axesHelper);
+        // scene.add(axesHelper);
 
         const controls = new OrbitControls(camera, labelRenderer.domElement);
         controls.target.set(0, 0, 0);
         controls.update();
         controls.enablePan = false;
         controls.enableDamping = true;
-        controls.enableZoom = false;
-        // controls.autoRotate = true;
+        // controls.enableZoom = false;
+        controls.autoRotate = true;
         controls.autoRotateSpeed = 1;
 
         const mousePointer = new THREE.Vector2();
@@ -161,6 +174,7 @@ export const HomeGL: React.FC = () => {
 
             renderer.render(scene, camera);
             labelRenderer.render(scene, camera);
+            console.log(camera.position);
         }
 
         function handleMouseMove(event) {
@@ -172,6 +186,13 @@ export const HomeGL: React.FC = () => {
         let oldCameraPos = camera.position;
         function handleResetCamera() {
             camera.layers.enable(1);
+            containerRef.current &&
+                gsap.to(containerRef.current, {
+                    duration: 0.8,
+                    x: containerRef.current.offsetWidth * 0.17,
+                    y: 0,
+                    z: 0,
+                });
             gsap.to(controls.target, {
                 duration: 0.8,
                 x: 0,
@@ -195,23 +216,31 @@ export const HomeGL: React.FC = () => {
         }
 
         function getHandleMouseClick(data: typeof pointerData[number]) {
-            const pos = data.position;
+            const lookPos = data.lookPosition;
+            const cameraPos = data.cameraPosition;
             return (event) => {
                 camera.layers.disable(1);
                 oldCameraPos = camera.position.clone();
                 controls.enabled = false;
                 controls.autoRotate = false;
+                containerRef.current &&
+                    gsap.to(containerRef.current, {
+                        duration: 0.8,
+                        x: 0,
+                        y: -100,
+                        z: 0,
+                    });
                 gsap.to(controls.target, {
                     duration: 0.8,
-                    x: pos.x,
-                    y: pos.y,
-                    z: pos.z,
+                    x: lookPos.x,
+                    y: lookPos.y,
+                    z: lookPos.z,
                 });
                 gsap.to(camera.position, {
                     duration: 0.8,
-                    x: pos.x * 2,
-                    y: pos.y * 2,
-                    z: pos.z * 2,
+                    x: cameraPos.x,
+                    y: cameraPos.y,
+                    z: cameraPos.z,
                     onComplete: () => {
                         labelRenderer.domElement.addEventListener(
                             'pointerup',
