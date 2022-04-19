@@ -50,9 +50,10 @@ export const Poster: React.FC = () => {
     return (
         <div className='poster' ref={containerRef}>
             <div className='poster__bg' ref={bgRef}>
+                <div className='poster__img poster__img--0'></div>
                 <div
-                    data-depth-x='0.075'
-                    data-depth-y='0.075'
+                    data-depth-x='0.05'
+                    data-depth-y='-0.1'
                     className='poster__img poster__img--1'
                 ></div>
                 <div
