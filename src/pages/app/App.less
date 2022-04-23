@@ -17,8 +17,8 @@
     .logo {
         position: absolute;
         .bgFull2x('app/logo@2x.png');
-        left: 62px;
-        top: 60px;
+        left: (62 / @designWidth * 100%);
+        top: (60 / @designHeight * 100%);
         z-index: 99;
         .f-hover-opa;
         cursor: pointer;
@@ -26,8 +26,9 @@
 
     .nav {
         position: absolute;
-        left: 203px;
-        top: 63px;
+        @leftPercent: (140 / @designWidth * 100%);
+        left: calc(@leftPercent + 63px);
+        top: (63 / @designHeight * 100%);
         height: 32px;
         display: flex;
         align-items: center;
@@ -82,6 +83,8 @@
         .bgFull2x('app/coming-btn@2x.png');
         top: 60px;
         right: 70px;
+        bottom: (60 / @designHeight * 100%);
+        right: (60 / @designWidth * 100%);
         z-index: 99;
         cursor: not-allowed;
         .f-hover-opa;
@@ -89,8 +92,8 @@
 
     .footer {
         position: absolute;
-        bottom: 60px;
-        right: 60px;
+        bottom: (60 / @designHeight * 100%);
+        right: (60 / @designWidth * 100%);
         z-index: 99;
         display: flex;
         align-items: center;

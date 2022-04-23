@@ -1,6 +1,5 @@
 export enum AvatarType {
-    NORMAL = 'NORMAL',
-    PARTICLE = 'PARTICLE',
+    LOWPOLY = 'LOWPOLY',
     CARTOON = 'CARTOON',
     DOKV = 'DOKV',
 }

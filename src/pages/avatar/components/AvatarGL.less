@@ -3,16 +3,22 @@
 .avatar-gl {
     .f-pseudo();
     overflow: hidden;
+
+    > canvas {
+        .f-pseudo();
+        z-index: 1;
+    }
 }
 
 .avatar-circle {
     .f-alignImg2x('avatar/circle@2x.png');
     pointer-events: none;
+    z-index: 10;
 }
 
-.avatar-particle {
-    .f-align(1920px, 1080px);
-    display: none;
-    overflow: hidden;
-    background-repeat: no-repeat;
-}
+// .avatar-particle {
+//     .f-align(1920px, 1080px);
+//     display: none;
+//     overflow: hidden;
+//     background-repeat: no-repeat;
+// }
