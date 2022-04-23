@@ -4,9 +4,51 @@
     .f-pseudo();
     overflow: hidden;
 
-    > canvas {
+    .avatar-gl-renderer-wrap,
+    .avatar-gl-container {
         .f-pseudo();
-        z-index: 1;
+        top: 0;
+        bottom: auto;
+        overflow: hidden;
+
+        canvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: auto;
+        }
+    }
+
+    .avatar-gl-canvas-wrap {
+        .f-pseudo();
+        top: auto;
+        bottom: 0;
+        overflow: hidden;
+
+        canvas {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, 0);
+            top: auto;
+            bottom: 0;
+        }
+    }
+
+    .avatar-lowpoly-btn-wrap {
+        position: absolute;
+        z-index: 10;
+        right: 120px;
+        top: 120px;
+        .avatar-lowpoly-switch-btn {
+            width: 100px;
+            height: 100px;
+            &--lowpoly {
+                background: #f00;
+            }
+            &--particle {
+                background: #0f0;
+            }
+        }
     }
 }
 

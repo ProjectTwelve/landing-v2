@@ -5,12 +5,14 @@ import { gsap } from 'gsap';
 
 export class AvatarGLItemBase {
     public loaded = false;
-    public container?: HTMLDivElement;
+    public mountContainer?: HTMLDivElement;
     protected frameId: number = 0;
     protected observer?: ResizeObserver;
 
-    public readonly scene = new THREE.Scene();
+    public container = document.createElement('div');
+    public rendererWrap = document.createElement('div');
     public renderer = new THREE.WebGLRenderer({ alpha: true });
+    public readonly scene = new THREE.Scene();
     public camera: THREE.PerspectiveCamera;
     public controls: OrbitControls;
     protected mixer?: THREE.AnimationMixer;
@@ -24,10 +26,7 @@ export class AvatarGLItemBase {
 
         const axesHelper = new THREE.AxesHelper(10);
         // this.scene.add(axesHelper);
-        const controls = new OrbitControls(
-            this.camera,
-            this.renderer.domElement
-        );
+        const controls = new OrbitControls(this.camera, this.container);
         controls.target.set(0, 0, 0);
         controls.update();
         controls.enablePan = false;
@@ -38,30 +37,36 @@ export class AvatarGLItemBase {
         controls.autoRotate = true;
         controls.autoRotateSpeed = 2;
         this.controls = controls;
+
+        this.rendererWrap.appendChild(this.renderer.domElement);
+        this.rendererWrap.className = 'avatar-gl-renderer-wrap';
+
+        this.container.appendChild(this.rendererWrap);
+        this.container.className = 'avatar-gl-container';
     }
     load() {}
-    mount(container: HTMLDivElement) {
-        this.container = container;
+    mount(mountContainer: HTMLDivElement) {
+        this.mountContainer = mountContainer;
         this.resize();
         this.observer = new ResizeObserver(() => {
             this.resize();
         });
         this.observer.observe(this.container);
-        this.container.appendChild(this.renderer.domElement);
-        gsap.set(this.renderer.domElement, { opacity: 0 });
+        gsap.set(this.container, { opacity: 0 });
+        this.mountContainer.appendChild(this.container);
     }
     enter() {
-        this.renderer.domElement.style.zIndex = '3';
+        this.container.style.zIndex = '3';
         this.animate();
-        gsap.to(this.renderer.domElement, {
+        gsap.to(this.container, {
             duration: 0.6,
             opacity: 1,
             onComplete: () => {},
         });
     }
     leave() {
-        this.renderer.domElement.style.zIndex = '1';
-        gsap.to(this.renderer.domElement, {
+        this.container.style.zIndex = '1';
+        gsap.to(this.container, {
             duration: 0.6,
             opacity: 0,
             onComplete: () => {
@@ -70,10 +75,10 @@ export class AvatarGLItemBase {
         });
     }
     unMount() {
-        this.renderer.domElement.style.zIndex = '1';
+        this.container.style.zIndex = '1';
         cancelAnimationFrame(this.frameId);
         this.observer?.disconnect();
-        this.container?.removeChild(this.renderer.domElement);
+        this.mountContainer?.removeChild(this.container);
     }
     protected animate() {
         this.frameId = requestAnimationFrame(() => this.animate());
@@ -86,9 +91,6 @@ export class AvatarGLItemBase {
         this.renderer.render(this.scene, this.camera);
     }
     protected resize() {
-        if (!this.container) {
-            return;
-        }
         this.camera.aspect =
             this.container.clientWidth / this.container.clientHeight;
         this.camera.updateProjectionMatrix();
@@ -96,5 +98,7 @@ export class AvatarGLItemBase {
             this.container.clientWidth,
             this.container.clientHeight
         );
+        this.renderer.domElement.style.width = `${this.container.clientWidth}px`;
+        this.renderer.domElement.style.height = `${this.container.clientHeight}px`;
     }
 }

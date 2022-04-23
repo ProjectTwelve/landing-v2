@@ -5,11 +5,44 @@ import { AvatarGLItemBase } from './AvatarGLItemBase';
 import { gsap } from 'gsap';
 
 export class AvatarGLItemLowpoly extends AvatarGLItemBase {
+    public canvasWrap = document.createElement('div');
     public canvas = document.createElement('canvas');
     public context = this.canvas.getContext('2d');
     private renderedImageIndex = -1;
-    // private imageDataArray: ImageData[] = [];
     private imageDataArray: HTMLImageElement[] = [];
+    private btnsWrap = document.createElement('div');
+
+    constructor() {
+        super();
+        this.canvas.style.pointerEvents = 'none';
+        this.canvas.width = 1920;
+        this.canvas.height = 1080;
+        this.canvasWrap.className = 'avatar-gl-canvas-wrap';
+        this.canvasWrap.appendChild(this.canvas);
+        this.container.appendChild(this.canvasWrap);
+
+        const btn1 = document.createElement('div');
+        btn1.className =
+            'avatar-lowpoly-switch-btn avatar-lowpoly-switch-btn--lowpoly';
+        this.btnsWrap.appendChild(btn1);
+        btn1.addEventListener(
+            'mousedown',
+            this.switchToParticle.bind(this, false)
+        );
+        const btn2 = document.createElement('div');
+        btn2.className =
+            'avatar-lowpoly-switch-btn avatar-lowpoly-switch-btn--particle';
+        btn2.addEventListener(
+            'mousedown',
+            this.switchToParticle.bind(this, true)
+        );
+        this.btnsWrap.className = 'avatar-lowpoly-btn-wrap';
+        this.btnsWrap.appendChild(btn2);
+        this.container.appendChild(this.btnsWrap);
+
+        this.rendererWrap.style.height = '100%';
+        this.canvasWrap.style.height = '0%';
+    }
 
     load() {
         super.load();
@@ -43,33 +76,11 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
             }
         );
     }
-
-    mount(container: HTMLDivElement) {
-        super.mount(container);
-        container.appendChild(this.canvas);
-        this.canvas.style.pointerEvents = 'none';
-    }
     enter() {
         super.enter();
-        this.canvas.style.zIndex = '3';
-        gsap.to(this.canvas, {
-            duration: 0.6,
-            opacity: 1,
-            onComplete: () => {},
-        });
     }
     leave() {
         super.leave();
-        this.canvas.style.zIndex = '1';
-        gsap.to(this.canvas, {
-            duration: 0.6,
-            opacity: 0,
-            onComplete: () => {},
-        });
-    }
-    unMount() {
-        super.unMount();
-        this.container?.removeChild(this.canvas);
     }
     protected animate() {
         super.animate();
@@ -82,7 +93,6 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
         );
         if (this.renderedImageIndex !== index && this.context) {
             this.renderedImageIndex = index;
-            console.log(index);
             this.context.drawImage(this.imageDataArray[index], 0, 0);
             const imageData = this.context.getImageData(
                 0,
@@ -103,10 +113,32 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
     }
     protected resize() {
         super.resize();
-        if (!this.container) {
-            return;
-        }
-        this.canvas.width = this.container.offsetWidth;
-        this.canvas.height = this.container.clientHeight;
+        this.canvas.style.width = 'auto';
+        this.canvas.style.height = `${this.container.clientHeight}px`;
+    }
+
+    switchToParticle(showParticle: boolean) {
+        const _this = this;
+        gsap.to(
+            {},
+            {
+                duration: 1.7,
+                onStart: function () {
+                    // _this.controls.autoRotate = false;
+                },
+                onUpdate: function () {
+                    const pro = this.progress();
+                    _this.canvasWrap.style.height = `${
+                        (showParticle ? pro : 1 - pro) * 100
+                    }%`;
+                    _this.rendererWrap.style.height = `${
+                        (showParticle ? 1 - pro : pro) * 100
+                    }%`;
+                },
+                onComplete: function () {
+                    // _this.controls.autoRotate = true;
+                },
+            }
+        );
     }
 }
