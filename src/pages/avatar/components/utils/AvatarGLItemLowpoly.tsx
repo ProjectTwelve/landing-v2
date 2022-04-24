@@ -15,7 +15,7 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
     constructor() {
         super();
         this.canvas.style.pointerEvents = 'none';
-        this.canvas.width = 1920;
+        this.canvas.width = 1080;
         this.canvas.height = 1080;
         this.canvasWrap.className = 'avatar-gl-canvas-wrap';
         this.canvasWrap.appendChild(this.canvas);
@@ -41,7 +41,7 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
         this.container.appendChild(this.btnsWrap);
 
         this.rendererWrap.style.height = '100%';
-        this.canvasWrap.style.height = '0%';
+        this.canvasWrap.style.height = '100%';
     }
 
     load() {
@@ -62,9 +62,9 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
             }
         );
 
-        const imageUrls = new Array(150).fill(0).map((_, i) => {
+        const imageUrls = new Array(360).fill(0).map((_, i) => {
             return getPublicAssetPath(
-                `files/avatar/avatar-particle/${i + 1 + 40000}.jpg`
+                `files/avatar/avatar-particle/${i + 1 + 60000}.jpg`
             );
         });
         const imageLoader = new THREE.ImageLoader();
@@ -88,9 +88,10 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
             (((this.controls.getAzimuthalAngle() / Math.PI + 1) / 2) *
                 this.imageDataArray.length +
                 this.imageDataArray.length +
-                60) %
+                140) %
                 this.imageDataArray.length
         );
+        // console.log(index);
         if (this.renderedImageIndex !== index && this.context) {
             this.renderedImageIndex = index;
             this.context.drawImage(this.imageDataArray[index], 0, 0);
@@ -122,7 +123,7 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
         gsap.to(
             {},
             {
-                duration: 1.7,
+                duration: 0.5,
                 onStart: function () {
                     // _this.controls.autoRotate = false;
                 },

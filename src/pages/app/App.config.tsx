@@ -23,7 +23,7 @@ export const CONTENT_PAGES = [
     },
     {
         type: PageType.Home,
-        NavText: null,
+        NavText: <>HOME</>,
         Content: <Home />,
     },
     {

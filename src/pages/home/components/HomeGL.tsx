@@ -74,11 +74,10 @@ export const HomeGL: React.FC = () => {
             100
         );
         camera.position.set(-2.17, 9.396, 0.0408);
-        // 0.10 6.968 3.404
         const pointerData = [
             {
                 position: new THREE.Vector3(3.1, -1, 0),
-                cameraPosition: new THREE.Vector3(3.1, 7.16, -2.79),
+                cameraPosition: new THREE.Vector3(3.27, 6.088, -0.22),
                 lookPosition: new THREE.Vector3(3.27, -6.43, -0.022),
             },
             {
@@ -114,27 +113,23 @@ export const HomeGL: React.FC = () => {
         camera.layers.enable(1);
 
         const axesHelper = new THREE.AxesHelper(10);
-        // scene.add(axesHelper);
+        scene.add(axesHelper);
 
         const controls = new OrbitControls(camera, labelRenderer.domElement);
         controls.target.set(0, 0, 0);
         controls.update();
-        controls.enablePan = false;
+        controls.enablePan = true;
         controls.enableDamping = true;
-        controls.enableZoom = false;
+        controls.enableZoom = true;
         controls.autoRotate = true;
         controls.autoRotateSpeed = 1;
 
-        const mousePointer = new THREE.Vector2();
-        const raycaster = new THREE.Raycaster();
-
-        const dracoLoader = new DRACOLoader();
-        dracoLoader.setDecoderPath(getPublicAssetPath('files/lib-draco/gltf/'));
         const loader = new GLTFLoader();
+        // const dracoLoader = new DRACOLoader();
+        // dracoLoader.setDecoderPath(getPublicAssetPath('files/lib-draco/gltf/'));
         // loader.setDRACOLoader(dracoLoader);
         loader.load(
             getPublicAssetPath('files/home/home.gltf'),
-            // getPublicAssetPath('files/avatar/avatar-particle.glb'),
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
@@ -174,45 +169,38 @@ export const HomeGL: React.FC = () => {
 
             renderer.render(scene, camera);
             labelRenderer.render(scene, camera);
-            console.log(camera.position);
+            // console.log(camera.position);
         }
-
-        function handleMouseMove(event) {
-            mousePointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mousePointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
-        }
-        function handleMouseDown(event) {}
 
         let oldCameraPos = camera.position;
         function handleResetCamera() {
-            camera.layers.enable(1);
-            containerRef.current &&
-                gsap.to(containerRef.current, {
-                    duration: 0.8,
-                    x: containerRef.current.offsetWidth * 0.17,
-                    y: 0,
-                    z: 0,
-                });
-            gsap.to(controls.target, {
-                duration: 0.8,
-                x: 0,
-                y: 0,
-                z: 0,
-            });
-            gsap.to(camera.position, {
-                duration: 0.8,
-                x: oldCameraPos.x,
-                y: oldCameraPos.y,
-                z: oldCameraPos.z,
-                onComplete: () => {
-                    controls.enabled = true;
-                    // controls.autoRotate = true;
-                },
-            });
-            labelRenderer.domElement.removeEventListener(
-                'pointerup',
-                handleResetCamera
-            );
+            // camera.layers.enable(1);
+            // containerRef.current &&
+            //     gsap.to(containerRef.current, {
+            //         duration: 0.8,
+            //         x: containerRef.current.offsetWidth * 0.17,
+            //         y: 0,
+            //         z: 0,
+            //     });
+            // gsap.to(controls.target, {
+            //     duration: 0.8,
+            //     x: 0,
+            //     y: 0,
+            //     z: 0,
+            // });
+            // gsap.to(camera.position, {
+            //     duration: 0.8,
+            //     x: oldCameraPos.x,
+            //     y: oldCameraPos.y,
+            //     z: oldCameraPos.z,
+            //     onComplete: () => {
+            //         controls.enabled = true;
+            //     },
+            // });
+            // labelRenderer.domElement.removeEventListener(
+            //     'pointerup',
+            //     handleResetCamera
+            // );
         }
 
         function getHandleMouseClick(data: typeof pointerData[number]) {
@@ -221,13 +209,13 @@ export const HomeGL: React.FC = () => {
             return (event) => {
                 camera.layers.disable(1);
                 oldCameraPos = camera.position.clone();
-                controls.enabled = false;
+                // controls.enabled = false;
                 controls.autoRotate = false;
                 containerRef.current &&
                     gsap.to(containerRef.current, {
                         duration: 0.8,
                         x: 0,
-                        y: -100,
+                        y: 0,
                         z: 0,
                     });
                 gsap.to(controls.target, {
@@ -248,42 +236,14 @@ export const HomeGL: React.FC = () => {
                         );
                     },
                 });
-
-                // const startOrientation = camera.quaternion.clone();
-                // const targetOrientation = new THREE.Quaternion(
-                //     pos.x,
-                //     pos.y,
-                //     pos.z
-                // );
-                // gsap.to(
-                //     {},
-                //     {
-                //         duration: 2,
-                //         onUpdate: function () {
-                //             camera.quaternion
-                //                 .copy(startOrientation)
-                //                 .slerp(targetOrientation, this.progress());
-                //         },
-                //     }
-                // );
             };
         }
 
         const observer = new ResizeObserver(resize);
         observer.observe(container);
-        renderer.domElement.addEventListener('pointermove', handleMouseMove);
-        labelRenderer.domElement.addEventListener('mousedown', handleMouseDown);
         return () => {
             cancelAnimationFrame(frameId);
             observer.disconnect();
-            renderer.domElement.removeEventListener(
-                'pointermove',
-                handleMouseMove
-            );
-            labelRenderer.domElement.removeEventListener(
-                'mousedown',
-                handleMouseDown
-            );
             pointersRemoveHandle.forEach((removeHandle) => removeHandle());
             labelRenderer.domElement.removeEventListener(
                 'pointerup',
