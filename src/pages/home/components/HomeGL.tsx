@@ -4,7 +4,8 @@ import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { ArcballControls } from 'three/examples/jsm/controls/ArcballControls';
+import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import {
     CSS2DObject,
@@ -23,6 +24,11 @@ export const HomeGL: React.FC = () => {
         if (!container) {
             return;
         }
+
+        // gsap.set(container, {
+        //     x: container.offsetWidth * 0.17,
+        //     y: 0,
+        // });
 
         let mixer: THREE.AnimationMixer;
         const clock = new THREE.Clock();
@@ -45,29 +51,77 @@ export const HomeGL: React.FC = () => {
             40,
             container.clientWidth / container.clientHeight,
             1,
-            100
+            200
         );
-        camera.position.set(-2.17, 9.396, 0.0408);
+        camera.position.set(-10.249, 24.482, 25.445);
+        camera.lookAt(0, 0, 0);
+
+        const axesHelper = new THREE.AxesHelper(10);
+        scene.add(axesHelper);
+
+        const ballControls = new ArcballControls(camera, container, scene);
+        ballControls.addEventListener('change', render);
+        ballControls.setGizmosVisible(false);
+        ballControls.enableZoom = false;
+        ballControls.update();
+
+        const transformControls = new TransformControls(camera, container);
+        transformControls.addEventListener('change', render);
+        transformControls.addEventListener(
+            'dragging-changed',
+            function (event) {
+                ballControls.enabled = !event.value;
+            }
+        );
+        scene.add(transformControls);
+
+        const loader = new GLTFLoader();
+        // const dracoLoader = new DRACOLoader();
+        // dracoLoader.setDecoderPath(getPublicAssetPath('files/lib-draco/gltf/'));
+        // loader.setDRACOLoader(dracoLoader);
+        loader.load(
+            getPublicAssetPath('files/home/home.gltf'),
+            function (gltf) {
+                console.log('gltf', gltf);
+                const model = gltf.scene;
+
+                model.position.set(0, -13.5, 0);
+                model.scale.set(1, 1, 1);
+
+                transformControls.attach(model);
+
+                scene.add(model);
+
+                mixer = new THREE.AnimationMixer(model);
+                // mixer.clipAction(gltf.animations[0]).play();
+                animate();
+            },
+            void 0,
+            function (e) {
+                console.error(e);
+            }
+        );
+
         const pointerData = [
             {
-                position: new THREE.Vector3(3.1, -1, 0),
+                position: new THREE.Vector3(12.4, -4, 0),
                 cameraPosition: new THREE.Vector3(3.27, 6.088, -0.22),
-                lookPosition: new THREE.Vector3(3.27, -6.43, -0.022),
+                modelPosition: new THREE.Vector3(3.27, -6.43, -0.022),
             },
             {
-                position: new THREE.Vector3(0.2, 3.3, -1.4),
+                position: new THREE.Vector3(0.8, 13.2, -5.6),
                 cameraPosition: new THREE.Vector3(-0.11, 7.16, 3.66),
-                lookPosition: new THREE.Vector3(0.2, 3.3, -1.4),
+                modelPosition: new THREE.Vector3(0.2, 3.3, -1.4),
             },
             {
-                position: new THREE.Vector3(0.2, -0.8, 3.3),
+                position: new THREE.Vector3(0.8, -3.2, 13.2),
                 cameraPosition: new THREE.Vector3(-0.11, 7.16, 3.66),
-                lookPosition: new THREE.Vector3(0.2, -0.8, 3.3),
+                modelPosition: new THREE.Vector3(0.2, -0.8, 3.3),
             },
             {
-                position: new THREE.Vector3(-3, 0.6, -0.2),
+                position: new THREE.Vector3(-9, 2.4, -0.8),
                 cameraPosition: new THREE.Vector3(-0.11, 7.16, 3.66),
-                lookPosition: new THREE.Vector3(-3, 0.6, -0.2),
+                modelPosition: new THREE.Vector3(-3, 0.6, -0.2),
             },
         ];
         const pointersRemoveHandle = pointerData.map((p) => {
@@ -86,40 +140,67 @@ export const HomeGL: React.FC = () => {
         });
         camera.layers.enable(1);
 
-        const axesHelper = new THREE.AxesHelper(10);
-        scene.add(axesHelper);
-
-        const controls = new OrbitControls(camera, labelRenderer.domElement);
-        controls.target.set(0, 0, 0);
-        controls.update();
-        controls.enablePan = true;
-        controls.enableDamping = true;
-        controls.enableZoom = true;
-        controls.autoRotate = true;
-        controls.autoRotateSpeed = 1;
-
-        const loader = new GLTFLoader();
-        // const dracoLoader = new DRACOLoader();
-        // dracoLoader.setDecoderPath(getPublicAssetPath('files/lib-draco/gltf/'));
-        // loader.setDRACOLoader(dracoLoader);
-        loader.load(
-            getPublicAssetPath('files/home/home.gltf'),
-            function (gltf) {
-                console.log('gltf', gltf);
-                const model = gltf.scene;
-                model.position.set(0, -3.1, 0);
-                model.scale.set(0.25, 0.25, 0.25);
-                scene.add(model);
-
-                mixer = new THREE.AnimationMixer(model);
-                // mixer.clipAction(gltf.animations[0]).play();
-                animate();
-            },
-            void 0,
-            function (e) {
-                console.error(e);
-            }
-        );
+        function getHandleMouseClick(data: typeof pointerData[number]) {
+            const modelPos = data.modelPosition;
+            const cameraPos = data.cameraPosition;
+            return (event) => {
+                camera.layers.disable(1);
+                const oldCameraPos = camera.position.clone();
+                const oldModelPos = camera.position.clone();
+                ballControls.enabled = false;
+                // ballControls.autoRotate = false;
+                containerRef.current &&
+                    gsap.to(containerRef.current, {
+                        duration: 0.8,
+                        x: 0,
+                    });
+                gsap.to(transformControls.object!.position, {
+                    duration: 0.8,
+                    x: modelPos.x,
+                    y: modelPos.y,
+                    z: modelPos.z,
+                });
+                gsap.to(camera.position, {
+                    duration: 0.8,
+                    x: cameraPos.x,
+                    y: cameraPos.y,
+                    z: cameraPos.z,
+                    onComplete: () => {
+                        const handleReset = () => {
+                            camera.layers.enable(1);
+                            containerRef.current &&
+                                gsap.to(containerRef.current, {
+                                    duration: 0.8,
+                                    x: containerRef.current.offsetWidth * 0.17,
+                                });
+                            gsap.to(transformControls.object!.position, {
+                                duration: 0.8,
+                                x: oldModelPos.x,
+                                y: oldModelPos.y,
+                                z: oldModelPos.z,
+                            });
+                            gsap.to(camera.position, {
+                                duration: 0.8,
+                                x: oldCameraPos.x,
+                                y: oldCameraPos.y,
+                                z: oldCameraPos.z,
+                                onComplete: () => {
+                                    ballControls.enabled = true;
+                                },
+                            });
+                            labelRenderer.domElement.removeEventListener(
+                                'pointerup',
+                                handleReset
+                            );
+                        };
+                        labelRenderer.domElement.addEventListener(
+                            'pointerup',
+                            handleReset
+                        );
+                    },
+                });
+            };
+        }
 
         function resize() {
             if (!container) {
@@ -137,80 +218,21 @@ export const HomeGL: React.FC = () => {
 
         function animate() {
             frameId = requestAnimationFrame(animate);
-            const delta = clock.getDelta();
-            mixer.update(delta);
-            controls.update();
+            render();
+        }
 
+        function render() {
+            const delta = clock.getDelta();
+            mixer?.update(delta);
             renderer.render(scene, camera);
             labelRenderer.render(scene, camera);
-            // console.log(camera.position);
-        }
-
-        let oldCameraPos = camera.position;
-        function handleResetCamera() {
-            // camera.layers.enable(1);
-            // containerRef.current &&
-            //     gsap.to(containerRef.current, {
-            //         duration: 0.8,
-            //         x: containerRef.current.offsetWidth * 0.17,
-            //         y: 0,
-            //         z: 0,
-            //     });
-            // gsap.to(controls.target, {
-            //     duration: 0.8,
-            //     x: 0,
-            //     y: 0,
-            //     z: 0,
-            // });
-            // gsap.to(camera.position, {
-            //     duration: 0.8,
-            //     x: oldCameraPos.x,
-            //     y: oldCameraPos.y,
-            //     z: oldCameraPos.z,
-            //     onComplete: () => {
-            //         controls.enabled = true;
-            //     },
-            // });
-            // labelRenderer.domElement.removeEventListener(
-            //     'pointerup',
-            //     handleResetCamera
-            // );
-        }
-
-        function getHandleMouseClick(data: typeof pointerData[number]) {
-            const lookPos = data.lookPosition;
-            const cameraPos = data.cameraPosition;
-            return (event) => {
-                camera.layers.disable(1);
-                oldCameraPos = camera.position.clone();
-                // controls.enabled = false;
-                controls.autoRotate = false;
-                containerRef.current &&
-                    gsap.to(containerRef.current, {
-                        duration: 0.8,
-                        x: 0,
-                        y: 0,
-                        z: 0,
-                    });
-                gsap.to(controls.target, {
-                    duration: 0.8,
-                    x: lookPos.x,
-                    y: lookPos.y,
-                    z: lookPos.z,
-                });
-                gsap.to(camera.position, {
-                    duration: 0.8,
-                    x: cameraPos.x,
-                    y: cameraPos.y,
-                    z: cameraPos.z,
-                    onComplete: () => {
-                        labelRenderer.domElement.addEventListener(
-                            'pointerup',
-                            handleResetCamera
-                        );
-                    },
-                });
-            };
+            try {
+                console.log(
+                    'camera.position',
+                    camera.position,
+                    transformControls.object?.position
+                );
+            } catch (e) {}
         }
 
         const observer = new ResizeObserver(resize);
@@ -218,11 +240,6 @@ export const HomeGL: React.FC = () => {
         return () => {
             cancelAnimationFrame(frameId);
             observer.disconnect();
-            pointersRemoveHandle.forEach((removeHandle) => removeHandle());
-            labelRenderer.domElement.removeEventListener(
-                'pointerup',
-                handleResetCamera
-            );
             container.removeChild(renderer.domElement);
             container.removeChild(labelRenderer.domElement);
         };
