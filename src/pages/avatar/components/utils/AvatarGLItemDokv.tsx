@@ -10,8 +10,8 @@ export class AvatarGLItemDokv extends AvatarGLItemBase {
             getPublicAssetPath('files/avatar/avatar-dokv.glb'),
             (gltf) => {
                 const model = gltf.scene;
-                model.position.set(0.2, -3.8, -1);
-                model.scale.set(3.2, 3.2, 3.2);
+                model.position.set(0.2, -3.6, -1);
+                model.scale.set(3, 3, 3);
                 this.scene.add(model);
                 this.mixer = new THREE.AnimationMixer(model);
                 this.mixer.clipAction(gltf.animations?.[0])?.play();

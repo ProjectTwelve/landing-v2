@@ -35,7 +35,7 @@ export class AvatarGLItemBase {
         controls.minPolarAngle = Math.PI * 0.5;
         controls.maxPolarAngle = Math.PI * 0.5;
         controls.autoRotate = true;
-        controls.autoRotateSpeed = 2;
+        controls.autoRotateSpeed = 1.5;
         this.controls = controls;
 
         this.rendererWrap.appendChild(this.renderer.domElement);
@@ -57,18 +57,29 @@ export class AvatarGLItemBase {
     }
     enter() {
         this.container.style.zIndex = '3';
+        this.camera.position.set(5, 2, 8);
+        gsap.set(this.container, {
+            x: 340,
+            y: -60,
+            opacity: 0,
+        });
         this.animate();
         gsap.to(this.container, {
-            duration: 0.6,
+            duration: 0.4,
+            x: 0,
+            y: 0,
             opacity: 1,
+            delay: 0.2,
             onComplete: () => {},
         });
     }
     leave() {
         this.container.style.zIndex = '1';
         gsap.to(this.container, {
-            duration: 0.6,
+            duration: 0.4,
             opacity: 0,
+            x: -240,
+            y: 20,
             onComplete: () => {
                 cancelAnimationFrame(this.frameId);
             },

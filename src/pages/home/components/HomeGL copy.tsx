@@ -24,6 +24,11 @@ export const HomeGL: React.FC = () => {
             return;
         }
 
+        gsap.set(container, {
+            x: container.offsetWidth * 0.17,
+            y: 0,
+        });
+
         let mixer: THREE.AnimationMixer;
         const clock = new THREE.Clock();
         const renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -34,8 +39,29 @@ export const HomeGL: React.FC = () => {
         container.appendChild(renderer.domElement);
 
         const scene = new THREE.Scene();
+        const pmremGenerator = new THREE.PMREMGenerator(renderer);
+        // scene.background = new THREE.Color(0x000000);
+        // scene.background = new THREE.Color(0xbfe3dd);
+        // scene.environment = pmremGenerator.fromScene(
+        //     new RoomEnvironment(),
+        //     0.04
+        // ).texture;
         const ambient = new THREE.AmbientLight(0xffffff, 0.1);
         scene.add(ambient);
+
+        // const spotLight = new THREE.SpotLight(0xffffff, 1);
+        // spotLight.position.set(10, 14, 16);
+        // spotLight.angle = Math.PI / 4;
+        // spotLight.penumbra = 0.1;
+        // spotLight.decay = 2;
+        // spotLight.distance = 200;
+        // spotLight.castShadow = true;
+        // spotLight.shadow.mapSize.width = 512;
+        // spotLight.shadow.mapSize.height = 512;
+        // spotLight.shadow.camera.near = 10;
+        // spotLight.shadow.camera.far = 200;
+        // spotLight.shadow.focus = 1;
+        // scene.add(spotLight);
 
         const labelRenderer = new CSS2DRenderer();
         labelRenderer.setSize(container.clientWidth, container.clientHeight);

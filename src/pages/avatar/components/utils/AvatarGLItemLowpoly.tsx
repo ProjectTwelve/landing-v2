@@ -40,7 +40,7 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
         this.btnsWrap.appendChild(btn2);
         this.container.appendChild(this.btnsWrap);
 
-        this.rendererWrap.style.height = '100%';
+        this.rendererWrap.style.height = '0%';
         this.canvasWrap.style.height = '100%';
     }
 
@@ -124,6 +124,7 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
             {},
             {
                 duration: 0.5,
+                ease: 'none',
                 onStart: function () {
                     // _this.controls.autoRotate = false;
                 },
