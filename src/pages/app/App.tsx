@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { PageType, CONTENT_PAGES } from './App.config';
 
 export const App = () => {
-    const [current, setCurrent] = useState(PageType.Home);
+    const [current, setCurrent] = useState(PageType.Avatar);
     const [musicPlaying, setMusicPlaying] = useState(true);
 
     return (

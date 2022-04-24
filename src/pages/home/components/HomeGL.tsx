@@ -15,7 +15,11 @@ import { gsap } from 'gsap';
 import { get } from 'lodash-es';
 import './HomeGL.less';
 
-export const HomeGL: React.FC = () => {
+interface HomeGLProps {
+    onAnimated: (model: THREE.Group) => gsap.core.Timeline;
+}
+
+export const HomeGL: React.FC<HomeGLProps> = (props) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -23,11 +27,6 @@ export const HomeGL: React.FC = () => {
         if (!container) {
             return;
         }
-
-        gsap.set(container, {
-            x: container.offsetWidth * 0.17,
-            y: 0,
-        });
 
         let mixer: THREE.AnimationMixer;
         const clock = new THREE.Clock();
@@ -113,7 +112,7 @@ export const HomeGL: React.FC = () => {
         camera.layers.enable(1);
 
         const axesHelper = new THREE.AxesHelper(10);
-        scene.add(axesHelper);
+        // scene.add(axesHelper);
 
         const controls = new OrbitControls(camera, labelRenderer.domElement);
         controls.target.set(0, 0, 0);
@@ -133,13 +132,26 @@ export const HomeGL: React.FC = () => {
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
-                model.position.set(0, -3.1, 0);
+                model.position.set(0, -3.375, 0);
                 model.scale.set(0.25, 0.25, 0.25);
                 scene.add(model);
 
                 mixer = new THREE.AnimationMixer(model);
                 // mixer.clipAction(gltf.animations[0]).play();
+                gsap.set('.home-gl', {
+                    opacity: 0,
+                });
                 animate();
+                requestAnimationFrame(() => {
+                    gsap.set(labelRenderer.domElement, {
+                        opacity: 0,
+                    });
+                    const tl = props.onAnimated(model);
+                    tl.to(labelRenderer.domElement, {
+                        duration: 0.6,
+                        opacity: 1,
+                    });
+                });
             },
             void 0,
             function (e) {

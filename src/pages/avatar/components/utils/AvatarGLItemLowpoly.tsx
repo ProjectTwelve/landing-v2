@@ -123,7 +123,7 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
         gsap.to(
             {},
             {
-                duration: 0.5,
+                duration: 0.3,
                 ease: 'none',
                 onStart: function () {
                     // _this.controls.autoRotate = false;
