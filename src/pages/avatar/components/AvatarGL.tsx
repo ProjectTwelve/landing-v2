@@ -30,7 +30,6 @@ const GL_MAP = {
     [AvatarType.CARTOON]: new AvatarGLItemCartoon(),
     [AvatarType.DOKV]: new AvatarGLItemDokv(),
 };
-Object.values(GL_MAP).map((v) => v.load());
 
 export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -53,6 +52,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         if (!container) {
             return;
         }
+        Object.values(GL_MAP).map((v) => v.load());
 
         Object.values(GL_MAP).map((v) => v.mount(container));
 
