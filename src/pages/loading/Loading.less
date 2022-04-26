@@ -5,8 +5,43 @@
     height: 100%;
     position: relative;
     overflow: hidden;
+    background: #000;
 
-    // &__info {
-    //     .f-alignImg('loading/info.png');
-    // }
+    &__logo {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        user-select: none;
+
+        > img {
+            width: 18vw;
+            cursor: pointer;
+        }
+    }
+
+    &__links {
+        position: absolute;
+        bottom: 18%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: row;
+        width: 80%;
+        max-width: 1200px;
+
+        path {
+            fill: white;
+        }
+    }
+    &__icon-link {
+        width: 6vw;
+        max-width: 60px;
+    }
 }
