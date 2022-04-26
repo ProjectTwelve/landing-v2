@@ -9,6 +9,28 @@ export const Avatar: React.FC = () => {
         AvatarType.LOWPOLY
     );
 
+    // 一段时间没有处理的话，就自动下一个
+    useEffect(() => {
+        let timeId: number;
+        const handleTouchDown = () => {
+            console.log('handleTouchDown');
+            clearTimeout(timeId);
+        };
+        const handleTouchUp = () => {
+            console.log('handleTouchUp');
+            timeId = window.setTimeout(() => {
+                handleNext();
+            }, 5000);
+        };
+        handleTouchUp();
+        window.addEventListener('pointerdown', handleTouchDown);
+        window.addEventListener('pointerup', handleTouchUp);
+        return () => {
+            window.removeEventListener('pointerdown', handleTouchDown);
+            window.removeEventListener('pointerup', handleTouchUp);
+        };
+    }, []);
+
     useEffect(() => {
         avatarGLRef.current?.switchTo(currentAvatar);
     }, [currentAvatar]);

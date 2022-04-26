@@ -12,6 +12,8 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
     private imageDataArray: HTMLImageElement[] = [];
     private btnsWrap = document.createElement('div');
 
+    private isShowParticle = true;
+
     constructor() {
         super();
         this.canvas.style.pointerEvents = 'none';
@@ -25,22 +27,18 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
         btn1.className =
             'avatar-lowpoly-switch-btn avatar-lowpoly-switch-btn--lowpoly';
         this.btnsWrap.appendChild(btn1);
-        btn1.addEventListener(
-            'mousedown',
-            this.switchToParticle.bind(this, false)
-        );
+        btn1.addEventListener('mousedown', this.toggleParticle.bind(this));
         const btn2 = document.createElement('div');
         btn2.className =
             'avatar-lowpoly-switch-btn avatar-lowpoly-switch-btn--particle';
-        btn2.addEventListener(
-            'mousedown',
-            this.switchToParticle.bind(this, true)
-        );
+        btn2.addEventListener('mousedown', this.toggleParticle.bind(this));
         this.btnsWrap.className = 'avatar-lowpoly-btn-wrap';
         this.btnsWrap.appendChild(btn2);
         this.container.appendChild(this.btnsWrap);
 
-        this.rendererWrap.style.height = '0%';
+        this.rendererWrap.style.height = '100%';
+        this.rendererWrap.style.opacity = '0';
+        // this.rendererWrap.style.height = '0%';
         this.canvasWrap.style.height = '100%';
     }
 
@@ -118,24 +116,31 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
         this.canvas.style.height = `${this.container.clientHeight}px`;
     }
 
-    switchToParticle(showParticle: boolean) {
+    toggleParticle() {
+        this.isShowParticle = !this.isShowParticle;
         const _this = this;
         gsap.to(
             {},
             {
-                duration: 0.3,
+                duration: 0.4,
                 ease: 'none',
                 onStart: function () {
                     // _this.controls.autoRotate = false;
                 },
                 onUpdate: function () {
                     const pro = this.progress();
-                    _this.canvasWrap.style.height = `${
-                        (showParticle ? pro : 1 - pro) * 100
-                    }%`;
-                    _this.rendererWrap.style.height = `${
-                        (showParticle ? 1 - pro : pro) * 100
-                    }%`;
+                    // _this.canvasWrap.style.height = `${
+                    //     (_this.isShowParticle ? pro : 1 - pro) * 100
+                    // }%`;
+                    // _this.rendererWrap.style.height = `${
+                    //     (_this.isShowParticle ? 1 - pro : pro) * 100
+                    // }%`;
+                    _this.canvasWrap.style.opacity = `${
+                        _this.isShowParticle ? pro : 1 - pro
+                    }`;
+                    _this.rendererWrap.style.opacity = `${
+                        _this.isShowParticle ? 1 - pro : pro
+                    }`;
                 },
                 onComplete: function () {
                     // _this.controls.autoRotate = true;

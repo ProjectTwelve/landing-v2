@@ -60,9 +60,8 @@ export class AvatarGLItemBase {
         this.camera.position.set(5, 2, 8);
         gsap.set(this.container, {
             x: 340,
-            y: -160,
+            y: -60,
             opacity: 0,
-            scale: 0.85,
         });
         this.animate();
         gsap.to(this.container, {
@@ -70,7 +69,6 @@ export class AvatarGLItemBase {
             x: 0,
             y: 0,
             opacity: 1,
-            scale: 1,
             delay: 0.2,
             onComplete: () => {},
         });

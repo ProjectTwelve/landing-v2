@@ -30,7 +30,10 @@ export const HomeGL: React.FC<HomeGLProps> = (props) => {
 
         let mixer: THREE.AnimationMixer;
         const clock = new THREE.Clock();
-        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        const renderer = new THREE.WebGLRenderer({
+            alpha: true,
+            antialias: true,
+        });
 
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(container.clientWidth, container.clientHeight);
