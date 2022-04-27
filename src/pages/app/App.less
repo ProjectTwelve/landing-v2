@@ -78,12 +78,49 @@
         }
     }
 
+    .badge-wrap {
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        bottom: (40 / @designHeight * 100%);
+        left: (60 / @designWidth * 100%);
+        z-index: 99;
+
+        .badge-circle {
+            .f-alignImg2x('app/badge-circle@2x.png');
+            animation: badgecircle 16s infinite linear;
+            animation-play-state: paused;
+        }
+        &:hover {
+            .badge-circle {
+                animation-play-state: running;
+            }
+        }
+        .badge-icon {
+            .f-alignImg2x('app/badge-h1@2x.png');
+            transition: opacity 0.3s;
+            &--1 {
+                .bg('app/badge-h1@2x.png');
+            }
+            &--2 {
+                .bg('app/badge-h2@2x.png');
+            }
+            &--3 {
+                .bg('app/badge-h3@2x.png');
+            }
+            &--4 {
+                .bg('app/badge-h4@2x.png');
+            }
+            &--5 {
+                .bg('app/badge-h5@2x.png');
+            }
+        }
+    }
+
     .coming-btn {
         position: absolute;
         .bgFull2x('app/coming-btn@2x.png');
-        top: 60px;
-        right: 70px;
-        bottom: (60 / @designHeight * 100%);
+        top: (60 / @designHeight * 100%);
         right: (60 / @designWidth * 100%);
         z-index: 99;
         cursor: not-allowed;
@@ -205,5 +242,11 @@
 @keyframes musicplay {
     100% {
         transform: scale(1, 1);
+    }
+}
+
+@keyframes badgecircle {
+    100% {
+        transform: rotate(360deg);
     }
 }

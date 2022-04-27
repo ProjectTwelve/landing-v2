@@ -15,7 +15,6 @@ export const Home: React.FC = () => {
                 '.home__text',
                 '.home__small-text-1',
                 '.home__small-text-2',
-                '.home__btn-wrap',
             ],
             {
                 opacity: 0,
@@ -40,10 +39,6 @@ export const Home: React.FC = () => {
                     A complete set of technologies, tools,and services-
                     <br />
                     for developers, players,and merchants alike
-                </div>
-                <div className='home__btn-wrap'>
-                    <div className='home__btn home__btn--left'></div>
-                    <div className='home__btn home__btn--right'></div>
                 </div>
             </div>
         </div>
@@ -134,7 +129,7 @@ export const Home: React.FC = () => {
             }
         );
         tl.fromTo(
-            ['.home__small-text-1', '.home__small-text-2', '.home__btn-wrap'],
+            ['.home__small-text-1', '.home__small-text-2'],
             {
                 y: 200,
                 opacity: 0,

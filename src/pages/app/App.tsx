@@ -2,7 +2,7 @@ import React, { Fragment, useRef, useState } from 'react';
 import { AppBg } from './components/AppBg';
 import './App.less';
 import classnames from 'classnames';
-import { PageType, CONTENT_PAGES } from './App.config';
+import { PageType, CONTENT_PAGES, PageBadges } from './App.config';
 
 export const App = () => {
     const [current, setCurrent] = useState(PageType.Loading);
@@ -46,10 +46,28 @@ export const App = () => {
                     );
                 })}
             </div>
+            {PageBadges.includes(current) && (
+                <div className='badge-wrap'>
+                    <div className='badge-circle'></div>
+                    {PageBadges.map((v, i) => (
+                        <div
+                            key={v}
+                            style={{
+                                opacity: v === current ? 1 : 0,
+                                zIndex: v === current ? 2 : 1,
+                            }}
+                            className={classnames([
+                                'badge-icon',
+                                `badge-icon--${i + 1}`,
+                            ])}
+                        ></div>
+                    ))}
+                </div>
+            )}
             <div className='coming-btn'></div>
             <div className='footer'>
                 <div className='footer__info'></div>
-                <div
+                {/* <div
                     className={classnames(
                         'footer__audio',
                         'audio-btn',
@@ -60,7 +78,7 @@ export const App = () => {
                     <i className='footer__audio-item'></i>
                     <i className='footer__audio-item'></i>
                     <i className='footer__audio-item'></i>
-                </div>
+                </div> */}
             </div>
         </div>
     );

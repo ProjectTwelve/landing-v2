@@ -15,6 +15,14 @@ export enum PageType {
     About,
 }
 
+export const PageBadges = [
+    PageType.Home,
+    PageType.Avatar,
+    PageType.Tree,
+    PageType.Poster,
+    PageType.About,
+];
+
 export const CONTENT_PAGES = [
     {
         type: PageType.Loading,
