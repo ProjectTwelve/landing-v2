@@ -67,6 +67,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             return;
         }
         const handleMouseMove = (e) => {
+            console.log(e);
             gsap.to(mouseDom, {
                 duration: 0.1,
                 opacity: 1,

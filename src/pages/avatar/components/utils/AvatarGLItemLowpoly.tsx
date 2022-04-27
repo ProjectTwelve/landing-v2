@@ -10,7 +10,7 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
     public context = this.canvas.getContext('2d');
     private renderedImageIndex = -1;
     private imageDataArray: HTMLImageElement[] = [];
-    private btnsWrap = document.createElement('div');
+    private btnWrap = document.createElement('div');
 
     private isShowParticle = true;
 
@@ -23,18 +23,15 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
         this.canvasWrap.appendChild(this.canvas);
         this.container.appendChild(this.canvasWrap);
 
-        const btn1 = document.createElement('div');
-        btn1.className =
-            'avatar-lowpoly-switch-btn avatar-lowpoly-switch-btn--lowpoly';
-        this.btnsWrap.appendChild(btn1);
-        btn1.addEventListener('mousedown', this.toggleParticle.bind(this));
-        const btn2 = document.createElement('div');
-        btn2.className =
-            'avatar-lowpoly-switch-btn avatar-lowpoly-switch-btn--particle';
-        btn2.addEventListener('mousedown', this.toggleParticle.bind(this));
-        this.btnsWrap.className = 'avatar-lowpoly-btn-wrap';
-        this.btnsWrap.appendChild(btn2);
-        this.container.appendChild(this.btnsWrap);
+        this.btnWrap.className = 'avatar-lowpoly-btn-wrap';
+        this.btnWrap.addEventListener('click', this.toggleParticle.bind(this));
+        this.btnWrap.addEventListener('mouseenter', () => {
+            document.getElementById('avatar-mouse')?.classList.add('hover');
+        });
+        this.btnWrap.addEventListener('mouseleave', () => {
+            document.getElementById('avatar-mouse')?.classList.remove('hover');
+        });
+        this.container.appendChild(this.btnWrap);
 
         this.rendererWrap.style.height = '100%';
         this.rendererWrap.style.opacity = '0';
@@ -75,11 +72,9 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
         );
     }
     enter() {
-        document.getElementById('avatar-mouse')?.classList.add('hover');
         super.enter();
     }
     leave() {
-        document.getElementById('avatar-mouse')?.classList.remove('hover');
         super.leave();
     }
     protected animate() {
