@@ -5,6 +5,7 @@ import { Tree } from '../tree/Tree';
 import { Poster } from '../poster/Poster';
 import { About } from '../about/About';
 import { Loading } from '../loading/Loading';
+import { Wall } from '../wall/Wall';
 
 export enum PageType {
     Loading = 1,
@@ -13,6 +14,7 @@ export enum PageType {
     Tree,
     Poster,
     About,
+    Wall,
 }
 
 export const PageBadges = [
@@ -53,6 +55,11 @@ export const CONTENT_PAGES = [
         type: PageType.About,
         NavText: <>ABOUT&nbsp;US</>,
         Content: <About />,
+    },
+    {
+        type: PageType.Wall,
+        NavText: <>PARTNERS</>,
+        Content: <Wall />,
     },
     {
         type: null,

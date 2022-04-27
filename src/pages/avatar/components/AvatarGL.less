@@ -58,9 +58,41 @@
     z-index: 10;
 }
 
-// .avatar-particle {
-//     .f-align(1920px, 1080px);
-//     display: none;
-//     overflow: hidden;
-//     background-repeat: no-repeat;
-// }
+.avatar-mouse {
+    pointer-events: none;
+    width: 0;
+    height: 0;
+    position: absolute;
+    z-index: 10;
+    opacity: 0;
+    left: -1px;
+    top: -2px;
+
+    &__circle {
+        .f-alignImg2x('avatar/mouse-circle@2x.png');
+    }
+    &__dot {
+        .f-alignImg2x('avatar/mouse-dot@2x.png');
+        transition: opacity 0.3s;
+    }
+    &__arrow {
+        .f-alignImg2x('avatar/mouse-arrow@2x.png');
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    &__arrow-bg {
+        .f-alignImg2x('avatar/mouse-arrow-bg@2x.png');
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    &.hover .avatar-mouse__dot {
+        opacity: 0;
+    }
+    &.hover .avatar-mouse__arrow {
+        opacity: 1;
+    }
+    &.hover .avatar-mouse__arrow-bg {
+        opacity: 1;
+    }
+}

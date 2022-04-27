@@ -75,9 +75,11 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
         );
     }
     enter() {
+        document.getElementById('avatar-mouse')?.classList.add('hover');
         super.enter();
     }
     leave() {
+        document.getElementById('avatar-mouse')?.classList.remove('hover');
         super.leave();
     }
     protected animate() {

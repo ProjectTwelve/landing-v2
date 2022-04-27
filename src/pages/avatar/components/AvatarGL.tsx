@@ -35,6 +35,7 @@ Object.values(GL_MAP).map((v) => v.load());
 export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const activatedRef = useRef<AvatarType | null>(null);
+    const mouseRef = useRef<HTMLDivElement>(null);
 
     useImperativeHandle(
         ref,
@@ -53,18 +54,41 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         if (!container) {
             return;
         }
-
         Object.values(GL_MAP).map((v) => v.mount(container));
-
         return () => {
             Object.values(GL_MAP).map((v) => container && v.unMount());
         };
     }, []);
 
+    useEffect(() => {
+        const container = containerRef.current;
+        const mouseDom = mouseRef.current;
+        if (!container || !mouseDom) {
+            return;
+        }
+        const handleMouseMove = (e) => {
+            gsap.to(mouseDom, {
+                duration: 0.1,
+                opacity: 1,
+                x: e.clientX,
+                y: e.clientY,
+            });
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+        };
+    }, []);
+
     return (
-        <>
-            <div className='avatar-gl' ref={containerRef} />
+        <div className='avatar-gl' ref={containerRef}>
             <div className='avatar-circle'></div>
-        </>
+            <div className='avatar-mouse' id='avatar-mouse' ref={mouseRef}>
+                <div className='avatar-mouse__circle'></div>
+                <div className='avatar-mouse__dot'></div>
+                <div className='avatar-mouse__arrow-bg'></div>
+                <div className='avatar-mouse__arrow'></div>
+            </div>
+        </div>
     );
 });

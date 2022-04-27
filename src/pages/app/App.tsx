@@ -3,6 +3,7 @@ import { AppBg } from './components/AppBg';
 import './App.less';
 import classnames from 'classnames';
 import { PageType, CONTENT_PAGES, PageBadges } from './App.config';
+import { playClickAudio } from '../../utils';
 
 export const App = () => {
     const [current, setCurrent] = useState(PageType.Loading);
@@ -25,7 +26,10 @@ export const App = () => {
             </div>
             <div
                 className='logo'
-                onClick={() => setCurrent(PageType.Home)}
+                onClick={() => {
+                    playClickAudio();
+                    setCurrent(PageType.Home);
+                }}
             ></div>
             <div className='nav'>
                 {CONTENT_PAGES.map((p, i) => {
@@ -38,7 +42,10 @@ export const App = () => {
                                     p.type === current && 'active',
                                     !p.Content && 'nav__item--no-content'
                                 )}
-                                onClick={() => p.type && setCurrent(p.type)}
+                                onClick={() => {
+                                    playClickAudio();
+                                    p.type && setCurrent(p.type);
+                                }}
                             >
                                 {p.NavText}
                             </div>
