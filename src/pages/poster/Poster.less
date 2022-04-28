@@ -1,4 +1,5 @@
 @import '../../styles/variables.less';
+// @import '~swiper/swiper.less';
 
 .poster {
     width: 100%;
@@ -33,6 +34,40 @@
         }
         &--5 {
             .bg('poster/5.png');
+        }
+    }
+}
+
+.poster-swiper-container {
+    position: absolute;
+    right: 116px;
+    bottom: 437px;
+    .bgFull2x('poster/logo-1.png');
+    background: none;
+    overflow: hidden;
+
+    .swiper-slide {
+        .bgFull2x('poster/logo-1.png');
+        &--1 {
+            .bg('poster/logo-1.png');
+        }
+        &--2 {
+            .bg('poster/logo-2.png');
+        }
+        &--3 {
+            .bg('poster/logo-3.png');
+        }
+        &--4 {
+            .bg('poster/logo-4.png');
+        }
+        &--5 {
+            .bg('poster/logo-5.png');
+        }
+        &--6 {
+            .bg('poster/logo-6.png');
+        }
+        &--7 {
+            .bg('poster/logo-7.png');
         }
     }
 }

@@ -6,7 +6,7 @@ import { PageType, CONTENT_PAGES, PageBadges } from './App.config';
 import { playClickAudio } from '../../utils';
 
 export const App = () => {
-    const [current, setCurrent] = useState(PageType.Loading);
+    const [current, setCurrent] = useState(PageType.Poster);
     const [musicPlaying, setMusicPlaying] = useState(true);
 
     return (

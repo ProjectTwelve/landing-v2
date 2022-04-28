@@ -1,7 +1,12 @@
 import { useSize } from 'ahooks';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Parallax from 'parallax-js';
+import Swiper, { Autoplay } from 'swiper';
+import 'swiper/css';
+// import SwiperCore, { Autoplay } from 'swiper';
+// import { Swiper, SwiperSlide } from 'swiper/react';
 import './Poster.less';
+Swiper.use([Autoplay]);
 
 export const Poster: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -37,6 +42,7 @@ export const Poster: React.FC = () => {
         bgRef.current.style.height = `${height}px`;
     }, [containerSize]);
 
+    // 视差滚动
     useEffect(() => {
         if (!bgRef.current) {
             return;
@@ -44,6 +50,22 @@ export const Poster: React.FC = () => {
         const parallaxInstance = new Parallax(bgRef.current, {});
         return () => {
             parallaxInstance.destroy();
+        };
+    }, []);
+
+    // 视差滚动
+    useEffect(() => {
+        if (!bgRef.current) {
+            return;
+        }
+        // 实例化
+        const swiper = new Swiper('.poster-swiper-container', {
+            autoplay: true,
+            loop: true,
+            direction: 'vertical',
+        });
+        return () => {
+            swiper.destroy();
         };
     }, []);
 
@@ -64,10 +86,20 @@ export const Poster: React.FC = () => {
                     data-depth-x='0.1'
                     className='poster__img poster__img--3'
                 ></div>
-                <div
-                    data-depth='-0.08'
-                    className='poster__img poster__img--4'
-                ></div>
+                <div data-depth='-0.08' className='poster__img poster__img--4'>
+                    <div className='poster-swiper-container swiper-container'>
+                        <div className='swiper-wrapper'>
+                            <div className='swiper-slide swiper-slide--1'></div>
+                            <div className='swiper-slide swiper-slide--2'></div>
+                            <div className='swiper-slide swiper-slide--3'></div>
+                            <div className='swiper-slide swiper-slide--4'></div>
+                            <div className='swiper-slide swiper-slide--5'></div>
+                            <div className='swiper-slide swiper-slide--6'></div>
+                            <div className='swiper-slide swiper-slide--7'></div>
+                        </div>
+                        <div className='swiper-pagination'></div>
+                    </div>
+                </div>
                 <div
                     data-depth-x='0.08'
                     data-depth-y='0.08'

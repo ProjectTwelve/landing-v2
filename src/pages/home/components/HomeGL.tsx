@@ -131,7 +131,7 @@ export const HomeGL: React.FC<HomeGLProps> = (props) => {
         // dracoLoader.setDecoderPath(getPublicAssetPath('files/lib-draco/gltf/'));
         // loader.setDRACOLoader(dracoLoader);
         loader.load(
-            getPublicAssetPath('files/home/home.gltf'),
+            getPublicAssetPath('files/home/home.glb'),
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
