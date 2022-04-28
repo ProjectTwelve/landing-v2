@@ -6,6 +6,39 @@
     position: relative;
     overflow: hidden;
 
+    &__nav {
+        z-index: 20;
+        position: absolute;
+        right: (47 / @designWidth * 100%);
+        top: 50%;
+        transform: translate(0, -50%);
+
+        &-item {
+            position: relative;
+            cursor: pointer;
+            width: 12px;
+            height: 12px;
+            background: #525252;
+            border-radius: 50%;
+            transition: background 0.3s;
+            margin-top: 20px;
+
+            &:first-child {
+                margin-top: 0;
+            }
+
+            &::after {
+                content: '';
+                .f-align(24px, 24px);
+            }
+
+            &:hover,
+            &.active {
+                background: #ffffff;
+            }
+        }
+    }
+
     &__info {
         position: absolute;
         z-index: 10;

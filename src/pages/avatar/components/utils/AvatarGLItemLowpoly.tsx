@@ -25,12 +25,21 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
 
         this.btnWrap.className = 'avatar-lowpoly-btn-wrap';
         let downTime = +new Date();
-        this.btnWrap.addEventListener('pointerdown', () => {
-            console.log('pointerdown');
+        let downX: number;
+        let downY: number;
+        this.btnWrap.addEventListener('pointerdown', (e) => {
             downTime = +new Date();
+            downX = e.clientX;
+            downY = e.clientY;
         });
-        this.container.addEventListener('pointerup', () => {
-            if (downTime && +new Date() - downTime < 200) {
+        this.container.addEventListener('pointerup', (e) => {
+            if (
+                downTime &&
+                +new Date() - downTime < 300 &&
+                Math.abs(e.clientX - downX) < 50 &&
+                Math.abs(e.clientY - downY) < 50
+            ) {
+                // 没有移动太远，表明是点击事件。以此来兼容 gl 的拖动
                 this.toggleParticle();
             }
         });

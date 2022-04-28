@@ -22,7 +22,7 @@ export const PageBadges = [
     PageType.Avatar,
     PageType.Tree,
     PageType.Poster,
-    PageType.About,
+    PageType.Wall,
 ];
 
 export const CONTENT_PAGES = [

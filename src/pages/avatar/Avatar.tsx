@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AvatarGL, AvatarGLRef } from './components/AvatarGL';
 import './Avatar.less';
 import { AvatarType, AvatarTypeArray } from './Avatar.config';
+import { playClickAudio } from '../../utils';
+import classnames from 'classnames';
 
 export const Avatar: React.FC = () => {
     const avatarGLRef = useRef<AvatarGLRef>(null);
@@ -20,7 +22,7 @@ export const Avatar: React.FC = () => {
             console.log('handleTouchUp');
             timeId = window.setTimeout(() => {
                 handleNext();
-            }, 5000);
+            }, 8000);
         };
         handleTouchUp();
         window.addEventListener('pointerdown', handleTouchDown);
@@ -56,13 +58,35 @@ export const Avatar: React.FC = () => {
                 <div className='avatar__btn-wrap'>
                     <div
                         className='avatar__btn avatar__btn--left'
-                        onClick={handlePrev}
+                        onClick={() => {
+                            playClickAudio();
+                            handlePrev();
+                        }}
                     ></div>
                     <div
                         className='avatar__btn avatar__btn--right'
-                        onClick={handleNext}
+                        onClick={() => {
+                            playClickAudio();
+                            handleNext();
+                        }}
                     ></div>
                 </div>
+            </div>
+            <div className='avatar__nav'>
+                {AvatarTypeArray.map((type) => {
+                    const activated = type === currentAvatar;
+                    return (
+                        <div
+                            className={classnames('avatar__nav-item', {
+                                active: activated,
+                            })}
+                            key={type}
+                            onClick={() => {
+                                setCurrentAvatar(type);
+                            }}
+                        ></div>
+                    );
+                })}
             </div>
         </div>
     );
