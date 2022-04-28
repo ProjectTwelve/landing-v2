@@ -16,20 +16,31 @@ export const About: React.FC = () => {
                             className='about__info-item'
                             style={{ left: info.x, top: info.y }}
                         >
-                            <i
-                                className={classnames(
-                                    'about__dot',
-                                    `about__dot--${info.type}`
-                                )}
-                            >
-                                <b
-                                    style={{
-                                        animationDelay: `${
-                                            Math.random() * -2
-                                        }s`,
-                                    }}
-                                ></b>
-                            </i>
+                            {info.img ? (
+                                <img
+                                    className={classnames(
+                                        'about__dot',
+                                        `about__dot--${info.type}`
+                                    )}
+                                    src={info.img}
+                                />
+                            ) : (
+                                <i
+                                    className={classnames(
+                                        'about__dot',
+                                        `about__dot--${info.type}`
+                                    )}
+                                >
+                                    <b
+                                        style={{
+                                            animationDelay: `${
+                                                Math.random() * -2
+                                            }s`,
+                                        }}
+                                    ></b>
+                                </i>
+                            )}
+
                             <span
                                 className={classnames(
                                     'about__info-name',
@@ -68,6 +79,13 @@ export const About: React.FC = () => {
                 <div className='about__helper-item'>
                     <i className='about__dot about__dot--remote'></i>
                     Remote
+                </div>
+                <div className='about__helper-item'>
+                    <img
+                        src={require('../../assets/about/origin-china.png')}
+                        className='about__dot about__dot--origin'
+                    ></img>
+                    Origin
                 </div>
             </div>
         </div>

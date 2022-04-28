@@ -17,16 +17,20 @@
         }
         &-name {
             position: absolute;
-            font-size: 22px;
-            line-height: 22px;
+            font-size: 18px;
+            line-height: 18px;
             color: #fff;
             top: 50%;
             transform: translate(0, -50%);
             white-space: nowrap;
+            opacity: 0.8;
             &--left {
                 right: 16px;
                 &.about__info-name--remote {
                     right: 22px;
+                }
+                &.about__info-name--origin {
+                    right: 43px;
                 }
             }
             &--right {
@@ -34,6 +38,12 @@
                 &.about__info-name--remote {
                     left: 22px;
                 }
+                &.about__info-name--origin {
+                    left: 43px;
+                }
+            }
+            &--none {
+                display: none;
             }
         }
     }
@@ -47,9 +57,9 @@
             display: flex;
             align-items: center;
             letter-spacing: 1px;
-            font-size: 22px;
-            line-height: 22px;
-            color: #fff;
+            font-size: 20px;
+            line-height: 20px;
+            color: rgba(255, 255, 255, 0.8);
             margin-top: 22px;
 
             .about__dot--office {
@@ -57,6 +67,11 @@
             }
             .about__dot--remote {
                 margin-right: 15px;
+            }
+            .about__dot--origin {
+                width: 20px;
+                margin-right: 10px;
+                margin-left: -4px;
             }
         }
     }
@@ -91,6 +106,10 @@
                 border: 2px solid #2372ff;
                 animation: aboutdot 2s infinite;
             }
+        }
+
+        &--origin {
+            width: 36px;
         }
     }
 
