@@ -24,7 +24,16 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
         this.container.appendChild(this.canvasWrap);
 
         this.btnWrap.className = 'avatar-lowpoly-btn-wrap';
-        this.btnWrap.addEventListener('click', this.toggleParticle.bind(this));
+        let downTime = +new Date();
+        this.btnWrap.addEventListener('pointerdown', () => {
+            console.log('pointerdown');
+            downTime = +new Date();
+        });
+        this.container.addEventListener('pointerup', () => {
+            if (downTime && +new Date() - downTime < 200) {
+                this.toggleParticle();
+            }
+        });
         this.btnWrap.addEventListener('mouseenter', () => {
             document.getElementById('avatar-mouse')?.classList.add('hover');
         });

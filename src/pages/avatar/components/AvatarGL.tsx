@@ -67,7 +67,6 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             return;
         }
         const handleMouseMove = (e) => {
-            console.log(e);
             gsap.to(mouseDom, {
                 duration: 0.1,
                 opacity: 1,
@@ -75,9 +74,21 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                 y: e.clientY,
             });
         };
+        const handleMouseDown = () => {
+            console.log('window', 'handleMouseDown');
+            mouseDom?.classList.add('active');
+        };
+        const handleMouseUp = () => {
+            mouseDom?.classList.remove('active');
+        };
+        handleMouseUp();
         window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mousedown', handleMouseDown);
+        window.addEventListener('mouseup', handleMouseUp);
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mousedown', handleMouseDown);
+            window.removeEventListener('mouseup', handleMouseUp);
         };
     }, []);
 

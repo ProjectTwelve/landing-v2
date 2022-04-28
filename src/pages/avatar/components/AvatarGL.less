@@ -59,18 +59,20 @@
 
     &__circle {
         .f-alignImg2x('avatar/mouse-circle@2x.png');
+        animation: mouserotate 16s infinite linear;
     }
     &__dot {
         .f-alignImg2x('avatar/mouse-dot@2x.png');
-        transition: opacity 0.3s;
+        transition: opacity 0.3s, transform 0.3s;
     }
     &__arrow {
         .f-alignImg2x('avatar/mouse-arrow@2x.png');
         opacity: 0;
         transition: opacity 0.3s;
+        animation: mouserotate 12s infinite linear;
     }
     &__arrow-bg {
-        .f-alignImg2x('avatar/mouse-arrow-bg@2x.png');
+        .f-alignImg('avatar/mouse-arrow-bg.png');
         opacity: 0;
         transition: opacity 0.3s;
     }
@@ -83,5 +85,18 @@
     }
     &.hover .avatar-mouse__arrow-bg {
         opacity: 1;
+    }
+
+    &.active .avatar-mouse__dot {
+        transform: scale(1.3);
+    }
+    &.active .avatar-mouse__circle {
+        animation-play-state: paused;
+    }
+}
+
+@keyframes mouserotate {
+    100% {
+        transform: rotate(360deg);
     }
 }
