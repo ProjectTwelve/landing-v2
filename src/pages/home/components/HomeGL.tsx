@@ -48,8 +48,8 @@ export const HomeGL: React.FC<HomeGLProps> = (props) => {
         //     new RoomEnvironment(),
         //     0.04
         // ).texture;
-        const ambient = new THREE.AmbientLight(0xffffff, 0.1);
-        scene.add(ambient);
+        // const ambient = new THREE.AmbientLight(0xffffff, 0.1);
+        // scene.add(ambient);
 
         // const spotLight = new THREE.SpotLight(0xffffff, 1);
         // spotLight.position.set(10, 14, 16);
@@ -114,8 +114,14 @@ export const HomeGL: React.FC<HomeGLProps> = (props) => {
         });
         camera.layers.enable(1);
 
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.copy(camera.position);
+        scene.add(light);
+        // const helper = new THREE.DirectionalLightHelper(light, 5);
+        // camera.add(helper);
+
         const axesHelper = new THREE.AxesHelper(10);
-        // scene.add(axesHelper);
+        scene.add(axesHelper);
 
         const controls = new OrbitControls(camera, labelRenderer.domElement);
         controls.target.set(0, 0, 0);
@@ -135,8 +141,10 @@ export const HomeGL: React.FC<HomeGLProps> = (props) => {
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
-                model.position.set(0, -3.375, 0);
-                model.scale.set(0.25, 0.25, 0.25);
+                // model.position.set(0, -3.375, 0);
+                // model.scale.set(0.25, 0.25, 0.25);
+                model.position.set(0, -3.375 * 2.5, 0);
+                model.scale.set(2.5, 2.5, 2.5);
                 scene.add(model);
 
                 mixer = new THREE.AnimationMixer(model);
@@ -181,6 +189,7 @@ export const HomeGL: React.FC<HomeGLProps> = (props) => {
             const delta = clock.getDelta();
             mixer.update(delta);
             controls.update();
+            light.position.copy(camera.position);
 
             renderer.render(scene, camera);
             labelRenderer.render(scene, camera);

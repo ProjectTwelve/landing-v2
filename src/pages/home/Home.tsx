@@ -60,16 +60,16 @@ export const Home: React.FC = () => {
         tl.fromTo(
             model.scale,
             {
-                x: 0.45,
-                y: 0.45,
-                z: 0.45,
+                x: 0.45 * 10,
+                y: 0.45 * 10,
+                z: 0.45 * 10,
             },
             {
                 duration: 1,
                 delay: -1,
-                x: 0.25,
-                y: 0.25,
-                z: 0.25,
+                x: 0.25 * 10,
+                y: 0.25 * 10,
+                z: 0.25 * 10,
             }
         );
         tl.fromTo(

@@ -6,4 +6,42 @@
     position: relative;
     overflow: hidden;
     background: #000;
+
+    &__info {
+        .f-pal50;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    &__title-1,
+    &__title-2 {
+        font-family: TTLakes;
+        color: #fff;
+        font-size: 22px;
+        line-height: 22px;
+        opacity: 0.8;
+    }
+
+    &__dot-1,
+    &__dot-2 {
+        display: inline-block;
+        width: 10px;
+        height: 2px;
+        background: #00d628;
+        margin-top: 30px;
+        margin-bottom: 36px;
+        opacity: 0.8;
+    }
+
+    &__logo-1 {
+        .bgFull('wall/logo-1.png');
+        margin-bottom: 100px;
+    }
+
+    &__logo-2 {
+        .bgFull('wall/logo-2.png');
+    }
 }
