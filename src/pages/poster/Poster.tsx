@@ -6,7 +6,7 @@ import 'swiper/css';
 // import SwiperCore, { Autoplay } from 'swiper';
 // import { Swiper, SwiperSlide } from 'swiper/react';
 import './Poster.less';
-import { usePageVisible } from '../app/App.utils';
+import { loadingEE, LoadingSourceType, usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
 import gsap from 'gsap';
 Swiper.use([Autoplay]);
@@ -86,6 +86,12 @@ export const Poster: React.FC = () => {
                     <img
                         className='poster__img'
                         src={require('../../assets/poster/0.png')}
+                        onLoad={() =>
+                            loadingEE.emit(
+                                `progress.${LoadingSourceType.POSTER_IMG_0}`,
+                                1
+                            )
+                        }
                     />
                 </div>
                 <div
@@ -96,6 +102,12 @@ export const Poster: React.FC = () => {
                     <img
                         className='poster__img'
                         src={require('../../assets/poster/1.png')}
+                        onLoad={() =>
+                            loadingEE.emit(
+                                `progress.${LoadingSourceType.POSTER_IMG_1}`,
+                                1
+                            )
+                        }
                     />
                 </div>
                 <div
@@ -105,6 +117,12 @@ export const Poster: React.FC = () => {
                     <img
                         className='poster__img'
                         src={require('../../assets/poster/2.png')}
+                        onLoad={() =>
+                            loadingEE.emit(
+                                `progress.${LoadingSourceType.POSTER_IMG_2}`,
+                                1
+                            )
+                        }
                     />
                 </div>
                 <div
@@ -114,6 +132,12 @@ export const Poster: React.FC = () => {
                     <img
                         className='poster__img'
                         src={require('../../assets/poster/3.png')}
+                        onLoad={() =>
+                            loadingEE.emit(
+                                `progress.${LoadingSourceType.POSTER_IMG_3}`,
+                                1
+                            )
+                        }
                     />
                 </div>
                 <div
@@ -123,6 +147,12 @@ export const Poster: React.FC = () => {
                     <img
                         className='poster__img'
                         src={require('../../assets/poster/4.png')}
+                        onLoad={() =>
+                            loadingEE.emit(
+                                `progress.${LoadingSourceType.POSTER_IMG_4}`,
+                                1
+                            )
+                        }
                     />
                     <div className='poster-swiper-container swiper-container'>
                         <div className='swiper-wrapper'>
@@ -145,6 +175,12 @@ export const Poster: React.FC = () => {
                     <img
                         className='poster__img'
                         src={require('../../assets/poster/5.png')}
+                        onLoad={() =>
+                            loadingEE.emit(
+                                `progress.${LoadingSourceType.POSTER_IMG_5}`,
+                                1
+                            )
+                        }
                     />
                 </div>
             </div>

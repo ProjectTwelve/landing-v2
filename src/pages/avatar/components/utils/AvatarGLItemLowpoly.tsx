@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { getPublicAssetPath } from '../../../../utils';
 import { AvatarGLItemBase } from './AvatarGLItemBase';
 import { gsap } from 'gsap';
+import { loadingEE, LoadingSourceType } from '../../../app/App.utils';
 
 export class AvatarGLItemLowpoly extends AvatarGLItemBase {
     public canvasWrap = document.createElement('div');
@@ -74,6 +75,16 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
                 gltfLoaded = true;
                 this.loaded = gltfLoaded || imageLoaded;
                 this.render();
+                loadingEE.emit(
+                    `progress.${LoadingSourceType.AVATAR_GLTF_LOWPOLY}`,
+                    1
+                );
+            },
+            (event) => {
+                loadingEE.emit(
+                    `progress.${LoadingSourceType.AVATAR_GLTF_LOWPOLY}`,
+                    event.total ? (event.loaded / event.total) * 0.95 : 0.5
+                );
             }
         );
 
@@ -89,6 +100,10 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
                 imageLoaded = true;
                 this.loaded = gltfLoaded || imageLoaded;
                 this.render();
+                loadingEE.emit(
+                    `progress.${LoadingSourceType.AVATAR_GLTF_LOWPOLY_PARTICLE}`,
+                    1
+                );
             }
         );
     }

@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { getPublicAssetPath } from '../../../../utils';
+import { loadingEE, LoadingSourceType } from '../../../app/App.utils';
 import { AvatarGLItemBase } from './AvatarGLItemBase';
 
 export class AvatarGLItemCartoon extends AvatarGLItemBase {
@@ -16,6 +17,16 @@ export class AvatarGLItemCartoon extends AvatarGLItemBase {
                 this.mixer = new THREE.AnimationMixer(model);
                 this.loaded = true;
                 this.render();
+                loadingEE.emit(
+                    `progress.${LoadingSourceType.AVATAR_GLTF_CARTOON}`,
+                    1
+                );
+            },
+            (event) => {
+                loadingEE.emit(
+                    `progress.${LoadingSourceType.AVATAR_GLTF_CARTOON}`,
+                    event.total ? (event.loaded / event.total) * 0.95 : 0.5
+                );
             }
         );
     }

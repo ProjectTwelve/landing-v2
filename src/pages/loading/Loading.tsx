@@ -1,12 +1,17 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { LoadingGL } from './components/LoadingGL';
-import { AppContext, usePageVisible } from '../app/App.utils';
+import { AppContext, loadingEE, usePageVisible } from '../app/App.utils';
 import './Loading.less';
 import { PageType } from '../app/App.config';
 import gsap from 'gsap';
 
 export const Loading: React.FC = () => {
     usePageVisible(PageType.Loading, () => {
+        const handleProgress = (progress) => {
+            console.log('progress', progress);
+        };
+        loadingEE.on('progress', handleProgress);
+
         return {
             onVisible: () => {
                 gsap.set('.page-wrap-loading', {
@@ -17,6 +22,9 @@ export const Loading: React.FC = () => {
                 gsap.set('.page-wrap-loading', {
                     display: 'none',
                 });
+            },
+            onDestroy: () => {
+                loadingEE.off('progress', handleProgress);
             },
         };
     });

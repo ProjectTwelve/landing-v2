@@ -131,6 +131,7 @@ export const Home: React.FC = () => {
                     display: 'none',
                 });
             },
+            onDestroy: () => {},
         };
     });
 

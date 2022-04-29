@@ -20,7 +20,11 @@ import { getPublicAssetPath } from '../../../utils';
 import { gsap } from 'gsap';
 import { get } from 'lodash-es';
 import './HomeGL.less';
-import { usePageVisible } from '../../app/App.utils';
+import {
+    loadingEE,
+    LoadingSourceType,
+    usePageVisible,
+} from '../../app/App.utils';
 import { PageType } from '../../app/App.config';
 
 export interface HomeGLRef {
@@ -156,8 +160,14 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
 
                 setBallModel(model);
                 render();
+                loadingEE.emit(`progress.${LoadingSourceType.HOME_GLTF}`, 1);
             },
-            void 0,
+            (event) => {
+                loadingEE.emit(
+                    `progress.${LoadingSourceType.HOME_GLTF}`,
+                    event.total ? (event.loaded / event.total) * 0.95 : 0.5
+                );
+            },
             function (e) {
                 console.error(e);
             }

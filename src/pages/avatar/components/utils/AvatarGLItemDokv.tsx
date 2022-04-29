@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { getPublicAssetPath } from '../../../../utils';
+import { loadingEE, LoadingSourceType } from '../../../app/App.utils';
 import { AvatarGLItemBase } from './AvatarGLItemBase';
 
 export class AvatarGLItemDokv extends AvatarGLItemBase {
@@ -31,6 +32,16 @@ export class AvatarGLItemDokv extends AvatarGLItemBase {
 
                 this.loaded = true;
                 this.render();
+                loadingEE.emit(
+                    `progress.${LoadingSourceType.AVATAR_GLTF_DOKV}`,
+                    1
+                );
+            },
+            (event) => {
+                loadingEE.emit(
+                    `progress.${LoadingSourceType.AVATAR_GLTF_DOKV}`,
+                    event.total ? (event.loaded / event.total) * 0.95 : 0.5
+                );
             }
         );
     }

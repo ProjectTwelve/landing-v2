@@ -4,7 +4,7 @@ import './App.less';
 import classnames from 'classnames';
 import { PageType, CONTENT_PAGES, PageBadges } from './App.config';
 import { playClickAudio } from '../../utils';
-import { AppContext } from './App.utils';
+import { AppContext, loadingEE } from './App.utils';
 import gsap from 'gsap';
 
 export const App = () => {
@@ -12,13 +12,22 @@ export const App = () => {
     const isLoading = current === PageType.Loading;
     const [musicPlaying, setMusicPlaying] = useState(true);
 
-    // useEffect(() => {
-    //     if (isLoading) {
-    //         // loading 进场
-    //     } else {
-    //         // loading 退场
-    //     }
-    // }, [isLoading]);
+    useEffect(() => {
+        const handleProgress = (progress) => {
+            // loading 界面 且 loading 完成
+            if (progress >= 1) {
+                setTimeout(() => {
+                    setCurrent(PageType.Home);
+                }, 100);
+            }
+        };
+        if (isLoading) {
+            loadingEE.on('progress', handleProgress);
+        }
+        return () => {
+            loadingEE.off('progress', handleProgress);
+        };
+    }, [isLoading]);
 
     const contextValue = useMemo(
         () => ({
