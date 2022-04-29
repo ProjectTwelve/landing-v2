@@ -12,7 +12,7 @@ export const Home: React.FC = () => {
         return {
             onVisible: () => {
                 const tl = gsap.timeline();
-                tl.set('.home', {
+                tl.set('.page-wrap-home', {
                     display: 'block',
                 });
                 tl.fromTo(
@@ -127,7 +127,7 @@ export const Home: React.FC = () => {
                 );
             },
             onHide: () => {
-                gsap.set('.home', {
+                gsap.set('.page-wrap-home', {
                     display: 'none',
                 });
             },

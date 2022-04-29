@@ -30,6 +30,7 @@ export class AvatarGLItemDokv extends AvatarGLItemBase {
                 );
 
                 this.loaded = true;
+                this.render();
             }
         );
     }

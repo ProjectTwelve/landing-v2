@@ -8,13 +8,13 @@ import { Loading } from '../loading/Loading';
 import { Wall } from '../wall/Wall';
 
 export enum PageType {
-    Loading = 1,
-    Home,
-    Avatar,
-    Tree,
-    Poster,
-    About,
-    Wall,
+    Loading = 'loading',
+    Home = 'home',
+    Avatar = 'avatar',
+    Tree = 'tree',
+    Poster = 'poster',
+    About = 'about',
+    Wall = 'wall',
 }
 
 export const PageBadges = [

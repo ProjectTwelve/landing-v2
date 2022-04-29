@@ -91,8 +91,8 @@ export class AvatarGLItemBase {
         this.observer?.disconnect();
         this.mountContainer?.removeChild(this.container);
     }
-    protected animate() {
-        this.frameId = requestAnimationFrame(() => this.animate());
+
+    protected render() {
         if (!this.loaded) {
             return;
         }
@@ -101,6 +101,12 @@ export class AvatarGLItemBase {
         this.controls.update();
         this.renderer.render(this.scene, this.camera);
     }
+
+    protected animate() {
+        this.frameId = requestAnimationFrame(() => this.animate());
+        this.render();
+    }
+
     protected resize() {
         this.camera.aspect =
             this.container.clientWidth / this.container.clientHeight;

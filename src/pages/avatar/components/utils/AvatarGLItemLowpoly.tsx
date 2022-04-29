@@ -11,6 +11,7 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
     private renderedImageIndex = -1;
     private imageDataArray: HTMLImageElement[] = [];
     private btnWrap = document.createElement('div');
+    private toggleTimeId = 0;
 
     private isShowParticle = true;
 
@@ -72,6 +73,7 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
                 this.mixer = new THREE.AnimationMixer(model);
                 gltfLoaded = true;
                 this.loaded = gltfLoaded || imageLoaded;
+                this.render();
             }
         );
 
@@ -86,17 +88,24 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
                 this.imageDataArray = data;
                 imageLoaded = true;
                 this.loaded = gltfLoaded || imageLoaded;
+                this.render();
             }
         );
     }
     enter() {
         super.enter();
+        // 4秒自动切换
+        this.toggleTimeId = window.setTimeout(() => {
+            this.toggleParticle();
+        }, 4000);
     }
     leave() {
         super.leave();
+        clearTimeout(this.toggleTimeId);
     }
-    protected animate() {
-        super.animate();
+
+    protected render() {
+        super.render();
         const index = Math.floor(
             (((this.controls.getAzimuthalAngle() / Math.PI + 1) / 2) *
                 this.imageDataArray.length +
@@ -132,6 +141,7 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
     }
 
     toggleParticle() {
+        clearTimeout(this.toggleTimeId);
         this.isShowParticle = !this.isShowParticle;
         const _this = this;
         gsap.to(

@@ -9,12 +9,12 @@ export const Wall: React.FC = () => {
     usePageVisible(PageType.Wall, () => {
         return {
             onVisible: () => {
-                gsap.set('.wall', {
+                gsap.set('.page-wrap-wall', {
                     display: 'block',
                 });
             },
             onHide: () => {
-                gsap.set('.wall', {
+                gsap.set('.page-wrap-wall', {
                     display: 'none',
                 });
             },

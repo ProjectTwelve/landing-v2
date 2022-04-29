@@ -15,17 +15,17 @@ export const Avatar: React.FC = () => {
     usePageVisible(PageType.Avatar, () => {
         let timeId: number;
         const handleTouchDown = () => {
-            clearTimeout(timeId);
+            clearInterval(timeId);
         };
         const handleTouchUp = () => {
-            timeId = window.setTimeout(() => {
+            timeId = window.setInterval(() => {
                 handleNext();
-            }, 7000);
+            }, 8000);
         };
 
         return {
             onVisible: () => {
-                gsap.set('.avatar', {
+                gsap.set('.page-wrap-avatar', {
                     display: 'block',
                 });
 
@@ -36,11 +36,11 @@ export const Avatar: React.FC = () => {
                 setCurrentAvatar(AvatarType.LOWPOLY);
             },
             onHide: () => {
-                gsap.set('.avatar', {
+                gsap.set('.page-wrap-avatar', {
                     display: 'none',
                 });
 
-                clearTimeout(timeId);
+                clearInterval(timeId);
                 window.removeEventListener('pointerdown', handleTouchDown);
                 window.removeEventListener('pointerup', handleTouchUp);
 
@@ -108,25 +108,22 @@ export const Avatar: React.FC = () => {
     );
 
     function handlePrev() {
-        if (!currentAvatar) {
-            setCurrentAvatar(AvatarType.LOWPOLY);
-        } else {
-            const newIndex =
-                (AvatarTypeArray.indexOf(currentAvatar) -
-                    1 +
-                    AvatarTypeArray.length) %
-                    AvatarTypeArray.length || 0;
-            setCurrentAvatar(AvatarTypeArray[newIndex]);
-        }
+        setCurrentAvatar((old) => {
+            const newIndex = old
+                ? (AvatarTypeArray.indexOf(old) - 1 + AvatarTypeArray.length) %
+                      AvatarTypeArray.length || 0
+                : 0;
+            return AvatarTypeArray[newIndex];
+        });
     }
+
     function handleNext() {
-        if (!currentAvatar) {
-            setCurrentAvatar(AvatarType.LOWPOLY);
-        } else {
-            const newIndex =
-                (AvatarTypeArray.indexOf(currentAvatar) + 1) %
-                    AvatarTypeArray.length || 0;
-            setCurrentAvatar(AvatarTypeArray[newIndex]);
-        }
+        setCurrentAvatar((old) => {
+            const newIndex = old
+                ? (AvatarTypeArray.indexOf(old) + 1 + AvatarTypeArray.length) %
+                      AvatarTypeArray.length || 0
+                : 0;
+            return AvatarTypeArray[newIndex];
+        });
     }
 };

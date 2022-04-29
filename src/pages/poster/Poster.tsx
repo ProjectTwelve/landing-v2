@@ -27,7 +27,7 @@ export const Poster: React.FC = () => {
 
         return {
             onVisible: () => {
-                gsap.set('.poster', {
+                gsap.set('.page-wrap-poster', {
                     display: 'block',
                 });
 
@@ -38,7 +38,7 @@ export const Poster: React.FC = () => {
                 });
             },
             onHide: () => {
-                gsap.set('.poster', {
+                gsap.set('.page-wrap-poster', {
                     display: 'none',
                 });
 
@@ -82,21 +82,48 @@ export const Poster: React.FC = () => {
     return (
         <div className='poster' ref={containerRef}>
             <div className='poster__bg' ref={bgRef}>
-                <div className='poster__img poster__img--0'></div>
+                <div className='poster__img-wrap poster__img-wrap--0'>
+                    <img
+                        className='poster__img'
+                        src={require('../../assets/poster/0.png')}
+                    />
+                </div>
                 <div
                     data-depth-x='0.05'
                     data-depth-y='-0.1'
-                    className='poster__img poster__img--1'
-                ></div>
+                    className='poster__img-wrap poster__img-wrap--1'
+                >
+                    <img
+                        className='poster__img'
+                        src={require('../../assets/poster/1.png')}
+                    />
+                </div>
                 <div
                     data-depth-x='-0.05'
-                    className='poster__img poster__img--2'
-                ></div>
+                    className='poster__img-wrap poster__img-wrap--2'
+                >
+                    <img
+                        className='poster__img'
+                        src={require('../../assets/poster/2.png')}
+                    />
+                </div>
                 <div
                     data-depth-x='0.1'
-                    className='poster__img poster__img--3'
-                ></div>
-                <div data-depth='-0.08' className='poster__img poster__img--4'>
+                    className='poster__img-wrap poster__img-wrap--3'
+                >
+                    <img
+                        className='poster__img'
+                        src={require('../../assets/poster/3.png')}
+                    />
+                </div>
+                <div
+                    data-depth='-0.08'
+                    className='poster__img-wrap poster__img-wrap--4'
+                >
+                    <img
+                        className='poster__img'
+                        src={require('../../assets/poster/4.png')}
+                    />
                     <div className='poster-swiper-container swiper-container'>
                         <div className='swiper-wrapper'>
                             <div className='swiper-slide swiper-slide--1'></div>
@@ -113,8 +140,13 @@ export const Poster: React.FC = () => {
                 <div
                     data-depth-x='0.08'
                     data-depth-y='0.08'
-                    className='poster__img poster__img--5'
-                ></div>
+                    className='poster__img-wrap poster__img-wrap--5'
+                >
+                    <img
+                        className='poster__img'
+                        src={require('../../assets/poster/5.png')}
+                    />
+                </div>
             </div>
         </div>
     );

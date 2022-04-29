@@ -1,14 +1,24 @@
-import React, { Fragment, useMemo, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { AppBg } from './components/AppBg';
 import './App.less';
 import classnames from 'classnames';
 import { PageType, CONTENT_PAGES, PageBadges } from './App.config';
 import { playClickAudio } from '../../utils';
 import { AppContext } from './App.utils';
+import gsap from 'gsap';
 
 export const App = () => {
     const [current, setCurrent] = useState(PageType.Loading);
+    const isLoading = current === PageType.Loading;
     const [musicPlaying, setMusicPlaying] = useState(true);
+
+    // useEffect(() => {
+    //     if (isLoading) {
+    //         // loading 进场
+    //     } else {
+    //         // loading 退场
+    //     }
+    // }, [isLoading]);
 
     const contextValue = useMemo(
         () => ({
@@ -20,17 +30,25 @@ export const App = () => {
 
     return (
         <AppContext.Provider value={contextValue}>
-            <div className='app'>
+            <div className={classnames('app', { 'app--loading': isLoading })}>
                 <AppBg />
                 <div className='content'>
                     {CONTENT_PAGES.map((p, i) => {
                         return (
                             p.Content &&
                             p.type && (
-                                <Fragment key={`${p.type}-${i}`}>
-                                    {/* {p.type === current && p.Content} */}
+                                <div
+                                    className={classnames(
+                                        'page-wrap',
+                                        `page-wrap-${p.type}`,
+                                        {
+                                            active: p.type === current,
+                                        }
+                                    )}
+                                    key={`${p.type}-${i}`}
+                                >
                                     {p.Content}
-                                </Fragment>
+                                </div>
                             )
                         );
                     })}

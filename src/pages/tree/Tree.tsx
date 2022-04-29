@@ -8,15 +8,16 @@ export const Tree: React.FC = () => {
     usePageVisible(PageType.Tree, () => {
         return {
             onVisible: () => {
-                gsap.set('.tree', {
+                gsap.set('.page-wrap-tree', {
                     display: 'block',
                 });
             },
             onHide: () => {
-                gsap.set('.tree', {
+                gsap.set('.page-wrap-tree', {
                     display: 'none',
                 });
             },
+            onDestroy: () => {},
         };
     });
     return (

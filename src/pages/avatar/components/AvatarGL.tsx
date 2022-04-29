@@ -77,7 +77,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             });
         };
         const handleMouseDown = () => {
-            console.log('window', 'handleMouseDown');
+            // console.log('window', 'handleMouseDown');
             mouseDom?.classList.add('active');
         };
         const handleMouseUp = () => {

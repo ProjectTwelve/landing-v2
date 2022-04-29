@@ -12,12 +12,12 @@ export const About: React.FC = () => {
     usePageVisible(PageType.About, () => {
         return {
             onVisible: () => {
-                gsap.set('.about', {
+                gsap.set('.page-wrap-about', {
                     display: 'block',
                 });
             },
             onHide: () => {
-                gsap.set('.about', {
+                gsap.set('.page-wrap-about', {
                     display: 'none',
                 });
             },

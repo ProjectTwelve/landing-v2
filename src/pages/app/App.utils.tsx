@@ -21,7 +21,7 @@ export const usePageVisible = function (
         callbacksRef.current = effectFun();
 
         // TODO 看是否处理
-        callbacksRef.current?.onHide?.();
+        // callbacksRef.current?.onHide?.();
 
         return () => {
             callbacksRef.current?.onHide?.();

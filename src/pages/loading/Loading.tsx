@@ -9,12 +9,12 @@ export const Loading: React.FC = () => {
     usePageVisible(PageType.Loading, () => {
         return {
             onVisible: () => {
-                gsap.set('.loading', {
+                gsap.set('.page-wrap-loading', {
                     display: 'block',
                 });
             },
             onHide: () => {
-                gsap.set('.loading', {
+                gsap.set('.page-wrap-loading', {
                     display: 'none',
                 });
             },

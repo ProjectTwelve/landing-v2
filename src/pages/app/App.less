@@ -10,8 +10,22 @@
         position: relative;
         width: 100%;
         height: 100%;
-        overflow: auto;
+        overflow: hidden;
         z-index: 2;
+
+        .page-wrap {
+            .f-pseudo;
+            z-index: 2;
+            pointer-events: none;
+            display: none;
+            overflow: hidden;
+
+            // 出现层在下面出来
+            &.active {
+                z-index: 1;
+                pointer-events: auto;
+            }
+        }
     }
 
     .logo {
@@ -180,6 +194,18 @@
                     animation-delay: -0.3s;
                 }
             }
+        }
+    }
+
+    &.app--loading {
+        > * {
+            display: none;
+            pointer-events: none;
+        }
+
+        > .content {
+            display: block;
+            pointer-events: auto;
         }
     }
 }
