@@ -1,23 +1,25 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { LoadingGL } from './components/LoadingGL';
-import { AppContext } from '../app/App.utils';
+import { AppContext, usePageVisible } from '../app/App.utils';
 import './Loading.less';
 import { PageType } from '../app/App.config';
 import gsap from 'gsap';
 
 export const Loading: React.FC = () => {
-    const visible = useContext(AppContext)?.visiblePage === PageType.Loading;
-    useEffect(() => {
-        if (visible) {
-            gsap.set('.loading', {
-                display: 'block',
-            });
-        } else {
-            gsap.set('.loading', {
-                display: 'none',
-            });
-        }
-    }, [visible]);
+    usePageVisible(PageType.Loading, () => {
+        return {
+            onVisible: () => {
+                gsap.set('.loading', {
+                    display: 'block',
+                });
+            },
+            onHide: () => {
+                gsap.set('.loading', {
+                    display: 'none',
+                });
+            },
+        };
+    });
 
     return (
         <div className='loading'>

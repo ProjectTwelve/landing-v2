@@ -6,12 +6,55 @@ import 'swiper/css';
 // import SwiperCore, { Autoplay } from 'swiper';
 // import { Swiper, SwiperSlide } from 'swiper/react';
 import './Poster.less';
+import { usePageVisible } from '../app/App.utils';
+import { PageType } from '../app/App.config';
+import gsap from 'gsap';
 Swiper.use([Autoplay]);
 
 export const Poster: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const bgRef = useRef<HTMLDivElement>(null);
     const containerSize = useSize(containerRef);
+
+    // 视差滚动
+    useEffect(() => {
+        if (!bgRef.current) {
+            return;
+        }
+        // 实例化
+        const swiper = new Swiper('.poster-swiper-container', {
+            autoplay: true,
+            loop: true,
+            direction: 'vertical',
+        });
+        return () => {
+            swiper.destroy();
+        };
+    }, []);
+
+    usePageVisible(PageType.Poster, () => {
+        if (!bgRef.current) {
+            return;
+        }
+        // 视差滚动
+        const parallaxInstance = new Parallax(bgRef.current, {});
+
+        return {
+            onVisible: () => {
+                gsap.set('.poster', {
+                    display: 'block',
+                });
+            },
+            onHide: () => {
+                gsap.set('.poster', {
+                    display: 'none',
+                });
+            },
+            onDestroy: () => {
+                parallaxInstance.destroy();
+            },
+        };
+    });
 
     // 根据原画宽高比计算出 cover 的宽高
     useEffect(() => {
@@ -41,33 +84,6 @@ export const Poster: React.FC = () => {
         bgRef.current.style.width = `${width}px`;
         bgRef.current.style.height = `${height}px`;
     }, [containerSize]);
-
-    // 视差滚动
-    useEffect(() => {
-        if (!bgRef.current) {
-            return;
-        }
-        const parallaxInstance = new Parallax(bgRef.current, {});
-        return () => {
-            parallaxInstance.destroy();
-        };
-    }, []);
-
-    // 视差滚动
-    useEffect(() => {
-        if (!bgRef.current) {
-            return;
-        }
-        // 实例化
-        const swiper = new Swiper('.poster-swiper-container', {
-            autoplay: true,
-            loop: true,
-            direction: 'vertical',
-        });
-        return () => {
-            swiper.destroy();
-        };
-    }, []);
 
     return (
         <div className='poster' ref={containerRef}>

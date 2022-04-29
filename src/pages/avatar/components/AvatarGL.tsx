@@ -20,6 +20,8 @@ import { AvatarType } from '../Avatar.config';
 import { AvatarGLItemDokv } from './utils/AvatarGLItemDokv';
 import { AvatarGLItemCartoon } from './utils/AvatarGLItemCartoon';
 import { AvatarGLItemLowpoly } from './utils/AvatarGLItemLowpoly';
+import { usePageVisible } from '../../app/App.utils';
+import { PageType } from '../../app/App.config';
 
 export interface AvatarGLRef {
     switchTo: (type: AvatarType | null) => void;
@@ -60,7 +62,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         };
     }, []);
 
-    useEffect(() => {
+    usePageVisible(PageType.Avatar, () => {
         const container = containerRef.current;
         const mouseDom = mouseRef.current;
         if (!container || !mouseDom) {
@@ -81,16 +83,21 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         const handleMouseUp = () => {
             mouseDom?.classList.remove('active');
         };
-        handleMouseUp();
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mousedown', handleMouseDown);
-        window.addEventListener('mouseup', handleMouseUp);
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mousedown', handleMouseDown);
-            window.removeEventListener('mouseup', handleMouseUp);
+        return {
+            onVisible: () => {
+                handleMouseUp();
+                window.addEventListener('mousemove', handleMouseMove);
+                window.addEventListener('mousedown', handleMouseDown);
+                window.addEventListener('mouseup', handleMouseUp);
+            },
+            onHide: () => {
+                window.removeEventListener('mousemove', handleMouseMove);
+                window.removeEventListener('mousedown', handleMouseDown);
+                window.removeEventListener('mouseup', handleMouseUp);
+            },
+            onDestroy: () => {},
         };
-    }, []);
+    });
 
     return (
         <div className='avatar-gl' ref={containerRef}>

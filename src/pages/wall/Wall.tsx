@@ -1,8 +1,25 @@
+import gsap from 'gsap';
 import React, { useEffect, useRef, useState } from 'react';
+import { PageType } from '../app/App.config';
+import { usePageVisible } from '../app/App.utils';
 import { WallGL } from './components/WallGL';
 import './Wall.less';
 
 export const Wall: React.FC = () => {
+    usePageVisible(PageType.Wall, () => {
+        return {
+            onVisible: () => {
+                gsap.set('.wall', {
+                    display: 'block',
+                });
+            },
+            onHide: () => {
+                gsap.set('.wall', {
+                    display: 'none',
+                });
+            },
+        };
+    });
     return (
         <div className='wall'>
             <WallGL />

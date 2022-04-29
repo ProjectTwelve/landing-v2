@@ -4,15 +4,15 @@ import './Avatar.less';
 import { AvatarType, AvatarTypeArray } from './Avatar.config';
 import { playClickAudio } from '../../utils';
 import classnames from 'classnames';
+import { usePageVisible } from '../app/App.utils';
+import { PageType } from '../app/App.config';
+import gsap from 'gsap';
 
 export const Avatar: React.FC = () => {
     const avatarGLRef = useRef<AvatarGLRef>(null);
-    const [currentAvatar, setCurrentAvatar] = useState<AvatarType>(
-        AvatarType.LOWPOLY
-    );
+    const [currentAvatar, setCurrentAvatar] = useState<AvatarType | null>(null);
 
-    // 一段时间没有处理的话，就自动下一个
-    useEffect(() => {
+    usePageVisible(PageType.Avatar, () => {
         let timeId: number;
         const handleTouchDown = () => {
             clearTimeout(timeId);
@@ -22,14 +22,32 @@ export const Avatar: React.FC = () => {
                 handleNext();
             }, 7000);
         };
-        handleTouchUp();
-        window.addEventListener('pointerdown', handleTouchDown);
-        window.addEventListener('pointerup', handleTouchUp);
-        return () => {
-            window.removeEventListener('pointerdown', handleTouchDown);
-            window.removeEventListener('pointerup', handleTouchUp);
+
+        return {
+            onVisible: () => {
+                gsap.set('.avatar', {
+                    display: 'block',
+                });
+
+                handleTouchUp();
+                window.addEventListener('pointerdown', handleTouchDown);
+                window.addEventListener('pointerup', handleTouchUp);
+
+                setCurrentAvatar(AvatarType.LOWPOLY);
+            },
+            onHide: () => {
+                gsap.set('.avatar', {
+                    display: 'none',
+                });
+
+                clearTimeout(timeId);
+                window.removeEventListener('pointerdown', handleTouchDown);
+                window.removeEventListener('pointerup', handleTouchUp);
+
+                setCurrentAvatar(null);
+            },
         };
-    }, []);
+    });
 
     useEffect(() => {
         avatarGLRef.current?.switchTo(currentAvatar);
@@ -90,17 +108,25 @@ export const Avatar: React.FC = () => {
     );
 
     function handlePrev() {
-        const newIndex =
-            (AvatarTypeArray.indexOf(currentAvatar) -
-                1 +
-                AvatarTypeArray.length) %
-                AvatarTypeArray.length || 0;
-        setCurrentAvatar(AvatarTypeArray[newIndex]);
+        if (!currentAvatar) {
+            setCurrentAvatar(AvatarType.LOWPOLY);
+        } else {
+            const newIndex =
+                (AvatarTypeArray.indexOf(currentAvatar) -
+                    1 +
+                    AvatarTypeArray.length) %
+                    AvatarTypeArray.length || 0;
+            setCurrentAvatar(AvatarTypeArray[newIndex]);
+        }
     }
     function handleNext() {
-        const newIndex =
-            (AvatarTypeArray.indexOf(currentAvatar) + 1) %
-                AvatarTypeArray.length || 0;
-        setCurrentAvatar(AvatarTypeArray[newIndex]);
+        if (!currentAvatar) {
+            setCurrentAvatar(AvatarType.LOWPOLY);
+        } else {
+            const newIndex =
+                (AvatarTypeArray.indexOf(currentAvatar) + 1) %
+                    AvatarTypeArray.length || 0;
+            setCurrentAvatar(AvatarTypeArray[newIndex]);
+        }
     }
 };

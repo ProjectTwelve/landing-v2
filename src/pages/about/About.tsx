@@ -2,9 +2,27 @@ import React, { useEffect, useRef, useState } from 'react';
 import './About.less';
 import classnames from 'classnames';
 import { ABOUT_PARTNERS, LOCATION_INFO } from './About.config';
+import { usePageVisible } from '../app/App.utils';
+import { PageType } from '../app/App.config';
+import gsap from 'gsap';
 
 export const About: React.FC = () => {
     const [currentPartner, setCurrentPartner] = useState(0);
+
+    usePageVisible(PageType.About, () => {
+        return {
+            onVisible: () => {
+                gsap.set('.about', {
+                    display: 'block',
+                });
+            },
+            onHide: () => {
+                gsap.set('.about', {
+                    display: 'none',
+                });
+            },
+        };
+    });
 
     return (
         <div className='about'>

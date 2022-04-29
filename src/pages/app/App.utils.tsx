@@ -19,6 +19,10 @@ export const usePageVisible = function (
     const callbacksRef = useRef<VisibleHookCallBacks | undefined>({});
     useEffect(() => {
         callbacksRef.current = effectFun();
+
+        // TODO 看是否处理
+        callbacksRef.current?.onHide?.();
+
         return () => {
             callbacksRef.current?.onHide?.();
             callbacksRef.current?.onDestroy?.();
