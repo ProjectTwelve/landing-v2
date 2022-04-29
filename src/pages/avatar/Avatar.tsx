@@ -15,14 +15,12 @@ export const Avatar: React.FC = () => {
     useEffect(() => {
         let timeId: number;
         const handleTouchDown = () => {
-            console.log('handleTouchDown');
             clearTimeout(timeId);
         };
         const handleTouchUp = () => {
-            console.log('handleTouchUp');
             timeId = window.setTimeout(() => {
                 handleNext();
-            }, 8000);
+            }, 7000);
         };
         handleTouchUp();
         window.addEventListener('pointerdown', handleTouchDown);
