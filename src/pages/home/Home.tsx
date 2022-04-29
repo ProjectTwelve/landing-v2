@@ -1,31 +1,143 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { HomeGL } from './components/HomeGL';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { HomeGL, HomeGLRef } from './components/HomeGL';
 import './Home.less';
 import { gsap } from 'gsap';
+import { usePageVisible } from '../app/App.utils';
+import { PageType } from '../app/App.config';
 
 export const Home: React.FC = () => {
-    useEffect(() => {
-        gsap.set('.home__info', {
-            display: 'block',
-        });
-        gsap.set(
-            [
-                '.home__slogan',
-                '.home__subtitle',
-                '.home__text',
-                '.home__small-text-1',
-                '.home__small-text-2',
-            ],
-            {
-                opacity: 0,
-            }
-        );
+    const homeGLRef = useRef<HomeGLRef>(null);
+
+    usePageVisible(PageType.Home, () => {
+        return {
+            onVisible: () => {
+                const tl = gsap.timeline();
+                tl.set('.home', {
+                    display: 'block',
+                });
+                tl.fromTo(
+                    '.home-gl',
+                    {
+                        opacity: 0,
+                    },
+                    {
+                        duration: 1,
+                        opacity: 1,
+                    }
+                );
+                homeGLRef.current?.ballModel &&
+                    tl.fromTo(
+                        homeGLRef.current?.ballModel.scale,
+                        {
+                            x: 0.45 * 10,
+                            y: 0.45 * 10,
+                            z: 0.45 * 10,
+                        },
+                        {
+                            duration: 1,
+                            delay: -1,
+                            x: 0.25 * 10,
+                            y: 0.25 * 10,
+                            z: 0.25 * 10,
+                        }
+                    );
+                homeGLRef.current?.ballModel &&
+                    tl.fromTo(
+                        [homeGLRef.current?.ballModel.rotation],
+                        {
+                            y: Math.PI * -2.5,
+                        },
+                        {
+                            duration: 2,
+                            delay: -1,
+                            ease: 'power2.out',
+                            y: 0,
+                        }
+                    );
+                tl.fromTo(
+                    '.home-gl',
+                    { x: 0 },
+                    {
+                        duration: 1.5,
+                        delay: -0.5,
+                        x: '15%',
+                    }
+                );
+                tl.fromTo(
+                    '.home__slogan',
+                    {
+                        y: 200,
+                        opacity: 0,
+                    },
+                    {
+                        duration: 0.4,
+                        delay: -0.38,
+                        y: 0,
+                        opacity: 1,
+                    }
+                );
+                tl.fromTo(
+                    '.home__subtitle',
+                    {
+                        y: 200,
+                        opacity: 0,
+                    },
+                    {
+                        duration: 0.4,
+                        delay: -0.2,
+                        y: 0,
+                        opacity: 1,
+                    }
+                );
+                tl.fromTo(
+                    '.home__text',
+                    {
+                        y: 200,
+                        opacity: 0,
+                    },
+                    {
+                        duration: 0.4,
+                        delay: -0.2,
+                        y: 0,
+                        opacity: 1,
+                    }
+                );
+                tl.fromTo(
+                    ['.home__small-text-1', '.home__small-text-2'],
+                    {
+                        y: 200,
+                        opacity: 0,
+                    },
+                    {
+                        duration: 0.4,
+                        delay: -0.2,
+                        y: 0,
+                        opacity: 1,
+                    }
+                );
+                tl.fromTo(
+                    '.home-gl .home-label-canvas',
+                    {
+                        opacity: 0,
+                    },
+                    {
+                        duration: 0.6,
+                        opacity: 1,
+                    }
+                );
+            },
+            onHide: () => {
+                gsap.set('.home', {
+                    display: 'none',
+                });
+            },
+        };
     });
 
     return (
         <div className='home'>
-            <HomeGL onAnimated={handleEnter} />
-            <div className='home__info f-dn'>
+            <HomeGL ref={homeGLRef} />
+            <div className='home__info'>
                 <div className='home__slogan'></div>
                 <div className='home__subtitle'>Empowering Metaworld</div>
                 <div className='home__text'>
@@ -43,104 +155,4 @@ export const Home: React.FC = () => {
             </div>
         </div>
     );
-
-    function handleEnter(model: THREE.Group) {
-        console.log('handleEnter');
-        const tl = gsap.timeline();
-        tl.fromTo(
-            '.home-gl',
-            {
-                opacity: 0,
-            },
-            {
-                duration: 1,
-                opacity: 1,
-            }
-        );
-        tl.fromTo(
-            model.scale,
-            {
-                x: 0.45 * 10,
-                y: 0.45 * 10,
-                z: 0.45 * 10,
-            },
-            {
-                duration: 1,
-                delay: -1,
-                x: 0.25 * 10,
-                y: 0.25 * 10,
-                z: 0.25 * 10,
-            }
-        );
-        tl.fromTo(
-            [model.rotation],
-            {
-                y: Math.PI * -2.5,
-            },
-            {
-                duration: 2,
-                delay: -1,
-                ease: 'power2.out',
-                y: 0,
-            }
-        );
-        tl.to('.home-gl', {
-            duration: 1.5,
-            delay: -0.5,
-            x: '15%',
-        });
-        tl.fromTo(
-            '.home__slogan',
-            {
-                y: 200,
-                opacity: 0,
-            },
-            {
-                duration: 0.4,
-                delay: -0.38,
-                y: 0,
-                opacity: 1,
-            }
-        );
-        tl.fromTo(
-            '.home__subtitle',
-            {
-                y: 200,
-                opacity: 0,
-            },
-            {
-                duration: 0.4,
-                delay: -0.2,
-                y: 0,
-                opacity: 1,
-            }
-        );
-        tl.fromTo(
-            '.home__text',
-            {
-                y: 200,
-                opacity: 0,
-            },
-            {
-                duration: 0.4,
-                delay: -0.2,
-                y: 0,
-                opacity: 1,
-            }
-        );
-        tl.fromTo(
-            ['.home__small-text-1', '.home__small-text-2'],
-            {
-                y: 200,
-                opacity: 0,
-            },
-            {
-                duration: 0.4,
-                delay: -0.2,
-                y: 0,
-                opacity: 1,
-            }
-        );
-        return tl;
-    }
 };

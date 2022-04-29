@@ -1,11 +1,14 @@
 /* eslint-disable */
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { getPublicAssetPath } from '../../../utils';
+import { PageType } from '../../app/App.config';
+import { AppContext, usePageVisible } from '../../app/App.utils';
 import './LoadingGL.less';
 
 export const LoadingGL = (props) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    useLoadingGL(canvasRef);
+    const visible = useContext(AppContext)?.visiblePage === PageType.Loading;
+    useLoadingGL(canvasRef, visible);
 
     return (
         <canvas
@@ -16,8 +19,11 @@ export const LoadingGL = (props) => {
     );
 };
 
-function useLoadingGL(canvasRef: React.RefObject<HTMLCanvasElement>) {
-    useEffect(() => {
+function useLoadingGL(
+    canvasRef: React.RefObject<HTMLCanvasElement>,
+    visible: boolean
+) {
+    usePageVisible(PageType.Loading, () => {
         const canvas = canvasRef.current;
         if (!canvas) {
             return;
@@ -76,15 +82,15 @@ function useLoadingGL(canvasRef: React.RefObject<HTMLCanvasElement>) {
                 let choice = decideOneRandomChoice(choices);
                 switch (choice) {
                     case 'dec':
-                        console.log(
-                            `dec before and after ${param} ${config[param]}`
-                        );
+                        // console.log(
+                        //     `dec before and after ${param} ${config[param]}`
+                        // );
                         config[param] = config[param] / 2;
                         break;
                     case 'inc':
-                        console.log(
-                            `inc before and after ${param} ${config[param]}`
-                        );
+                        // console.log(
+                        //     `inc before and after ${param} ${config[param]}`
+                        // );
                         config[param] = config[param] * 2;
                         break;
                     case 'const':
@@ -1356,19 +1362,8 @@ function useLoadingGL(canvasRef: React.RefObject<HTMLCanvasElement>) {
 
         let timeId: number;
         let frameId: number;
-        setTimeout(() => {
-            multipleSplats(12);
-        }, 200);
-        setTimeout(() => {
-            multipleSplats(8);
-        }, 1600);
-        setTimeout(() => {
-            timeId = window.setInterval(startParamDrift, 6000);
-        }, 3000);
-
         let lastUpdateTime = Date.now();
         let colorUpdateTimer = 0.0;
-        update();
 
         function update() {
             const dt = calcDeltaTime();
@@ -1795,6 +1790,25 @@ function useLoadingGL(canvasRef: React.RefObject<HTMLCanvasElement>) {
             return radius;
         }
 
+        const handleMouseUp = () => {
+            updatePointerUpData(pointers[0]);
+        };
+        const handleTouchEnd = (e) => {
+            const touches = e.changedTouches;
+            for (let i = 0; i < touches.length; i++) {
+                let pointer = pointers.find(
+                    (p) => p.id == touches[i].identifier
+                );
+                if (pointer == null) continue;
+                updatePointerUpData(pointer);
+            }
+        };
+        const handleKeyDown = (e) => {
+            if (e.code === 'KeyP') config.PAUSED = !config.PAUSED;
+            if (e.key === ' ')
+                splatStack.push(parseInt(`${Math.random() * 20}`) + 5);
+        };
+
         canvas.addEventListener('mousedown', (e) => {
             let posX = scaleByPixelRatio(e.offsetX);
             let posY = scaleByPixelRatio(e.offsetY);
@@ -1843,29 +1857,6 @@ function useLoadingGL(canvasRef: React.RefObject<HTMLCanvasElement>) {
             },
             false
         );
-
-        const handleMouseUp = () => {
-            updatePointerUpData(pointers[0]);
-        };
-        const handleTouchEnd = (e) => {
-            const touches = e.changedTouches;
-            for (let i = 0; i < touches.length; i++) {
-                let pointer = pointers.find(
-                    (p) => p.id == touches[i].identifier
-                );
-                if (pointer == null) continue;
-                updatePointerUpData(pointer);
-            }
-        };
-        const handleKeyDown = (e) => {
-            if (e.code === 'KeyP') config.PAUSED = !config.PAUSED;
-            if (e.key === ' ')
-                splatStack.push(parseInt(`${Math.random() * 20}`) + 5);
-        };
-
-        window.addEventListener('mouseup', handleMouseUp);
-        window.addEventListener('touchend', handleTouchEnd);
-        window.addEventListener('keydown', handleKeyDown);
 
         function updatePointerDownData(pointer, id, posX, posY) {
             pointer.id = id;
@@ -2016,12 +2007,37 @@ function useLoadingGL(canvasRef: React.RefObject<HTMLCanvasElement>) {
             return hash;
         }
 
-        return () => {
-            clearInterval(timeId);
-            cancelAnimationFrame(frameId);
-            window.removeEventListener('mouseup', handleMouseUp);
-            window.removeEventListener('touchend', handleTouchEnd);
-            window.removeEventListener('keydown', handleKeyDown);
+        function startUpdate() {
+            setTimeout(() => {
+                multipleSplats(12);
+            }, 200);
+            setTimeout(() => {
+                multipleSplats(8);
+            }, 1600);
+            setTimeout(() => {
+                timeId = window.setInterval(startParamDrift, 6000);
+            }, 3000);
+
+            update();
+
+            window.addEventListener('mouseup', handleMouseUp);
+            window.addEventListener('touchend', handleTouchEnd);
+            window.addEventListener('keydown', handleKeyDown);
+        }
+
+        return {
+            onVisible: () => {
+                startUpdate();
+            },
+            onHide: () => {
+                clearInterval(timeId);
+                cancelAnimationFrame(frameId);
+            },
+            onDestroy: () => {
+                window.removeEventListener('mouseup', handleMouseUp);
+                window.removeEventListener('touchend', handleTouchEnd);
+                window.removeEventListener('keydown', handleKeyDown);
+            },
         };
-    }, []);
+    });
 }

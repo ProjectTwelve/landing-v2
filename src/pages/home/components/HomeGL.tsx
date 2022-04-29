@@ -1,4 +1,10 @@
-import React, { useRef, useEffect } from 'react';
+import React, {
+    useRef,
+    useEffect,
+    forwardRef,
+    useState,
+    useImperativeHandle,
+} from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
@@ -14,15 +20,26 @@ import { getPublicAssetPath } from '../../../utils';
 import { gsap } from 'gsap';
 import { get } from 'lodash-es';
 import './HomeGL.less';
+import { usePageVisible } from '../../app/App.utils';
+import { PageType } from '../../app/App.config';
 
-interface HomeGLProps {
-    onAnimated: (model: THREE.Group) => gsap.core.Timeline;
+export interface HomeGLRef {
+    ballModel?: THREE.Group;
 }
 
-export const HomeGL: React.FC<HomeGLProps> = (props) => {
+export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const [ballModel, setBallModel] = useState<THREE.Group>();
 
-    useEffect(() => {
+    useImperativeHandle(
+        ref,
+        () => ({
+            ballModel: ballModel,
+        }),
+        [ballModel]
+    );
+
+    usePageVisible(PageType.Home, () => {
         const container = containerRef.current;
         if (!container) {
             return;
@@ -67,6 +84,7 @@ export const HomeGL: React.FC<HomeGLProps> = (props) => {
 
         const labelRenderer = new CSS2DRenderer();
         labelRenderer.setSize(container.clientWidth, container.clientHeight);
+        labelRenderer.domElement.className = 'home-label-canvas';
         container.appendChild(labelRenderer.domElement);
 
         const camera = new THREE.PerspectiveCamera(
@@ -98,20 +116,6 @@ export const HomeGL: React.FC<HomeGLProps> = (props) => {
                 lookPosition: new THREE.Vector3(-3, 0.6, -0.2),
             },
         ];
-        const pointersRemoveHandle = pointerData.map((p) => {
-            const btn = document.createElement('div');
-            btn.className = 'gl-pointer';
-            const label = new CSS2DObject(btn);
-            label.position.set(p.position.x, p.position.y, p.position.z);
-            scene.add(label);
-            label.layers.set(1);
-
-            const handle = getHandleMouseClick(p);
-            btn.addEventListener('mousedown', handle);
-            return () => {
-                btn.removeEventListener('mousedown', handle);
-            };
-        });
         camera.layers.enable(1);
 
         const light = new THREE.DirectionalLight(0xffffff, 1);
@@ -149,20 +153,9 @@ export const HomeGL: React.FC<HomeGLProps> = (props) => {
 
                 mixer = new THREE.AnimationMixer(model);
                 // mixer.clipAction(gltf.animations[0]).play();
-                gsap.set('.home-gl', {
-                    opacity: 0,
-                });
-                animate();
-                requestAnimationFrame(() => {
-                    gsap.set(labelRenderer.domElement, {
-                        opacity: 0,
-                    });
-                    const tl = props.onAnimated(model);
-                    tl.to(labelRenderer.domElement, {
-                        duration: 0.6,
-                        opacity: 1,
-                    });
-                });
+
+                setBallModel(model);
+                render();
             },
             void 0,
             function (e) {
@@ -184,16 +177,20 @@ export const HomeGL: React.FC<HomeGLProps> = (props) => {
         }
         let frameId: number;
 
-        function animate() {
-            frameId = requestAnimationFrame(animate);
+        function render() {
             const delta = clock.getDelta();
-            mixer.update(delta);
+            mixer?.update?.(delta);
             controls.update();
             light.position.copy(camera.position);
 
             renderer.render(scene, camera);
             labelRenderer.render(scene, camera);
             // console.log(camera.position);
+        }
+
+        function animate() {
+            frameId = requestAnimationFrame(animate);
+            render();
         }
 
         let oldCameraPos = camera.position;
@@ -263,20 +260,43 @@ export const HomeGL: React.FC<HomeGLProps> = (props) => {
             };
         }
 
+        const pointersRemoveHandle = pointerData.map((p) => {
+            const btn = document.createElement('div');
+            btn.className = 'gl-pointer';
+            const label = new CSS2DObject(btn);
+            label.position.set(p.position.x, p.position.y, p.position.z);
+            scene.add(label);
+            label.layers.set(1);
+
+            const handle = getHandleMouseClick(p);
+            btn.addEventListener('mousedown', handle);
+            return () => {
+                btn.removeEventListener('mousedown', handle);
+            };
+        });
+
         const observer = new ResizeObserver(resize);
         observer.observe(container);
-        return () => {
-            cancelAnimationFrame(frameId);
-            observer.disconnect();
-            pointersRemoveHandle.forEach((removeHandle) => removeHandle());
-            labelRenderer.domElement.removeEventListener(
-                'pointerup',
-                handleResetCamera
-            );
-            container.removeChild(renderer.domElement);
-            container.removeChild(labelRenderer.domElement);
+
+        return {
+            onVisible: () => {
+                animate();
+            },
+            onHide: () => {
+                cancelAnimationFrame(frameId);
+            },
+            onDestroy: () => {
+                observer.disconnect();
+                pointersRemoveHandle.forEach((removeHandle) => removeHandle());
+                labelRenderer.domElement.removeEventListener(
+                    'pointerup',
+                    handleResetCamera
+                );
+                container.removeChild(renderer.domElement);
+                container.removeChild(labelRenderer.domElement);
+            },
         };
-    }, []);
+    });
 
     return <div className='home-gl' ref={containerRef} />;
-};
+});
