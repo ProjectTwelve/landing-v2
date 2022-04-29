@@ -16,39 +16,33 @@ export const Poster: React.FC = () => {
     const bgRef = useRef<HTMLDivElement>(null);
     const containerSize = useSize(containerRef);
 
-    // 视差滚动
-    useEffect(() => {
-        if (!bgRef.current) {
-            return;
-        }
-        // 实例化
-        const swiper = new Swiper('.poster-swiper-container', {
-            autoplay: true,
-            loop: true,
-            direction: 'vertical',
-        });
-        return () => {
-            swiper.destroy();
-        };
-    }, []);
-
     usePageVisible(PageType.Poster, () => {
         if (!bgRef.current) {
             return;
         }
         // 视差滚动
         const parallaxInstance = new Parallax(bgRef.current, {});
+        // swiper
+        let swiper: Swiper;
 
         return {
             onVisible: () => {
                 gsap.set('.poster', {
                     display: 'block',
                 });
+
+                swiper = new Swiper('.poster-swiper-container', {
+                    autoplay: true,
+                    loop: true,
+                    direction: 'vertical',
+                });
             },
             onHide: () => {
                 gsap.set('.poster', {
                     display: 'none',
                 });
+
+                swiper && swiper.destroy();
             },
             onDestroy: () => {
                 parallaxInstance.destroy();
