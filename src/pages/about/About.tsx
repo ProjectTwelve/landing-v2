@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './About.less';
 import classnames from 'classnames';
-import { LOCATION_INFO } from './About.config';
+import { ABOUT_PARTNERS, LOCATION_INFO } from './About.config';
 
 export const About: React.FC = () => {
-    const [currentPartner, setCurrentPartner] = useState(1);
+    const [currentPartner, setCurrentPartner] = useState(0);
 
     return (
         <div className='about'>
@@ -56,17 +56,38 @@ export const About: React.FC = () => {
             </div>
             <div className='about__partner'>
                 <i className='about__partner-dot about__partner-dot--left'></i>
-                {[1, 2, 3].map((i) => {
+                {ABOUT_PARTNERS.map((v, i) => {
                     return (
                         <div
                             key={i}
                             className={classnames(
                                 'about__partner-item',
-                                `about__partner-item--${i}`,
+                                `about__partner-item--${i + 1}`,
                                 i === currentPartner && 'active'
                             )}
                             onClick={() => setCurrentPartner(i)}
-                        ></div>
+                        >
+                            <div className='about__partner-text'>
+                                <div className='about__partner-text-name'>
+                                    {v.name}
+                                </div>
+                                <div className='about__partner-text-desc'>
+                                    {v.desc}
+                                </div>
+                                <div className='about__partner-text-links'>
+                                    <a
+                                        className='about__partner-text-link about__partner-text-link--linkedin'
+                                        href={v.links.linkedin}
+                                        target='_blank'
+                                    ></a>
+                                    <a
+                                        className='about__partner-text-link about__partner-text-link--twitter'
+                                        href={v.links.twitter}
+                                        target='_blank'
+                                    ></a>
+                                </div>
+                            </div>
+                        </div>
                     );
                 })}
                 <i className='about__partner-dot about__partner-dot--right'></i>

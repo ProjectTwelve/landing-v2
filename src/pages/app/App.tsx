@@ -27,8 +27,9 @@ export const App = () => {
             <div
                 className='logo'
                 onClick={() => {
-                    playClickAudio();
-                    setCurrent(PageType.Home);
+                    // playClickAudio();
+                    // setCurrent(PageType.Home);
+                    window.location.reload();
                 }}
             ></div>
             <div className='nav'>

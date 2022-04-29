@@ -120,3 +120,48 @@ export const LOCATION_INFO = [
         namePosition: 'right',
     },
 ];
+
+export const ABOUT_PARTNERS = [
+    {
+        name: 'Boyang | Founder',
+        desc: (
+            <>
+                Two times TI Crimson Witness;
+                <br />
+                Hatsune Miku 39's Live 2011
+            </>
+        ),
+        links: {
+            linkedin: 'https://baidu.com',
+            twitter: 'https://google.com',
+        },
+    },
+    {
+        name: 'Maciej Burno',
+        desc: (
+            <>
+                Game Veteran. First game:
+                <br />
+                Contra, most /played: WoW
+            </>
+        ),
+        links: {
+            linkedin: 'https://baidu.com',
+            twitter: 'https://google.com',
+        },
+    },
+    {
+        name: 'Amber Drolma',
+        desc: (
+            <>
+                Capoeirista CBLA Clan;
+                <br />
+                Ecstatic dance Koh Phangan
+            </>
+        ),
+        links: {
+            linkedin: 'https://baidu.com',
+            twitter: 'https://google.com',
+        },
+    },
+];

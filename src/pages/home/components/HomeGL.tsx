@@ -121,7 +121,7 @@ export const HomeGL: React.FC<HomeGLProps> = (props) => {
         // camera.add(helper);
 
         const axesHelper = new THREE.AxesHelper(10);
-        scene.add(axesHelper);
+        // scene.add(axesHelper);
 
         const controls = new OrbitControls(camera, labelRenderer.domElement);
         controls.target.set(0, 0, 0);
