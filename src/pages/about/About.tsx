@@ -9,10 +9,10 @@ export const About: React.FC = () => {
     return (
         <div className='about'>
             <div className='about__info'>
-                {LOCATION_INFO.map((info) => {
+                {LOCATION_INFO.map((info, i) => {
                     return (
                         <div
-                            key={info.name}
+                            key={info.name + i}
                             className='about__info-item'
                             style={{ left: info.x, top: info.y }}
                         >
