@@ -14,9 +14,7 @@ export const Wall: React.FC = () => {
                 });
             },
             onHide: () => {
-                gsap.set('.page-wrap-wall', {
-                    display: 'none',
-                });
+                gsap.set('.page-wrap-wall', {});
             },
         };
     });

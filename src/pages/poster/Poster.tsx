@@ -60,19 +60,19 @@ export const Poster: React.FC = () => {
         let width = 0;
         let height = 0;
         const ratio = 4196 / 2160;
-        if (containerSize) {
-            if (containerSize.width / containerSize.height >= ratio) {
-                // 补充点宽高，防止视差滚动时露馅
-                width = containerSize.width + 60;
-                height = width / ratio;
-            } else {
-                // 补充点宽高，防止视差滚动时露馅
-                height = containerSize.height + 30;
-                width = ratio * height;
-            }
-            left = (width - containerSize.width) / -2;
-            top = (height - containerSize.height) / -2;
+        const containerW = containerSize?.width || window.innerWidth || 1;
+        const containerH = containerSize?.height || window.innerHeight || 1;
+        if (containerW / containerH >= ratio) {
+            // 补充点宽高，防止视差滚动时露馅
+            width = containerW + 60;
+            height = width / ratio;
+        } else {
+            // 补充点宽高，防止视差滚动时露馅
+            height = containerH + 30;
+            width = ratio * height;
         }
+        left = (width - containerW) / -2;
+        top = (height - containerH) / -2;
         bgRef.current.style.left = `${left}px`;
         bgRef.current.style.top = `${top}px`;
         bgRef.current.style.width = `${width}px`;

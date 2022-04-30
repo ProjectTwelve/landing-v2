@@ -7,8 +7,7 @@ import './LoadingGL.less';
 
 export const LoadingGL = (props) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const visible = useContext(AppContext)?.visiblePage === PageType.Loading;
-    useLoadingGL(canvasRef, visible);
+    useLoadingGL(canvasRef);
 
     return (
         <canvas
@@ -20,8 +19,7 @@ export const LoadingGL = (props) => {
 };
 
 function useLoadingGL(
-    canvasRef: React.RefObject<HTMLCanvasElement>,
-    visible: boolean
+    canvasRef: React.RefObject<HTMLCanvasElement>
 ) {
     usePageVisible(PageType.Loading, () => {
         const canvas = canvasRef.current;
