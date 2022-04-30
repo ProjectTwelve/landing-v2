@@ -7,6 +7,19 @@
     overflow: hidden;
     background: #000;
 
+    &__progress {
+        .f-align(40vw, 4px);
+        background: #fff;
+        &-inner {
+            .f-pseudo;
+            // todo 等待设计稿
+            background: #f00;
+            transform: scaleX(0);
+            transition: transform 0.6s;
+            transform-origin: left center;
+        }
+    }
+
     &__logo {
         position: absolute;
         display: flex;

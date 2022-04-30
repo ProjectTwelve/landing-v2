@@ -1,10 +1,16 @@
 # P12 官网 PC 版
 
+## 环境和规范
+
+-   环境要求：nodejs >= 12.14
+-   编码规范：见`.eslintrc.json`
+-   CSS 规范：使用 `BEM`
+
 ## Get Started
 
 1. `npm install`
 2. `npm run start`
-3. enjoy! http://localhost:3000
+3. http://localhost:3000 enjoy!
 
 ## 打包部署
 

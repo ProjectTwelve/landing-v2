@@ -9,6 +9,9 @@ export const Loading: React.FC = () => {
     usePageVisible(PageType.Loading, () => {
         const handleProgress = (progress) => {
             console.log('progress', progress);
+            gsap.set('.loading__progress-inner', {
+                scaleX: progress,
+            });
         };
         loadingEE.on('progress', handleProgress);
 
@@ -32,6 +35,9 @@ export const Loading: React.FC = () => {
     return (
         <div className='loading'>
             <LoadingGL />
+            <div className='loading__progress'>
+                <div className='loading__progress-inner'></div>
+            </div>
             <div className='loading__logo'>
                 <img
                     id='loading-icon'

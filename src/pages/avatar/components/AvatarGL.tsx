@@ -1,27 +1,17 @@
-import React, {
-    useRef,
-    useEffect,
-    forwardRef,
-    useImperativeHandle,
-} from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
-import * as THREE from 'three';
-import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-// import { Fire } from 'three/examples/jsm/objects/Fire';
-import { getPublicAssetPath } from '../../../utils';
 import { gsap } from 'gsap';
-import { get } from 'lodash-es';
-import './AvatarGL.less';
-import { AvatarType } from '../Avatar.config';
-import { AvatarGLItemDokv } from './utils/AvatarGLItemDokv';
-import { AvatarGLItemCartoon } from './utils/AvatarGLItemCartoon';
-import { AvatarGLItemLowpoly } from './utils/AvatarGLItemLowpoly';
-import { usePageVisible } from '../../app/App.utils';
+import React, {
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+} from 'react';
 import { PageType } from '../../app/App.config';
+import { usePageVisible } from '../../app/App.utils';
+import { AvatarType } from '../Avatar.config';
+import './AvatarGL.less';
+import { AvatarGLItemCartoon } from './utils/AvatarGLItemCartoon';
+import { AvatarGLItemDokv } from './utils/AvatarGLItemDokv';
+import { AvatarGLItemLowpoly } from './utils/AvatarGLItemLowpoly';
 
 export interface AvatarGLRef {
     switchTo: (type: AvatarType | null) => void;
