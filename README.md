@@ -3,6 +3,7 @@
 ## 环境和规范
 
 -   环境要求：nodejs >= 12.14
+-   技术栈：Typescript、React、ThreeJs、GreenSock
 -   编码规范：见`.eslintrc.json`
 -   CSS 规范：使用 `BEM`
 
