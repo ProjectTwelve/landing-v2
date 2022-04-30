@@ -43,7 +43,8 @@ export const Loading: React.FC = () => {
                 <a
                     className='loading__icon-link'
                     target='_blank'
-                    href='https://t.me/project_twelve' rel="noreferrer"
+                    href='https://t.me/project_twelve'
+                    rel='noreferrer'
                 >
                     <svg
                         className='telegram-icon'
@@ -60,7 +61,7 @@ export const Loading: React.FC = () => {
                 <a
                     className='loading__icon-link'
                     target='_blank'
-                    href='https://twitter.com/_p12_' rel="noreferrer"
+                    href='https://twitter.com/_p12_'
                 >
                     <svg
                         className='twitter-icon'
@@ -73,7 +74,8 @@ export const Loading: React.FC = () => {
                 <a
                     className='loading__icon-link'
                     target='_blank'
-                    href='https://discord.gg/EMrbsZPbxs' rel="noreferrer"
+                    href='https://discord.gg/EMrbsZPbxs'
+                    rel='noreferrer'
                 >
                     <svg
                         className='discord-icon'
