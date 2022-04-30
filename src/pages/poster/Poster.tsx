@@ -86,7 +86,7 @@ export const Poster: React.FC = () => {
                     <img
                         className='poster__img'
                         alt='poster-img'
-                        src={require('../../assets/poster/0.png')}
+                        src={require('../../assets/poster/0.jpg')}
                         onLoad={() =>
                             loadingEE.emit(
                                 `progress.${LoadingSourceType.POSTER_IMG_0}`,
