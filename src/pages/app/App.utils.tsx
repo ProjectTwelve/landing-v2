@@ -3,14 +3,19 @@ import { PageType } from './App.config';
 import EE from 'eventemitter3';
 import { mapValues, mean } from 'lodash-es';
 
-export const AppContext = createContext<{
+interface AppContextValue {
     visiblePage: PageType;
     setVisiblePage: (t: PageType) => void;
-        } | null>(null);
+}
+export const AppContext = createContext<AppContextValue | null>(null);
 
+/** 界面的 callback 集合 */
 type VisibleHookCallBacks = {
+    /** 界面销毁 */
     onDestroy?: () => void;
+    /** 界面显示 */
     onVisible?: () => void;
+    /** 界面隐藏 */
     onHide?: () => void;
 };
 /** 界面显示、退出、销毁相关逻辑 */
@@ -22,9 +27,6 @@ export const usePageVisible = function (
     const callbacksRef = useRef<VisibleHookCallBacks | undefined>({});
     useEffect(() => {
         callbacksRef.current = effectFun();
-
-        // TODO 看是否处理
-        // callbacksRef.current?.onHide?.();
 
         return () => {
             callbacksRef.current?.onHide?.();

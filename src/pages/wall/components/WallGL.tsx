@@ -14,6 +14,7 @@ export const WallGL = (props) => {
         }
         const container = containerRef.current;
         // 处理加载等逻辑
+
         return {
             onVisible: () => {
                 // 界面显示的逻辑，加载副作用
