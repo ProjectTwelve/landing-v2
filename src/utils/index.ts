@@ -8,6 +8,11 @@ for (let x = 0; x < vendors.length && !window.requestAnimationFrame; x++) {
         window[vendors[x] + 'CancelAnimationFrame'] ||
         window[vendors[x] + 'CancelRequestAnimationFrame'];
 }
+// const oldRAF = window.requestAnimationFrame;
+// window.requestAnimationFrame = (fun) => {
+//     console.log('window.requestAnimationFrame');
+//     return oldRAF(fun);
+// };
 
 export function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
