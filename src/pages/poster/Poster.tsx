@@ -21,7 +21,7 @@ export const Poster: React.FC = () => {
             return;
         }
         // 视差滚动
-        const parallaxInstance = new Parallax(bgRef.current, {});
+        const parallax = new Parallax(bgRef.current, {});
         // swiper
         let swiper: Swiper;
 
@@ -42,10 +42,10 @@ export const Poster: React.FC = () => {
                     display: 'none',
                 });
 
-                swiper && swiper.destroy();
+                swiper?.destroy();
             },
             onDestroy: () => {
-                parallaxInstance.destroy();
+                parallax?.destroy();
             },
         };
     });
