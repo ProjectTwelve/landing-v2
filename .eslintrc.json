@@ -1,83 +1,9 @@
 {
-    "env": {
-        "es6": true,
-        "browser": true
-    },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:react-hooks/recommended"
-    ],
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 6,
-        "sourceType": "module"
-    },
-    "plugins": ["react", "jsx-a11y", "react-hooks"],
-    "settings": {
-        "react": {
-            "version": "detect"
-        }
-    },
-    "globals": {
-        "JSX": true,
-        "React": true,
-        "Promise": true
-    },
+    "extends": ["react-app"],
     "rules": {
-        "no-unused-vars": "off",
-        "react/jsx-filename-extension": [1, { "extensions": [".jsx", "tsx"] }],
-        "react/jsx-no-target-blank": "off",
-        "linebreak-style": ["off", "windows"],
-        "no-console": "off",
-        "import/no-unresolved": "off",
-        "react/destructuring-assignment": 0,
-        "react/prop-types": 0,
-        "import/no-extraneous-dependencies": "off",
-        "no-use-before-define": "off",
-        "no-param-reassign": "off",
-        "no-plusplus": "off",
-        "react/jsx-props-no-spreading": "off",
-        "no-lonely-if": "off",
-        "jsx-a11y/no-static-element-interactions": "off",
-        "jsx-a11y/click-events-have-key-events": "off",
-        "consistent-return": "off",
-        "jsx-a11y/label-has-associated-control": "off",
-        "no-unused-expressions": [
-            "error",
-            { "allowShortCircuit": true, "allowTernary": true }
-        ],
-        "global-require": "off",
-        "array-callback-return": "off",
-        "import/prefer-default-export": "off",
-        "prefer-promise-reject-errors": "off",
-        "no-continue": "off",
         "indent": ["error", 4, { "SwitchCase": 1 }],
-        "react/jsx-indent": ["error", 4],
-        "react/jsx-indent-props": ["error", 4],
-        "react/react-in-jsx-scope": "off",
-        "no-trailing-spaces": "off",
-        "react/jsx-no-bind": "off",
-        "import/no-dynamic-require": "off",
-        "jsx-a11y/no-noninteractive-element-interactions": "off",
-        "no-shadow": "off",
-        "max-len": [
-            "error",
-            {
-                "ignoreComments": true,
-                "code": 100,
-                "ignoreTrailingComments": true,
-                "ignoreUrls": true,
-                "ignoreStrings": true,
-                "ignoreTemplateLiterals": true,
-                "ignoreRegExpLiterals": true
-            }
-        ],
-        "eqeqeq": ["warn", "smart"],
-        "radix": ["error", "as-needed"],
-        "no-underscore-dangle": "off",
-        "import/extensions": "off"
+        "@typescript-eslint/no-unused-vars": "off",
+        "react-hooks/exhaustive-deps": "off",
+        "jsx-a11y/anchor-has-content": "off"
     }
 }

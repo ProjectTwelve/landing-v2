@@ -70,7 +70,7 @@ export const CONTENT_PAGES = [
                     <a
                         href='https://twitter.com/_p12_'
                         target='_blank'
-                        className='nav-community__item nav-community__item--twitter'
+                        className='nav-community__item nav-community__item--twitter' rel="noreferrer"
                     >
                         <i></i>
                         Twitter
@@ -78,7 +78,7 @@ export const CONTENT_PAGES = [
                     <a
                         href='https://discord.com/invite/EMrbsZPbxs'
                         target='_blank'
-                        className='nav-community__item nav-community__item--discord'
+                        className='nav-community__item nav-community__item--discord' rel="noreferrer"
                     >
                         <i></i>
                         Discord
@@ -86,7 +86,7 @@ export const CONTENT_PAGES = [
                     <a
                         href='https://t.me/project_twelve'
                         target='_blank'
-                        className='nav-community__item nav-community__item--telegram'
+                        className='nav-community__item nav-community__item--telegram' rel="noreferrer"
                     >
                         <i></i>
                         Telegram

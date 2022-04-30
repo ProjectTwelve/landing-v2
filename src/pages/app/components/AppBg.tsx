@@ -134,7 +134,7 @@ export const AppBg: React.FC = () => {
                 stars.push(aStar);
             }
         }
-    }, [containerRef.current]);
+    }, []);
 
     return <div className='app-bg' ref={containerRef} />;
 };

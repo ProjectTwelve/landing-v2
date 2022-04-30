@@ -85,6 +85,7 @@ export const Poster: React.FC = () => {
                 <div className='poster__img-wrap poster__img-wrap--0'>
                     <img
                         className='poster__img'
+                        alt='poster-img'
                         src={require('../../assets/poster/0.png')}
                         onLoad={() =>
                             loadingEE.emit(
@@ -101,6 +102,7 @@ export const Poster: React.FC = () => {
                 >
                     <img
                         className='poster__img'
+                        alt='poster-img'
                         src={require('../../assets/poster/1.png')}
                         onLoad={() =>
                             loadingEE.emit(
@@ -116,6 +118,7 @@ export const Poster: React.FC = () => {
                 >
                     <img
                         className='poster__img'
+                        alt='poster-img'
                         src={require('../../assets/poster/2.png')}
                         onLoad={() =>
                             loadingEE.emit(
@@ -131,6 +134,7 @@ export const Poster: React.FC = () => {
                 >
                     <img
                         className='poster__img'
+                        alt='poster-img'
                         src={require('../../assets/poster/3.png')}
                         onLoad={() =>
                             loadingEE.emit(
@@ -146,6 +150,7 @@ export const Poster: React.FC = () => {
                 >
                     <img
                         className='poster__img'
+                        alt='poster-img'
                         src={require('../../assets/poster/4.png')}
                         onLoad={() =>
                             loadingEE.emit(
@@ -174,6 +179,7 @@ export const Poster: React.FC = () => {
                 >
                     <img
                         className='poster__img'
+                        alt='poster-img'
                         src={require('../../assets/poster/5.png')}
                         onLoad={() =>
                             loadingEE.emit(

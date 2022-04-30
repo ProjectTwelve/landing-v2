@@ -6,7 +6,7 @@ import { mapValues, mean } from 'lodash-es';
 export const AppContext = createContext<{
     visiblePage: PageType;
     setVisiblePage: (t: PageType) => void;
-} | null>(null);
+        } | null>(null);
 
 type VisibleHookCallBacks = {
     onDestroy?: () => void;

@@ -36,6 +36,7 @@ export const About: React.FC = () => {
                         >
                             {info.img ? (
                                 <img
+                                    alt='origin'
                                     className={classnames(
                                         'about__dot',
                                         `about__dot--${info.type}`
@@ -97,11 +98,13 @@ export const About: React.FC = () => {
                                         className='about__partner-text-link about__partner-text-link--linkedin'
                                         href={v.links.linkedin}
                                         target='_blank'
+                                        rel='noreferrer'
                                     ></a>
                                     <a
                                         className='about__partner-text-link about__partner-text-link--twitter'
                                         href={v.links.twitter}
                                         target='_blank'
+                                        rel='noreferrer'
                                     ></a>
                                 </div>
                             </div>
@@ -121,6 +124,7 @@ export const About: React.FC = () => {
                 </div>
                 <div className='about__helper-item'>
                     <img
+                        alt='origin'
                         src={require('../../assets/about/origin-china.png')}
                         className='about__dot about__dot--origin'
                     ></img>
