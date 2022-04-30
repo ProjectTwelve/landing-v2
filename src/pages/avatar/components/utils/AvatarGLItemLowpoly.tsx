@@ -132,21 +132,25 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
         if (this.renderedImageIndex !== index && this.context) {
             this.renderedImageIndex = index;
             this.context.drawImage(this.imageDataArray[index], 0, 0);
-            const imageData = this.context.getImageData(
-                0,
-                0,
-                this.canvas.width,
-                this.canvas.height
-            );
-            const data = imageData.data;
-            for (let i = 0; i < data.length; i += 4) {
-                if (data[i] + data[i + 1] + data[i + 2] < 10) {
-                    data[i + 3] = 0;
-                } else if (data[i] + data[i + 1] + data[i + 2] < 30) {
-                    data[i + 3] = 0.6;
-                }
-            }
-            this.context.putImageData(imageData, 0, 0);
+            // const imageData = this.context.getImageData(
+            //     0,
+            //     0,
+            //     this.canvas.width,
+            //     this.canvas.height
+            // );
+            // const data = imageData.data;
+            // for (let i = 0; i < data.length; i += 4) {
+            //     if (data[i] + data[i + 1] + data[i + 2] < 5) {
+            //         data[i + 3] = 0;
+            //     } else if (data[i] + data[i + 1] + data[i + 2] < 10) {
+            //         data[i + 3] = 0.1;
+            //     } else if (data[i] + data[i + 1] + data[i + 2] < 20) {
+            //         data[i + 3] = 0.3;
+            //     } else if (data[i] + data[i + 1] + data[i + 2] < 40) {
+            //         data[i + 3] = 0.7;
+            //     }
+            // }
+            // this.context.putImageData(imageData, 0, 0);
         }
     }
     protected resize() {
