@@ -9,6 +9,7 @@ import gsap from 'gsap';
 
 export const App = () => {
     const [current, setCurrent] = useState(PageType.Loading);
+    // const [current, setCurrent] = useState(PageType.Home);
     const isLoading = current === PageType.Loading;
     const [musicPlaying, setMusicPlaying] = useState(true);
 

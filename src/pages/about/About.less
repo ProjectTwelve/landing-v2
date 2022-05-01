@@ -51,7 +51,8 @@
     &__helper {
         position: absolute;
         left: (78 / @designWidth * 100%);
-        bottom: (80 / @designHeight * 100%);
+        @bottomPercent: (90 / @designHeight * 100%);
+        bottom: calc(@bottomPercent + 70px);
 
         &-item {
             display: flex;

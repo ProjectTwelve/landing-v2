@@ -62,29 +62,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         container.appendChild(renderer.domElement);
 
         const scene = new THREE.Scene();
-        const pmremGenerator = new THREE.PMREMGenerator(renderer);
-        // scene.background = new THREE.Color(0x000000);
-        // scene.background = new THREE.Color(0xbfe3dd);
-        // scene.environment = pmremGenerator.fromScene(
-        //     new RoomEnvironment(),
-        //     0.04
-        // ).texture;
-        // const ambient = new THREE.AmbientLight(0xffffff, 0.1);
-        // scene.add(ambient);
-
-        // const spotLight = new THREE.SpotLight(0xffffff, 1);
-        // spotLight.position.set(10, 14, 16);
-        // spotLight.angle = Math.PI / 4;
-        // spotLight.penumbra = 0.1;
-        // spotLight.decay = 2;
-        // spotLight.distance = 200;
-        // spotLight.castShadow = true;
-        // spotLight.shadow.mapSize.width = 512;
-        // spotLight.shadow.mapSize.height = 512;
-        // spotLight.shadow.camera.near = 10;
-        // spotLight.shadow.camera.far = 200;
-        // spotLight.shadow.focus = 1;
-        // scene.add(spotLight);
 
         const labelRenderer = new CSS2DRenderer();
         labelRenderer.setSize(container.clientWidth, container.clientHeight);
@@ -97,7 +74,8 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             1,
             100
         );
-        camera.position.set(-2.17, 9.396, 0.0408);
+        // camera.position.set(-2.17, 9.396, 0.0408);
+        camera.position.set(3360 / 400, 473.3 / 400, 1240 / 400);
         const pointerData = [
             {
                 position: new THREE.Vector3(3.1, -1, 0),
@@ -122,14 +100,44 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         ];
         camera.layers.enable(1);
 
-        const light = new THREE.DirectionalLight(0xffffff, 1);
-        light.position.copy(camera.position);
-        scene.add(light);
-        // const helper = new THREE.DirectionalLightHelper(light, 5);
-        // camera.add(helper);
+        const hemisphereLight = new THREE.HemisphereLight(
+            0xffffbb,
+            0x080820,
+            1
+        );
+        scene.add(hemisphereLight);
+        const hemisphereHelper = new THREE.HemisphereLightHelper(
+            hemisphereLight,
+            10
+        );
+        scene.add(hemisphereHelper);
+
+        const directionalLight = new THREE.DirectionalLight(0x9bbdfe, 1);
+        directionalLight.position.set(-99.75 / 400, -979.9 / 400, 3694 / 400);
+        // scene.add(directionalLight);
+        // const directionalHelper = new THREE.DirectionalLightHelper(
+        //     directionalLight,
+        //     10
+        // );
+        // scene.add(directionalHelper);
+
+        // const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        // scene.add(ambientLight);
+
+        const spotLight = new THREE.SpotLight(0xfec28e, 10);
+        spotLight.position.set(1046 / 400, 2958 / 400, -1425 / 400);
+        spotLight.castShadow = true;
+        // spotLight.shadow.mapSize.width = 512;
+        // spotLight.shadow.mapSize.height = 512;
+        // spotLight.shadow.camera.near = 10;
+        // spotLight.shadow.camera.far = 200;
+        // spotLight.shadow.focus = 1;
+        scene.add(spotLight);
+        const spotLightHelper = new THREE.SpotLightHelper(spotLight, 10);
+        scene.add(spotLightHelper);
 
         const axesHelper = new THREE.AxesHelper(10);
-        // scene.add(axesHelper);
+        scene.add(axesHelper);
 
         const controls = new OrbitControls(camera, labelRenderer.domElement);
         controls.target.set(0, 0, 0);
@@ -137,8 +145,8 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         controls.enablePan = true;
         controls.enableDamping = true;
         controls.enableZoom = true;
-        controls.autoRotate = true;
-        controls.autoRotateSpeed = 1;
+        // controls.autoRotate = true;
+        // controls.autoRotateSpeed = 1;
 
         const loader = new GLTFLoader();
         // const dracoLoader = new DRACOLoader();
@@ -191,7 +199,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             const delta = clock.getDelta();
             mixer?.update?.(delta);
             controls.update();
-            light.position.copy(camera.position);
+            // light.position.copy(camera.position);
 
             renderer.render(scene, camera);
             labelRenderer.render(scene, camera);
