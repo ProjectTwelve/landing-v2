@@ -137,16 +137,13 @@
             transition: 0.3s;
             background-position: center;
             border-radius: 50%;
+            width: 102px;
+            height: 102px;
 
-            &--1 {
-                .bgFull2x('about/partner-1@2x.png');
+            > img {
+                .f-pseudo;
             }
-            &--2 {
-                .bgFull2x('about/partner-2@2x.png');
-            }
-            &--3 {
-                .bgFull2x('about/partner-3@2x.png');
-            }
+
             &::before {
                 content: '';
                 .f-pseudo;
@@ -154,6 +151,7 @@
                 background: #000;
                 opacity: 0.65;
                 transition: 0.3s;
+                z-index: 4;
             }
 
             &:hover,

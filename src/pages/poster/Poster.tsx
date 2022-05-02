@@ -31,6 +31,7 @@ export const Poster: React.FC = () => {
                 gsap.set('.page-wrap-poster', {
                     display: 'block',
                 });
+                handleResize();
 
                 parallax?.enable();
                 swiper = new Swiper('.poster-swiper-container', {
@@ -55,31 +56,7 @@ export const Poster: React.FC = () => {
 
     // 根据原画宽高比计算出 cover 的宽高
     useEffect(() => {
-        if (!bgRef.current) {
-            return;
-        }
-        let left = 0;
-        let top = 0;
-        let width = 0;
-        let height = 0;
-        const ratio = 4196 / 2160;
-        const containerW = containerSize?.width || window.innerWidth || 1;
-        const containerH = containerSize?.height || window.innerHeight || 1;
-        if (containerW / containerH >= ratio) {
-            // 补充点宽高，防止视差滚动时露馅
-            width = containerW + 60;
-            height = width / ratio;
-        } else {
-            // 补充点宽高，防止视差滚动时露馅
-            height = containerH + 30;
-            width = ratio * height;
-        }
-        left = (width - containerW) / -2;
-        top = (height - containerH) / -2;
-        bgRef.current.style.left = `${left}px`;
-        bgRef.current.style.top = `${top}px`;
-        bgRef.current.style.width = `${width}px`;
-        bgRef.current.style.height = `${height}px`;
+        handleResize();
     }, [containerSize]);
 
     return (
@@ -211,4 +188,32 @@ export const Poster: React.FC = () => {
             </div>
         </div>
     );
+
+    function handleResize() {
+        if (!bgRef.current) {
+            return;
+        }
+        let left = 0;
+        let top = 0;
+        let width = 0;
+        let height = 0;
+        const ratio = 4196 / 2160;
+        const containerW = containerSize?.width || window.innerWidth || 1;
+        const containerH = containerSize?.height || window.innerHeight || 1;
+        if (containerW / containerH >= ratio) {
+            // 补充点宽高，防止视差滚动时露馅
+            width = containerW + 60;
+            height = width / ratio;
+        } else {
+            // 补充点宽高，防止视差滚动时露馅
+            height = containerH + 30;
+            width = ratio * height;
+        }
+        left = (width - containerW) / -2;
+        top = (height - containerH) / -2;
+        bgRef.current.style.left = `${left}px`;
+        bgRef.current.style.top = `${top}px`;
+        bgRef.current.style.width = `${width}px`;
+        bgRef.current.style.height = `${height}px`;
+    }
 };

@@ -45,8 +45,8 @@
         top: 50%;
         transform: translate(0, -50%);
         left: (60 / @designWidth * 100%);
+        user-select: none;
     }
-
     &__slogan {
         .bgFull2x('home/slogan@2x.png');
         margin-left: -6px;
@@ -62,6 +62,29 @@
     }
     &__small-text-2 {
         padding-bottom: 45px;
+    }
+
+    &__extra {
+        position: absolute;
+        z-index: 10;
+        top: 50%;
+        transform: translate(0, -50%);
+        right: (140 / @designWidth * 100%);
+        pointer-events: none;
+        padding-bottom: 20px;
+
+        &-title {
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: 16px;
+
+            &::after {
+                display: none;
+            }
+        }
+        &-text {
+            line-height: 24px;
+        }
     }
 
     &__btn {

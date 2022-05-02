@@ -86,6 +86,7 @@ export const About: React.FC = () => {
                             )}
                             onClick={() => setCurrentPartner(i)}
                         >
+                            <img src={v.img} alt='avatar' />
                             <div className='about__partner-text'>
                                 <div className='about__partner-text-name'>
                                     {v.name}
@@ -94,18 +95,22 @@ export const About: React.FC = () => {
                                     {v.desc}
                                 </div>
                                 <div className='about__partner-text-links'>
-                                    <a
-                                        className='about__partner-text-link about__partner-text-link--linkedin'
-                                        href={v.links.linkedin}
-                                        target='_blank'
-                                        rel='noreferrer'
-                                    ></a>
-                                    <a
-                                        className='about__partner-text-link about__partner-text-link--twitter'
-                                        href={v.links.twitter}
-                                        target='_blank'
-                                        rel='noreferrer'
-                                    ></a>
+                                    {!!v.links.linkedin && (
+                                        <a
+                                            className='about__partner-text-link about__partner-text-link--linkedin'
+                                            href={v.links.linkedin}
+                                            target='_blank'
+                                            rel='noreferrer'
+                                        ></a>
+                                    )}
+                                    {!!v.links.twitter && (
+                                        <a
+                                            className='about__partner-text-link about__partner-text-link--twitter'
+                                            href={v.links.twitter}
+                                            target='_blank'
+                                            rel='noreferrer'
+                                        ></a>
+                                    )}
                                 </div>
                             </div>
                         </div>

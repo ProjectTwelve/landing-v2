@@ -123,6 +123,7 @@ export const LOCATION_INFO = [
 
 export const ABOUT_PARTNERS = [
     {
+        img: require('../../assets/about/partner-1@2x.png'),
         name: 'Boyang | Founder',
         desc: (
             <>
@@ -137,6 +138,7 @@ export const ABOUT_PARTNERS = [
         },
     },
     {
+        img: require('../../assets/about/partner-2@2x.png'),
         name: 'Maciej Burno',
         desc: (
             <>
@@ -151,6 +153,7 @@ export const ABOUT_PARTNERS = [
         },
     },
     {
+        img: require('../../assets/about/partner-3@2x.png'),
         name: 'Amber Drolma',
         desc: (
             <>
