@@ -68,7 +68,7 @@ export const Home: React.FC = () => {
                     }
                 );
                 tl.fromTo(
-                    '.home__subtitle',
+                    '.home__sub-title',
                     {
                         y: 200,
                         opacity: 0,
@@ -81,7 +81,7 @@ export const Home: React.FC = () => {
                     }
                 );
                 tl.fromTo(
-                    '.home__text',
+                    '.home__small-title',
                     {
                         y: 200,
                         opacity: 0,
@@ -131,15 +131,14 @@ export const Home: React.FC = () => {
             <HomeGL ref={homeGLRef} />
             <div className='home__info'>
                 <div className='home__slogan'></div>
-                <div className='home__subtitle'>Metaworld</div>
-                <div className='home__text'>
+                <div className='app-sub-title home__sub-title'>Metaworld</div>
+                <div className='app-small-title home__small-title'>
                     NOMOCRAC
-                    <i className='home__text-block'></i>
                 </div>
-                <div className='home__small-text-1'>
+                <div className='app-small-text home__small-text-1'>
                     A Metaverse Economy Backbone.
                 </div>
-                <div className='home__small-text-2'>
+                <div className='app-small-text home__small-text-2'>
                     A complete set of technologies, tools,and services-
                     <br />
                     for developers, players,and merchants alike

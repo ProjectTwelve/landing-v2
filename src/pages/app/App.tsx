@@ -41,7 +41,7 @@ export const App = () => {
     return (
         <AppContext.Provider value={contextValue}>
             <div className={classnames('app', { 'app--loading': isLoading })}>
-                <AppBg />
+                {/* <AppBg /> */}
                 <div className='content'>
                     {CONTENT_PAGES.map((p, i) => {
                         return (

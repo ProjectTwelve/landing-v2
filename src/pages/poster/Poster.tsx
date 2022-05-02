@@ -193,6 +193,22 @@ export const Poster: React.FC = () => {
                     />
                 </div>
             </div>
+            <div className='poster__info-wrap'>
+                <div className='poster__info'>
+                    <div className='poster__slogan'>Project Twelve</div>
+                    <div className='app-sub-title poster__sub-title'>
+                        Game Character
+                    </div>
+                    <div className='app-small-text poster__small-text-1'>
+                        A Metaverse Economy Backbone.
+                    </div>
+                    <div className='app-small-text poster__small-text-2'>
+                        A complete set of technologies, tools,and services-for
+                        <br />
+                        developers, players,and merchants alike
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

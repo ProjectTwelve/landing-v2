@@ -9,35 +9,42 @@
     &__bg {
         position: absolute;
         overflow: hidden;
-        // left: 50%;
-        // top: 50%;
-        // transform: translate(-50%, -50%);
     }
     &__img-wrap {
         .f-pseudo();
     }
     &__img {
         .f-pseudo();
-        // background-size: auto 100%;
-        // background-position: center;
-        // &--0 {
-        //     .bg('poster/0.png');
-        // }
-        // &--1 {
-        //     .bg('poster/1.png');
-        // }
-        // &--2 {
-        //     .bg('poster/2.png');
-        // }
-        // &--3 {
-        //     .bg('poster/3.png');
-        // }
-        // &--4 {
-        //     .bg('poster/4.png');
-        // }
-        // &--5 {
-        //     .bg('poster/5.png');
-        // }
+    }
+
+    &__info {
+        position: absolute;
+        z-index: 10;
+        bottom: 50%;
+        margin-bottom: 65px;
+        right: (60 / @designWidth * 100%);
+        text-align: right;
+
+        &-wrap {
+            .f-pseudo();
+        }
+    }
+    &__slogan {
+        font-family: TTLakes;
+        font-size: 80px;
+        line-height: 84px;
+        color: #fff;
+    }
+    &__sub-title {
+        font-size: 48px;
+        line-height: 48px;
+        margin-bottom: 12px;
+    }
+    &__small-text-1 {
+        line-height: 22px;
+    }
+    &__small-text-2 {
+        line-height: 22px;
     }
 }
 
