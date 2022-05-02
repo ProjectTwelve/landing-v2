@@ -8,15 +8,35 @@
     background: #000;
 
     &__progress {
-        .f-align(40vw, 4px);
-        background: #fff;
-        &-inner {
-            .f-pseudo;
-            // todo 等待设计稿
-            background: #f00;
-            transform: scaleX(0);
-            transition: transform 0.6s;
-            transform-origin: left center;
+        .f-align(100%, 100px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        user-select: none;
+        padding-top: 5.1vh;
+        &-dot {
+            display: block;
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            opacity: 0.8;
+            margin: 0 5.5px;
+            border-radius: 50%;
+            &--1,
+            &--6 {
+                opacity: 0.1;
+            }
+            &--2,
+            &--5 {
+                opacity: 0.4;
+            }
+        }
+        &-text {
+            font-size: 32px;
+            line-height: 32px;
+            color: #fff;
+            text-align: center;
+            width: 92px;
         }
     }
 

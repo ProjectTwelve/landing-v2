@@ -5,12 +5,23 @@ import './Loading.less';
 import { PageType } from '../app/App.config';
 import gsap from 'gsap';
 
+const loadingProgressObj = { num: 0 };
+
 export const Loading: React.FC = () => {
+    const progressTextRef = useRef<HTMLSpanElement>(null);
+    let tween: gsap.core.Tween;
+
     usePageVisible(PageType.Loading, () => {
         const handleProgress = (progress) => {
-            console.log('progress', progress);
-            gsap.set('.loading__progress-inner', {
-                scaleX: progress,
+            tween?.kill();
+            tween = gsap.to(loadingProgressObj, {
+                duration: 0.6,
+                num: progress * 100,
+                onUpdate: function () {
+                    progressTextRef.current!.innerHTML = `${Math.floor(
+                        loadingProgressObj.num
+                    )}`;
+                },
             });
         };
         loadingEE.on('progress', handleProgress);
@@ -25,6 +36,7 @@ export const Loading: React.FC = () => {
                 gsap.set('.page-wrap-loading', {
                     display: 'none',
                 });
+                tween?.kill();
             },
             onDestroy: () => {
                 loadingEE.off('progress', handleProgress);
@@ -36,7 +48,15 @@ export const Loading: React.FC = () => {
         <div className='loading'>
             <LoadingGL />
             <div className='loading__progress'>
-                <div className='loading__progress-inner'></div>
+                <div className='loading__progress-dot loading__progress-dot--1'></div>
+                <div className='loading__progress-dot loading__progress-dot--2'></div>
+                <div className='loading__progress-dot loading__progress-dot--3'></div>
+                <div className='loading__progress-text'>
+                    <span ref={progressTextRef}>0</span>%
+                </div>
+                <div className='loading__progress-dot loading__progress-dot--4'></div>
+                <div className='loading__progress-dot loading__progress-dot--5'></div>
+                <div className='loading__progress-dot loading__progress-dot--6'></div>
             </div>
             <div className='loading__logo'>
                 <img

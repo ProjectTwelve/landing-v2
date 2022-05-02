@@ -55,15 +55,6 @@ export const Home: React.FC = () => {
                         }
                     );
                 tl.fromTo(
-                    '.home-gl',
-                    { x: 0 },
-                    {
-                        duration: 1.5,
-                        delay: -0.5,
-                        x: '15%',
-                    }
-                );
-                tl.fromTo(
                     '.home__slogan',
                     {
                         y: 200,
@@ -140,7 +131,7 @@ export const Home: React.FC = () => {
             <HomeGL ref={homeGLRef} />
             <div className='home__info'>
                 <div className='home__slogan'></div>
-                <div className='home__subtitle'>Empowering Metaworld</div>
+                <div className='home__subtitle'>Metaworld</div>
                 <div className='home__text'>
                     NOMOCRAC
                     <i className='home__text-block'></i>

@@ -15,11 +15,11 @@ export const App = () => {
 
     useEffect(() => {
         const handleProgress = (progress) => {
-            // loading 界面 且 loading 完成
+            // 当前是 loading 界面 且 loading 完成
             if (progress >= 1) {
                 setTimeout(() => {
                     setCurrent(PageType.Home);
-                }, 300);
+                }, 800);
             }
         };
         if (isLoading) {
