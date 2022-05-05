@@ -15,34 +15,6 @@
     </head>
     <body>
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script> -->
-        <script>
-            const buffer = {};
-            function hexToDec(hexString){
-                return parseInt(hexString, 16);
-            }
-            function onProportyChange(value, name) {
-                console.log(value);
-                let _v;
-                if(name === 'color1Hex' || name === 'color2Hex') {
-                    _v = hexToDec(value.replace('#', ''))
-                
-                } else {
-                    _v = value
-                }
-                if(name) {
-                    window.hpgButterfly.properties[name] = _v;
-                }
-            }
-
-            function replacer(key,value)
-            {
-                if (key=="scene") return undefined;
-                else if(key === "programs") return undefined;
-                else if(key === "renderer") return undefined;
-                else return value;
-            }
-            // oninput="onProportyChange(this.value)"
-        </script>
         <canvas width="1920" height="841" style="width: 1280px; height: 561px;"></canvas>
         <!-- Required javascript files -->
         <script src="./static/index.js"></script>
@@ -157,17 +129,6 @@
             function render () {
                 var newTime = +new Date() / 1000;
                 var deltaTime = newTime - time;
-                // colorChangeCounter++
-                // if(colorChangeCounter > 4) {
-                //     // 变色
-                //     hpgButterfly.properties.color1Hex = ++color1 % 0xffffffff
-                //     hpgButterfly.properties.color2Hex = ++color2 % 0xffffffff
-                //     colorChangeCounter = 0
-                // }
-
-
-
-                // to create that "Charging Effect".
                 if (isMultiTouch) {
                     let from = touchEvents[multiTouchChargeToggle ? 0 : 1];
                     let to = touchEvents[multiTouchChargeToggle ? 1 : 0];
@@ -180,26 +141,5 @@
                 time = newTime;
             }
                     </script>
-                
-
-            <script>mendeleyWebImporter = {
-            downloadPdfs(e,t) { return this._call('downloadPdfs', [e,t]); },
-            open() { return this._call('open', []); },
-            setLoginToken(e) { return this._call('setLoginToken', [e]); },
-            _call(methodName, methodArgs) {
-                const id = Math.random();
-                window.postMessage({ id, token: '0.33860257220401513', methodName, methodArgs }, 'https://static.iohk.io');
-                return new Promise(resolve => {
-                const listener = window.addEventListener('message', event => {
-                    const data = event.data;
-                    if (typeof data !== 'object' || !('result' in data) || data.id !== id) return;
-                    window.removeEventListener('message', listener);
-                    resolve(data.result);
-                });
-                });
-            }
-            };
-        </script>
-
     </body>
 </html>
