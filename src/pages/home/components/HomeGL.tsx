@@ -167,7 +167,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 });
                 // model.position.set(0, -3.375, 0);
                 // model.scale.set(0.25, 0.25, 0.25);
-                model.position.set(0, -3.375 * 2.5, 0);
+                model.position.set(0, 0, 0);
                 model.scale.set(2.5, 2.5, 2.5);
                 scene.add(model);
 
