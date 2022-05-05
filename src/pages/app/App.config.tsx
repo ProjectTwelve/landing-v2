@@ -34,39 +34,52 @@ export const CONTENT_PAGES = [
     },
     {
         type: PageType.Home,
-        NavText: <>HOME</>,
+        NavText: <>Vision</>,
         Content: <Home />,
     },
     {
+        type: PageType.Poster,
+        NavText: <>The&nbsp;Editor</>,
+        Content: <Poster />,
+    },
+    {
         type: PageType.Avatar,
-        NavText: <>GAME&nbsp;CHARACTER</>,
+        NavText: <>The&nbsp;Infra</>,
         Content: <Avatar />,
     },
     {
         type: PageType.Tree,
-        NavText: <>ECONOMIC&nbsp;SYSTEM</>,
+        NavText: <>The&nbsp;Econs</>,
         Content: <Tree />,
     },
     {
-        type: PageType.Poster,
-        NavText: <>GAME&nbsp;SCENE</>,
-        Content: <Poster />,
+        type: null,
+        NavText: (
+            <a
+                className='nav-whitepaper-wrap'
+                href='https://twitter.com/_p12_'
+                target='_blank'
+                rel='noreferrer'>
+                Whitepaper
+            </a>
+        ),
+        Content: null,
     },
     {
         type: PageType.About,
-        NavText: <>ABOUT&nbsp;US</>,
+        NavText: <>Team</>,
         Content: <About />,
     },
     {
         type: PageType.Wall,
-        NavText: <>PARTNERS</>,
+        NavText: <>Partners</>,
         Content: <Wall />,
     },
     {
         type: null,
         NavText: (
             <div className='nav-community-wrap'>
-                COMMUNITY
+                ..And&nbsp;Frens
                 <div className='nav-community'>
                     <a
                         href='https://twitter.com/_p12_'
