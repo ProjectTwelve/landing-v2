@@ -22,7 +22,7 @@ export const Home: React.FC = () => {
                     },
                     {
                         duration: 2,
-                        opacity: 2,
+                        opacity: 1,
                     }
                 );
                 homeGLRef.current?.ballModel &&
@@ -35,7 +35,8 @@ export const Home: React.FC = () => {
                         },
                         {
                             duration: 2,
-                            delay: -2,
+                            ease: 'power2.out',
+                            delay: -1.9,
                             x: 0.25 * 10,
                             y: 0.25 * 10,
                             z: 0.25 * 10,
