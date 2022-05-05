@@ -55,6 +55,8 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             alpha: true,
             antialias: true,
         });
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(container.clientWidth, container.clientHeight);
@@ -114,7 +116,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
 
         const directionalLight = new THREE.DirectionalLight(0x9bbdfe, 1);
         directionalLight.position.set(-99.75 / 400, -979.9 / 400, 3694 / 400);
-        // scene.add(directionalLight);
+        scene.add(directionalLight);
         // const directionalHelper = new THREE.DirectionalLightHelper(
         //     directionalLight,
         //     10
@@ -124,14 +126,14 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         // const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
         // scene.add(ambientLight);
 
-        const spotLight = new THREE.SpotLight(0xfec28e, 10);
+        const spotLight = new THREE.SpotLight(0xfec28e, 1.5);
         spotLight.position.set(1046 / 400, 2958 / 400, -1425 / 400);
         spotLight.castShadow = true;
-        // spotLight.shadow.mapSize.width = 512;
-        // spotLight.shadow.mapSize.height = 512;
-        // spotLight.shadow.camera.near = 10;
-        // spotLight.shadow.camera.far = 200;
-        // spotLight.shadow.focus = 1;
+        spotLight.shadow.mapSize.width = 512;
+        spotLight.shadow.mapSize.height = 512;
+        spotLight.shadow.camera.near = 10;
+        spotLight.shadow.camera.far = 200;
+        spotLight.shadow.focus = 1;
         scene.add(spotLight);
         const spotLightHelper = new THREE.SpotLightHelper(spotLight, 10);
         scene.add(spotLightHelper);
@@ -157,11 +159,28 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
+                model.traverse((node: any) => {
+                    if (node.isMesh) {
+                        node.castShadow = true;
+                        node.receiveShadow = true;
+                    }
+                });
                 // model.position.set(0, -3.375, 0);
                 // model.scale.set(0.25, 0.25, 0.25);
                 model.position.set(0, -3.375 * 2.5, 0);
                 model.scale.set(2.5, 2.5, 2.5);
                 scene.add(model);
+
+                const mesh = new THREE.Mesh(
+                    new THREE.PlaneGeometry(100, 100),
+                    new THREE.MeshPhongMaterial({
+                        color: 0x999999,
+                        depthWrite: false,
+                    })
+                );
+                mesh.rotation.x = -Math.PI / 2;
+                mesh.receiveShadow = true;
+                scene.add(mesh);
 
                 mixer = new THREE.AnimationMixer(model);
                 // mixer.clipAction(gltf.animations[0]).play();
