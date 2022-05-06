@@ -57,21 +57,21 @@ export const CONTENT_PAGES = [
         Content: <Tree />,
         dropdown: false,
     },
-    {
-        type: null,
-        NavText: (
-            <a
-                className='nav-whitepaper-wrap'
-                href='https://twitter.com/_p12_'
-                target='_blank'
-                rel='noreferrer'
-            >
-                Whitepaper
-            </a>
-        ),
-        Content: null,
-        dropdown: false,
-    },
+    // {
+    //     type: null,
+    //     NavText: (
+    //         <a
+    //             className='nav-link-wrap'
+    //             href='https://twitter.com/_p12_'
+    //             target='_blank'
+    //             rel='noreferrer'
+    //         >
+    //             Whitepaper
+    //         </a>
+    //     ),
+    //     Content: null,
+    //     dropdown: false,
+    // },
     {
         type: PageType.About,
         NavText: <>Team</>,
