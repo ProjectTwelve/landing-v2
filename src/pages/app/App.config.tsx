@@ -31,26 +31,31 @@ export const CONTENT_PAGES = [
         type: PageType.Loading,
         NavText: null,
         Content: <Loading />,
+        dropdown: false,
     },
     {
         type: PageType.Home,
         NavText: <>Vision</>,
         Content: <Home />,
+        dropdown: false,
     },
     {
         type: PageType.Poster,
         NavText: <>The&nbsp;Editor</>,
         Content: <Poster />,
+        dropdown: false,
     },
     {
         type: PageType.Avatar,
         NavText: <>The&nbsp;Infra</>,
         Content: <Avatar />,
+        dropdown: false,
     },
     {
         type: PageType.Tree,
         NavText: <>The&nbsp;Econs</>,
         Content: <Tree />,
+        dropdown: false,
     },
     {
         type: null,
@@ -59,21 +64,25 @@ export const CONTENT_PAGES = [
                 className='nav-whitepaper-wrap'
                 href='https://twitter.com/_p12_'
                 target='_blank'
-                rel='noreferrer'>
+                rel='noreferrer'
+            >
                 Whitepaper
             </a>
         ),
         Content: null,
+        dropdown: false,
     },
     {
         type: PageType.About,
         NavText: <>Team</>,
         Content: <About />,
+        dropdown: false,
     },
     {
         type: PageType.Wall,
         NavText: <>Partners</>,
         Content: <Wall />,
+        dropdown: false,
     },
     {
         type: null,
@@ -112,5 +121,6 @@ export const CONTENT_PAGES = [
             </div>
         ),
         Content: null,
+        dropdown: true,
     },
 ];

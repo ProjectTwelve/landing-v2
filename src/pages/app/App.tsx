@@ -80,7 +80,8 @@ export const App = () => {
                                     className={classnames(
                                         'nav__item',
                                         p.type === current && 'active',
-                                        !p.Content && 'nav__item--no-content'
+                                        !p.Content && 'nav__item--no-content',
+                                        p.dropdown && 'nav__item--dropdown'
                                     )}
                                     onClick={() => {
                                         playClickAudio();
