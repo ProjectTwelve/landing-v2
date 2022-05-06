@@ -88,7 +88,7 @@ export const CONTENT_PAGES = [
         type: null,
         NavText: (
             <div className='nav-community-wrap'>
-                ..And&nbsp;Frens
+                And&nbsp;Frens
                 <div className='nav-community'>
                     <a
                         href='https://twitter.com/_p12_'
