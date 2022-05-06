@@ -3,8 +3,6 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Parallax from 'parallax-js';
 import Swiper, { Autoplay } from 'swiper';
 import 'swiper/css';
-// import SwiperCore, { Autoplay } from 'swiper';
-// import { Swiper, SwiperSlide } from 'swiper/react';
 import './Poster.less';
 import { loadingEE, LoadingSourceType, usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
