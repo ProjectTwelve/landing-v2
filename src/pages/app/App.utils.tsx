@@ -63,13 +63,13 @@ const GlobalProgressTypes = [
     // LoadingSourceType.AVATAR_GLTF_LOWPOLY,
     // LoadingSourceType.AVATAR_GLTF_LOWPOLY_PARTICLE,
     // LoadingSourceType.AVATAR_GLTF_CARTOON,
-    LoadingSourceType.AVATAR_GLTF_DOKV,
-    LoadingSourceType.POSTER_IMG_0,
-    LoadingSourceType.POSTER_IMG_1,
-    LoadingSourceType.POSTER_IMG_2,
-    LoadingSourceType.POSTER_IMG_3,
-    LoadingSourceType.POSTER_IMG_4,
-    LoadingSourceType.POSTER_IMG_5,
+    // LoadingSourceType.AVATAR_GLTF_DOKV,
+    // LoadingSourceType.POSTER_IMG_0,
+    // LoadingSourceType.POSTER_IMG_1,
+    // LoadingSourceType.POSTER_IMG_2,
+    // LoadingSourceType.POSTER_IMG_3,
+    // LoadingSourceType.POSTER_IMG_4,
+    // LoadingSourceType.POSTER_IMG_5,
 ];
 
 /** 全局 loading 数据，进度为 0-1 0 */
