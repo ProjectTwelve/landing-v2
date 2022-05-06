@@ -7,11 +7,27 @@
     overflow: hidden;
 
     &__info {
-        .bgFull2x('tree/info@2x.png');
         position: absolute;
-        left: 67px;
-        bottom: 70px;
+        z-index: 10;
+        top: 50%;
+        transform: translate(0, -50%);
+        left: (60 / @designWidth * 100%);
+        user-select: none;
     }
+    &__slogan {
+        .bgFull2x('avatar/slogan@2x.png');
+        margin-left: -6px;
+    }
+    &__small-title {
+        margin-top: 24px;
+        margin-bottom: 10px;
+    }
+    &__small-text-1 {
+        line-height: 22px;
+        margin-bottom: 44px;
+        color: rgba(255, 255, 255, 0.95);
+    }
+
     &__content {
         .f-alignImg2x('tree/content@2x.png');
     }

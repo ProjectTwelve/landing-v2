@@ -23,7 +23,17 @@ export const Tree: React.FC = () => {
     return (
         <div className='tree'>
             <div className='tree__content'></div>
-            <div className='tree__info'></div>
+            <div className='tree__info'>
+                <div className='tree__slogan'></div>
+                <div className='app-small-title app-small-title--with-block tree__small-title'>
+                    FOR SUSTAINABILITY AND PROSPERITY
+                </div>
+                <div className='app-small-text tree__small-text-1'>
+                    A series of economic and governmental rules have been
+                    <br />
+                    implemented in the P12 Econs. Key mechanisms are:
+                </div>
+            </div>
         </div>
     );
 };
