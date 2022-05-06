@@ -6,7 +6,10 @@ import { AvatarGLItemBase } from './AvatarGLItemBase';
 
 export class AvatarGLItemCartoon extends AvatarGLItemBase {
     load() {
-        super.load();
+        if (this.loaded || this.loading) {
+            return;
+        }
+        this.loading = true;
         new GLTFLoader().load(
             getPublicAssetPath('files/avatar/avatar-cartoon.glb'),
             (gltf) => {
@@ -16,6 +19,7 @@ export class AvatarGLItemCartoon extends AvatarGLItemBase {
                 this.scene.add(model);
                 this.mixer = new THREE.AnimationMixer(model);
                 this.loaded = true;
+                this.loading = false;
                 this.render();
                 loadingEE.emit(
                     `progress.${LoadingSourceType.AVATAR_GLTF_CARTOON}`,

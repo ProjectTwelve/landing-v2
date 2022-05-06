@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { gsap } from 'gsap';
 
 export class AvatarGLItemBase {
+    public loading = false;
     public loaded = false;
     public mountContainer?: HTMLDivElement;
     protected frameId: number = 0;
@@ -56,30 +57,37 @@ export class AvatarGLItemBase {
         this.mountContainer.appendChild(this.container);
     }
     enter() {
+        // 确保一定在加载了
+        this.load();
         this.container.style.zIndex = '3';
         this.camera.position.set(5, 2, 8);
-        gsap.set(this.container, {
-            x: 340,
-            y: -60,
-            opacity: 0,
-        });
         this.animate();
-        gsap.to(this.container, {
-            duration: 0.4,
-            x: 0,
-            y: 0,
-            opacity: 1,
-            delay: 0.2,
-            onComplete: () => {},
-        });
+        gsap.fromTo(
+            this.container,
+            {
+                display: 'block',
+                x: 280,
+                y: 0,
+                opacity: 0,
+            },
+            {
+                duration: 0.4,
+                x: 0,
+                y: 0,
+                opacity: 1,
+                delay: 0.2,
+                onComplete: () => {},
+            }
+        );
     }
     leave() {
         this.container.style.zIndex = '1';
         gsap.to(this.container, {
             duration: 0.4,
+            display: 'none',
             opacity: 0,
-            x: -240,
-            y: 20,
+            x: -200,
+            y: 0,
             onComplete: () => {
                 cancelAnimationFrame(this.frameId);
             },

@@ -130,7 +130,7 @@ export const About: React.FC = () => {
                 <div className='about__helper-item'>
                     <img
                         alt='origin'
-                        src={require('../../assets/about/origin-china.png')}
+                        src={require('../../assets/about/origin-helper.png')}
                         className='about__dot about__dot--origin'
                     ></img>
                     Origin
