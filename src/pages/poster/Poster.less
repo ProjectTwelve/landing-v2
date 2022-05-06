@@ -23,32 +23,40 @@
         bottom: 50%;
         margin-bottom: 65px;
         right: (60 / @designWidth * 100%);
-        text-align: right;
+        text-align: left;
 
         &-wrap {
             .f-pseudo();
         }
     }
     &__slogan {
-        font-family: TTLakes;
-        font-size: 80px;
-        line-height: 84px;
-        color: #fff;
+        .bgFull2x('poster/slogan@2x.png');
+        margin-left: -6px;
     }
     &__sub-title {
-        font-size: 48px;
-        line-height: 48px;
-        margin-bottom: 12px;
+        font-size: 34px;
+        line-height: 34px;
+        margin-top: 22px;
+        margin-bottom: 17px;
     }
     &__small-text-1 {
-        line-height: 22px;
+        margin-bottom: 6px;
+        color: rgba(255, 255, 255, 0.9);
     }
     &__small-text-2 {
-        line-height: 22px;
+        color: rgba(255, 255, 255, 0.9);
     }
 }
 
-.poster-swiper-container {
+.poster-features-swiper-container {
+    position: absolute;
+    overflow: hidden;
+
+    .swiper-slide {
+    }
+}
+
+.poster-logos-swiper-container {
     position: absolute;
     right: 5.6%;
     bottom: 40.45%;

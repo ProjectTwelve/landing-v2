@@ -9,6 +9,13 @@ import { PageType } from '../app/App.config';
 import gsap from 'gsap';
 Swiper.use([Autoplay]);
 
+const POSTER_FEATURES = [
+    {
+        title: '',
+        desc: <></>,
+    },
+];
+
 export const Poster: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const bgRef = useRef<HTMLDivElement>(null);
@@ -22,7 +29,8 @@ export const Poster: React.FC = () => {
         const parallax = new Parallax(bgRef.current, {});
         parallax?.disable();
         // swiper
-        let swiper: Swiper;
+        let logosSwiper: Swiper;
+        let featuresSwiper: Swiper;
 
         return {
             onVisible: () => {
@@ -32,11 +40,18 @@ export const Poster: React.FC = () => {
                 handleResize();
 
                 parallax?.enable();
-                swiper = new Swiper('.poster-swiper-container', {
+                logosSwiper = new Swiper('.poster-logos-swiper-container', {
                     autoplay: true,
                     loop: true,
                     direction: 'vertical',
                 });
+                featuresSwiper = new Swiper(
+                    '.poster-features-swiper-container',
+                    {
+                        autoplay: true,
+                        loop: true,
+                    }
+                );
             },
             onHide: () => {
                 gsap.set('.page-wrap-poster', {
@@ -44,10 +59,10 @@ export const Poster: React.FC = () => {
                 });
 
                 parallax?.disable();
-                swiper?.destroy();
             },
             onDestroy: () => {
-                parallax?.destroy();
+                logosSwiper?.destroy();
+                featuresSwiper?.destroy();
             },
         };
     });
@@ -137,7 +152,7 @@ export const Poster: React.FC = () => {
                             )
                         }
                     />
-                    <div className='poster-swiper-container swiper-container'>
+                    <div className='poster-logos-swiper-container swiper-container'>
                         <div className='swiper-wrapper'>
                             <div className='swiper-slide swiper-slide--1'></div>
                             <div className='swiper-slide swiper-slide--2'></div>
@@ -170,17 +185,41 @@ export const Poster: React.FC = () => {
             </div>
             <div className='poster__info-wrap'>
                 <div className='poster__info'>
-                    <div className='poster__slogan'>Project Twelve</div>
+                    <div className='poster__slogan'></div>
                     <div className='app-sub-title poster__sub-title'>
-                        Game Character
+                        BEST METAVERSE EDITOR IN WEB3
                     </div>
                     <div className='app-small-text poster__small-text-1'>
-                        A Metaverse Economy Backbone.
+                        by a top R&amp;D team with 500+ people that built a 10
+                        million DAU gaming platform
                     </div>
                     <div className='app-small-text poster__small-text-2'>
-                        A complete set of technologies, tools,and services-for
-                        <br />
-                        developers, players,and merchants alike
+                        The Editor is backed by a strong R&amp;D team with
+                        proven track record in gaming.
+                    </div>
+                    <div className='poster__features'>
+                        <div className='poster__features-top'>
+                            <div className='poster__features-title'>
+                                {/* Features */}
+                            </div>
+                            <div className='poster__features-blocks'>
+                                <div className='poster__features-block-1'></div>
+                                <div className='poster__features-block-2'></div>
+                            </div>
+
+                            <div className='poster-features-swiper-container swiper-container'>
+                                <div className='swiper-wrapper'>
+                                    <div className='swiper-slide swiper-slide--1'></div>
+                                    <div className='swiper-slide swiper-slide--2'></div>
+                                    <div className='swiper-slide swiper-slide--3'></div>
+                                    <div className='swiper-slide swiper-slide--4'></div>
+                                    <div className='swiper-slide swiper-slide--5'></div>
+                                    <div className='swiper-slide swiper-slide--6'></div>
+                                    <div className='swiper-slide swiper-slide--7'></div>
+                                </div>
+                                <div className='swiper-pagination'></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
