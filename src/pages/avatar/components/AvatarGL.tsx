@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { first } from 'lodash-es';
 import React, {
     forwardRef,
     useEffect,
@@ -17,12 +18,11 @@ export interface AvatarGLRef {
     switchTo: (type: AvatarType | null) => void;
 }
 
-const GL_MAP = {
+export const AVATAR_GL_MAP = {
+    [AvatarType.DOKV]: new AvatarGLItemDokv(),
     [AvatarType.LOWPOLY]: new AvatarGLItemLowpoly(),
     [AvatarType.CARTOON]: new AvatarGLItemCartoon(),
-    [AvatarType.DOKV]: new AvatarGLItemDokv(),
 };
-Object.values(GL_MAP).map((v) => v.load());
 
 export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -33,9 +33,11 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         ref,
         () => ({
             switchTo: (type) => {
-                activatedRef.current && GL_MAP[activatedRef.current].leave();
+                activatedRef.current &&
+                    AVATAR_GL_MAP[activatedRef.current].leave();
                 activatedRef.current = type;
-                activatedRef.current && GL_MAP[activatedRef.current].enter();
+                activatedRef.current &&
+                    AVATAR_GL_MAP[activatedRef.current].enter();
             },
         }),
         []
@@ -46,9 +48,12 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         if (!container) {
             return;
         }
-        Object.values(GL_MAP).map((v) => v.mount(container));
+        Object.values(AVATAR_GL_MAP).map((v) => v.mount(container));
+
+        // 先只加载首个资源
+        first(Object.values(AVATAR_GL_MAP))?.load();
         return () => {
-            Object.values(GL_MAP).map((v) => container && v.unMount());
+            Object.values(AVATAR_GL_MAP).map((v) => container && v.unMount());
         };
     }, []);
 
@@ -75,6 +80,8 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         };
         return {
             onVisible: () => {
+                // 进入界面后，加载所有内容
+                Object.values(AVATAR_GL_MAP).map((v) => v.load());
                 handleMouseUp();
                 window.addEventListener('mousemove', handleMouseMove);
                 window.addEventListener('mousedown', handleMouseDown);

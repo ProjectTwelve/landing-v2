@@ -46,7 +46,7 @@ export const Home: React.FC = () => {
                     tl.fromTo(
                         [homeGLRef.current?.ballModel.rotation],
                         {
-                            y: Math.PI * -2.5,
+                            y: Math.PI * -1,
                         },
                         {
                             duration: 3,

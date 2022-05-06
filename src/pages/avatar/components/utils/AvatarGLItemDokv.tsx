@@ -6,7 +6,10 @@ import { AvatarGLItemBase } from './AvatarGLItemBase';
 
 export class AvatarGLItemDokv extends AvatarGLItemBase {
     load() {
-        super.load();
+        if (this.loaded || this.loading) {
+            return;
+        }
+        this.loading = true;
         new GLTFLoader().load(
             getPublicAssetPath('files/avatar/avatar-dokv.glb'),
             (gltf) => {
@@ -31,6 +34,7 @@ export class AvatarGLItemDokv extends AvatarGLItemBase {
                 );
 
                 this.loaded = true;
+                this.loading = false;
                 this.render();
                 loadingEE.emit(
                     `progress.${LoadingSourceType.AVATAR_GLTF_DOKV}`,

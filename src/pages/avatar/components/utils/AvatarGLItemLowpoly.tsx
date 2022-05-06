@@ -60,7 +60,10 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
     }
 
     load() {
-        super.load();
+        if (this.loaded || this.loading) {
+            return;
+        }
+        this.loading = true;
         let gltfLoaded = false;
         let imageLoaded = false;
         new GLTFLoader().load(
@@ -74,6 +77,9 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
                 this.mixer = new THREE.AnimationMixer(model);
                 gltfLoaded = true;
                 this.loaded = gltfLoaded || imageLoaded;
+                if (this.loaded) {
+                    this.loading = false;
+                }
                 this.render();
                 loadingEE.emit(
                     `progress.${LoadingSourceType.AVATAR_GLTF_LOWPOLY}`,
@@ -99,6 +105,9 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
                 this.imageDataArray = data;
                 imageLoaded = true;
                 this.loaded = gltfLoaded || imageLoaded;
+                if (this.loaded) {
+                    this.loading = false;
+                }
                 this.render();
                 loadingEE.emit(
                     `progress.${LoadingSourceType.AVATAR_GLTF_LOWPOLY_PARTICLE}`,
@@ -121,6 +130,9 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
 
     protected render() {
         super.render();
+        if (!this.loaded) {
+            return;
+        }
         const index = Math.floor(
             (((this.controls.getAzimuthalAngle() / Math.PI + 1) / 2) *
                 this.imageDataArray.length +

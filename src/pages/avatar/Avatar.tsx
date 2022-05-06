@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { AvatarGL, AvatarGLRef } from './components/AvatarGL';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { AvatarGL, AvatarGLRef, AVATAR_GL_MAP } from './components/AvatarGL';
 import './Avatar.less';
 import { AvatarType, AvatarTypeArray } from './Avatar.config';
 import { playClickAudio } from '../../utils';
@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import { usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
 import gsap from 'gsap';
+import { first } from 'lodash-es';
 
 export const Avatar: React.FC = () => {
     const avatarGLRef = useRef<AvatarGLRef>(null);
@@ -18,10 +19,19 @@ export const Avatar: React.FC = () => {
             clearInterval(timeId);
         };
         const handleTouchUp = () => {
+            clearInterval(timeId);
             timeId = window.setInterval(() => {
                 handleNext();
             }, 8000);
         };
+
+        function handleVisibilityChange() {
+            if (document.hidden) {
+                handleTouchDown();
+            } else {
+                handleTouchUp();
+            }
+        }
 
         return {
             onVisible: () => {
@@ -32,8 +42,15 @@ export const Avatar: React.FC = () => {
                 handleTouchUp();
                 window.addEventListener('pointerdown', handleTouchDown);
                 window.addEventListener('pointerup', handleTouchUp);
+                document.addEventListener(
+                    'visibilitychange',
+                    handleVisibilityChange,
+                    false
+                );
 
-                setCurrentAvatar(AvatarType.LOWPOLY);
+                setCurrentAvatar(
+                    first(Object.keys(AVATAR_GL_MAP)) as AvatarType
+                );
             },
             onHide: () => {
                 gsap.set('.page-wrap-avatar', {
@@ -43,13 +60,17 @@ export const Avatar: React.FC = () => {
                 clearInterval(timeId);
                 window.removeEventListener('pointerdown', handleTouchDown);
                 window.removeEventListener('pointerup', handleTouchUp);
+                document.removeEventListener(
+                    'visibilitychange',
+                    handleVisibilityChange
+                );
 
                 setCurrentAvatar(null);
             },
         };
     });
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         avatarGLRef.current?.switchTo(currentAvatar);
     }, [currentAvatar]);
 
