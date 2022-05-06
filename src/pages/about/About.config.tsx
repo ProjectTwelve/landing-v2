@@ -59,8 +59,8 @@ export const LOCATION_INFO = [
         type: 'origin',
         img: require('../../assets/about/origin-poland.png'),
         name: 'Poland',
-        x: 1059,
-        y: 563,
+        x: 1063,
+        y: 559,
         namePosition: 'right',
     },
     {
@@ -68,7 +68,7 @@ export const LOCATION_INFO = [
         img: require('../../assets/about/origin-rwanda.png'),
         name: 'Rwanda',
         x: 1099,
-        y: 900,
+        y: 904,
         namePosition: 'right',
     },
     {
@@ -76,7 +76,7 @@ export const LOCATION_INFO = [
         img: require('../../assets/about/origin-china.png'),
         name: 'China',
         x: 1400,
-        y: 700,
+        y: 704,
         namePosition: 'right',
     },
     {
@@ -84,7 +84,7 @@ export const LOCATION_INFO = [
         img: require('../../assets/about/origin-korea.png'),
         name: 'Korea',
         x: 1625,
-        y: 695,
+        y: 699,
         namePosition: 'left',
     },
     {
@@ -100,15 +100,15 @@ export const LOCATION_INFO = [
         img: require('../../assets/about/origin-penang.png'),
         name: 'Penang',
         x: 1510,
-        y: 850,
+        y: 855,
         namePosition: 'none',
     },
     {
         type: 'origin',
         img: require('../../assets/about/origin-singapore.png'),
         name: 'Singapore',
-        x: 1520,
-        y: 893,
+        x: 1526,
+        y: 897,
         namePosition: 'none',
     },
     {
@@ -116,7 +116,7 @@ export const LOCATION_INFO = [
         img: require('../../assets/about/origin-hongkong.png'),
         name: 'Hongkong',
         x: 1558,
-        y: 788,
+        y: 792,
         namePosition: 'right',
     },
 ];

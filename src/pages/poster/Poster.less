@@ -20,10 +20,11 @@
     &__info {
         position: absolute;
         z-index: 10;
-        bottom: 50%;
-        margin-bottom: 65px;
+        top: 50%;
+        margin-top: -200px;
         right: (60 / @designWidth * 100%);
         text-align: left;
+        user-select: none;
 
         &-wrap {
             .f-pseudo();
@@ -46,13 +47,83 @@
     &__small-text-2 {
         color: rgba(255, 255, 255, 0.9);
     }
+
+    &__features {
+        display: flex;
+        align-items: flex-start;
+        padding-top: 51px;
+        position: relative;
+
+        &-title {
+            font-size: 20px;
+            height: 20px;
+            color: #fff;
+            padding-right: 16px;
+        }
+
+        &-item {
+            &-title {
+                font-family: TTLakes;
+                color: #000;
+                font-size: 16px;
+                line-height: 22px;
+                background: #fff;
+                border-radius: 4px;
+                display: inline-block;
+                padding: 0 8px;
+                position: relative;
+                margin-left: 26px;
+                margin-bottom: 19px;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    width: 1px;
+                    height: 100%;
+                    transform: scale(1, 0.7);
+                    left: -22px;
+                    background: #fff;
+                    opacity: 0.7;
+                }
+            }
+            &-desc {
+                color: #fff;
+                font-size: 16px;
+                line-height: 18px;
+                margin-bottom: 6px;
+                margin-left: 26px;
+                position: relative;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    width: 1px;
+                    height: 100%;
+                    transform: scale(1, 0.9);
+                    left: -22px;
+                    background: #fff;
+                    opacity: 0.15;
+                }
+            }
+        }
+    }
 }
 
 .poster-features-swiper-container {
-    position: absolute;
+    position: relative;
     overflow: hidden;
+    width: 500px;
+    height: 400px;
 
     .swiper-slide {
+        width: 100%;
+        height: 100%;
+        opacity: 0 !important;
+        transition: opacity 0.6s !important;
+
+        &.swiper-slide-active {
+            opacity: 1 !important;
+        }
     }
 }
 

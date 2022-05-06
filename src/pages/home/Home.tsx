@@ -84,7 +84,7 @@ export const Home: React.FC = () => {
                     EDITOR<i className='app-sub-title__block'></i>INFRA
                     <i className='app-sub-title__block'></i>ECONS
                 </div>
-                <div className='app-small-title home__small-title app-small-title--with-block'>
+                <div className='app-small-title app-small-title--with-block home__small-title'>
                     Empowering Metaworld
                 </div>
                 <div className='app-small-text home__small-text-1'>

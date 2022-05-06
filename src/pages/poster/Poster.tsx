@@ -1,20 +1,16 @@
 import { useSize } from 'ahooks';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Parallax from 'parallax-js';
-import Swiper, { Autoplay } from 'swiper';
+import Swiper, { Autoplay, EffectFade } from 'swiper';
 import 'swiper/css';
+import 'swiper/css/autoplay';
+import 'swiper/css/effect-fade';
 import './Poster.less';
 import { loadingEE, LoadingSourceType, usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
 import gsap from 'gsap';
-Swiper.use([Autoplay]);
-
-const POSTER_FEATURES = [
-    {
-        title: '',
-        desc: <></>,
-    },
-];
+import { POSTER_FEATURES } from './Poster.config';
+Swiper.use([Autoplay, EffectFade]);
 
 export const Poster: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -50,6 +46,7 @@ export const Poster: React.FC = () => {
                     {
                         autoplay: true,
                         loop: true,
+                        effect: 'fade',
                     }
                 );
             },
@@ -153,7 +150,7 @@ export const Poster: React.FC = () => {
                         }
                     />
                     <div className='poster-logos-swiper-container swiper-container'>
-                        <div className='swiper-wrapper'>
+                        <div className='swiper-wrapper '>
                             <div className='swiper-slide swiper-slide--1'></div>
                             <div className='swiper-slide swiper-slide--2'></div>
                             <div className='swiper-slide swiper-slide--3'></div>
@@ -198,27 +195,26 @@ export const Poster: React.FC = () => {
                         proven track record in gaming.
                     </div>
                     <div className='poster__features'>
-                        <div className='poster__features-top'>
-                            <div className='poster__features-title'>
-                                {/* Features */}
+                        <div className='poster__features-title'>Features</div>
+                        <div className='poster-features-swiper-container swiper-container'>
+                            <div className='swiper-wrapper'>
+                                {POSTER_FEATURES.map((feature, i) => {
+                                    return (
+                                        <div
+                                            key={i}
+                                            className='swiper-slide poster__features-item'
+                                        >
+                                            <div className='poster__features-item-title'>
+                                                {feature.title}
+                                            </div>
+                                            <div className='poster__features-item-desc'>
+                                                {feature.desc}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                             </div>
-                            <div className='poster__features-blocks'>
-                                <div className='poster__features-block-1'></div>
-                                <div className='poster__features-block-2'></div>
-                            </div>
-
-                            <div className='poster-features-swiper-container swiper-container'>
-                                <div className='swiper-wrapper'>
-                                    <div className='swiper-slide swiper-slide--1'></div>
-                                    <div className='swiper-slide swiper-slide--2'></div>
-                                    <div className='swiper-slide swiper-slide--3'></div>
-                                    <div className='swiper-slide swiper-slide--4'></div>
-                                    <div className='swiper-slide swiper-slide--5'></div>
-                                    <div className='swiper-slide swiper-slide--6'></div>
-                                    <div className='swiper-slide swiper-slide--7'></div>
-                                </div>
-                                <div className='swiper-pagination'></div>
-                            </div>
+                            <div className='swiper-pagination'></div>
                         </div>
                     </div>
                 </div>

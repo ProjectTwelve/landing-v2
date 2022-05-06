@@ -79,19 +79,13 @@ export const Avatar: React.FC = () => {
             <AvatarGL ref={avatarGLRef} />
             <div className='avatar__info'>
                 <div className='avatar__slogan'></div>
-                <div className='app-sub-title avatar__sub-title'>
-                    Game Character
-                </div>
-                <div className='app-small-title avatar__small-title'>
-                    NOMOCRAC
+                <div className='app-small-title app-small-title--with-block avatar__small-title'>
+                    TOKENOMICS AND NFT MADE EASY
                 </div>
                 <div className='app-small-text avatar__small-text-1'>
-                    A Metaverse Economy Backbone.
-                </div>
-                <div className='app-small-text avatar__small-text-2'>
-                    A complete set of technologies, tools,and services-
+                    The Infra consists of a set of API / SDK and developer
                     <br />
-                    for developers, players,and merchants alike
+                    portals for bridging game content on-chain
                 </div>
                 <div className='avatar__btn-wrap'>
                     <div
