@@ -30,11 +30,14 @@ export const Loading: React.FC = () => {
             onVisible: () => {
                 gsap.set('.page-wrap-loading', {
                     display: 'block',
+                    opacity: 1,
                 });
             },
             onHide: () => {
-                gsap.set('.page-wrap-loading', {
+                gsap.to('.page-wrap-loading', {
+                    duration: 1.3,
                     display: 'none',
+                    opacity: 0,
                 });
                 tween?.kill();
             },
