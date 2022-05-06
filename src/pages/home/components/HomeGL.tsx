@@ -77,7 +77,11 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             100
         );
         // camera.position.set(-2.17, 9.396, 0.0408);
-        camera.position.set(3360 / 400, 473.3 / 400, 1240 / 400);
+        camera.position.set(
+            3360 / 400 / 2.8,
+            473.3 / 400 / 2.8,
+            1240 / 400 / 2.8
+        );
         const pointerData = [
             {
                 position: new THREE.Vector3(3.1, -1, 0),
@@ -168,10 +172,8 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                         node.receiveShadow = true;
                     }
                 });
-                // model.position.set(0, -3.375, 0);
-                // model.scale.set(0.25, 0.25, 0.25);
                 model.position.set(0, 0, 0);
-                model.scale.set(2.5, 2.5, 2.5);
+                model.scale.set(1, 1, 1);
                 scene.add(model);
 
                 // const mesh = new THREE.Mesh(

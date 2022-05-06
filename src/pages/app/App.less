@@ -291,9 +291,19 @@
 
 .app-sub-title {
     font-family: TTLakes;
-    font-size: 70px;
-    line-height: 84px;
+    font-size: 40px;
+    line-height: 40px;
     color: #fff;
+
+    &__block {
+        display: inline-block;
+        height: 1em;
+        transform: scale(1, 0.75);
+        opacity: 0.5;
+        border-right: 3px solid #fff;
+        vertical-align: top;
+        margin: 0 20px;
+    }
 }
 
 .app-small-title {
@@ -302,14 +312,16 @@
     line-height: 27px;
     color: #fff;
 
-    &::after {
-        display: inline-block;
-        content: '';
-        width: 14px;
-        height: 2px;
-        background: #00d628;
-        opacity: 0.8;
-        margin-left: 20px;
+    &.app-small-title--with-block {
+        &::after {
+            display: inline-block;
+            content: '';
+            width: 12px;
+            height: 2px;
+            background: #00d628;
+            opacity: 0.8;
+            margin-left: 10px;
+        }
     }
 }
 .app-small-text {

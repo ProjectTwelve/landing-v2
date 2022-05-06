@@ -29,30 +29,30 @@ export const Home: React.FC = () => {
                     tl.fromTo(
                         homeGLRef.current?.ballModel.scale,
                         {
-                            x: 0.45 * 10,
-                            y: 0.45 * 10,
-                            z: 0.45 * 10,
+                            x: 2,
+                            y: 2,
+                            z: 2,
                         },
                         {
                             duration: 1,
                             ease: 'power2.out',
                             delay: -1,
-                            x: 0.25 * 10,
-                            y: 0.25 * 10,
-                            z: 0.25 * 10,
+                            x: 1,
+                            y: 1,
+                            z: 1,
                         }
                     );
                 homeGLRef.current?.ballModel &&
                     tl.fromTo(
                         [homeGLRef.current?.ballModel.rotation],
                         {
-                            y: Math.PI * -1,
+                            y: Math.PI * -2,
                         },
                         {
+                            y: Math.PI * -1,
                             duration: 1,
                             delay: -1,
                             ease: 'power2.out',
-                            y: 0,
                         }
                     );
                 tl.fromTo(
@@ -80,17 +80,20 @@ export const Home: React.FC = () => {
             <HomeGL ref={homeGLRef} />
             <div className='home__info'>
                 <div className='home__slogan'></div>
-                <div className='app-sub-title home__sub-title'>Metaworld</div>
-                <div className='app-small-title home__small-title'>
-                    NOMOCRAC
+                <div className='app-sub-title home__sub-title'>
+                    EDITOR<i className='app-sub-title__block'></i>INFRA
+                    <i className='app-sub-title__block'></i>ECONS
+                </div>
+                <div className='app-small-title home__small-title app-small-title--with-block'>
+                    Empowering Metaworld
                 </div>
                 <div className='app-small-text home__small-text-1'>
-                    A Metaverse Economy Backbone.
+                    Project Twelve, P12 for short, is a GameFi ecosystem
+                    <br /> with sustainable economy
                 </div>
                 <div className='app-small-text home__small-text-2'>
-                    A complete set of technologies, tools,and services-
-                    <br />
-                    for developers, players,and merchants alike
+                    The scope of the project covers the Editor, the Infra,
+                    <br /> and the Econs
                 </div>
             </div>
         </div>
