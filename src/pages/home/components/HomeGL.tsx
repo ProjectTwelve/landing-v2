@@ -104,7 +104,8 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 lookPosition: new THREE.Vector3(-3, 0.6, -0.2),
             },
         ];
-        camera.layers.enable(1);
+        // todo 调参
+        // camera.layers.enable(1);
 
         const hemisphereLight = new THREE.HemisphereLight(
             0xffffbb,
