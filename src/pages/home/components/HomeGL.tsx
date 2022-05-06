@@ -115,7 +115,8 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         );
         // scene.add(hemisphereHelper);
 
-        const directionalLight = new THREE.DirectionalLight(0x9bbdfe, 1);
+        // const directionalLight = new THREE.DirectionalLight(0x9bbdfe, 1);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
         directionalLight.position.set(-99.75 / 400, -979.9 / 400, 3694 / 400);
         scene.add(directionalLight);
         const directionalHelper = new THREE.DirectionalLightHelper(

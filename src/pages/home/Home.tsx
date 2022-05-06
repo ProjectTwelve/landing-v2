@@ -56,64 +56,12 @@ export const Home: React.FC = () => {
                         }
                     );
                 tl.fromTo(
-                    '.home__slogan',
-                    {
-                        y: 200,
-                        opacity: 0,
-                    },
-                    {
-                        duration: 0.4,
-                        delay: -0.38,
-                        y: 0,
-                        opacity: 1,
-                    }
-                );
-                tl.fromTo(
-                    '.home__sub-title',
-                    {
-                        y: 200,
-                        opacity: 0,
-                    },
-                    {
-                        duration: 0.4,
-                        delay: -0.2,
-                        y: 0,
-                        opacity: 1,
-                    }
-                );
-                tl.fromTo(
-                    '.home__small-title',
-                    {
-                        y: 200,
-                        opacity: 0,
-                    },
-                    {
-                        duration: 0.4,
-                        delay: -0.2,
-                        y: 0,
-                        opacity: 1,
-                    }
-                );
-                tl.fromTo(
-                    ['.home__small-text-1', '.home__small-text-2'],
-                    {
-                        y: 200,
-                        opacity: 0,
-                    },
-                    {
-                        duration: 0.4,
-                        delay: -0.2,
-                        y: 0,
-                        opacity: 1,
-                    }
-                );
-                tl.fromTo(
-                    '.home-gl .home-label-canvas',
+                    ['.home__info', '.home-gl .home-label-canvas'],
                     {
                         opacity: 0,
                     },
                     {
-                        duration: 0.6,
+                        duration: 0.5,
                         opacity: 1,
                     }
                 );
