@@ -56,6 +56,7 @@ export enum LoadingSourceType {
     POSTER_IMG_5 = 'POSTER_IMG_5',
 }
 const LoadingSourceTypeArray = Object.values(LoadingSourceType);
+
 /** 参与 全局loading 进度计算的类型 */
 const GlobalProgressTypes = [
     LoadingSourceType.HOME_GLTF,
@@ -70,6 +71,7 @@ const GlobalProgressTypes = [
     LoadingSourceType.POSTER_IMG_4,
     LoadingSourceType.POSTER_IMG_5,
 ];
+
 /** 全局 loading 数据，进度为 0-1 0 */
 const globalLoadingState: Record<LoadingSourceType, number> = mapValues(
     LoadingSourceType,
