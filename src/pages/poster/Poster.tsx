@@ -45,8 +45,10 @@ export const Poster: React.FC = () => {
                     '.poster-features-swiper-container',
                     {
                         autoplay: true,
-                        loop: true,
                         effect: 'fade',
+                        fadeEffect: {
+                            crossFade: true,
+                        },
                     }
                 );
             },

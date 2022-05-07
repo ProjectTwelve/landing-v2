@@ -5,6 +5,15 @@ import { loadingEE, LoadingSourceType } from '../../../app/App.utils';
 import { AvatarGLItemBase } from './AvatarGLItemBase';
 
 export class AvatarGLItemDokv extends AvatarGLItemBase {
+    public extraNode = (
+        <>
+            <div className='avatar-extra-subtitle'>GameArtefact API</div>
+            <div className='avatar-extra-text'>→ For NFT</div>
+            <div className='avatar-extra-subtitle'>GameCoin API</div>
+            <div className='avatar-extra-text'>→ For tokenomics</div>
+        </>
+    );
+
     load() {
         if (this.loaded || this.loading) {
             return;

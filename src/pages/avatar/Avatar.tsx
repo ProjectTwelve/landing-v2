@@ -104,19 +104,6 @@ export const Avatar: React.FC = () => {
                     ></div>
                 </div>
             </div>
-            <div className='avatar__extra'>
-                <div className='app-small-title avatar__extra-title'>
-                    Distribute
-                    <br />
-                    by statistics
-                </div>
-                <div className='app-small-text avatar__extra-text'>
-                    → Population Policy
-                </div>
-                <div className='app-small-text avatar__extra-text'>
-                    → Population Policy
-                </div>
-            </div>
             <div className='avatar__nav'>
                 {AvatarTypeArray.map((type) => {
                     const activated = type === currentAvatar;

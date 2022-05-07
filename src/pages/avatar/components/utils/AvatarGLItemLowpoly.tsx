@@ -6,6 +6,15 @@ import { gsap } from 'gsap';
 import { loadingEE, LoadingSourceType } from '../../../app/App.utils';
 
 export class AvatarGLItemLowpoly extends AvatarGLItemBase {
+    public extraNode = (
+        <>
+            <div className='avatar-extra-subtitle'>SecretShop</div>
+            <div className='avatar-extra-text'>→ The marketplace</div>
+            <div className='avatar-extra-subtitle'>GameMaster</div>
+            <div className='avatar-extra-text'>→ The governance</div>
+        </>
+    );
+
     public canvasWrap = document.createElement('div');
     public canvas = document.createElement('canvas');
     public context = this.canvas.getContext('2d');

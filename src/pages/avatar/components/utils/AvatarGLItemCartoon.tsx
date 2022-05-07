@@ -3,8 +3,15 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { getPublicAssetPath } from '../../../../utils';
 import { loadingEE, LoadingSourceType } from '../../../app/App.utils';
 import { AvatarGLItemBase } from './AvatarGLItemBase';
-
 export class AvatarGLItemCartoon extends AvatarGLItemBase {
+    public extraNode = (
+        <>
+            <div className='avatar-extra-subtitle'>Server DevOps</div>
+            <div className='avatar-extra-subtitle'>Data Analytics</div>
+            <div className='avatar-extra-subtitle'>Community / Social</div>
+        </>
+    );
+
     load() {
         if (this.loaded || this.loading) {
             return;

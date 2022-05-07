@@ -1,9 +1,11 @@
+import classnames from 'classnames';
 import { gsap } from 'gsap';
 import { first } from 'lodash-es';
 import React, {
     forwardRef,
     useEffect,
     useImperativeHandle,
+    useReducer,
     useRef,
 } from 'react';
 import { PageType } from '../../app/App.config';
@@ -24,10 +26,13 @@ export const AVATAR_GL_MAP = {
     [AvatarType.CARTOON]: new AvatarGLItemCartoon(),
 };
 
+const AVATAR_GL_ARRAY = Object.values(AVATAR_GL_MAP);
+
 export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const activatedRef = useRef<AvatarType | null>(null);
     const mouseRef = useRef<HTMLDivElement>(null);
+    const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
     useImperativeHandle(
         ref,
@@ -38,6 +43,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                 activatedRef.current = type;
                 activatedRef.current &&
                     AVATAR_GL_MAP[activatedRef.current].enter();
+                forceUpdate();
             },
         }),
         []
@@ -48,12 +54,12 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         if (!container) {
             return;
         }
-        Object.values(AVATAR_GL_MAP).map((v) => v.mount(container));
+        AVATAR_GL_ARRAY.map((v) => v.mount(container));
 
         // 先只加载首个资源
-        first(Object.values(AVATAR_GL_MAP))?.load();
+        first(AVATAR_GL_ARRAY)?.load();
         return () => {
-            Object.values(AVATAR_GL_MAP).map((v) => container && v.unMount());
+            AVATAR_GL_ARRAY.map((v) => container && v.unMount());
         };
     }, []);
 
@@ -104,6 +110,21 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                 <div className='avatar-mouse__dot'></div>
                 <div className='avatar-mouse__arrow-bg'></div>
                 <div className='avatar-mouse__arrow'></div>
+            </div>
+            <div className='avatar-extra'>
+                {Object.keys(AVATAR_GL_MAP).map((key) => {
+                    const gl = AVATAR_GL_MAP[key];
+                    return (
+                        <div
+                            className={classnames('avatar-extra-item', {
+                                active: activatedRef.current === key,
+                            })}
+                            key={key}
+                        >
+                            {gl.extraNode}
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

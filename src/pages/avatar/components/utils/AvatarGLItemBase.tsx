@@ -4,6 +4,9 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { gsap } from 'gsap';
 
 export class AvatarGLItemBase {
+    /** 额外的 node，用于放置说明等文案 */
+    public extraNode?: JSX.Element = void 0;
+
     public loading = false;
     public loaded = false;
     public mountContainer?: HTMLDivElement;
