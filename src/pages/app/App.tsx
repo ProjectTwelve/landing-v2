@@ -149,11 +149,11 @@ export const App = () => {
         const pages = CONTENT_PAGES.filter(
             (v) => v.Content && v.type !== PageType.Loading
         ).map((v) => v.type);
-        const currentIndex = pages.indexOf(current) || 0;
+        let index = pages.indexOf(current) || 0;
         if (e.deltaY <= 0) {
             if (document.body.scrollTop <= 0) {
                 // 到达顶部了，切换至上一页
-                newPage = pages[currentIndex - 1];
+                index = (index - 1 + pages.length) % pages.length;
             }
         } else {
             const rootDom = document.getElementById('root');
@@ -164,9 +164,10 @@ export const App = () => {
                     rootDom.clientHeight
             ) {
                 // 到达底部了
-                newPage = pages[currentIndex + 1];
+                index = (index + 1 + pages.length) % pages.length;
             }
         }
+        newPage = pages[index];
         if (!newPage || newPage === current) return;
         setCurrent(newPage);
     }
