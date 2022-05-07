@@ -61,7 +61,7 @@ export const LOCATION_INFO = [
         name: 'Poland',
         x: 1063,
         y: 559,
-        namePosition: 'right',
+        namePosition: 'none',
     },
     {
         type: 'origin',
@@ -69,7 +69,7 @@ export const LOCATION_INFO = [
         name: 'Rwanda',
         x: 1099,
         y: 904,
-        namePosition: 'right',
+        namePosition: 'none',
     },
     {
         type: 'origin',
@@ -77,7 +77,7 @@ export const LOCATION_INFO = [
         name: 'China',
         x: 1400,
         y: 704,
-        namePosition: 'right',
+        namePosition: 'none',
     },
     {
         type: 'origin',
@@ -85,7 +85,7 @@ export const LOCATION_INFO = [
         name: 'Korea',
         x: 1625,
         y: 699,
-        namePosition: 'left',
+        namePosition: 'none',
     },
     {
         type: 'origin',
@@ -117,7 +117,7 @@ export const LOCATION_INFO = [
         name: 'Hongkong',
         x: 1558,
         y: 792,
-        namePosition: 'right',
+        namePosition: 'none',
     },
 ];
 
