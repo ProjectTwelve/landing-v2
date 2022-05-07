@@ -1,6 +1,6 @@
-import { AvatarGLItemBase } from './utils/AvatarGLItemBase'; 
 import * as THREE from 'three';
-import {Points, PointsMaterial, BufferGeometry, Float32BufferAttribute, Vector3} from 'three';
+import {Points, PointsMaterial, BufferGeometry, Float32BufferAttribute, Vector3, ShaderMaterial} from 'three';
+import shaders from './utils/shader';
 
 interface OrbitParticle {
     speed: number; // 轨道粒子的速度是一个弧度值，表示每一帧绕圆形旋转的弧度
@@ -30,9 +30,23 @@ export class AvatarCycle {
     private points: Points| null = null;
     private origin = new Vector3(0, 0, 0.6);
     private GAP_ANGLE = Math.PI * 13 / 16;
+    private alphas: Array<number> = [];
 
-    private POINT_MATERIAL: PointsMaterial = new PointsMaterial({
-        size: 0.03
+    // private POINT_MATERIAL: PointsMaterial = new PointsMaterial({
+    //     size: 0.03,
+    //     vertexColors: true,
+    //     // transparent: true,
+    //     opacity: .5
+    // });
+
+    private POINT_MATERIAL: ShaderMaterial = new THREE.ShaderMaterial( {
+        uniforms:       {
+            color: { value: new THREE.Color( 0xffffffff ) },
+        },
+        colorWrite: true,
+        vertexShader:   shaders.verterxShader,
+        fragmentShader: shaders.fragmentShader,
+        transparent:    true,
     });
 
     constructor(particleCount = 150) {
@@ -53,11 +67,43 @@ export class AvatarCycle {
         return [this.R * Math.cos(angle) + this.origin.x, this.R * Math.sin(angle) + this.origin.y,0 + this.origin.z];
     }
 
+    getColorByAngle(angle: number): Array<number> {
+        let alpha = 1;
+        const coff =  Math.min(angle - this.GAP_ANGLE, 2* Math.PI - angle)
+        const fraction = Math.PI / 8;
+        return [
+            1,
+            1,
+            1,
+        ]
+    }
+
+    getAlphaByAngle(angle: number): number {
+        let alpha = 1;
+        const coff =  Math.min(angle - this.GAP_ANGLE, 2* Math.PI - angle)
+        const fraction = Math.PI / 4;
+        return coff / fraction;
+    }
+
     updatePosition() {
         this.geometry.setAttribute(
             'position',
-            new Float32BufferAttribute(this.positions, 3)
+            new Float32BufferAttribute(this.positions, 3),
         );
+    }
+
+    updateAlpha() {
+        this.geometry.setAttribute(
+            'alpha',
+            new Float32BufferAttribute(this.alphas, 1),
+        );
+    }
+
+    updateColor() {
+        this.geometry.setAttribute(
+            'color',
+            new THREE.Uint8BufferAttribute( this.colors, 4)
+        )
     }
 
     initParticles () {
@@ -65,12 +111,16 @@ export class AvatarCycle {
         for(let angle = 0;angle < 2 * Math.PI; angle+=steeper) {
             if(angle > 0 && angle < this.GAP_ANGLE) continue;
             this.positions.push(...this.getPositionByAngle(angle));
+            this.colors.push(...this.getColorByAngle(angle));
+            this.alphas.push(this.getAlphaByAngle(angle));
             this.particles.push({
                 speed: Math.PI / 800 + Math.random() * Math.PI / 1600,
                 currentAngle: angle,
             });
         }
         this.updatePosition();
+        this.updateColor();
+        this.updateAlpha();
         this.points = new Points(this.geometry, this.POINT_MATERIAL);
     }
 
@@ -83,17 +133,20 @@ export class AvatarCycle {
             }
             let newPosition: Array<number> = [];
             if(particle.currentAngle > 0 && particle.currentAngle < this.GAP_ANGLE) {
-                console.log('jump');
                 particle.currentAngle = this.GAP_ANGLE;
             }
             newPosition = this.getPositionByAngle(particle.currentAngle);
+            const newAlpha = this.getAlphaByAngle(particle.currentAngle);
             this.positions[positionIndex] = newPosition[0]
             this.positions[positionIndex+1] = newPosition[1];
             this.positions[positionIndex+2] = newPosition[2];
+            this.alphas[index] = newAlpha;
         });
         this.updatePosition();
+        this.updateAlpha();
     }
 
+    // 调整圆环姿态
     modifyCriclePosture() {
         this.points?.rotateX(-Math.PI / 2.49);
         this.points?.rotateY(Math.PI / 12);
