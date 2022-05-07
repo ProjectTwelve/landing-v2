@@ -48,10 +48,8 @@ export const usePageVisible = function (
         window.appVisibleAnimating++;
         const visiblePromise = callbacksRef.current?.onVisible?.();
         if (!visiblePromise || !isFunction(visiblePromise.then)) {
-            // show 结束，设置一个延迟，防止界面没设置返回值时，频繁切换
-            setTimeout(() => {
-                window.appVisibleAnimating--;
-            }, 300);
+            // show 结束
+            window.appVisibleAnimating--;
         } else {
             visiblePromise &&
                 visiblePromise.then(() => {
@@ -63,10 +61,8 @@ export const usePageVisible = function (
             window.appHideAnimating++;
             const hidePromise = callbacksRef.current?.onHide?.();
             if (!hidePromise || !isFunction(hidePromise.then)) {
-                // show 结束，设置一个延迟，防止界面没设置返回值时，频繁切换
-                setTimeout(() => {
-                    window.appHideAnimating--;
-                }, 300);
+                // show 结束
+                window.appHideAnimating--;
             } else {
                 hidePromise &&
                     hidePromise.then(() => {
