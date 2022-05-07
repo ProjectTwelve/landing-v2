@@ -2,6 +2,11 @@ import { AvatarGLItemBase } from './utils/AvatarGLItemBase';
 import * as THREE from 'three';
 import {Points, PointsMaterial, BufferGeometry, Float32BufferAttribute, Vector3} from 'three';
 
+interface OrbitParticle {
+    speed: number; // 轨道粒子的速度是一个弧度值，表示每一帧绕圆形旋转的弧度
+    currentAngle: number; // 当前弧度数值
+}
+
 export class AvatarCycle {
     public loading = false;
     public loaded = false;
@@ -17,17 +22,20 @@ export class AvatarCycle {
     protected observer?: ResizeObserver;
 
     private positions: Array<number> = [];
+    private colors: Array<number> = [];
+    private particles: Array<OrbitParticle> = [];
     private PARTICLE_COUNT = 0;
     private R = 4.05;
     private geometry: BufferGeometry = new BufferGeometry();
     private points: Points| null = null;
     private origin = new Vector3(0, 0, 0.6);
+    private GAP_ANGLE = Math.PI * 13 / 16;
 
     private POINT_MATERIAL: PointsMaterial = new PointsMaterial({
         size: 0.03
     });
 
-    constructor(particleCount = 500) {
+    constructor(particleCount = 150) {
         this.PARTICLE_COUNT = particleCount;
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.outputEncoding = THREE.sRGBEncoding;
@@ -40,19 +48,56 @@ export class AvatarCycle {
         this.container.appendChild(this.rendererWrap);
         this.container.className = 'avatar-gl-container';
     }
+    
+    getPositionByAngle(angle: number): Array<number> {
+        return [this.R * Math.cos(angle) + this.origin.x, this.R * Math.sin(angle) + this.origin.y,0 + this.origin.z];
+    }
 
-    initParticles () {
-        const steeper = 2*Math.PI / this.PARTICLE_COUNT;
-        const divider = Math.PI / 8
-        for(let angle = 0;angle < 2*Math.PI; angle+=steeper) {
-            if(angle > divider && angle < Math.PI - divider) continue;
-            this.positions.push( this.R * Math.cos(angle) + this.origin.x, this.R * Math.sin(angle) + this.origin.y,0 + this.origin.z);
-        }
+    updatePosition() {
         this.geometry.setAttribute(
             'position',
             new Float32BufferAttribute(this.positions, 3)
         );
+    }
+
+    initParticles () {
+        const steeper = 2 * Math.PI / this.PARTICLE_COUNT;
+        for(let angle = 0;angle < 2 * Math.PI; angle+=steeper) {
+            if(angle > 0 && angle < this.GAP_ANGLE) continue;
+            this.positions.push(...this.getPositionByAngle(angle));
+            this.particles.push({
+                speed: Math.PI / 800 + Math.random() * Math.PI / 1600,
+                currentAngle: angle,
+            });
+        }
+        this.updatePosition();
         this.points = new Points(this.geometry, this.POINT_MATERIAL);
+    }
+
+    updateParticles() {
+        this.particles.forEach((particle: OrbitParticle, index: number) => {
+            const positionIndex = index * 3;
+            particle.currentAngle += particle.speed;
+            if(particle.currentAngle > Math.PI * 2) {
+                particle.currentAngle = particle.currentAngle - Math.PI * 2;
+            }
+            let newPosition: Array<number> = [];
+            if(particle.currentAngle > 0 && particle.currentAngle < this.GAP_ANGLE) {
+                console.log('jump');
+                particle.currentAngle = this.GAP_ANGLE;
+            }
+            newPosition = this.getPositionByAngle(particle.currentAngle);
+            this.positions[positionIndex] = newPosition[0]
+            this.positions[positionIndex+1] = newPosition[1];
+            this.positions[positionIndex+2] = newPosition[2];
+        });
+        this.updatePosition();
+    }
+
+    modifyCriclePosture() {
+        this.points?.rotateX(-Math.PI / 2.49);
+        this.points?.rotateY(Math.PI / 12);
+        this.points?.rotateZ(Math.PI / 12);
     }
 
     load() {
@@ -64,8 +109,7 @@ export class AvatarCycle {
         if(this.points) {
             this.scene.add(this.points);
         }
-        this.points?.rotateX(-Math.PI/2.49);
-        this.points?.rotateY(Math.PI / 12);
+        this.modifyCriclePosture();
         this.loaded= true;
         this.loading = false;
         this.animate();
@@ -93,6 +137,7 @@ export class AvatarCycle {
             return;
         }
         const delta = this.clock.getDelta();
+        this.updateParticles();
         this.mixer?.update(delta);
         this.renderer.render(this.scene, this.camera);
     }
