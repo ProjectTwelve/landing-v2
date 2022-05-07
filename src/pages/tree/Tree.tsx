@@ -33,6 +33,25 @@ export const Tree: React.FC = () => {
                     <br />
                     implemented in the P12 Econs. Key mechanisms are:
                 </div>
+                <div className='tree__details'>
+                    <div className='tree__detail'>→ Swap</div>
+                    <div className='tree__detail'>→ CastDelay</div>
+                    <div className='tree__detail'>→ Meritocracy</div>
+                    <div className='tree__detail'>→ GameMaster</div>
+                </div>
+            </div>
+            <div className='tree__extra'>
+                <div className='tree__extra-info'>
+                    For in-depth discussion on
+                    <br />
+                    the Econs, refer to the
+                </div>
+                <div className='tree__extra-desc'>P12 Economic Whitepaper</div>
+                <a
+                    className='tree__extra-link'
+                    href='https://baidu.com'
+                    target='_blank'
+                ></a>
             </div>
         </div>
     );

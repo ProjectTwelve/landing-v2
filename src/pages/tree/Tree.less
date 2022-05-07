@@ -24,11 +24,78 @@
     }
     &__small-text-1 {
         line-height: 22px;
-        margin-bottom: 44px;
+        margin-bottom: 20px;
         color: rgba(255, 255, 255, 0.95);
+    }
+    &__details {
+        position: relative;
+        font-family: TTLakes;
+        padding-left: 24px;
+
+        &::before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 6px;
+            left: 0;
+            width: 1px;
+            height: 13px;
+            background: #00d628;
+            opacity: 0.7;
+        }
+
+        &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 23px;
+            left: 0;
+            width: 1px;
+            background: #fff;
+            opacity: 0.3;
+            bottom: 8px;
+        }
+    }
+    &__detail {
+        font-size: 14px;
+        line-height: 20px;
+        color: #fff;
+        padding: 3px 0;
+        opacity: 0.9;
+    }
+
+    &__extra {
+        position: absolute;
+        z-index: 10;
+        top: 50%;
+        transform: translate(0, -50%);
+        right: (60 / @designWidth * 100%);
+        user-select: none;
+        font-family: TTLakes;
+        color: #fff;
+
+        &-info {
+            font-size: 14px;
+            line-height: 20px;
+            opacity: 0.5;
+        }
+        &-desc {
+            font-size: 14px;
+            line-height: 20px;
+            margin: 13px 0 20px;
+        }
+        &-link {
+            display: block;
+            .bgFull2x('tree/btn-download@2x.png');
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            &:hover {
+                opacity: 1;
+            }
+        }
     }
 
     &__content {
-        .f-alignImg2x('tree/content@2x.png');
+        .f-alignImg('tree/content.jpg');
     }
 }
