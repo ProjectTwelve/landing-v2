@@ -33,7 +33,7 @@ export const usePageVisible = function (
 ) {
     const visible = useContext(AppContext)?.visiblePage === key;
     const callbacksRef = useRef<VisibleHookCallBacks | undefined>({});
-    useEffect(() => {
+    useLayoutEffect(() => {
         callbacksRef.current = effectFun();
 
         return () => {
