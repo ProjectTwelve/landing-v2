@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useRef } from 'react';
+import React, {
+    createContext,
+    useContext,
+    useEffect,
+    useLayoutEffect,
+    useRef,
+} from 'react';
 import { PageType } from './App.config';
 import EE from 'eventemitter3';
 import { isFunction, mapValues, mean, pick } from 'lodash-es';
@@ -14,10 +20,12 @@ type VisibleHookCallBacks = {
     /** 界面销毁 */
     onDestroy?: () => void;
     /** 界面显示 */
-    onVisible?: () => void | Thenable;
+    onVisible?: () => void | Promise<any>;
     /** 界面隐藏 */
-    onHide?: () => void | Thenable;
+    onHide?: () => void | Promise<any>;
 };
+window.appVisibleAnimating = 0;
+window.appHideAnimating = 0;
 /** 界面显示、退出、销毁相关逻辑 */
 export const usePageVisible = function (
     key: PageType,
@@ -33,36 +41,37 @@ export const usePageVisible = function (
             callbacksRef.current?.onDestroy?.();
         };
     }, []);
-    useEffect(() => {
-        if (visible) {
-            window.appVisibleAnimating = true;
-            const visibleAnimation = callbacksRef.current?.onVisible?.();
-            if (!visibleAnimation || !isFunction(visibleAnimation.then)) {
-                // show 结束，设置一个延迟，防止界面没设置返回值时，频繁切换
-                setTimeout(() => {
-                    window.appVisibleAnimating = false;
-                }, 300);
-            } else {
-                visibleAnimation &&
-                    visibleAnimation.then(() => {
-                        // show 结束
-                        window.appVisibleAnimating = false;
-                    });
-            }
+    useLayoutEffect(() => {
+        if (!visible) {
+            return;
+        }
+        window.appVisibleAnimating++;
+        const visiblePromise = callbacksRef.current?.onVisible?.();
+        if (!visiblePromise || !isFunction(visiblePromise.then)) {
+            // show 结束，设置一个延迟，防止界面没设置返回值时，频繁切换
+            setTimeout(() => {
+                window.appVisibleAnimating--;
+            }, 300);
+        } else {
+            visiblePromise &&
+                visiblePromise.then(() => {
+                    // show 结束
+                    window.appVisibleAnimating--;
+                });
         }
         return () => {
-            window.appHideAnimating = true;
-            const hideAnimation = callbacksRef.current?.onHide?.();
-            if (!hideAnimation || !isFunction(hideAnimation.then)) {
+            window.appHideAnimating++;
+            const hidePromise = callbacksRef.current?.onHide?.();
+            if (!hidePromise || !isFunction(hidePromise.then)) {
                 // show 结束，设置一个延迟，防止界面没设置返回值时，频繁切换
                 setTimeout(() => {
-                    window.appHideAnimating = false;
+                    window.appHideAnimating--;
                 }, 300);
             } else {
-                hideAnimation &&
-                    hideAnimation.then(() => {
+                hidePromise &&
+                    hidePromise.then(() => {
                         // show 结束
-                        window.appHideAnimating = false;
+                        window.appHideAnimating--;
                     });
             }
         };

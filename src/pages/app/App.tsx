@@ -136,6 +136,12 @@ export const App = () => {
     );
 
     function handleWheel(e: React.WheelEvent<HTMLDivElement>) {
+        // console.log(
+        //     'window.appVisibleAnimating',
+        //     window.appVisibleAnimating,
+        //     window.appHideAnimating
+        // );
+        // 正在切换和 loading 时，阻止切换，防止滚轮导致界面乱飞
         if (isLoading || window.appVisibleAnimating || window.appHideAnimating)
             return;
 

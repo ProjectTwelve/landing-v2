@@ -12,14 +12,35 @@ export const About: React.FC = () => {
     usePageVisible(PageType.About, () => {
         return {
             onVisible: () => {
-                gsap.set('.page-wrap-about', {
-                    display: 'block',
-                });
+                const tl = gsap.timeline();
+                tl.fromTo(
+                    '.page-wrap-about',
+                    {
+                        opacity: 0,
+                    },
+                    {
+                        duration: 0.5,
+                        display: 'block',
+                        opacity: 1,
+                    }
+                );
+                return tl.then();
             },
             onHide: () => {
-                gsap.set('.page-wrap-about', {
-                    display: 'none',
-                });
+                const tl = gsap.timeline();
+                tl.fromTo(
+                    '.page-wrap-about',
+                    {
+                        display: 'block',
+                        opacity: 1,
+                    },
+                    {
+                        duration: 0.5,
+                        display: 'none',
+                        opacity: 0,
+                    }
+                );
+                return tl.then();
             },
         };
     });

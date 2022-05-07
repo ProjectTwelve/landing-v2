@@ -14,6 +14,8 @@ export const Home: React.FC = () => {
                 const tl = gsap.timeline();
                 tl.set('.page-wrap-home', {
                     display: 'block',
+                    opacity: 1,
+                    scale: 1,
                 });
                 tl.fromTo(
                     '.home-gl',
@@ -65,12 +67,23 @@ export const Home: React.FC = () => {
                         opacity: 1,
                     }
                 );
-                return tl;
+                return tl.then();
             },
             onHide: () => {
-                gsap.set('.page-wrap-home', {
-                    display: 'none',
-                });
+                const tl = gsap.timeline();
+                tl.fromTo(
+                    '.page-wrap-home',
+                    {
+                        display: 'block',
+                        opacity: 1,
+                    },
+                    {
+                        duration: 0.5,
+                        display: 'none',
+                        opacity: 0,
+                    }
+                );
+                return tl.then();
             },
             onDestroy: () => {},
         };

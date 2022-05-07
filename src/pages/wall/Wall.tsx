@@ -9,14 +9,35 @@ export const Wall: React.FC = () => {
     usePageVisible(PageType.Wall, () => {
         return {
             onVisible: () => {
-                gsap.set('.page-wrap-wall', {
-                    display: 'block',
-                });
+                const tl = gsap.timeline();
+                tl.fromTo(
+                    '.page-wrap-wall',
+                    {
+                        opacity: 0,
+                    },
+                    {
+                        duration: 0.5,
+                        display: 'block',
+                        opacity: 1,
+                    }
+                );
+                return tl.then();
             },
             onHide: () => {
-                gsap.set('.page-wrap-wall', {
-                    display: 'none',
-                });
+                const tl = gsap.timeline();
+                tl.fromTo(
+                    '.page-wrap-wall',
+                    {
+                        display: 'block',
+                        opacity: 1,
+                    },
+                    {
+                        duration: 0.5,
+                        display: 'none',
+                        opacity: 0,
+                    }
+                );
+                return tl.then();
             },
         };
     });

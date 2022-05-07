@@ -154,7 +154,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         controls.update();
         controls.enablePan = true;
         controls.enableDamping = true;
-        controls.enableZoom = true;
+        controls.enableZoom = false;
         // controls.autoRotate = true;
         // controls.autoRotateSpeed = 1;
 

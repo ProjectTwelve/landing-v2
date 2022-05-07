@@ -35,10 +35,6 @@ export const Avatar: React.FC = () => {
 
         return {
             onVisible: () => {
-                gsap.set('.page-wrap-avatar', {
-                    display: 'block',
-                });
-
                 handleTouchUp();
                 window.addEventListener('pointerdown', handleTouchDown);
                 window.addEventListener('pointerup', handleTouchUp);
@@ -51,12 +47,23 @@ export const Avatar: React.FC = () => {
                 setCurrentAvatar(
                     first(Object.keys(AVATAR_GL_MAP)) as AvatarType
                 );
+                const tl = gsap.timeline({
+                    onComplete: () => {},
+                });
+                tl.fromTo(
+                    '.page-wrap-avatar',
+                    {
+                        opacity: 0,
+                    },
+                    {
+                        duration: 0.5,
+                        display: 'block',
+                        opacity: 1,
+                    }
+                );
+                return tl.then();
             },
             onHide: () => {
-                gsap.set('.page-wrap-avatar', {
-                    display: 'none',
-                });
-
                 clearInterval(timeId);
                 window.removeEventListener('pointerdown', handleTouchDown);
                 window.removeEventListener('pointerup', handleTouchUp);
@@ -65,7 +72,23 @@ export const Avatar: React.FC = () => {
                     handleVisibilityChange
                 );
 
-                setCurrentAvatar(null);
+                const tl = gsap.timeline({
+                    onComplete: () => {
+                        setCurrentAvatar(null);
+                    },
+                });
+                tl.fromTo(
+                    '.page-wrap-avatar',
+                    {
+                        opacity: 1,
+                    },
+                    {
+                        duration: 0.5,
+                        display: 'none',
+                        opacity: 0,
+                    }
+                );
+                return tl.then();
             },
         };
     });

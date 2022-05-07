@@ -87,7 +87,9 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         return {
             onVisible: () => {
                 // 进入界面后，加载所有内容
-                Object.values(AVATAR_GL_MAP).map((v) => v.load());
+                setTimeout(() => {
+                    Object.values(AVATAR_GL_MAP).map((v) => v.load());
+                }, 500);
                 handleMouseUp();
                 window.addEventListener('mousemove', handleMouseMove);
                 window.addEventListener('mousedown', handleMouseDown);

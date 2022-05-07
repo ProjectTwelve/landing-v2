@@ -30,9 +30,6 @@ export const Poster: React.FC = () => {
 
         return {
             onVisible: () => {
-                gsap.set('.page-wrap-poster', {
-                    display: 'block',
-                });
                 handleResize();
 
                 parallax?.enable();
@@ -40,6 +37,7 @@ export const Poster: React.FC = () => {
                     autoplay: true,
                     loop: true,
                     direction: 'vertical',
+                    mousewheel: false,
                 });
                 featuresSwiper = new Swiper(
                     '.poster-features-swiper-container',
@@ -49,15 +47,42 @@ export const Poster: React.FC = () => {
                         fadeEffect: {
                             crossFade: true,
                         },
+                        mousewheel: false,
                     }
                 );
+
+                const tl = gsap.timeline();
+                tl.fromTo(
+                    '.page-wrap-poster',
+                    {
+                        opacity: 0,
+                        // scale: 3,
+                    },
+                    {
+                        duration: 0.5,
+                        display: 'block',
+                        opacity: 1,
+                        // scale: 1,
+                    }
+                );
+                return tl.then();
             },
             onHide: () => {
-                gsap.set('.page-wrap-poster', {
-                    display: 'none',
-                });
-
                 parallax?.disable();
+                const tl = gsap.timeline();
+                tl.fromTo(
+                    '.page-wrap-poster',
+                    {
+                        display: 'block',
+                        opacity: 1,
+                    },
+                    {
+                        duration: 0.5,
+                        display: 'none',
+                        opacity: 0,
+                    }
+                );
+                return tl.then();
             },
             onDestroy: () => {
                 logosSwiper?.destroy();

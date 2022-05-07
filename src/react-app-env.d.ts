@@ -15,7 +15,7 @@ interface Thenable<TResult1 = any, TResult2 = any> {
 
 declare interface Window {
     /** 新界面正在显示 */
-    appVisibleAnimating: boolean;
+    appVisibleAnimating: number;
     /** 旧界面正在隐藏 */
-    appHideAnimating: boolean;
+    appHideAnimating: number;
 }
