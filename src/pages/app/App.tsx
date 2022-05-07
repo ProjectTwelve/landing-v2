@@ -19,7 +19,7 @@ export const App = () => {
             if (progress >= 1) {
                 setTimeout(() => {
                     setCurrent(PageType.Home);
-                }, 800);
+                }, 600);
             }
         };
         if (isLoading) {
@@ -136,17 +136,32 @@ export const App = () => {
     );
 
     function handleWheel(e: React.WheelEvent<HTMLDivElement>) {
-        if (isLoading) return;
+        if (isLoading || window.appVisibleAnimating || window.appHideAnimating)
+            return;
 
-        if (e.deltaY > 0) {
-            // if (!window.main.viewport.reachedTop()) return;
-            console.log('prev');
+        let newPage: PageType | null = null;
+        const pages = CONTENT_PAGES.filter(
+            (v) => v.Content && v.type !== PageType.Loading
+        ).map((v) => v.type);
+        const currentIndex = pages.indexOf(current) || 0;
+        if (e.deltaY <= 0) {
+            if (document.body.scrollTop <= 0) {
+                // 到达顶部了，切换至上一页
+                newPage = pages[currentIndex - 1];
+            }
         } else {
-            // if (!window.main.viewport.reachedBottom()) return;
-            console.log('next');
+            const rootDom = document.getElementById('root');
+            if (
+                rootDom &&
+                Math.ceil(document.body.scrollTop) +
+                    document.body.clientHeight >=
+                    rootDom.clientHeight
+            ) {
+                // 到达底部了
+                newPage = pages[currentIndex + 1];
+            }
         }
-        // index = Math.max(index, 0);
-        // index = Math.min(index, this.$links.length);
-        // this.$links.eq(index).click();
+        if (!newPage || newPage === current) return;
+        setCurrent(newPage);
     }
 };

@@ -73,8 +73,8 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             gsap.to(mouseDom, {
                 duration: 0.1,
                 opacity: 1,
-                x: e.clientX,
-                y: e.clientY,
+                x: e.clientX + document.body.scrollLeft,
+                y: e.clientY + document.body.scrollTop,
             });
         };
         const handleMouseDown = () => {

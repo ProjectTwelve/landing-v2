@@ -65,6 +65,7 @@ export const Home: React.FC = () => {
                         opacity: 1,
                     }
                 );
+                return tl;
             },
             onHide: () => {
                 gsap.set('.page-wrap-home', {

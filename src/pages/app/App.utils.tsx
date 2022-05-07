@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useRef } from 'react';
 import { PageType } from './App.config';
 import EE from 'eventemitter3';
-import { mapValues, mean, pick } from 'lodash-es';
+import { isFunction, mapValues, mean, pick } from 'lodash-es';
 
 interface AppContextValue {
     visiblePage: PageType;
@@ -14,9 +14,9 @@ type VisibleHookCallBacks = {
     /** 界面销毁 */
     onDestroy?: () => void;
     /** 界面显示 */
-    onVisible?: () => void;
+    onVisible?: () => void | Thenable;
     /** 界面隐藏 */
-    onHide?: () => void;
+    onHide?: () => void | Thenable;
 };
 /** 界面显示、退出、销毁相关逻辑 */
 export const usePageVisible = function (
@@ -35,9 +35,37 @@ export const usePageVisible = function (
     }, []);
     useEffect(() => {
         if (visible) {
-            callbacksRef.current?.onVisible?.();
+            window.appVisibleAnimating = true;
+            const visibleAnimation = callbacksRef.current?.onVisible?.();
+            if (!visibleAnimation || !isFunction(visibleAnimation.then)) {
+                // show 结束，设置一个延迟，防止界面没设置返回值时，频繁切换
+                setTimeout(() => {
+                    window.appVisibleAnimating = false;
+                }, 300);
+            } else {
+                visibleAnimation &&
+                    visibleAnimation.then(() => {
+                        // show 结束
+                        window.appVisibleAnimating = false;
+                    });
+            }
         }
-        return callbacksRef.current?.onHide;
+        return () => {
+            window.appHideAnimating = true;
+            const hideAnimation = callbacksRef.current?.onHide?.();
+            if (!hideAnimation || !isFunction(hideAnimation.then)) {
+                // show 结束，设置一个延迟，防止界面没设置返回值时，频繁切换
+                setTimeout(() => {
+                    window.appHideAnimating = false;
+                }, 300);
+            } else {
+                hideAnimation &&
+                    hideAnimation.then(() => {
+                        // show 结束
+                        window.appHideAnimating = false;
+                    });
+            }
+        };
     }, [visible]);
 };
 
