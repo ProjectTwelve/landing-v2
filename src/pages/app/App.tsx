@@ -40,7 +40,10 @@ export const App = () => {
 
     return (
         <AppContext.Provider value={contextValue}>
-            <div className={classnames('app', { 'app--loading': isLoading })}>
+            <div
+                className={classnames('app', { 'app--loading': isLoading })}
+                onWheel={handleWheel}
+            >
                 {/* <AppBg /> */}
                 <div className='content'>
                     {CONTENT_PAGES.map((p, i) => {
@@ -131,4 +134,19 @@ export const App = () => {
             </div>
         </AppContext.Provider>
     );
+
+    function handleWheel(e: React.WheelEvent<HTMLDivElement>) {
+        if (isLoading) return;
+
+        if (e.deltaY > 0) {
+            // if (!window.main.viewport.reachedTop()) return;
+            console.log('prev');
+        } else {
+            // if (!window.main.viewport.reachedBottom()) return;
+            console.log('next');
+        }
+        // index = Math.max(index, 0);
+        // index = Math.min(index, this.$links.length);
+        // this.$links.eq(index).click();
+    }
 };
