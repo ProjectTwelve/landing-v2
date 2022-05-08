@@ -156,8 +156,9 @@ export const App = () => {
         let index = pages.indexOf(current) || 0;
         if (e.deltaY <= 0) {
             if (document.body.scrollTop <= 0) {
-                // 到达顶部了，切换至上一页
-                index = (index - 1 + pages.length) % pages.length;
+                // 滚动到达顶部了，切换至上一页
+                index = index - 1;
+                // index = (index - 1 + pages.length) % pages.length;
             }
         } else {
             const rootDom = document.getElementById('root');
@@ -167,8 +168,9 @@ export const App = () => {
                     document.body.clientHeight >=
                     rootDom.clientHeight
             ) {
-                // 到达底部了
-                index = (index + 1 + pages.length) % pages.length;
+                // 滚动到达底部了
+                index = index + 1;
+                // index = (index + 1 + pages.length) % pages.length;
             }
         }
         newPage = pages[index];

@@ -48,14 +48,14 @@ export const Home: React.FC = () => {
                     tl.fromTo(
                         [homeGLRef.current?.group.rotation],
                         {
-                            x: 0,
-                            y: 0,
-                            z: Math.PI,
+                            x: Math.PI * -0.25,
+                            y: Math.PI * -0.25,
+                            z: Math.PI * 1.75,
                         },
                         {
-                            x: 0,
-                            y: Math.PI * 0.5,
-                            z: Math.PI,
+                            x: Math.PI * -0.25,
+                            y: Math.PI * 0.25,
+                            z: Math.PI * 1.75,
                             duration: 1,
                             delay: -1,
                             ease: 'power2.out',

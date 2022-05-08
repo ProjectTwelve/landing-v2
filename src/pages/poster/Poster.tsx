@@ -28,8 +28,20 @@ export const Poster: React.FC = () => {
         let logosSwiper: Swiper;
         let featuresSwiper: Swiper;
 
+        // 后台默默渲染，性能优化用
+        document
+            .getElementsByClassName('page-wrap-poster')[0]
+            ?.classList.add('back-render');
         return {
             onVisible: () => {
+                document
+                    .getElementsByClassName('.page-wrap-poster')[0]
+                    ?.classList.remove('back-render');
+
+                gsap.set('.page-wrap-poster', {
+                    visibility: 'visible',
+                });
+
                 handleResize();
 
                 parallax?.enable();

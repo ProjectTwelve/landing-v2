@@ -96,10 +96,16 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         };
         return {
             onVisible: () => {
-                // 进入界面后，加载所有内容
-                setTimeout(() => {
-                    AVATAR_GL_ARRAY.map((v) => v.load());
-                }, 500);
+                // 进入界面后，“依次”加载所有内容（上一个加载完，再加载下一个）
+                (async () => {
+                    for (let i = 0; i < AVATAR_GL_ARRAY.length; i++) {
+                        try {
+                            await AVATAR_GL_ARRAY[i].load();
+                        } catch (e) {
+                            console.error('load error', e);
+                        }
+                    }
+                })();
                 handleMouseUp();
                 window.addEventListener('mousemove', handleMouseMove);
                 window.addEventListener('mousedown', handleMouseDown);
