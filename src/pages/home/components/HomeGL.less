@@ -12,32 +12,20 @@
     .gl-pointer {
         .f-hover-opa();
         cursor: pointer;
-        width: 18px;
-        height: 18px;
-        background: #d8d8d8;
+        width: 22px;
+        height: 22px;
+        background: #fff;
         border-radius: 50%;
 
         &::after {
             .f-pseudo;
             content: '';
-            background: #d8d8d8;
+            background: #fff;
             opacity: 0.8;
             animation: glpointer 2s infinite;
             border-radius: 50%;
         }
     }
-
-    // .gl-tips {
-    //     background: rgba(0, 0, 0, 0.8);
-    //     border-radius: 4px;
-    //     padding: 10px;
-    //     // width: 200px;
-    //     height: 100px;
-    //     font-size: 30px;
-    //     color: #fff;
-    //     line-height: 100px;
-    //     margin-left: 160px;
-    // }
 }
 
 #home-gl-gui {
@@ -66,7 +54,7 @@
 
     &.active {
         opacity: 1;
-        transition-delay: 0.2s;
+        transition-delay: 0.6s;
     }
 
     &::before {
@@ -92,7 +80,7 @@
 
 @keyframes glpointer {
     100% {
-        transform: scale(3, 3);
+        transform: scale(4, 4);
         opacity: 0;
     }
 }

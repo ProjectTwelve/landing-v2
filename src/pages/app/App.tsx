@@ -136,14 +136,18 @@ export const App = () => {
     );
 
     function handleWheel(e: React.WheelEvent<HTMLDivElement>) {
-        // console.log(
-        //     'window.appVisibleAnimating',
-        //     window.appVisibleAnimating,
-        //     window.appHideAnimating
-        // );
         // 正在切换和 loading 时，阻止切换，防止滚轮导致界面乱飞
-        if (isLoading || window.appVisibleAnimating || window.appHideAnimating)
+        if (
+            isLoading ||
+            window.appVisibleAnimating ||
+            window.appHideAnimating
+        ) {
             return;
+        }
+        if (Math.abs(e.deltaY) < 30) {
+            // 剔除 mac 的惯性和 轻轻转动的事件
+            return;
+        }
 
         let newPage: PageType | null = null;
         const pages = CONTENT_PAGES.filter(
