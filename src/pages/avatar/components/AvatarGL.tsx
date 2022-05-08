@@ -15,7 +15,7 @@ import './AvatarGL.less';
 import { AvatarGLItemCartoon } from './utils/AvatarGLItemCartoon';
 import { AvatarGLItemDokv } from './utils/AvatarGLItemDokv';
 import { AvatarGLItemLowpoly } from './utils/AvatarGLItemLowpoly';
-
+import { AvatarCycle } from './AvatarCycle';
 export interface AvatarGLRef {
     switchTo: (type: AvatarType | null) => void;
 }
@@ -25,6 +25,8 @@ export const AVATAR_GL_MAP = {
     [AvatarType.LOWPOLY]: new AvatarGLItemLowpoly(),
     [AvatarType.CARTOON]: new AvatarGLItemCartoon(),
 };
+
+export const AVATAR_GL_CYCLE = new AvatarCycle(); 
 
 const AVATAR_GL_ARRAY = Object.values(AVATAR_GL_MAP);
 
@@ -55,11 +57,14 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             return;
         }
         AVATAR_GL_ARRAY.map((v) => v.mount(container));
-
+        // 圆环加载
+        AVATAR_GL_CYCLE.mount(container);
+        AVATAR_GL_CYCLE.load();
         // 先只加载首个资源
         first(AVATAR_GL_ARRAY)?.load();
         return () => {
             AVATAR_GL_ARRAY.map((v) => container && v.unMount());
+            container && AVATAR_GL_CYCLE.unMount()
         };
     }, []);
 
@@ -106,7 +111,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
 
     return (
         <div className='avatar-gl' ref={containerRef}>
-            <div className='avatar-circle'></div>
+            {/* <div className='avatar-circle'></div> */}
             <div className='avatar-mouse' id='avatar-mouse' ref={mouseRef}>
                 <div className='avatar-mouse__circle'></div>
                 <div className='avatar-mouse__dot'></div>
