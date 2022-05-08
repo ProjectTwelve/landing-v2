@@ -235,7 +235,7 @@ export const Poster: React.FC = () => {
                     </div>
                     <div className='poster__features'>
                         <div className='poster__features-title'>Features</div>
-                        <div className='poster-features-swiper-container swiper-container'>
+                        <div className='poster-features-swiper-container swiper-container swiper-no-swiping'>
                             <div className='swiper-wrapper'>
                                 {POSTER_FEATURES.map((feature, i) => {
                                     return (
