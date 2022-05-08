@@ -2,7 +2,7 @@ import React from 'react';
 
 export const POSTER_FEATURES = [
     {
-        title: 'Style Fusion',
+        title: 'StyleFusion',
         desc: (
             <>
                 Styles co-exist in one Metaverse
@@ -22,7 +22,7 @@ export const POSTER_FEATURES = [
         ),
     },
     {
-        title: 'Full programmability',
+        title: 'Full-programmability',
         desc: (
             <>
                 Full-fledged scripting support for complex gameplay
@@ -32,14 +32,12 @@ export const POSTER_FEATURES = [
         ),
     },
     {
-        title: 'Lego-Like',
+        title: 'Lego-like',
         desc: (
             <>
                 Reusability for code templates,
                 <br />
-                graphic assets, and even
-                <br />
-                tokenomics boilerplates
+                graphic assets, and even tokenomics boilerplates
             </>
         ),
     },
