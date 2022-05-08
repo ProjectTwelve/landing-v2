@@ -40,6 +40,56 @@
     // }
 }
 
+#home-gl-gui {
+    position: absolute;
+    z-index: 100;
+    left: auto;
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.home-extra {
+    pointer-events: none;
+    .f-pseudo;
+}
+
+.home-extra-item {
+    position: absolute;
+    font-family: TTLakes;
+    opacity: 0;
+    transition: opacity 0.5s;
+    color: #fff;
+    top: 50%;
+    transform: translate(0, -64%);
+    right: (130 / @designWidth * 100%);
+
+    &.active {
+        opacity: 1;
+        transition-delay: 0.2s;
+    }
+
+    &::before {
+        display: block;
+        content: '';
+        .bgFull2x('home/gl-line@2x.png');
+        position: absolute;
+        top: 10px;
+        left: -15px;
+        transform: translate(-100%, 0);
+    }
+    &__title {
+        font-size: 27px;
+        line-height: 27px;
+    }
+    &__desc {
+        font-size: 16px;
+        line-height: 20px;
+        opacity: 0.6;
+        margin-top: 15px;
+    }
+}
+
 @keyframes glpointer {
     100% {
         transform: scale(3, 3);

@@ -14,6 +14,10 @@ for (let x = 0; x < vendors.length && !window.requestAnimationFrame; x++) {
 //     return oldRAF(fun);
 // };
 
+export function toRadians(angle: number) {
+    return angle * (Math.PI / 180);
+}
+
 export function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }

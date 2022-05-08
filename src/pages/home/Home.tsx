@@ -27,9 +27,9 @@ export const Home: React.FC = () => {
                         opacity: 1,
                     }
                 );
-                homeGLRef.current?.ballModel &&
+                homeGLRef.current?.group &&
                     tl.fromTo(
-                        homeGLRef.current?.ballModel.scale,
+                        homeGLRef.current?.group.scale,
                         {
                             x: 2,
                             y: 2,
@@ -44,14 +44,14 @@ export const Home: React.FC = () => {
                             z: 1,
                         }
                     );
-                homeGLRef.current?.ballModel &&
+                homeGLRef.current?.group &&
                     tl.fromTo(
-                        [homeGLRef.current?.ballModel.rotation],
+                        [homeGLRef.current?.group.rotation],
                         {
-                            y: Math.PI * -2,
+                            y: Math.PI * 0,
                         },
                         {
-                            y: Math.PI * -1,
+                            y: Math.PI * 1.5,
                             duration: 1,
                             delay: -1,
                             ease: 'power2.out',
