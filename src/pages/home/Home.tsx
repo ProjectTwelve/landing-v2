@@ -56,7 +56,7 @@ export const Home: React.FC = () => {
                             x: Math.PI * -0.25,
                             y: Math.PI * 0.25,
                             z: Math.PI * 1.75,
-                            duration: 1,
+                            duration: 2,
                             delay: -1,
                             ease: 'power2.out',
                         }
@@ -67,7 +67,7 @@ export const Home: React.FC = () => {
                         opacity: 0,
                     },
                     {
-                        duration: 0.5,
+                        duration: 2,
                         opacity: 1,
                     }
                 );
@@ -82,7 +82,7 @@ export const Home: React.FC = () => {
                         opacity: 1,
                     },
                     {
-                        duration: 0.5,
+                        duration: 2,
                         display: 'none',
                         opacity: 0,
                     }
