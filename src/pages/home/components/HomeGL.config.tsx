@@ -25,14 +25,17 @@ export const HOME_GL_ACTIVE_DATA = [
         groupPos: new THREE.Vector3(0, -1.39, 0),
         groupSca: new THREE.Vector3(1.3, 1.3, 1.3),
         info: {
-            title: 'The Econs',
+            title: 'Empowering Metaworlds',
             desc: (
                 <>
-                    A set of economic and governmental rules
+                    A Metaverse platform where
                     <br />
-                    and mechanisms implemented in smart
+                    Web2 and Web3 users co-exist in harmony
                     <br />
-                    contracts; for prosperity and sustainability
+                    <br />
+                    An open ecosystem with
+                    <br />
+                    sustainable economy
                 </>
             ),
         },
@@ -64,12 +67,14 @@ export const HOME_GL_ACTIVE_DATA = [
         groupSca: new THREE.Vector3(1.52, 1.52, 1.52),
         // 文案 todo 补充
         info: {
-            title: 'The Editor',
+            title: 'The Econs',
             desc: (
                 <>
-                    A full-featured Metaverse content engine
+                    A set of economic and governmental rules
                     <br />
-                    for building game worlds; best in its kind
+                    and mechanisms implemented in smart
+                    <br />
+                    contracts; for prosperity and sustainability
                 </>
             ),
         },

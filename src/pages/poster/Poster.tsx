@@ -227,7 +227,7 @@ export const Poster: React.FC = () => {
                         BEST METAVERSE EDITOR IN WEB3
                     </div>
                     <div className='app-small-text poster__small-text-1'>
-                        by a top R&amp;D team with 500+ people that built a 10
+                        by a top R&amp;D team with 500+ people that built a 12
                         million DAU gaming platform
                     </div>
                     <div className='app-small-text poster__small-text-2'>
