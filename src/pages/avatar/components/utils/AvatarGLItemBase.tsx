@@ -7,8 +7,8 @@ export class AvatarGLItemBase {
     /** 额外的 node，用于放置说明等文案 */
     public extraNode?: JSX.Element = void 0;
 
-    public loading = false;
     public loaded = false;
+    public loadingPromise: Promise<void> | null = null;
     public mountContainer?: HTMLDivElement;
     protected frameId: number = 0;
     protected observer?: ResizeObserver;
@@ -48,7 +48,13 @@ export class AvatarGLItemBase {
         this.container.appendChild(this.rendererWrap);
         this.container.className = 'avatar-gl-container';
     }
-    load() {}
+    load() {
+        if (this.loadingPromise) {
+            return this.loadingPromise;
+        }
+        this.loadingPromise = Promise.resolve();
+        return this.loadingPromise;
+    }
     mount(mountContainer: HTMLDivElement) {
         this.mountContainer = mountContainer;
         this.resize();

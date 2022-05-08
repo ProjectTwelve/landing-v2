@@ -13,32 +13,34 @@ export class AvatarGLItemCartoon extends AvatarGLItemBase {
     );
 
     load() {
-        if (this.loaded || this.loading) {
-            return;
+        if (this.loadingPromise) {
+            return this.loadingPromise;
         }
-        this.loading = true;
-        new GLTFLoader().load(
-            getPublicAssetPath('files/avatar/avatar-cartoon.glb'),
-            (gltf) => {
-                const model = gltf.scene;
-                model.position.set(0, -3.18, 0);
-                model.scale.set(3.5, 3.5, 3.5);
-                this.scene.add(model);
-                this.mixer = new THREE.AnimationMixer(model);
-                this.loaded = true;
-                this.loading = false;
-                this.render();
-                loadingEE.emit(
-                    `progress.${LoadingSourceType.AVATAR_GLTF_CARTOON}`,
-                    1
-                );
-            },
-            (event) => {
-                loadingEE.emit(
-                    `progress.${LoadingSourceType.AVATAR_GLTF_CARTOON}`,
-                    event.total ? (event.loaded / event.total) * 0.95 : 0.5
-                );
-            }
-        );
+        this.loadingPromise = new Promise((resolve, reject) => {
+            new GLTFLoader().load(
+                getPublicAssetPath('files/avatar/avatar-cartoon.glb'),
+                (gltf) => {
+                    const model = gltf.scene;
+                    model.position.set(0, -3.18, 0);
+                    model.scale.set(3.5, 3.5, 3.5);
+                    this.scene.add(model);
+                    this.mixer = new THREE.AnimationMixer(model);
+                    this.loaded = true;
+                    this.render();
+                    resolve();
+                    loadingEE.emit(
+                        `progress.${LoadingSourceType.AVATAR_GLTF_CARTOON}`,
+                        1
+                    );
+                },
+                (event) => {
+                    loadingEE.emit(
+                        `progress.${LoadingSourceType.AVATAR_GLTF_CARTOON}`,
+                        event.total ? (event.loaded / event.total) * 0.95 : 0.5
+                    );
+                }
+            );
+        });
+        return this.loadingPromise;
     }
 }

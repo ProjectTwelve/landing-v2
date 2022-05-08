@@ -136,14 +136,18 @@ export const App = () => {
     );
 
     function handleWheel(e: React.WheelEvent<HTMLDivElement>) {
-        // console.log(
-        //     'window.appVisibleAnimating',
-        //     window.appVisibleAnimating,
-        //     window.appHideAnimating
-        // );
         // 正在切换和 loading 时，阻止切换，防止滚轮导致界面乱飞
-        if (isLoading || window.appVisibleAnimating || window.appHideAnimating)
+        if (
+            isLoading ||
+            window.appVisibleAnimating ||
+            window.appHideAnimating
+        ) {
             return;
+        }
+        if (Math.abs(e.deltaY) < 30) {
+            // 剔除 mac 的惯性和 轻轻转动的事件
+            return;
+        }
 
         let newPage: PageType | null = null;
         const pages = CONTENT_PAGES.filter(
@@ -152,8 +156,9 @@ export const App = () => {
         let index = pages.indexOf(current) || 0;
         if (e.deltaY <= 0) {
             if (document.body.scrollTop <= 0) {
-                // 到达顶部了，切换至上一页
-                index = (index - 1 + pages.length) % pages.length;
+                // 滚动到达顶部了，切换至上一页
+                index = index - 1;
+                // index = (index - 1 + pages.length) % pages.length;
             }
         } else {
             const rootDom = document.getElementById('root');
@@ -163,8 +168,9 @@ export const App = () => {
                     document.body.clientHeight >=
                     rootDom.clientHeight
             ) {
-                // 到达底部了
-                index = (index + 1 + pages.length) % pages.length;
+                // 滚动到达底部了
+                index = index + 1;
+                // index = (index + 1 + pages.length) % pages.length;
             }
         }
         newPage = pages[index];
