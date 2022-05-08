@@ -32,12 +32,13 @@ export const Poster: React.FC = () => {
         document
             .getElementsByClassName('page-wrap-poster')[0]
             ?.classList.add('back-render');
+        setTimeout(() => {
+            document
+                .getElementsByClassName('.page-wrap-poster')[0]
+                ?.classList.remove('back-render');
+        }, 1000);
         return {
             onVisible: () => {
-                document
-                    .getElementsByClassName('.page-wrap-poster')[0]
-                    ?.classList.remove('back-render');
-
                 gsap.set('.page-wrap-poster', {
                     visibility: 'visible',
                 });
