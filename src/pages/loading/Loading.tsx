@@ -38,6 +38,7 @@ export const Loading: React.FC = () => {
                     duration: 1.8,
                     display: 'none',
                     opacity: 0,
+                    ease: 'slow',
                 });
                 tween?.kill();
             },
