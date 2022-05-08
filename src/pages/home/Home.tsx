@@ -82,7 +82,7 @@ export const Home: React.FC = () => {
                         opacity: 1,
                     },
                     {
-                        duration: 2,
+                        duration: 0.8,
                         display: 'none',
                         opacity: 0,
                     }
@@ -103,7 +103,7 @@ export const Home: React.FC = () => {
                     <i className='app-sub-title__block'></i>ECONS
                 </div>
                 <div className='app-small-title app-small-title--with-block home__small-title'>
-                    Empowering Metaworld
+                    Empowering Metaworlds
                 </div>
                 <div className='app-small-text home__small-text-1'>
                     Project Twelve, P12 for short, is a GameFi ecosystem
