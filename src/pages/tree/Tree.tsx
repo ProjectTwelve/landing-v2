@@ -65,7 +65,6 @@ export const Tree: React.FC = () => {
                 <div className='tree__extra-info'>
                     For in-depth discussion on Econs, refer to
                 </div>
-                <div className='tree__extra-desc'>P12 Economic Whitepaper</div>
                 <a
                     className='tree__extra-link'
                     href='https://baidu.com'
