@@ -9,7 +9,6 @@
     "ahooks": "^3.3.0",
     "classnames": "^2.3.1",
     "customize-cra": "^1.0.0-alpha.0",
-    "dat.gui": "^0.7.9",
     "eventemitter3": "^4.0.7",
     "gsap": "^3.10.2",
     "howler": "^2.2.3",
@@ -46,7 +45,6 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.3.1",
-    "@types/dat.gui": "^0.7.7",
     "@types/lodash-es": "^4.17.6",
     "@types/three": "^0.139.0",
     "customize-cra-less-loader": "^2.0.0",

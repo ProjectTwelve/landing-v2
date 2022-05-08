@@ -27,7 +27,6 @@ import {
     usePageVisible,
 } from '../../app/App.utils';
 import { PageType } from '../../app/App.config';
-import { GUI } from 'dat.gui';
 import { HOME_GL_ACTIVE_DATA } from './HomeGL.config';
 import classnames from 'classnames';
 
