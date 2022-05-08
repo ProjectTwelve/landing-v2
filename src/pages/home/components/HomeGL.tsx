@@ -63,8 +63,8 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             alpha: true,
             antialias: true,
         });
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        // renderer.shadowMap.enabled = true;
+        // renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(container.clientWidth, container.clientHeight);
@@ -157,12 +157,12 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
-                model.traverse((node: any) => {
-                    if (node.isMesh) {
-                        node.castShadow = true;
-                        node.receiveShadow = true;
-                    }
-                });
+                // model.traverse((node: any) => {
+                //     if (node.isMesh) {
+                //         node.castShadow = true;
+                //         node.receiveShadow = true;
+                //     }
+                // });
                 model.position.set(0, 0, 0);
                 model.scale.set(1, 1, 1);
                 group.add(model);
@@ -300,8 +300,8 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         function handleControlMove(e: MouseEvent) {
             if (isDragging && autoRotating) {
                 const deltaMove = {
-                    x: e.offsetX - previousMousePosition.x,
-                    y: e.offsetY - previousMousePosition.y,
+                    x: e.screenX - previousMousePosition.x,
+                    y: e.screenY - previousMousePosition.y,
                 };
                 const deltaRotationQuaternion = new THREE.Quaternion().setFromEuler(
                     new THREE.Euler(
@@ -318,8 +318,8 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             }
 
             previousMousePosition = {
-                x: e.offsetX,
-                y: e.offsetY,
+                x: e.screenX,
+                y: e.screenY,
             };
         }
 
