@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { gsap } from 'gsap';
-import { first } from 'lodash-es';
+import { first, shuffle } from 'lodash-es';
 import React, {
     forwardRef,
     useEffect,
@@ -26,9 +26,13 @@ export const AVATAR_GL_MAP = {
     [AvatarType.CARTOON]: new AvatarGLItemCartoon(),
 };
 
-export const AVATAR_GL_CYCLE = new AvatarCycle(); 
+export const AVATAR_GL_CYCLE = new AvatarCycle();
 
-const AVATAR_GL_ARRAY = Object.values(AVATAR_GL_MAP);
+/** 决定要显示的 avatar 的顺序（第 0 个会优先加载，其他的会在界面进入后加载） */
+const AVATAR_GL_KEYS = Object.keys(AVATAR_GL_MAP);
+// 随机打乱的数组，打开注释即可使用
+// const AVATAR_GL_KEYS = shuffle(Object.keys(AVATAR_GL_MAP));
+const AVATAR_GL_ARRAY = AVATAR_GL_KEYS.map((k) => AVATAR_GL_MAP[k]);
 
 export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -57,14 +61,15 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             return;
         }
         AVATAR_GL_ARRAY.map((v) => v.mount(container));
+        // 先只加载首个资源
+        first(AVATAR_GL_ARRAY)?.load();
+
         // 圆环加载
         AVATAR_GL_CYCLE.mount(container);
         AVATAR_GL_CYCLE.load();
-        // 先只加载首个资源
-        first(AVATAR_GL_ARRAY)?.load();
         return () => {
             AVATAR_GL_ARRAY.map((v) => container && v.unMount());
-            container && AVATAR_GL_CYCLE.unMount()
+            container && AVATAR_GL_CYCLE.unMount();
         };
     }, []);
 
@@ -93,7 +98,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             onVisible: () => {
                 // 进入界面后，加载所有内容
                 setTimeout(() => {
-                    Object.values(AVATAR_GL_MAP).map((v) => v.load());
+                    AVATAR_GL_ARRAY.map((v) => v.load());
                 }, 500);
                 handleMouseUp();
                 window.addEventListener('mousemove', handleMouseMove);
@@ -119,7 +124,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                 <div className='avatar-mouse__arrow'></div>
             </div>
             <div className='avatar-extra'>
-                {Object.keys(AVATAR_GL_MAP).map((key) => {
+                {AVATAR_GL_KEYS.map((key) => {
                     const gl = AVATAR_GL_MAP[key];
                     return (
                         <div
