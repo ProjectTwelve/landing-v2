@@ -2030,11 +2030,11 @@ function useLoadingGL(
             onHide: () => {
                 clearInterval(timeId);
                 cancelAnimationFrame(frameId);
-            },
-            onDestroy: () => {
                 window.removeEventListener('mouseup', handleMouseUp);
                 window.removeEventListener('touchend', handleTouchEnd);
                 window.removeEventListener('keydown', handleKeyDown);
+            },
+            onDestroy: () => {
             },
         };
     });
