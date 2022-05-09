@@ -21,6 +21,7 @@ export const WallGL = (props) => {
                 console.log('XXXTEMP hpgButterfly', hpgButterfly);
                 var time = +new Date() / 1000;
                 const canvas = document.querySelector('canvas#butterfly');
+                const wall = document.querySelector('.wall');
                 var isMultiTouch = false;
                 var multiTouchChargeToggle = false;
                 var touchEvents : any[] = [];
@@ -45,13 +46,13 @@ export const WallGL = (props) => {
                     loop();
 
                     // you can alter the input event as you wish to or even use some input event library.
-                    canvas!.addEventListener('mousedown', onDown);
-                    canvas!.addEventListener('touchstart', getTouchBound(onDown));
-                    canvas!.addEventListener('mousemove', onMove);
-                    canvas!.addEventListener('touchmove', getTouchBound(onMove));
-                    canvas!.addEventListener('mouseup', onUp);
-                    canvas!.addEventListener('touchend', getTouchBound(onUp));
-                    canvas!.addEventListener('click', onClick);
+                    wall!.addEventListener('mousedown', onDown);
+                    wall!.addEventListener('touchstart', getTouchBound(onDown));
+                    wall!.addEventListener('mousemove', onMove);
+                    wall!.addEventListener('touchmove', getTouchBound(onMove));
+                    wall!.addEventListener('mouseup', onUp);
+                    wall!.addEventListener('touchend', getTouchBound(onUp));
+                    wall!.addEventListener('click', onClick);
 
                     // the following is not needed in the production
                     properties = hpgButterfly.properties;
@@ -82,7 +83,7 @@ export const WallGL = (props) => {
                 }
 
                 function getInputXY (evt) {
-                    var rect = canvas!.getBoundingClientRect();
+                    var rect = wall!.getBoundingClientRect();
                     var xy = {
                         x: evt.clientX - rect.left,
                         y: evt.clientY - rect.top
