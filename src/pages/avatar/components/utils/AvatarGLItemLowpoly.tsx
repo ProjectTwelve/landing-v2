@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { getPublicAssetPath } from '../../../../utils';
-import { AvatarGLItemBaseWithParticle } from './AvatarGLItemBaseWithParticle';
+import { AvatarGLItemBaseWithParticle } from './base/AvatarGLItemBaseWithParticle';
 import { loadingEE, LoadingSourceType } from '../../../app/App.utils';
 
 export class AvatarGLItemLowpoly extends AvatarGLItemBaseWithParticle {
@@ -28,8 +28,6 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBaseWithParticle {
             new GLTFLoader().load(
                 getPublicAssetPath('files/avatar/avatar-lowpoly.glb'),
                 (gltf) => {
-                    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-                    this.scene.add(ambientLight);
                     const model = gltf.scene;
                     model.position.set(0, -2.9, 0);
                     model.scale.set(3.6, 3.6, 3.6);
@@ -43,6 +41,9 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBaseWithParticle {
                     if (this.loaded) {
                         resolve();
                     }
+                    this.scene.add(
+                        new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6)
+                    );
                     loadingEE.emit(
                         `progress.${LoadingSourceType.AVATAR_GLTF_LOWPOLY}`,
                         1

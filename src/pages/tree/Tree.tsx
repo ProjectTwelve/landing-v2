@@ -1,5 +1,6 @@
 import gsap from 'gsap';
 import React, { useEffect, useRef, useState } from 'react';
+import { playClickAudio } from '../../utils';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
 import './Tree.less';
@@ -69,6 +70,9 @@ export const Tree: React.FC = () => {
                     className='tree__extra-link'
                     href='https://baidu.com'
                     target='_blank'
+                    onClick={() => {
+                        playClickAudio();
+                    }}
                 ></a>
             </div>
         </div>

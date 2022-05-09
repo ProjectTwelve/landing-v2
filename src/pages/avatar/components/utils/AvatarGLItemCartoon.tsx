@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { getPublicAssetPath } from '../../../../utils';
 import { loadingEE, LoadingSourceType } from '../../../app/App.utils';
-import { AvatarGLItemBase } from './AvatarGLItemBase';
+import { AvatarGLItemBase } from './base/AvatarGLItemBase';
 export class AvatarGLItemCartoon extends AvatarGLItemBase {
     public extraNode = (
         <>
@@ -25,6 +25,7 @@ export class AvatarGLItemCartoon extends AvatarGLItemBase {
                     model.scale.set(3.5, 3.5, 3.5);
                     this.scene.add(model);
                     this.mixer = new THREE.AnimationMixer(model);
+                    this.mixer.clipAction(gltf.animations?.[0])?.play();
                     this.loaded = true;
                     this.render();
                     resolve();

@@ -2,8 +2,8 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { getPublicAssetPath } from '../../../../utils';
 import { loadingEE, LoadingSourceType } from '../../../app/App.utils';
-import { AvatarGLItemBase } from './AvatarGLItemBase';
-import { AvatarGLItemBaseWithParticle } from './AvatarGLItemBaseWithParticle';
+import { AvatarGLItemBase } from './base/AvatarGLItemBase';
+import { AvatarGLItemBaseWithParticle } from './base/AvatarGLItemBaseWithParticle';
 
 export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
     public particleCanvasWidth = 1920;
