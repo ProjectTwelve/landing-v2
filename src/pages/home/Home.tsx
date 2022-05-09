@@ -27,9 +27,9 @@ export const Home: React.FC = () => {
                         opacity: 1,
                     }
                 );
-                homeGLRef.current?.ballModel &&
+                homeGLRef.current?.group &&
                     tl.fromTo(
-                        homeGLRef.current?.ballModel.scale,
+                        homeGLRef.current?.group.scale,
                         {
                             x: 2,
                             y: 2,
@@ -44,15 +44,19 @@ export const Home: React.FC = () => {
                             z: 1,
                         }
                     );
-                homeGLRef.current?.ballModel &&
+                homeGLRef.current?.group &&
                     tl.fromTo(
-                        [homeGLRef.current?.ballModel.rotation],
+                        [homeGLRef.current?.group.rotation],
                         {
-                            y: Math.PI * -2,
+                            x: Math.PI * -0.25,
+                            y: Math.PI * -0.25,
+                            z: Math.PI * 1.75,
                         },
                         {
-                            y: Math.PI * -1,
-                            duration: 1,
+                            x: Math.PI * -0.25,
+                            y: Math.PI * 0.25,
+                            z: Math.PI * 1.75,
+                            duration: 2,
                             delay: -1,
                             ease: 'power2.out',
                         }
@@ -63,7 +67,7 @@ export const Home: React.FC = () => {
                         opacity: 0,
                     },
                     {
-                        duration: 0.5,
+                        duration: 2,
                         opacity: 1,
                     }
                 );
@@ -78,7 +82,7 @@ export const Home: React.FC = () => {
                         opacity: 1,
                     },
                     {
-                        duration: 0.5,
+                        duration: 0.8,
                         display: 'none',
                         opacity: 0,
                     }
@@ -99,7 +103,7 @@ export const Home: React.FC = () => {
                     <i className='app-sub-title__block'></i>ECONS
                 </div>
                 <div className='app-small-title app-small-title--with-block home__small-title'>
-                    Empowering Metaworld
+                    Empowering Metaworlds
                 </div>
                 <div className='app-small-text home__small-text-1'>
                     Project Twelve, P12 for short, is a GameFi ecosystem

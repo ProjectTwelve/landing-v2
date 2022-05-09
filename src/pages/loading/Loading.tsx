@@ -35,9 +35,10 @@ export const Loading: React.FC = () => {
             },
             onHide: () => {
                 gsap.to('.page-wrap-loading', {
-                    duration: 1.3,
+                    duration: 2.4,
                     display: 'none',
                     opacity: 0,
+                    ease: 'power1.inOut',
                 });
                 tween?.kill();
             },

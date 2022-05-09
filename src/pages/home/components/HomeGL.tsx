@@ -11,14 +11,15 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+// import { ObjectControls } from 'threejs-object-controls';
+import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import {
     CSS2DObject,
     CSS2DRenderer,
 } from 'three/examples/jsm/renderers/CSS2DRenderer';
-import { getPublicAssetPath } from '../../../utils';
+import { getPublicAssetPath, toRadians } from '../../../utils';
 import { gsap } from 'gsap';
-import { get } from 'lodash-es';
 import './HomeGL.less';
 import {
     loadingEE,
@@ -26,21 +27,24 @@ import {
     usePageVisible,
 } from '../../app/App.utils';
 import { PageType } from '../../app/App.config';
+import { HOME_GL_ACTIVE_DATA } from './HomeGL.config';
+import classnames from 'classnames';
 
 export interface HomeGLRef {
-    ballModel?: THREE.Group;
+    group?: THREE.Group;
 }
 
 export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const [ballModel, setBallModel] = useState<THREE.Group>();
+    const groupRef = useRef<THREE.Group>();
+    const [activatedIndex, setActivatedIndex] = useState<number | null>(null);
 
     useImperativeHandle(
         ref,
         () => ({
-            ballModel: ballModel,
+            group: groupRef.current,
         }),
-        [ballModel]
+        [groupRef.current]
     );
 
     usePageVisible(PageType.Home, () => {
@@ -48,15 +52,18 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         if (!container) {
             return;
         }
+        const group = new THREE.Group();
+        groupRef.current = group;
 
         let mixer: THREE.AnimationMixer;
+        let autoRotating = false;
         const clock = new THREE.Clock();
         const renderer = new THREE.WebGLRenderer({
             alpha: true,
             antialias: true,
         });
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        // renderer.shadowMap.enabled = true;
+        // renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(container.clientWidth, container.clientHeight);
@@ -64,6 +71,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         container.appendChild(renderer.domElement);
 
         const scene = new THREE.Scene();
+        scene.add(group);
 
         const labelRenderer = new CSS2DRenderer();
         labelRenderer.setSize(container.clientWidth, container.clientHeight);
@@ -76,36 +84,11 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             1,
             100
         );
-        // camera.position.set(-2.17, 9.396, 0.0408);
-        camera.position.set(
-            3360 / 400 / 2.8,
-            473.3 / 400 / 2.8,
-            1240 / 400 / 2.8
-        );
-        const pointerData = [
-            {
-                position: new THREE.Vector3(3.1, -1, 0),
-                cameraPosition: new THREE.Vector3(3.27, 6.088, -0.22),
-                lookPosition: new THREE.Vector3(3.27, -6.43, -0.022),
-            },
-            {
-                position: new THREE.Vector3(0.2, 3.3, -1.4),
-                cameraPosition: new THREE.Vector3(-0.11, 7.16, 3.66),
-                lookPosition: new THREE.Vector3(0.2, 3.3, -1.4),
-            },
-            {
-                position: new THREE.Vector3(0.2, -0.8, 3.3),
-                cameraPosition: new THREE.Vector3(-0.11, 7.16, 3.66),
-                lookPosition: new THREE.Vector3(0.2, -0.8, 3.3),
-            },
-            {
-                position: new THREE.Vector3(-3, 0.6, -0.2),
-                cameraPosition: new THREE.Vector3(-0.11, 7.16, 3.66),
-                lookPosition: new THREE.Vector3(-3, 0.6, -0.2),
-            },
-        ];
-        // todo 调参
-        // camera.layers.enable(1);
+
+        // camera.position.set(2, 2, 2);
+        camera.position.set(0, 0, 3.33);
+        camera.lookAt(0, 0, 0);
+        camera.layers.enable(1);
 
         const hemisphereLight = new THREE.HemisphereLight(
             0xffffbb,
@@ -149,14 +132,20 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         const axesHelper = new THREE.AxesHelper(10);
         // scene.add(axesHelper);
 
-        const controls = new OrbitControls(camera, labelRenderer.domElement);
-        controls.target.set(0, 0, 0);
-        controls.update();
-        controls.enablePan = true;
-        controls.enableDamping = true;
-        controls.enableZoom = false;
-        // controls.autoRotate = true;
-        // controls.autoRotateSpeed = 1;
+        // const gui = new GUI();
+        // const folderRotation = gui.addFolder('group.rotation');
+        // folderRotation.add(group.rotation, 'x').step(0.01);
+        // folderRotation.add(group.rotation, 'y').step(0.01);
+        // folderRotation.add(group.rotation, 'z').step(0.01);
+        // const folderPosition = gui.addFolder('group.position');
+        // folderPosition.add(group.position, 'x').step(0.01);
+        // folderPosition.add(group.position, 'y').step(0.01);
+        // folderPosition.add(group.position, 'z').step(0.01);
+        // const folderScale = gui.addFolder('group.scale');
+        // folderScale.add(group.scale, 'x').step(0.01);
+        // folderScale.add(group.scale, 'y').step(0.01);
+        // folderScale.add(group.scale, 'z').step(0.01);
+        // gui.domElement.id = 'home-gl-gui';
 
         const loader = new GLTFLoader();
         // const dracoLoader = new DRACOLoader();
@@ -167,31 +156,19 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
-                model.traverse((node: any) => {
-                    if (node.isMesh) {
-                        node.castShadow = true;
-                        node.receiveShadow = true;
-                    }
-                });
+                // model.traverse((node: any) => {
+                //     if (node.isMesh) {
+                //         node.castShadow = true;
+                //         node.receiveShadow = true;
+                //     }
+                // });
                 model.position.set(0, 0, 0);
                 model.scale.set(1, 1, 1);
-                scene.add(model);
-
-                // const mesh = new THREE.Mesh(
-                //     new THREE.PlaneGeometry(100, 100),
-                //     new THREE.MeshPhongMaterial({
-                //         color: 0x999999,
-                //         depthWrite: false,
-                //     })
-                // );
-                // mesh.rotation.x = -Math.PI / 2;
-                // mesh.receiveShadow = true;
-                // scene.add(mesh);
+                group.add(model);
 
                 mixer = new THREE.AnimationMixer(model);
                 // mixer.clipAction(gltf.animations[0]).play();
 
-                setBallModel(model);
                 render();
                 loadingEE.emit(`progress.${LoadingSourceType.HOME_GLTF}`, 1);
             },
@@ -218,47 +195,30 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 container.clientHeight
             );
         }
-        let frameId: number;
 
-        function render() {
-            const delta = clock.getDelta();
-            mixer?.update?.(delta);
-            controls.update();
-            // light.position.copy(camera.position);
-
-            renderer.render(scene, camera);
-            labelRenderer.render(scene, camera);
-            // console.log(camera.position);
-        }
-
-        function animate() {
-            frameId = requestAnimationFrame(animate);
-            render();
-        }
-
-        let oldCameraPos = camera.position;
+        let oldGroupRot = group.rotation.clone();
         function handleResetCamera() {
+            setActivatedIndex(null);
             camera.layers.enable(1);
-            containerRef.current &&
-                gsap.to(containerRef.current, {
-                    duration: 0.8,
-                    x: containerRef.current.offsetWidth * 0.17,
-                    y: 0,
-                    z: 0,
-                });
-            gsap.to(controls.target, {
+            gsap.to(group.rotation, {
+                duration: 0.8,
+                x: oldGroupRot.x,
+                y: oldGroupRot.y,
+                z: oldGroupRot.z,
+            });
+            gsap.to(group.scale, {
+                duration: 0.8,
+                x: 1,
+                y: 1,
+                z: 1,
+            });
+            gsap.to(group.position, {
                 duration: 0.8,
                 x: 0,
                 y: 0,
                 z: 0,
-            });
-            gsap.to(camera.position, {
-                duration: 0.8,
-                x: oldCameraPos.x,
-                y: oldCameraPos.y,
-                z: oldCameraPos.z,
                 onComplete: () => {
-                    controls.enabled = true;
+                    autoRotating = true;
                 },
             });
             labelRenderer.domElement.removeEventListener(
@@ -267,32 +227,30 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             );
         }
 
-        function getHandleMouseClick(data: typeof pointerData[number]) {
-            const lookPos = data.lookPosition;
-            const cameraPos = data.cameraPosition;
+        function getHandleMouseClick(index: number) {
+            const data = HOME_GL_ACTIVE_DATA[index];
             return (event) => {
+                setActivatedIndex(index);
+                oldGroupRot = group.rotation.clone();
+                autoRotating = false;
                 camera.layers.disable(1);
-                oldCameraPos = camera.position.clone();
-                controls.enabled = false;
-                controls.autoRotate = false;
-                containerRef.current &&
-                    gsap.to(containerRef.current, {
-                        duration: 0.8,
-                        x: 0,
-                        y: 0,
-                        z: 0,
-                    });
-                gsap.to(controls.target, {
+                gsap.to(group.rotation, {
                     duration: 0.8,
-                    x: lookPos.x,
-                    y: lookPos.y,
-                    z: lookPos.z,
+                    x: data.groupRot.x,
+                    y: data.groupRot.y,
+                    z: data.groupRot.z,
                 });
-                gsap.to(camera.position, {
+                gsap.to(group.scale, {
                     duration: 0.8,
-                    x: cameraPos.x,
-                    y: cameraPos.y,
-                    z: cameraPos.z,
+                    x: data.groupSca.x,
+                    y: data.groupSca.y,
+                    z: data.groupSca.z,
+                });
+                gsap.to(group.position, {
+                    duration: 0.8,
+                    x: data.groupPos.x,
+                    y: data.groupPos.y,
+                    z: data.groupPos.z,
                     onComplete: () => {
                         labelRenderer.domElement.addEventListener(
                             'pointerup',
@@ -303,15 +261,21 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             };
         }
 
-        const pointersRemoveHandle = pointerData.map((p) => {
+        const pointersRemoveHandle = HOME_GL_ACTIVE_DATA.map((p, index) => {
             const btn = document.createElement('div');
             btn.className = 'gl-pointer';
             const label = new CSS2DObject(btn);
             label.position.set(p.position.x, p.position.y, p.position.z);
-            scene.add(label);
+
+            // const folder = gui.addFolder('label.position' + index);
+            // folder.add(label.position, 'x').step(0.01);
+            // folder.add(label.position, 'y').step(0.01);
+            // folder.add(label.position, 'z').step(0.01);
+
+            group.add(label);
             label.layers.set(1);
 
-            const handle = getHandleMouseClick(p);
+            const handle = getHandleMouseClick(index);
             btn.addEventListener('mousedown', handle);
             return () => {
                 btn.removeEventListener('mousedown', handle);
@@ -321,12 +285,77 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         const observer = new ResizeObserver(resize);
         observer.observe(container);
 
+        let isDragging = false;
+        let previousMousePosition = {
+            x: 0,
+            y: 0,
+        };
+        function handleControlUp() {
+            isDragging = false;
+        }
+        function handleControlDown() {
+            isDragging = true;
+        }
+        function handleControlMove(e: MouseEvent) {
+            if (isDragging && autoRotating) {
+                const deltaMove = {
+                    x: e.screenX - previousMousePosition.x,
+                    y: e.screenY - previousMousePosition.y,
+                };
+                const deltaRotationQuaternion = new THREE.Quaternion().setFromEuler(
+                    new THREE.Euler(
+                        toRadians(deltaMove.y * 1 * 0.3),
+                        toRadians(deltaMove.x * 1 * 0.3),
+                        0,
+                        'XYZ'
+                    )
+                );
+                group.quaternion.multiplyQuaternions(
+                    deltaRotationQuaternion,
+                    group.quaternion
+                );
+            }
+
+            previousMousePosition = {
+                x: e.screenX,
+                y: e.screenY,
+            };
+        }
+
+        let frameId: number;
+
+        function render() {
+            const delta = clock.getDelta();
+            mixer?.update?.(delta);
+            if (autoRotating && !isDragging) {
+                group.rotation.y += ((2 * Math.PI) / 60 / 60) * delta * 30;
+            }
+
+            renderer.render(scene, camera);
+            labelRenderer.render(scene, camera);
+            // gui.updateDisplay();
+        }
+
+        function animate() {
+            frameId = requestAnimationFrame(animate);
+            render();
+        }
+
         return {
             onVisible: () => {
                 animate();
+                autoRotating = true;
+                window.addEventListener('mouseup', handleControlUp);
+                window.addEventListener('mousedown', handleControlDown);
+                window.addEventListener('mousemove', handleControlMove);
+                // if (process.env.NODE_ENV === 'development') {
+                //     document.body.appendChild(gui.domElement);
+                // }
             },
             onHide: () => {
+                autoRotating = false;
                 cancelAnimationFrame(frameId);
+                // document.body.removeChild(gui.domElement);
             },
             onDestroy: () => {
                 observer.disconnect();
@@ -335,11 +364,36 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                     'pointerup',
                     handleResetCamera
                 );
+                window.removeEventListener('mouseup', handleControlUp);
+                window.removeEventListener('mousedown', handleControlDown);
+                window.removeEventListener('mousemove', handleControlMove);
                 container.removeChild(renderer.domElement);
                 container.removeChild(labelRenderer.domElement);
             },
         };
     });
 
-    return <div className='home-gl' ref={containerRef} />;
+    return (
+        <div className='home-gl' ref={containerRef}>
+            <div className='home-extra'>
+                {HOME_GL_ACTIVE_DATA.map((data, index) => {
+                    return (
+                        <div
+                            className={classnames('home-extra-item', {
+                                active: activatedIndex === index,
+                            })}
+                            key={index}
+                        >
+                            <div className='home-extra-item__title'>
+                                {data.info.title}
+                            </div>
+                            <div className='home-extra-item__desc'>
+                                {data.info.desc}
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
 });

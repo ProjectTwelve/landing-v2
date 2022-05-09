@@ -69,61 +69,63 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBase {
     }
 
     load() {
-        if (this.loaded || this.loading) {
-            return;
+        if (this.loadingPromise) {
+            return this.loadingPromise;
         }
-        this.loading = true;
-        let gltfLoaded = false;
-        let imageLoaded = false;
-        new GLTFLoader().load(
-            getPublicAssetPath('files/avatar/avatar-lowpoly.glb'),
-            (gltf) => {
-                const model = gltf.scene;
-                model.position.set(0, -2.9, 0);
-                model.scale.set(3.6, 3.6, 3.6);
-                model.rotation.y = Math.PI * 1.7;
-                this.scene.add(model);
-                this.mixer = new THREE.AnimationMixer(model);
-                gltfLoaded = true;
-                this.loaded = gltfLoaded || imageLoaded;
-                if (this.loaded) {
-                    this.loading = false;
+        this.loadingPromise = new Promise((resolve, reject) => {
+            let gltfLoaded = false;
+            let imageLoaded = false;
+            new GLTFLoader().load(
+                getPublicAssetPath('files/avatar/avatar-lowpoly.glb'),
+                (gltf) => {
+                    const model = gltf.scene;
+                    model.position.set(0, -2.9, 0);
+                    model.scale.set(3.6, 3.6, 3.6);
+                    model.rotation.y = Math.PI * 1.7;
+                    this.scene.add(model);
+                    this.mixer = new THREE.AnimationMixer(model);
+                    gltfLoaded = true;
+                    this.loaded = gltfLoaded && imageLoaded;
+                    this.render();
+                    if (this.loaded) {
+                        resolve();
+                    }
+                    loadingEE.emit(
+                        `progress.${LoadingSourceType.AVATAR_GLTF_LOWPOLY}`,
+                        1
+                    );
+                },
+                (event) => {
+                    loadingEE.emit(
+                        `progress.${LoadingSourceType.AVATAR_GLTF_LOWPOLY}`,
+                        event.total ? (event.loaded / event.total) * 0.95 : 0.5
+                    );
                 }
-                this.render();
-                loadingEE.emit(
-                    `progress.${LoadingSourceType.AVATAR_GLTF_LOWPOLY}`,
-                    1
-                );
-            },
-            (event) => {
-                loadingEE.emit(
-                    `progress.${LoadingSourceType.AVATAR_GLTF_LOWPOLY}`,
-                    event.total ? (event.loaded / event.total) * 0.95 : 0.5
-                );
-            }
-        );
+            );
 
-        const imageUrls = new Array(360).fill(0).map((_, i) => {
-            return getPublicAssetPath(
-                `files/avatar/avatar-particle/${i + 1 + 60000}.jpg`
+            const imageUrls = new Array(360).fill(0).map((_, i) => {
+                return getPublicAssetPath(
+                    `files/avatar/avatar-particle/${i + 1 + 60000}.jpg`
+                );
+            });
+            const imageLoader = new THREE.ImageLoader();
+            Promise.all(imageUrls.map((url) => imageLoader.load(url))).then(
+                (data) => {
+                    this.imageDataArray = data;
+                    imageLoaded = true;
+                    this.loaded = gltfLoaded && imageLoaded;
+                    this.render();
+                    if (this.loaded) {
+                        resolve();
+                    }
+                    loadingEE.emit(
+                        `progress.${LoadingSourceType.AVATAR_GLTF_LOWPOLY_PARTICLE}`,
+                        1
+                    );
+                }
             );
         });
-        const imageLoader = new THREE.ImageLoader();
-        Promise.all(imageUrls.map((url) => imageLoader.load(url))).then(
-            (data) => {
-                this.imageDataArray = data;
-                imageLoaded = true;
-                this.loaded = gltfLoaded || imageLoaded;
-                if (this.loaded) {
-                    this.loading = false;
-                }
-                this.render();
-                loadingEE.emit(
-                    `progress.${LoadingSourceType.AVATAR_GLTF_LOWPOLY_PARTICLE}`,
-                    1
-                );
-            }
-        );
+        return this.loadingPromise;
     }
     enter() {
         super.enter();

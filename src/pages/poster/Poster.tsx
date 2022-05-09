@@ -28,8 +28,21 @@ export const Poster: React.FC = () => {
         let logosSwiper: Swiper;
         let featuresSwiper: Swiper;
 
+        // 后台默默渲染，性能优化用
+        document
+            .getElementsByClassName('page-wrap-poster')[0]
+            ?.classList.add('back-render');
+        setTimeout(() => {
+            document
+                .getElementsByClassName('.page-wrap-poster')[0]
+                ?.classList.remove('back-render');
+        }, 1000);
         return {
             onVisible: () => {
+                gsap.set('.page-wrap-poster', {
+                    visibility: 'visible',
+                });
+
                 handleResize();
 
                 parallax?.enable();
@@ -214,7 +227,7 @@ export const Poster: React.FC = () => {
                         BEST METAVERSE EDITOR IN WEB3
                     </div>
                     <div className='app-small-text poster__small-text-1'>
-                        by a top R&amp;D team with 500+ people that built a 10
+                        by a top R&amp;D team with 500+ people that built a 12
                         million DAU gaming platform
                     </div>
                     <div className='app-small-text poster__small-text-2'>
@@ -223,7 +236,7 @@ export const Poster: React.FC = () => {
                     </div>
                     <div className='poster__features'>
                         <div className='poster__features-title'>Features</div>
-                        <div className='poster-features-swiper-container swiper-container'>
+                        <div className='poster-features-swiper-container swiper-container swiper-no-swiping'>
                             <div className='swiper-wrapper'>
                                 {POSTER_FEATURES.map((feature, i) => {
                                     return (
