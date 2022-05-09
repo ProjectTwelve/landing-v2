@@ -123,20 +123,34 @@ export const WallGL = (props) => {
                 }
 
                 function startParamDrift() {
-                    let choices = ['dec', 'inc', 'const'];
-                    let params = Object.keys(defaultProperties);
+                    const choices = ['dec', 'inc', 'const'];
+                    const colorParams = [
+                        'baseColorHex',
+                        'color1Hex',
+                        'color2Hex',
+                    ];
+                    const params = Object.keys(defaultProperties);
                     for (let param of params) {
                         let choice = decideOneRandomChoice(choices);
                         switch(choice) {
                             case 'dec':
-                                console.log(`dec before and after ${param} ${properties[param]}`)
-                                properties[param] = properties[param] / 2;
+                                console.log(`dec before and after ${param} ${properties[param]}`);
+                                if (!colorParams.includes(param)) {
+                                    properties[param] = properties[param] / 2;
+                                }
                                 break;
                             case 'inc':
-                                console.log(`inc before and after ${param} ${properties[param]}`)
-                                properties[param] = properties[param] * 2;
+                                console.log(`inc before and after ${param} ${properties[param]}`);
+                                if (!colorParams.includes(param)) {
+                                    properties[param] = properties[param] * 2;
+                                }
                                 break;
                             case 'const':
+                                if (colorParams.includes(param)) {
+                                    properties[param] = 
+                                        Math.floor((3 * getRandomInt(0x0, 0xffffff) + properties[param]) / 4);
+                                }
+                                break;
                             default:
                         }
                     }
@@ -144,6 +158,12 @@ export const WallGL = (props) => {
 
                 function decideOneRandomChoice(choices) {
                     return choices[Math.floor(Math.random() * choices.length)];
+                }
+
+                function getRandomInt(min, max) {
+                    min = Math.ceil(min);
+                    max = Math.floor(max);
+                    return Math.floor(Math.random() * (max - min + 1)) + min;
                 }
 
                 function onMove (evt) {
