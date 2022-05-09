@@ -27,7 +27,7 @@ export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
             let gltfLoaded = false;
             let imageLoaded = false;
             new GLTFLoader().load(
-                getPublicAssetPath('files/avatar/avatar-dokv.glb'),
+                getPublicAssetPath('files/avatar/avatar-dokv.glb?v050901'),
                 (gltf) => {
                     const model = gltf.scene;
                     model.position.set(0.2, -2.6, -1);

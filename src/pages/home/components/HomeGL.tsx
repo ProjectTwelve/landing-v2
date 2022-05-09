@@ -152,7 +152,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         // dracoLoader.setDecoderPath(getPublicAssetPath('files/lib-draco/gltf/'));
         // loader.setDRACOLoader(dracoLoader);
         loader.load(
-            getPublicAssetPath('files/home/home.glb'),
+            getPublicAssetPath('files/home/home.glb?v050901'),
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
