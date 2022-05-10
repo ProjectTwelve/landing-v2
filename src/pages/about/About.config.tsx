@@ -134,6 +134,7 @@ export const ABOUT_PARTNERS = [
         ),
         links: {
             linkedin: 'https://www.linkedin.com/in/wangboyang/',
+            twitter: null,
         },
     },
     {
@@ -148,6 +149,7 @@ export const ABOUT_PARTNERS = [
         ),
         links: {
             linkedin: 'https://www.linkedin.com/in/maciejburno/',
+            twitter: null,
         },
     },
     {
@@ -162,6 +164,7 @@ export const ABOUT_PARTNERS = [
         ),
         links: {
             linkedin: 'https://www.linkedin.com/in/kelsangdrolma/',
+            twitter: null,
         },
     },
 ];
