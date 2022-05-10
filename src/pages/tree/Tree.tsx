@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { playClickAudio } from '../../utils';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
+import { TreeGL } from './components/TreeGL';
 import './Tree.less';
 
 export const Tree: React.FC = () => {
@@ -44,7 +45,8 @@ export const Tree: React.FC = () => {
     });
     return (
         <div className='tree'>
-            <div className='tree__content'></div>
+            {/* <div className='tree__content'></div> */}
+            <TreeGL />
             <div className='tree__info'>
                 <div className='tree__slogan'></div>
                 <div className='app-small-title app-small-title--with-block tree__small-title'>
