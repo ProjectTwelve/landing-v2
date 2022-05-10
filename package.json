@@ -48,6 +48,7 @@
     "@types/lodash-es": "^4.17.6",
     "@types/three": "^0.139.0",
     "customize-cra-less-loader": "^2.0.0",
+    "dat.gui": "^0.7.9",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
     "react-app-rewired": "^2.2.1",
