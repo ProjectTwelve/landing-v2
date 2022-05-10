@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "PUBLIC_URL=/p12/ react-app-rewired build",
+    "build": "PUBLIC_URL=/ react-app-rewired build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
