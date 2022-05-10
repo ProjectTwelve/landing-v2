@@ -25,7 +25,7 @@ export class AvatarGLItemCartoon extends AvatarGLItemBase {
                     model.scale.set(3.5, 3.5, 3.5);
                     this.scene.add(model);
                     this.mixer = new THREE.AnimationMixer(model);
-                    this.mixer.clipAction(gltf.animations?.[0])?.play();
+                    // this.mixer?.clipAction(gltf.animations?.[0])?.play();
                     this.loaded = true;
                     this.render();
                     resolve();
