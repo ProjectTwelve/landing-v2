@@ -14,6 +14,7 @@
         transform: translate(0, -50%);
         left: (60 / @designWidth * 100%);
         user-select: none;
+        pointer-events: none;
     }
     &__slogan {
         .bgFull2x('tree/slogan@2x.png');
@@ -92,7 +93,7 @@
         }
     }
 
-    &__content {
-        .f-alignImg('tree/content.jpg');
-    }
+    // &__content {
+    //     .f-alignImg('tree/content.jpg');
+    // }
 }
