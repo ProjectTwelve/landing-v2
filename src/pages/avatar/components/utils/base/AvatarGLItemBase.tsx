@@ -27,6 +27,7 @@ export class AvatarGLItemBase {
         this.renderer.outputEncoding = THREE.sRGBEncoding;
         this.camera = new THREE.PerspectiveCamera(40, 1, 1, 100);
         this.camera.position.set(5, 2, 8);
+        this.scene.add(this.camera);
 
         const axesHelper = new THREE.AxesHelper(10);
         // this.scene.add(axesHelper);

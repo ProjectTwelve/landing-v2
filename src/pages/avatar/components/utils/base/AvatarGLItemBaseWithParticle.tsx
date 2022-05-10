@@ -5,7 +5,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     public particleCanvasWidth = 1920;
     public particleCanvasHeight = 1080;
     // 序列帧和 glb 模型位置对应，所需的 offset 图片张数
-    public particleImgOffset = 140;
+    public particleImgOffset = 0;
 
     public canvasWrap = document.createElement('div');
     public canvas = document.createElement('canvas');
@@ -69,19 +69,23 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         clearTimeout(this.toggleTimeId);
     }
 
+    getParticleIndex() {
+        return Math.floor(
+            (((this.controls.getAzimuthalAngle() / Math.PI + 1) / 2) *
+                this.imageDataArray.length +
+                this.imageDataArray.length +
+                0) %
+                this.imageDataArray.length
+        );
+    }
+
     protected render() {
         super.render();
         if (!this.loaded) {
             return;
         }
-        const index = Math.floor(
-            (((this.controls.getAzimuthalAngle() / Math.PI + 1) / 2) *
-                this.imageDataArray.length +
-                this.imageDataArray.length +
-                this.particleImgOffset) %
-                this.imageDataArray.length
-        );
-        // console.log(index);
+        const index = this.getParticleIndex();
+        console.log(index);
         if (this.renderedImageIndex !== index && this.context) {
             this.renderedImageIndex = index;
             this.context.drawImage(this.imageDataArray[index], 0, 0);
