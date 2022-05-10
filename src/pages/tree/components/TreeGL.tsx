@@ -52,7 +52,7 @@ export const TreeGL = (props) => {
             loading = true;
             const imageUrls = new Array(480).fill(0).map((_, i) => {
                 return getPublicAssetPath(
-                    `files/tree/tree-model/tree_${i + 1 + 1000}.jpg`
+                    `files/tree/tree-model/${i + 1 + 1000}.jpg`
                 );
             });
             const imageLoader = new THREE.ImageLoader();

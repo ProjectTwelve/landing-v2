@@ -13,7 +13,7 @@ import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 // import { ObjectControls } from 'threejs-object-controls';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
 import {
     CSS2DObject,
     CSS2DRenderer,
@@ -29,6 +29,7 @@ import {
 import { PageType } from '../../app/App.config';
 import { HOME_GL_ACTIVE_DATA } from './HomeGL.config';
 import classnames from 'classnames';
+import { GUI } from 'dat.gui';
 
 export interface HomeGLRef {
     group?: THREE.Group;
@@ -85,49 +86,16 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             100
         );
 
-        // camera.position.set(2, 2, 2);
         camera.position.set(0, 0, 3.33);
         camera.lookAt(0, 0, 0);
         camera.layers.enable(1);
 
-        const hemisphereLight = new THREE.HemisphereLight(
-            0xffffbb,
-            0xffffbb,
-            // 0x080820,
-            1
-        );
-        scene.add(hemisphereLight);
-        const hemisphereHelper = new THREE.HemisphereLightHelper(
-            hemisphereLight,
-            10
-        );
-        // scene.add(hemisphereHelper);
-
-        // const directionalLight = new THREE.DirectionalLight(0x9bbdfe, 1);
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(-99.75 / 400, -979.9 / 400, 3694 / 400);
-        scene.add(directionalLight);
-        const directionalHelper = new THREE.DirectionalLightHelper(
-            directionalLight,
-            5
-            // 10
-        );
-        // scene.add(directionalHelper);
-
-        const ambientLight = new THREE.AmbientLight(0xff0000, 0.5);
-        scene.add(ambientLight);
-
-        // const spotLight = new THREE.SpotLight(0xffffff, 1.5);
-        // spotLight.position.set(1046 / 400, 2958 / 400, -1425 / 400);
-        // spotLight.castShadow = true;
-        // spotLight.shadow.mapSize.width = 512;
-        // spotLight.shadow.mapSize.height = 512;
-        // spotLight.shadow.camera.near = 0;
-        // spotLight.shadow.camera.far = 200;
-        // spotLight.shadow.focus = 1;
-        // scene.add(spotLight);
-        // const spotLightHelper = new THREE.SpotLightHelper(spotLight, 10);
-        // scene.add(spotLightHelper);
+        scene.add(camera);
+        const directionalLight = new THREE.DirectionalLight(0xedf1b9, 1.3);
+        directionalLight.position.set(0.5, 0, 0.866); // ~60º
+        camera.add(directionalLight);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+        camera.add(ambientLight);
 
         const axesHelper = new THREE.AxesHelper(10);
         // scene.add(axesHelper);
@@ -348,9 +316,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 window.addEventListener('mouseup', handleControlUp);
                 window.addEventListener('mousedown', handleControlDown);
                 window.addEventListener('mousemove', handleControlMove);
-                // if (process.env.NODE_ENV === 'development') {
-                //     document.body.appendChild(gui.domElement);
-                // }
+                // document.body.appendChild(gui.domElement);
             },
             onHide: () => {
                 autoRotating = false;
