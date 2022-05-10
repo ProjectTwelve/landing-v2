@@ -34,7 +34,7 @@ export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
                     model.scale.set(3, 3, 3);
                     this.scene.add(model);
                     this.mixer = new THREE.AnimationMixer(model);
-                    this.mixer.clipAction(gltf.animations?.[0])?.play();
+                    // this.mixer?.clipAction(gltf.animations?.[0])?.play();
                     gltfLoaded = true;
                     this.loaded = gltfLoaded && imageLoaded;
                     this.render();

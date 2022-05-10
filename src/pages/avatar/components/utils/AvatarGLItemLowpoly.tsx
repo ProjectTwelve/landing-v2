@@ -34,7 +34,7 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBaseWithParticle {
                     model.rotation.y = Math.PI * 1.7;
                     this.scene.add(model);
                     this.mixer = new THREE.AnimationMixer(model);
-                    this.mixer.clipAction(gltf.animations?.[0])?.play();
+                    // this.mixer?.clipAction(gltf.animations?.[0])?.play();
                     gltfLoaded = true;
                     this.loaded = gltfLoaded && imageLoaded;
                     this.render();
