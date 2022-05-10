@@ -18,7 +18,7 @@ export class AvatarGLItemCartoon extends AvatarGLItemBase {
         }
         this.loadingPromise = new Promise((resolve, reject) => {
             new GLTFLoader().load(
-                getPublicAssetPath('files/avatar/avatar-cartoon.glb?v050901'),
+                getPublicAssetPath('files/avatar/avatar-cartoon.glb?v051001'),
                 (gltf) => {
                     const model = gltf.scene;
                     model.position.set(0, -3.18, 0);

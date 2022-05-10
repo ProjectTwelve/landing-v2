@@ -26,7 +26,7 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBaseWithParticle {
             let gltfLoaded = false;
             let imageLoaded = false;
             new GLTFLoader().load(
-                getPublicAssetPath('files/avatar/avatar-lowpoly.glb?v050901'),
+                getPublicAssetPath('files/avatar/avatar-lowpoly.glb?v051001'),
                 (gltf) => {
                     const model = gltf.scene;
                     model.position.set(0, -2.9, 0);
