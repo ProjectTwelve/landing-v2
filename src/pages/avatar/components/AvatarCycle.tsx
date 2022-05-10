@@ -2,6 +2,8 @@ import * as THREE from 'three';
 import {Points, PointsMaterial, BufferGeometry, Float32BufferAttribute, Vector3, ShaderMaterial} from 'three';
 import shaders from './utils/shader';
 
+
+
 interface OrbitParticle {
     speed: number; // 轨道粒子的速度是一个弧度值，表示每一帧绕圆形旋转的弧度
     currentAngle: number; // 当前弧度数值
@@ -26,32 +28,54 @@ export class AvatarCycle {
     private colors: Array<number> = [];
     private particles: Array<OrbitParticle> = [];
     private PARTICLE_COUNT = 0;
-    private R = 4.05;
+    private R = 2.8;
     private geometry: BufferGeometry = new BufferGeometry();
     private points: Points| null = null;
-    private origin = new Vector3(0, 0, 0.6);
-    private GAP_ANGLE = Math.PI * 25 / 100;
+    private origin = new Vector3(0, 0, 0.5);
+    private GAP_ANGLE = Math.PI * 45 / 100;
     private alphas: Array<number> = [];
-    private ALPHA_CANDIATES = [1, .6, .4 , .6, .4, .2, .2];
-    // private POINT_MATERIAL: PointsMaterial = new PointsMaterial({
-    //     size: 0.03,
-    //     vertexColors: true,
-    //     // transparent: true,
-    //     opacity: .5
-    // });
-
-    private POINT_MATERIAL: ShaderMaterial = new THREE.ShaderMaterial( {
-        uniforms:       {
-            color: { value: new THREE.Color( 0xffffff5 ) },
-            scale: { value : 1}
-        },
-        colorWrite: true,
-        vertexShader:   shaders.verterxShader,
-        fragmentShader: shaders.fragmentShader,
-        transparent:    true,
+    private ALPHA_CANDIATES = [1,.8,.8, .6, .4 , .6, .4, .2, .2];
+    private POINT_MATERIAL: PointsMaterial = new PointsMaterial({
+        size: 0.05,
+        vertexColors: true,
+        transparent: true,
+        alphaTest: 0,
+        map: this.createCanvasMaterial('#'+new THREE.Color(1, 1, 1).getHexString(), 256),
     });
 
-    constructor(particleCount = 150) {
+    // private POINT_MATERIAL: ShaderMaterial = new THREE.ShaderMaterial( {
+    //     uniforms: {
+    //         color: { value: new THREE.Color( 0xffffff5 ) },
+    //         scale: { value : 1}
+    //     },
+    //     colorWrite: true,
+    //     vertexShader:   shaders.verterxShader,
+    //     fragmentShader: shaders.fragmentShader,
+    //     transparent:    true,
+    // });
+
+    createCanvasMaterial(color, size) {
+        var matCanvas = document.createElement('canvas');
+        matCanvas.width = matCanvas.height = size;
+        var matContext = matCanvas.getContext('2d');
+        // create exture object from canvas.
+        var texture = new THREE.Texture(matCanvas);
+        // Draw a circle
+        var center = size / 2;
+        if(matContext) {
+            matContext.beginPath();
+            matContext.arc(center, center, size/2, 0, 2 * Math.PI, false);
+            matContext.closePath();
+            matContext.fillStyle = color;
+            matContext.fill();
+        }
+        // need to set needsUpdate
+        texture.needsUpdate = true;
+        // return a texture made from the canvas
+        return texture;
+    }
+
+    constructor(particleCount = 250) {
         this.PARTICLE_COUNT = particleCount;
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.outputEncoding = THREE.sRGBEncoding;
@@ -69,20 +93,21 @@ export class AvatarCycle {
         return [this.R * Math.cos(angle) + this.origin.x, this.R * Math.sin(angle) + this.origin.y,0 + this.origin.z];
     }
 
-    getColorByAngle(angle: number): Array<number> {
-        return [
-            1,
-            1,
-            1,
-        ]
-    }
-
     getAlphaByAngle(angle: number, cap = 1): number {
         let alpha = 1;
         const coff =  Math.min(angle - this.GAP_ANGLE, 2* Math.PI - angle)
         const fraction = Math.PI / 4;
         alpha = coff / fraction;
         return alpha * cap;
+    }
+
+    getColorByAngle(angle: number, alphaCap: number = .8): Array<number> {
+        return [
+            1,
+            1,
+            1,
+            (this.getAlphaByAngle(angle, alphaCap))
+        ]
     }
 
     updatePosition() {
@@ -102,7 +127,7 @@ export class AvatarCycle {
     updateColor() {
         this.geometry.setAttribute(
             'color',
-            new THREE.Uint8BufferAttribute( this.colors, 4)
+            new THREE.Float32BufferAttribute(this.colors, 4)
         )
     }
 
@@ -111,18 +136,17 @@ export class AvatarCycle {
         for(let angle = 0;angle < 2 * Math.PI; angle+=steeper) {
             if(angle > 0 && angle < this.GAP_ANGLE) continue;
             this.positions.push(...this.getPositionByAngle(angle));
-            this.colors.push(...this.getColorByAngle(angle));
-            const opacity = this.ALPHA_CANDIATES[Math.round(Math.random() * 6)];
-            this.alphas.push(this.getAlphaByAngle(angle, opacity));
+            const opacity = this.ALPHA_CANDIATES[Math.round(Math.random() * (this.ALPHA_CANDIATES.length-1 ))];
+            this.colors.push(...this.getColorByAngle(angle, opacity));
             this.particles.push({
-                speed: Math.PI / 1600 + Math.random() * Math.PI / 3200,
+                speed: Math.PI / 3200 + Math.random() * Math.PI / 3200,
                 currentAngle: angle,
                 opacity,
             });
         }
         this.updatePosition();
         this.updateColor();
-        this.updateAlpha();
+        // this.updateAlpha();
         this.points = new Points(this.geometry, this.POINT_MATERIAL);
     }
 
@@ -145,14 +169,13 @@ export class AvatarCycle {
             this.alphas[index] = newAlpha;
         });
         this.updatePosition();
-        this.updateAlpha();
     }
 
     // 调整圆环姿态
     modifyCriclePosture() {
         this.points?.rotateX(-Math.PI / 2.49);
         this.points?.rotateY(Math.PI / 12);
-        this.points?.rotateZ(Math.PI * 36 / 100);
+        this.points?.rotateZ(Math.PI * 18 / 100);
     }
 
     load() {
