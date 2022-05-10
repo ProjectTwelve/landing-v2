@@ -133,8 +133,7 @@ export const ABOUT_PARTNERS = [
             </>
         ),
         links: {
-            linkedin: 'https://baidu.com',
-            twitter: 'https://google.com',
+            linkedin: 'https://www.linkedin.com/in/wangboyang/',
         },
     },
     {
@@ -148,8 +147,7 @@ export const ABOUT_PARTNERS = [
             </>
         ),
         links: {
-            linkedin: 'https://baidu.com',
-            twitter: 'https://google.com',
+            linkedin: 'https://www.linkedin.com/in/maciejburno/',
         },
     },
     {
@@ -163,8 +161,7 @@ export const ABOUT_PARTNERS = [
             </>
         ),
         links: {
-            linkedin: 'https://baidu.com',
-            twitter: 'https://google.com',
+            linkedin: 'https://www.linkedin.com/in/kelsangdrolma/',
         },
     },
 ];
