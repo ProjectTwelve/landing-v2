@@ -23,18 +23,17 @@ export class AvatarCycle {
     public mountContainer?: HTMLDivElement;
     protected clock = new THREE.Clock();
     protected observer?: ResizeObserver;
-
     private positions: Array<number> = [];
     private colors: Array<number> = [];
     private particles: Array<OrbitParticle> = [];
     private PARTICLE_COUNT = 0;
-    private R = 2.8;
+    private R = 2.8; // 圆环半径
     private geometry: BufferGeometry = new BufferGeometry();
     private points: Points| null = null;
     private origin = new Vector3(0, 0, 0.5);
-    private GAP_ANGLE = Math.PI * 45 / 100;
+    private GAP_ANGLE = Math.PI * 45 / 100; // 豁口大小
     private alphas: Array<number> = [];
-    private ALPHA_CANDIATES = [1,.8,.8, .6, .4 , .6, .4, .2, .2];
+    private ALPHA_CANDIDATES = [1, .8, .8, .6, .4 , .6, .4, .2, .2]; // 例子透明度分布，每个粒子的透明度从这个数组中随机抽取
     private POINT_MATERIAL: PointsMaterial = new PointsMaterial({
         size: 0.05,
         vertexColors: true,
@@ -54,6 +53,7 @@ export class AvatarCycle {
     //     transparent:    true,
     // });
 
+    // 绘制圆形材质
     createCanvasMaterial(color, size) {
         var matCanvas = document.createElement('canvas');
         matCanvas.width = matCanvas.height = size;
@@ -64,7 +64,7 @@ export class AvatarCycle {
         var center = size / 2;
         if(matContext) {
             matContext.beginPath();
-            matContext.arc(center, center, size/2, 0, 2 * Math.PI, false);
+            matContext.arc(center, center, size / 2, 0, 2 * Math.PI, false);
             matContext.closePath();
             matContext.fillStyle = color;
             matContext.fill();
@@ -136,10 +136,11 @@ export class AvatarCycle {
         for(let angle = 0;angle < 2 * Math.PI; angle+=steeper) {
             if(angle > 0 && angle < this.GAP_ANGLE) continue;
             this.positions.push(...this.getPositionByAngle(angle));
-            const opacity = this.ALPHA_CANDIATES[Math.round(Math.random() * (this.ALPHA_CANDIATES.length-1 ))];
+            const opacity = this.ALPHA_CANDIDATES[Math.round(Math.random() * (this.ALPHA_CANDIDATES.length-1 ))];
             this.colors.push(...this.getColorByAngle(angle, opacity));
             this.particles.push({
-                speed: Math.PI / 3200 + Math.random() * Math.PI / 3200,
+                speed: Math.PI / 3200,
+                // speed: Math.PI / 3200 + Math.random() * Math.PI / 6400,
                 currentAngle: angle,
                 opacity,
             });
@@ -153,6 +154,7 @@ export class AvatarCycle {
     updateParticles() {
         this.particles.forEach((particle: OrbitParticle, index: number) => {
             const positionIndex = index * 3;
+            const colorIndex = index * 4;
             particle.currentAngle += particle.speed;
             if(particle.currentAngle > Math.PI * 2) {
                 particle.currentAngle = particle.currentAngle - Math.PI * 2;
@@ -166,9 +168,10 @@ export class AvatarCycle {
             this.positions[positionIndex] = newPosition[0]
             this.positions[positionIndex+1] = newPosition[1];
             this.positions[positionIndex+2] = newPosition[2];
-            this.alphas[index] = newAlpha;
+            this.colors[colorIndex + 3] = newAlpha
         });
         this.updatePosition();
+        this.updateColor();
     }
 
     // 调整圆环姿态
