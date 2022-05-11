@@ -18,7 +18,7 @@ export const App = () => {
             // 当前是 loading 界面 且 loading 完成
             if (progress >= 1) {
                 setTimeout(() => {
-                    setCurrent(PageType.Home);
+                    // setCurrent(PageType.Home);
                 }, 700);
             }
         };
