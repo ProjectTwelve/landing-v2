@@ -29,7 +29,7 @@ export const TreeGL = (props) => {
         let loading = false;
 
         const context = canvas.getContext('2d');
-        canvas.width = 1080;
+        canvas.width = 960;
         canvas.height = 1080;
 
         const camera = new THREE.PerspectiveCamera(40, 1, 1, 100);
@@ -50,6 +50,8 @@ export const TreeGL = (props) => {
                 return;
             }
             loading = true;
+            container?.classList.add('app-container-loading');
+            container?.classList.add('loading');
             const imageUrls = new Array(480).fill(0).map((_, i) => {
                 return getPublicAssetPath(
                     `files/tree/tree-model/${i + 1 + 1000}.jpg`
@@ -68,6 +70,7 @@ export const TreeGL = (props) => {
                 })
                 .finally(() => {
                     loading = false;
+                    container?.classList.remove('loading');
                 });
         }
         function render() {

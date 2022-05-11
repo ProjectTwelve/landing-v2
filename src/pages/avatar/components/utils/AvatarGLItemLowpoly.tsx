@@ -4,6 +4,7 @@ import { getPublicAssetPath } from '../../../../utils';
 import { AvatarGLItemBaseWithParticle } from './base/AvatarGLItemBaseWithParticle';
 import { loadingEE, LoadingSourceType } from '../../../app/App.utils';
 import { padStart } from 'lodash-es';
+import { GUI } from 'dat.gui';
 
 export class AvatarGLItemLowpoly extends AvatarGLItemBaseWithParticle {
     public particleCanvasWidth = 840;
@@ -23,7 +24,7 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBaseWithParticle {
             (((this.controls.getAzimuthalAngle() / Math.PI + 1) / 2) *
                 this.imageDataArray.length +
                 this.imageDataArray.length +
-                288) %
+                215) %
                 this.imageDataArray.length
         );
     }
@@ -48,16 +49,34 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBaseWithParticle {
                     this.camera.add(directionalLight);
 
                     const model = gltf.scene;
-                    model.position.set(0, -2.9, 0);
-                    model.scale.set(3.6, 3.6, 3.6);
-                    model.rotation.y = Math.PI * 1.7;
+                    model.position.set(-0.1, -2.77, 0.1);
+                    model.scale.set(3.3, 3.3, 3.3);
+                    // model.rotation.y = Math.PI * 1.7;
                     this.scene.add(model);
+
+                    // const gui = new GUI();
+                    // const folderScale = gui.addFolder('model.scale');
+                    // folderScale.add(model.scale, 'x').step(0.01);
+                    // folderScale.add(model.scale, 'y').step(0.01);
+                    // folderScale.add(model.scale, 'z').step(0.01);
+                    // const folderPosition = gui.addFolder('model.position');
+                    // folderPosition.add(model.position, 'x').step(0.01);
+                    // folderPosition.add(model.position, 'y').step(0.01);
+                    // folderPosition.add(model.position, 'z').step(0.01);
+                    // const cameraPosition = gui.addFolder('camera.position');
+                    // cameraPosition.add(this.camera.position, 'x').step(0.01);
+                    // cameraPosition.add(this.camera.position, 'y').step(0.01);
+                    // cameraPosition.add(this.camera.position, 'z').step(0.01);
+                    // gui.domElement.id = 'home-gl-gui';
+                    // document.body.appendChild(gui.domElement);
+
                     this.mixer = new THREE.AnimationMixer(model);
                     // this.mixer?.clipAction(gltf.animations?.[0])?.play();
                     gltfLoaded = true;
                     this.loaded = gltfLoaded && imageLoaded;
                     this.render();
                     if (this.loaded) {
+                        this.container.classList.remove('loading');
                         resolve();
                     }
                     loadingEE.emit(
@@ -68,7 +87,10 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBaseWithParticle {
                 (event) => {
                     loadingEE.emit(
                         `progress.${LoadingSourceType.AVATAR_GLTF_LOWPOLY}`,
-                        event.total ? (event.loaded / event.total) * 0.95 : 0.5
+                        Math.min(
+                            event.loaded / (event.total || 1024 * 1024 * 30),
+                            0.95
+                        )
                     );
                 }
             );
@@ -91,6 +113,7 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBaseWithParticle {
                     this.loaded = gltfLoaded && imageLoaded;
                     this.render();
                     if (this.loaded) {
+                        this.container.classList.remove('loading');
                         resolve();
                     }
                     loadingEE.emit(

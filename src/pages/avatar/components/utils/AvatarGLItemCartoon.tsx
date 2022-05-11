@@ -4,6 +4,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { getPublicAssetPath } from '../../../../utils';
 import { loadingEE, LoadingSourceType } from '../../../app/App.utils';
 import { AvatarGLItemBaseWithParticle } from './base/AvatarGLItemBaseWithParticle';
+import { GUI } from 'dat.gui';
+
 export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
     public particleCanvasWidth = 600;
     public particleCanvasHeight = 1080;
@@ -21,7 +23,7 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
             (((this.controls.getAzimuthalAngle() / Math.PI + 1) / 2) *
                 this.imageDataArray.length +
                 this.imageDataArray.length +
-                -215) %
+                204) %
                 this.imageDataArray.length
         );
     }
@@ -47,7 +49,7 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
                     this.camera.add(directionalLight);
 
                     const model = gltf.scene;
-                    model.position.set(0, -3.18, 0);
+                    model.position.set(0.06, -3.09, -0.2);
                     model.scale.set(3.5, 3.5, 3.5);
                     this.scene.add(model);
                     this.mixer = new THREE.AnimationMixer(model);
@@ -56,6 +58,7 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
                     this.loaded = gltfLoaded && imageLoaded;
                     this.render();
                     if (this.loaded) {
+                        this.container.classList.remove('loading');
                         resolve();
                     }
                     loadingEE.emit(
@@ -66,7 +69,10 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
                 (event) => {
                     loadingEE.emit(
                         `progress.${LoadingSourceType.AVATAR_GLTF_CARTOON}`,
-                        event.total ? (event.loaded / event.total) * 0.95 : 0.5
+                        Math.min(
+                            event.loaded / (event.total || 1024 * 1024 * 30),
+                            0.95
+                        )
                     );
                 }
             );
@@ -88,6 +94,7 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
                     this.loaded = gltfLoaded && imageLoaded;
                     this.render();
                     if (this.loaded) {
+                        this.container.classList.remove('loading');
                         resolve();
                     }
                     loadingEE.emit(

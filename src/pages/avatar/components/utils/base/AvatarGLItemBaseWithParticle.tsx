@@ -85,7 +85,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
             return;
         }
         const index = this.getParticleIndex();
-        console.log(index);
+        // console.log(index);
         if (this.renderedImageIndex !== index && this.context) {
             this.renderedImageIndex = index;
             this.context.drawImage(this.imageDataArray[index], 0, 0);

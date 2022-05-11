@@ -5,6 +5,7 @@ import { getPublicAssetPath } from '../../../../utils';
 import { loadingEE, LoadingSourceType } from '../../../app/App.utils';
 import { AvatarGLItemBase } from './base/AvatarGLItemBase';
 import { AvatarGLItemBaseWithParticle } from './base/AvatarGLItemBaseWithParticle';
+import { GUI } from 'dat.gui';
 
 export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
     public particleCanvasWidth = 1200;
@@ -49,15 +50,32 @@ export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
                     this.camera.add(directionalLight);
 
                     const model = gltf.scene;
-                    model.position.set(0.41, -2.55, -1.3);
-                    model.scale.set(3.5, 3.5, 3.5);
+                    model.position.set(0.41, -2.64, -1.3);
+                    model.scale.set(3.55, 3.55, 3.55);
+
+                    // const gui = new GUI();
+                    // const folderScale = gui.addFolder('model.scale');
+                    // folderScale.add(model.scale, 'x').step(0.01);
+                    // folderScale.add(model.scale, 'y').step(0.01);
+                    // folderScale.add(model.scale, 'z').step(0.01);
+                    // const folderPosition = gui.addFolder('model.position');
+                    // folderPosition.add(model.position, 'x').step(0.01);
+                    // folderPosition.add(model.position, 'y').step(0.01);
+                    // folderPosition.add(model.position, 'z').step(0.01);
+                    // const cameraPosition = gui.addFolder('camera.position');
+                    // cameraPosition.add(this.camera.position, 'x').step(0.01);
+                    // cameraPosition.add(this.camera.position, 'y').step(0.01);
+                    // cameraPosition.add(this.camera.position, 'z').step(0.01);
+                    // gui.domElement.id = 'home-gl-gui';
+                    // document.body.appendChild(gui.domElement);
+
                     this.scene.add(model);
                     this.mixer = new THREE.AnimationMixer(model);
-                    // this.mixer?.clipAction(gltf.animations?.[0])?.play();
                     gltfLoaded = true;
                     this.loaded = gltfLoaded && imageLoaded;
                     this.render();
                     if (this.loaded) {
+                        this.container.classList.remove('loading');
                         resolve();
                     }
                     loadingEE.emit(
@@ -68,7 +86,10 @@ export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
                 (event) => {
                     loadingEE.emit(
                         `progress.${LoadingSourceType.AVATAR_GLTF_DOKV}`,
-                        event.total ? (event.loaded / event.total) * 0.95 : 0.5
+                        Math.min(
+                            event.loaded / (event.total || 1024 * 1024 * 30),
+                            0.95
+                        )
                     );
                 }
             );
@@ -90,6 +111,7 @@ export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
                     this.loaded = gltfLoaded && imageLoaded;
                     this.render();
                     if (this.loaded) {
+                        this.container.classList.remove('loading');
                         resolve();
                     }
                     loadingEE.emit(

@@ -47,13 +47,14 @@ export class AvatarGLItemBase {
         this.rendererWrap.className = 'avatar-gl-renderer-wrap';
 
         this.container.appendChild(this.rendererWrap);
-        this.container.className = 'avatar-gl-container';
+        this.container.className = 'avatar-gl-container app-container-loading loading';
     }
     load() {
         if (this.loadingPromise) {
             return this.loadingPromise;
         }
         this.loadingPromise = Promise.resolve();
+        this.container.classList.remove('loading');
         return this.loadingPromise;
     }
     mount(mountContainer: HTMLDivElement) {
