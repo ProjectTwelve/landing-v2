@@ -65,7 +65,7 @@ export const Loading: React.FC = () => {
             <div className='loading__logo'>
                 <img
                     id='loading-icon'
-                    src={require('../../assets/app/logo@2x.png')}
+                    src={require('../../assets/loading/loading-icon.png')}
                     alt='P12'
                 />
             </div>

@@ -91,11 +91,11 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         camera.layers.enable(1);
 
         scene.add(camera);
-        const directionalLight = new THREE.DirectionalLight(0xedf1b9, 1.3);
+        const ambientLight = new THREE.AmbientLight(0xb7d4f9, 0.4);
+        camera.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xf9e8cf, 1.3);
         directionalLight.position.set(0.5, 0, 0.866); // ~60º
         camera.add(directionalLight);
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
-        camera.add(ambientLight);
 
         const axesHelper = new THREE.AxesHelper(10);
         // scene.add(axesHelper);
@@ -120,7 +120,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         // dracoLoader.setDecoderPath(getPublicAssetPath('files/lib-draco/gltf/'));
         // loader.setDRACOLoader(dracoLoader);
         loader.load(
-            getPublicAssetPath('files/home/home.glb?v051001'),
+            getPublicAssetPath('files/home/home.glb?v051101'),
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
