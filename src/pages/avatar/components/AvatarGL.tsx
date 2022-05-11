@@ -125,7 +125,6 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
 
     return (
         <div className='avatar-gl' ref={containerRef}>
-            {/* <div className='avatar-circle'></div> */}
             <div className='avatar-mouse' id='avatar-mouse' ref={mouseRef}>
                 <div className='avatar-mouse__circle'></div>
                 <div className='avatar-mouse__dot'></div>
