@@ -61,12 +61,15 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             return;
         }
         AVATAR_GL_ARRAY.map((v) => v.mount(container));
-        // 先只加载首个资源
-        first(AVATAR_GL_ARRAY)?.load();
+        setTimeout(() => {
+            // 先只加载首个资源
+            first(AVATAR_GL_ARRAY)?.load();
+        }, 100);
 
         // 圆环加载
         AVATAR_GL_CYCLE.mount(container);
         AVATAR_GL_CYCLE.load();
+
         return () => {
             AVATAR_GL_ARRAY.map((v) => container && v.unMount());
             container && AVATAR_GL_CYCLE.unMount();

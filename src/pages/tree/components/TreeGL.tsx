@@ -93,7 +93,9 @@ export const TreeGL = (props) => {
             render();
         }
 
-        load();
+        setTimeout(() => {
+            load();
+        }, 100);
 
         return {
             onVisible: () => {
