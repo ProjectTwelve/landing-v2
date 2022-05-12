@@ -41,7 +41,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
                 Math.abs(e.clientY - downY) < 50
             ) {
                 // 没有移动太远，表明是点击事件。以此来兼容 gl 的拖动
-                this.toggleParticle();
+                this.toggleParticle(!this.isShowParticle);
             }
         });
         this.btnWrap.addEventListener('mouseenter', () => {
@@ -58,10 +58,11 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         this.canvasWrap.style.height = '100%';
     }
     enter() {
+        this.emit('enter', { isShowParticle: this.isShowParticle });
         super.enter();
         // 4秒自动切换
         this.toggleTimeId = window.setTimeout(() => {
-            this.toggleParticle();
+            this.toggleParticle(false);
         }, 4000);
     }
     leave() {
@@ -118,9 +119,13 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         this.canvas.height = this.particleCanvasHeight;
     }
 
-    toggleParticle() {
+    toggleParticle(isShow) {
         clearTimeout(this.toggleTimeId);
-        this.isShowParticle = !this.isShowParticle;
+        if (isShow === this.isShowParticle) {
+            return;
+        }
+        this.isShowParticle = isShow;
+        this.emit('toggled', { isShowParticle: this.isShowParticle });
         const _this = this;
         gsap.to(
             {},

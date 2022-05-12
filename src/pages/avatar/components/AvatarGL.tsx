@@ -29,7 +29,7 @@ export const AVATAR_GL_MAP = {
 export const AVATAR_GL_CYCLE = new AvatarCycle();
 
 /** 决定要显示的 avatar 的顺序（第 0 个会优先加载，其他的会在界面进入后加载） */
-const AVATAR_GL_KEYS = Object.keys(AVATAR_GL_MAP);
+const AVATAR_GL_KEYS = Object.keys(AVATAR_GL_MAP) as AvatarType[];
 // 随机打乱的数组，打开注释即可使用
 // const AVATAR_GL_KEYS = shuffle(Object.keys(AVATAR_GL_MAP));
 const AVATAR_GL_ARRAY = AVATAR_GL_KEYS.map((k) => AVATAR_GL_MAP[k]);
@@ -70,10 +70,35 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         AVATAR_GL_CYCLE.mount(container);
         AVATAR_GL_CYCLE.load();
 
+        AVATAR_GL_ARRAY.forEach((v) => {
+            v.on('enter', ({ isShowParticle }) =>
+                handleToggleParticle(isShowParticle)
+            );
+            v.on('toggled', ({ isShowParticle }) => {
+                handleToggleParticle(isShowParticle);
+                AVATAR_GL_ARRAY.forEach((av) =>
+                    av.toggleParticle(isShowParticle)
+                );
+            });
+        });
+
         return () => {
             AVATAR_GL_ARRAY.map((v) => container && v.unMount());
             container && AVATAR_GL_CYCLE.unMount();
+            AVATAR_GL_ARRAY.forEach((v) => {
+                v.off('toggled');
+            });
         };
+
+        function handleToggleParticle(isShowParticle: boolean) {
+            if (isShowParticle) {
+                container?.classList.add('show-particle');
+                container?.classList.remove('hidden-particle');
+            } else {
+                container?.classList.remove('show-particle');
+                container?.classList.add('hidden-particle');
+            }
+        }
     }, []);
 
     usePageVisible(PageType.Avatar, () => {

@@ -5,6 +5,27 @@
     overflow: hidden;
     background: #000;
 
+    &::before {
+        content: '';
+        .f-pseudo;
+        .bg('avatar/bg-1.jpg');
+        background-position: center;
+        background-repeat: repeat;
+        pointer-events: none;
+        transition: opacity 0.5s;
+    }
+
+    &.show-particle {
+        &::before {
+            opacity: 0;
+        }
+    }
+    &.hidden-particle {
+        &::before {
+            opacity: 1;
+        }
+    }
+
     .avatar-gl-renderer-wrap,
     .avatar-gl-container {
         .f-pseudo();
