@@ -53,9 +53,10 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         if (!container) {
             return;
         }
+
         const group = new THREE.Group();
         groupRef.current = group;
-
+        let frameId: number;
         let mixer: THREE.AnimationMixer;
         let autoRotating = false;
         const clock = new THREE.Clock();
@@ -85,12 +86,11 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             1,
             100
         );
-
         camera.position.set(0, 0, 3.33);
         camera.lookAt(0, 0, 0);
         camera.layers.enable(1);
-
         scene.add(camera);
+
         const ambientLight = new THREE.AmbientLight(0xb7d4f9, 0.4);
         camera.add(ambientLight);
         const directionalLight = new THREE.DirectionalLight(0xf9e8cf, 1.3);
@@ -116,9 +116,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         // gui.domElement.id = 'home-gl-gui';
 
         const loader = new GLTFLoader();
-        // const dracoLoader = new DRACOLoader();
-        // dracoLoader.setDecoderPath(getPublicAssetPath('files/lib-draco/gltf/'));
-        // loader.setDRACOLoader(dracoLoader);
         loader.load(
             getPublicAssetPath('files/home/home.glb?v051101'),
             function (gltf) {
@@ -148,9 +145,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                         0.95
                     )
                 );
-            },
-            function (e) {
-                console.error(e);
             }
         );
 
@@ -293,8 +287,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             };
         }
 
-        let frameId: number;
-
         function render() {
             const delta = clock.getDelta();
             mixer?.update?.(delta);
@@ -325,8 +317,11 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 // document.body.appendChild(gui.domElement);
             },
             onHide: () => {
-                autoRotating = false;
                 cancelAnimationFrame(frameId);
+                autoRotating = false;
+                window.removeEventListener('mouseup', handleControlUp);
+                window.removeEventListener('mousedown', handleControlDown);
+                window.removeEventListener('mousemove', handleControlMove);
                 // document.body.removeChild(gui.domElement);
             },
             onDestroy: () => {
@@ -336,9 +331,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                     'pointerup',
                     handleResetCamera
                 );
-                window.removeEventListener('mouseup', handleControlUp);
-                window.removeEventListener('mousedown', handleControlDown);
-                window.removeEventListener('mousemove', handleControlMove);
                 container.removeChild(renderer.domElement);
                 container.removeChild(labelRenderer.domElement);
             },
