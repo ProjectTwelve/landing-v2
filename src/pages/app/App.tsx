@@ -140,11 +140,12 @@ export const App = () => {
         if (
             isLoading ||
             window.appVisibleAnimating ||
-            window.appHideAnimating
+            window.appHideAnimating ||
+            !e
         ) {
             return;
         }
-        if (Math.abs(e.deltaY) < 30) {
+        if (Math.abs(e.deltaY) < 35) {
             // 剔除 mac 的惯性和 轻轻转动的事件
             return;
         }
