@@ -99,8 +99,8 @@ export const Home: React.FC = () => {
 
     return (
         <div className='home'>
-            <HomeGL ref={homeGLRef} />
             <ButterflyGL page={PageType.Home} />
+            <HomeGL ref={homeGLRef} />
             <div className='home__info'>
                 <div className='home__slogan'></div>
                 <div className='app-sub-title home__sub-title'>

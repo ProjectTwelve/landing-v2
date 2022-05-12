@@ -21,7 +21,7 @@ export const ButterflyGL = (props: ButterflyGLProps) => {
         let frameId: number;
         let timeoutId: number;
         let intervalId: number;
-        let gui = null;
+        let gui: dat.GUI;
         const hpgButterfly = (window as any).hpgButterfly;
         // for render timedelta calc
         let time;
@@ -112,9 +112,10 @@ export const ButterflyGL = (props: ButterflyGLProps) => {
                 properties[key] = currentDefaultProperties[key];
             }
             // for param tweaking
-            // gui = butterflyHelpers.turnOnGui();
+            // gui = butterflyHelpers.turnOnGui(properties);
         };
         const onVisible = () => {
+            init();
             onResize();
             time = +new Date() / 1000;
             butterflyHelpers.resetParams(currentDefaultProperties, properties);
@@ -137,8 +138,6 @@ export const ButterflyGL = (props: ButterflyGLProps) => {
             clearInterval(intervalId);
             cancelAnimationFrame(frameId);
         };
-
-        init();
         return {
             onVisible: () => {
                 onVisible();
@@ -154,7 +153,7 @@ export const ButterflyGL = (props: ButterflyGLProps) => {
 
     return (
         <div className='butterfly-gl' ref={containerRef}>
-            <canvas className='butterfly-canvas' ref={canvasRef}></canvas>
+            <canvas className={`butterfly-canvas butterfly-canvas-${props.page}`} ref={canvasRef}></canvas>
         </div>
     );
 };
