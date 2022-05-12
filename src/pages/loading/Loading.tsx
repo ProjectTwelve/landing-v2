@@ -24,10 +24,10 @@ export const Loading: React.FC = () => {
                 },
             });
         };
-        loadingEE.on('progress', handleProgress);
 
         return {
             onVisible: () => {
+                loadingEE.on('progress', handleProgress);
                 gsap.set('.page-wrap-loading', {
                     display: 'block',
                     opacity: 1,
@@ -40,11 +40,10 @@ export const Loading: React.FC = () => {
                     opacity: 0,
                     ease: 'power1.inOut',
                 });
-                tween?.kill();
-            },
-            onDestroy: () => {
                 loadingEE.off('progress', handleProgress);
+                handleProgress(1);
             },
+            onDestroy: () => {},
         };
     });
 
