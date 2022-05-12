@@ -34,8 +34,8 @@ export const TreeGL = (props) => {
 
         const camera = new THREE.PerspectiveCamera(40, 1, 1, 100);
         camera.position.set(5, 2, 8);
+        camera.lookAt(0, 0, 0);
         const controls = new OrbitControls(camera, container);
-        controls.target.set(0, 0, 0);
         controls.update();
         controls.enablePan = false;
         controls.enableDamping = true;
@@ -96,12 +96,12 @@ export const TreeGL = (props) => {
             render();
         }
 
-        setTimeout(() => {
-            load();
-        }, 100);
+        /** 首页loading结束后，再开始loading */
+        loadingEE.on('loaded', () => setTimeout(load, 200));
 
         return {
             onVisible: () => {
+                load();
                 animate();
             },
             onHide: () => {

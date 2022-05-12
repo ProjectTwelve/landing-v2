@@ -115,9 +115,9 @@ export class AvatarGLItemBase extends EventEmitter {
     }
 
     protected render() {
-        if (!this.loaded) {
-            return;
-        }
+        // if (!this.loaded) {
+        //     return;
+        // }
         const delta = this.clock.getDelta();
         this.mixer?.update(delta);
         this.controls.update();

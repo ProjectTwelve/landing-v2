@@ -9,7 +9,7 @@ import React, {
     useRef,
 } from 'react';
 import { PageType } from '../../app/App.config';
-import { usePageVisible } from '../../app/App.utils';
+import { loadingEE, usePageVisible } from '../../app/App.utils';
 import { AvatarType } from '../Avatar.config';
 import './AvatarGL.less';
 import { AvatarGLItemCartoon } from './utils/AvatarGLItemCartoon';
@@ -61,10 +61,10 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             return;
         }
         AVATAR_GL_ARRAY.map((v) => v.mount(container));
-        setTimeout(() => {
-            // 先只加载首个资源
-            first(AVATAR_GL_ARRAY)?.load();
-        }, 100);
+
+        /** 首页loading结束后，再开始loading */
+        // 先只加载首个资源
+        loadingEE.on('loaded', () => first(AVATAR_GL_ARRAY)?.load());
 
         // 圆环加载
         AVATAR_GL_CYCLE.mount(container);

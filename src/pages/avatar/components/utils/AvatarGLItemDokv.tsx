@@ -73,10 +73,9 @@ export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
                     this.mixer = new THREE.AnimationMixer(model);
                     gltfLoaded = true;
                     this.loaded = gltfLoaded && imageLoaded;
-                    this.render();
                     if (this.loaded) {
                         this.container.classList.remove('loading');
-                        resolve();
+                        resolve(true);
                     }
                     loadingEE.emit(
                         `progress.${LoadingSourceType.AVATAR_GLTF_DOKV}`,
@@ -109,10 +108,9 @@ export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
                     this.imageDataArray = data;
                     imageLoaded = true;
                     this.loaded = gltfLoaded && imageLoaded;
-                    this.render();
                     if (this.loaded) {
                         this.container.classList.remove('loading');
-                        resolve();
+                        resolve(true);
                     }
                     loadingEE.emit(
                         `progress.${LoadingSourceType.AVATAR_GLTF_DOKV_PARTICLE}`,
@@ -120,6 +118,11 @@ export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
                     );
                 }
             );
+        }).then(() => {
+            setTimeout(() => {
+                // 首次渲染，做个延时防止影响首屏的入场
+                this.render();
+            }, 3000);
         });
         return this.loadingPromise;
     }

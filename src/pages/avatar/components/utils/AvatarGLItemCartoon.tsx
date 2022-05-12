@@ -56,10 +56,9 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
                     // this.mixer?.clipAction(gltf.animations?.[0])?.play();
                     gltfLoaded = true;
                     this.loaded = gltfLoaded && imageLoaded;
-                    this.render();
                     if (this.loaded) {
                         this.container.classList.remove('loading');
-                        resolve();
+                        resolve(true);
                     }
                     loadingEE.emit(
                         `progress.${LoadingSourceType.AVATAR_GLTF_CARTOON}`,
@@ -92,10 +91,9 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
                     this.imageDataArray = data;
                     imageLoaded = true;
                     this.loaded = gltfLoaded && imageLoaded;
-                    this.render();
                     if (this.loaded) {
                         this.container.classList.remove('loading');
-                        resolve();
+                        resolve(true);
                     }
                     loadingEE.emit(
                         `progress.${LoadingSourceType.AVATAR_GLTF_CARTOON_PARTICLE}`,
@@ -103,6 +101,11 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
                     );
                 }
             );
+        }).then(() => {
+            setTimeout(() => {
+                // 首次渲染，做个延时防止影响首屏的入场
+                this.render();
+            }, 3000);
         });
         return this.loadingPromise;
     }
