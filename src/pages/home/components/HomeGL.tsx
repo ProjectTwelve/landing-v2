@@ -299,7 +299,10 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             const delta = clock.getDelta();
             mixer?.update?.(delta);
             if (autoRotating && !isDragging) {
-                group.rotation.y += ((2 * Math.PI) / 60 / 60) * delta * 30;
+                group.rotation.y =
+                    (group.rotation.y +
+                        ((2 * Math.PI) / 60 / 60) * delta * 30) %
+                    (2 * Math.PI);
             }
 
             renderer.render(scene, camera);
