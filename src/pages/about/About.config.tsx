@@ -119,6 +119,14 @@ export const LOCATION_INFO = [
         y: 792,
         namePosition: 'none',
     },
+    {
+        type: 'origin',
+        img: require('../../assets/about/origin-usa.png'),
+        name: 'USA',
+        x: 388,
+        y: 681,
+        namePosition: 'none',
+    },
 ];
 
 export const ABOUT_PARTNERS = [
