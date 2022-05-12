@@ -1,8 +1,8 @@
 import gsap from 'gsap';
 import React, { useEffect, useRef, useState } from 'react';
+import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
-import { WallGL } from './components/WallGL';
 import './Wall.less';
 
 export const Wall: React.FC = () => {
@@ -43,7 +43,7 @@ export const Wall: React.FC = () => {
     });
     return (
         <div className='wall'>
-            <WallGL />
+            <ButterflyGL page={PageType.Wall} />
             <div className='wall__info'>
                 <div className='wall__title-1'>Investors &amp; Partners</div>
                 <div className='wall__dot-1'></div>

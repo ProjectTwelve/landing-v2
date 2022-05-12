@@ -1,14 +1,17 @@
 import { useRef } from 'react';
-import { PageType } from '../../app/App.config';
-import { usePageVisible } from '../../app/App.utils';
+import { PageType } from '../../pages/app/App.config';
+import { usePageVisible } from '../../pages/app/App.utils';
 import butterflyHelpers from './butterflyHelpers';
-import './WallGL.less';
+import './ButterflyGL.less';
 
-export const WallGL = (props) => {
+export interface ButterflyGLProps {
+    page: PageType;
+}
+export const ButterflyGL = (props: ButterflyGLProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
-    usePageVisible(PageType.Wall, () => {
+    usePageVisible(props.page, () => {
         const canvas = canvasRef.current;
         const container = containerRef.current;
         if (!canvas || !container) {
@@ -57,9 +60,9 @@ export const WallGL = (props) => {
             hpgButterfly.resize(window.innerWidth, window.innerHeight);
         };
         const loop = () => {
-            // 性能优化：只在 wall 显示时调用
+            // 性能优化：只在 butterfly 显示时调用
             // 用于测试是否渲染
-            // console.log('wall loop');
+            // console.log('butterfly loop');
             frameId = requestAnimationFrame(loop);
             [time, multiTouchChargeToggle] = butterflyHelpers.render(
                 hpgButterfly,
@@ -96,10 +99,13 @@ export const WallGL = (props) => {
             onResize();
 
             properties = hpgButterfly.properties;
-            const butterflyIdx = properties.scene.children.findIndex(
-                (elem) => elem.type === 'Object3D'
+            // const butterflyIdx = properties.scene.children.findIndex(
+            //     (elem) => elem.type === 'Object3D'
+            // );
+            // properties.scene.children.splice(butterflyIdx);
+            properties.scene.children = properties.scene.children.filter(
+                (v) => v.type !== 'Object3D'
             );
-            properties.scene.children.splice(butterflyIdx);
             for (let key in butterflyHelpers.defaultProperties) {
                 properties[key] = butterflyHelpers.defaultProperties[key];
             }
@@ -143,7 +149,7 @@ export const WallGL = (props) => {
     });
 
     return (
-        <div className='wall-gl' ref={containerRef}>
+        <div className='butterfly-gl' ref={containerRef}>
             <canvas className='butterfly-canvas' ref={canvasRef}></canvas>
         </div>
     );

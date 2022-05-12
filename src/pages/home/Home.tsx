@@ -4,6 +4,7 @@ import './Home.less';
 import { gsap } from 'gsap';
 import { usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
+import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 
 export const Home: React.FC = () => {
     const homeGLRef = useRef<HomeGLRef>(null);
@@ -99,6 +100,7 @@ export const Home: React.FC = () => {
     return (
         <div className='home'>
             <HomeGL ref={homeGLRef} />
+            {/* <ButterflyGL page={PageType.Home} /> */}
             <div className='home__info'>
                 <div className='home__slogan'></div>
                 <div className='app-sub-title home__sub-title'>
