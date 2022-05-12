@@ -10,6 +10,7 @@ export interface ButterflyGLProps {
 export const ButterflyGL = (props: ButterflyGLProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const currentDefaultProperties = butterflyHelpers.defaultProperties[props.page];
 
     usePageVisible(props.page, () => {
         const canvas = canvasRef.current;
@@ -106,8 +107,9 @@ export const ButterflyGL = (props: ButterflyGLProps) => {
             properties.scene.children = properties.scene.children.filter(
                 (v) => v.type !== 'Object3D'
             );
-            for (let key in butterflyHelpers.defaultProperties) {
-                properties[key] = butterflyHelpers.defaultProperties[key];
+
+            for (let key in currentDefaultProperties) {
+                properties[key] = currentDefaultProperties[key];
             }
             // for param tweaking
             // gui = butterflyHelpers.turnOnGui();
@@ -115,14 +117,16 @@ export const ButterflyGL = (props: ButterflyGLProps) => {
         const onVisible = () => {
             onResize();
             time = +new Date() / 1000;
+            butterflyHelpers.resetParams(currentDefaultProperties, properties);
             hpgButterfly.reset();
             loop();
             timeoutId = window.setTimeout(() => {
                 intervalId = window.setInterval(
                     butterflyHelpers.startParamDrift.bind(
                         null,
-                        butterflyHelpers.defaultProperties,
-                        properties
+                        currentDefaultProperties,
+                        properties,
+                        true
                     ),
                     6000
                 );

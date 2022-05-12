@@ -7619,7 +7619,6 @@
             }
 
             function lo(e) {
-                console.log("THREE.WebGLRenderer", "95");
                 var r = void 0 !== (e = e || {}).canvas ? e.canvas : document.createElementNS("http://www.w3.org/1999/xhtml", "canvas"),
                     t = void 0 !== e.context ? e.context : null,
                     n = void 0 !== e.alpha && e.alpha,

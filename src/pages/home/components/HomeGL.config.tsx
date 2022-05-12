@@ -33,9 +33,7 @@ export const HOME_GL_ACTIVE_DATA = [
                     Web2 and Web3 users co-exist in harmony
                     <br />
                     <br />
-                    An open ecosystem with
-                    <br />
-                    sustainable economy
+                    An open ecosystem with sustainable economy
                 </>
             ),
         },
