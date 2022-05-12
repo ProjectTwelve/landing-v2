@@ -87,7 +87,7 @@ export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
                     loadingEE.emit(
                         `progress.${LoadingSourceType.AVATAR_GLTF_DOKV}`,
                         Math.min(
-                            event.loaded / (event.total || 1024 * 1024 * 30),
+                            event.loaded / (event.total || 1024 * 1024 * 25),
                             0.95
                         )
                     );

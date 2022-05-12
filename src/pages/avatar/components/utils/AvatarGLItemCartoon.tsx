@@ -70,7 +70,7 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
                     loadingEE.emit(
                         `progress.${LoadingSourceType.AVATAR_GLTF_CARTOON}`,
                         Math.min(
-                            event.loaded / (event.total || 1024 * 1024 * 30),
+                            event.loaded / (event.total || 1024 * 1024 * 25),
                             0.95
                         )
                     );

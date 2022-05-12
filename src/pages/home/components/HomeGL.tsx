@@ -144,7 +144,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 loadingEE.emit(
                     `progress.${LoadingSourceType.HOME_GLTF}`,
                     Math.min(
-                        event.loaded / (event.total || 1024 * 1024 * 30),
+                        event.loaded / (event.total || 1024 * 1024 * 25),
                         0.95
                     )
                 );
