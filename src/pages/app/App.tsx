@@ -1,11 +1,9 @@
-import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react';
-import { AppBg } from './components/AppBg';
-import './App.less';
 import classnames from 'classnames';
-import { PageType, CONTENT_PAGES, PageBadges } from './App.config';
+import React, { useEffect, useMemo, useState } from 'react';
 import { playClickAudio } from '../../utils';
+import { CONTENT_PAGES, PageBadges, PageType } from './App.config';
+import './App.less';
 import { AppContext, loadingEE } from './App.utils';
-import gsap from 'gsap';
 
 export const App = () => {
     const [current, setCurrent] = useState(PageType.Loading);
