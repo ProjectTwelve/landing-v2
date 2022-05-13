@@ -1,4 +1,6 @@
+import gsap from 'gsap';
 import { Howl } from 'howler';
+import { throttle } from 'lodash-es';
 
 /** hack raf */
 const vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -34,3 +36,21 @@ const clickSound = new Howl({
 export function playClickAudio() {
     clickSound.play();
 }
+
+export const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+);
+
+export const resizeMobileRoot = throttle((baseWidth = 1250) => {
+    baseWidth = Math.max(window.innerWidth, baseWidth);
+    const ratio = window.innerWidth / window.innerHeight;
+    const baseHeight = baseWidth / ratio;
+    gsap.set('#root', {
+        width: baseWidth,
+        height: baseHeight,
+        scaleX: window.innerWidth / baseWidth,
+        scaleY: window.innerWidth / baseWidth,
+        left: -(baseWidth - window.innerWidth) / 2,
+        top: -(baseHeight - window.innerHeight) / 2,
+    });
+}, 100);

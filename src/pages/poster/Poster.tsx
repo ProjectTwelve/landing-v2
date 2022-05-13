@@ -266,13 +266,22 @@ export const Poster: React.FC = () => {
         if (!bgRef.current) {
             return;
         }
+        const rootDom = document.getElementById('root');
         let left = 0;
         let top = 0;
         let width = 0;
         let height = 0;
         const ratio = 4196 / 2160;
-        const containerW = containerSize?.width || window.innerWidth || 1;
-        const containerH = containerSize?.height || window.innerHeight || 1;
+        const containerW =
+            containerSize?.width ||
+            rootDom?.offsetWidth ||
+            window.innerWidth ||
+            1;
+        const containerH =
+            containerSize?.height ||
+            rootDom?.offsetHeight ||
+            window.innerHeight ||
+            1;
         if (containerW / containerH >= ratio) {
             // 补充点宽高，防止视差滚动时露馅
             width = containerW + 60;

@@ -6,6 +6,18 @@
     position: relative;
     overflow: hidden;
 
+    &::after {
+        content: '';
+        position: absolute;
+        z-index: 10;
+        left: 0;
+        width: 100%;
+        top: 0;
+        height: 100px;
+        pointer-events: none;
+        background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    }
+
     &__nav {
         z-index: 20;
         position: absolute;
