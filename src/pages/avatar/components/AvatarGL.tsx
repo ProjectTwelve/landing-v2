@@ -16,6 +16,7 @@ import { AvatarGLItemCartoon } from './utils/AvatarGLItemCartoon';
 import { AvatarGLItemDokv } from './utils/AvatarGLItemDokv';
 import { AvatarGLItemLowpoly } from './utils/AvatarGLItemLowpoly';
 import { AvatarCycle } from './AvatarCycle';
+import { ButterflyGL } from '../../../components/butterfly-gl/ButterflyGL';
 export interface AvatarGLRef {
     switchTo: (type: AvatarType | null) => void;
 }
@@ -150,6 +151,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
 
     return (
         <div className='avatar-gl' ref={containerRef}>
+            <ButterflyGL page={PageType.Avatar} />
             <div className='avatar-mouse' id='avatar-mouse' ref={mouseRef}>
                 <div className='avatar-mouse__circle'></div>
                 <div className='avatar-mouse__dot'></div>

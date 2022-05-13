@@ -15,13 +15,22 @@
         transition: opacity 0.5s;
     }
 
+    .butterfly-gl {
+        transition: opacity 0.5s;
+    }
     &.show-particle {
         &::before {
+            opacity: 0;
+        }
+        .butterfly-gl {
             opacity: 0;
         }
     }
     &.hidden-particle {
         &::before {
+            opacity: 1;
+        }
+        .butterfly-gl {
             opacity: 1;
         }
     }
@@ -46,6 +55,7 @@
         top: auto;
         bottom: 0;
         overflow: hidden;
+        background: #000;
 
         canvas {
             position: absolute;

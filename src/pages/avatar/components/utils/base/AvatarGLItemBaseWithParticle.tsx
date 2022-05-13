@@ -98,14 +98,9 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
             // );
             // const data = imageData.data;
             // for (let i = 0; i < data.length; i += 4) {
-            //     if (data[i] + data[i + 1] + data[i + 2] < 5) {
+            //     // 提出黑边
+            //     if (data[i] + data[i + 1] + data[i + 2] < 2) {
             //         data[i + 3] = 0;
-            //     } else if (data[i] + data[i + 1] + data[i + 2] < 10) {
-            //         data[i + 3] = 0.1;
-            //     } else if (data[i] + data[i + 1] + data[i + 2] < 20) {
-            //         data[i + 3] = 0.3;
-            //     } else if (data[i] + data[i + 1] + data[i + 2] < 40) {
-            //         data[i + 3] = 0.7;
             //     }
             // }
             // this.context.putImageData(imageData, 0, 0);
