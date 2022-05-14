@@ -33,12 +33,12 @@ export const CONTENT_PAGES = [
         Content: <Loading />,
         dropdown: false,
     },
-    // {
-    //     type: PageType.Home,
-    //     NavText: <>Vision</>,
-    //     Content: <Home />,
-    //     dropdown: false,
-    // },
+    {
+        type: PageType.Home,
+        NavText: <>Vision</>,
+        Content: <Home />,
+        dropdown: false,
+    },
     {
         type: PageType.Poster,
         NavText: <>The&nbsp;Editor</>,

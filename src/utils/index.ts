@@ -41,7 +41,9 @@ export const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Ope
     navigator.userAgent
 );
 
-export const resizeMobileRoot = throttle((baseWidth = 1250) => {
+export const resizeMobileRoot = throttle(() => {
+    // 最多缩放 1.2 倍，防止过大，导致手机端，不断重新刷新
+    let baseWidth = Math.min(1250, window.innerWidth * 1.2);
     baseWidth = Math.max(window.innerWidth, baseWidth);
     const ratio = window.innerWidth / window.innerHeight;
     const baseHeight = baseWidth / ratio;
