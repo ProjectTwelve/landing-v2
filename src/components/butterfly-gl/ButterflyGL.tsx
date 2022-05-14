@@ -24,7 +24,7 @@ const ButterflyGLComponent = (props: ButterflyGLProps) => {
         let timeoutId: number;
         let intervalId: number;
         let gui: dat.GUI;
-        const hpgButterfly = (window as any).hpgButterfly;
+        const hpgButterfly = window.hpgButterfly;
         // for render timedelta calc
         let time;
         // butterfly properties obj ref
@@ -164,7 +164,7 @@ const ButterflyGLComponent = (props: ButterflyGLProps) => {
 };
 
 export const ButterflyGL = (props: ButterflyGLProps) => {
-    if (IS_MOBILE) {
+    if (IS_MOBILE || !window.hpgButterfly) {
         return null;
     }
     return <ButterflyGLComponent {...props} />;

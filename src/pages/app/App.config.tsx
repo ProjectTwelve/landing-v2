@@ -33,12 +33,12 @@ export const CONTENT_PAGES = [
         Content: <Loading />,
         dropdown: false,
     },
-    {
-        type: PageType.Home,
-        NavText: <>Vision</>,
-        Content: <Home />,
-        dropdown: false,
-    },
+    // {
+    //     type: PageType.Home,
+    //     NavText: <>Vision</>,
+    //     Content: <Home />,
+    //     dropdown: false,
+    // },
     {
         type: PageType.Poster,
         NavText: <>The&nbsp;Editor</>,
@@ -57,21 +57,6 @@ export const CONTENT_PAGES = [
         Content: <Tree />,
         dropdown: false,
     },
-    // {
-    //     type: null,
-    //     NavText: (
-    //         <a
-    //             className='nav-link-wrap'
-    //             href='https://twitter.com/_p12_'
-    //             target='_blank'
-    //             rel='noreferrer'
-    //         >
-    //             Whitepaper
-    //         </a>
-    //     ),
-    //     Content: null,
-    //     dropdown: false,
-    // },
     {
         type: PageType.About,
         NavText: <>Team</>,

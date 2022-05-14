@@ -9,6 +9,9 @@ import { IS_MOBILE, resizeMobileRoot } from './utils';
 if (IS_MOBILE) {
     document.body.classList.add('body-mobile');
     window.addEventListener('resize', () => resizeMobileRoot());
+    window.addEventListener('orientationchange', () =>
+        setTimeout(() => resizeMobileRoot(), 100)
+    );
     resizeMobileRoot();
 } else {
     document.body.classList.add('body-pc');

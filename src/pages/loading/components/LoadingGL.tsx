@@ -18,9 +18,7 @@ export const LoadingGL = (props) => {
     );
 };
 
-function useLoadingGL(
-    canvasRef: React.RefObject<HTMLCanvasElement>
-) {
+function useLoadingGL(canvasRef: React.RefObject<HTMLCanvasElement>) {
     usePageVisible(PageType.Loading, () => {
         const canvas = canvasRef.current;
         if (!canvas) {
@@ -2034,8 +2032,7 @@ function useLoadingGL(
                 window.removeEventListener('touchend', handleTouchEnd);
                 window.removeEventListener('keydown', handleKeyDown);
             },
-            onDestroy: () => {
-            },
+            onDestroy: () => {},
         };
     });
 }

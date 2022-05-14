@@ -6,8 +6,8 @@ import './App.less';
 import { AppContext, loadingEE } from './App.utils';
 
 export const App = () => {
-    const [current, setCurrent] = useState(PageType.Loading);
-    // const [current, setCurrent] = useState(PageType.Home);
+    // const [current, setCurrent] = useState(PageType.Loading);
+    const [current, setCurrent] = useState(PageType.Wall);
     const isLoading = current === PageType.Loading;
     const [musicPlaying, setMusicPlaying] = useState(true);
 
@@ -16,7 +16,7 @@ export const App = () => {
             // 当前是 loading 界面 且 loading 完成
             if (progress >= 1) {
                 setTimeout(() => {
-                    setCurrent(PageType.Home);
+                    setCurrent(PageType.Wall);
                 }, 700);
             }
         };

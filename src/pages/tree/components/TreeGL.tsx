@@ -97,7 +97,8 @@ export const TreeGL = (props) => {
         }
 
         /** 首页loading结束后，再开始loading */
-        loadingEE.on('loaded', () => setTimeout(load, 200));
+        // loadingEE.on('loaded', () => setTimeout(load, 200));
+        load();
 
         return {
             onVisible: () => {
