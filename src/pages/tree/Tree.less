@@ -104,8 +104,23 @@
             }
         }
     }
+}
 
-    // &__content {
-    //     .f-alignImg('tree/content.jpg');
-    // }
+.body-mobile {
+    .tree {
+        &__info {
+            transform: translate(0, -50%) scale(0.7);
+            transform-origin: left center;
+        }
+        &__small-text-1 {
+            display: none;
+        }
+        &__details {
+            display: none;
+        }
+        &__extra {
+            transform: translate(0, -50%) scale(0.8);
+            transform-origin: right center;
+        }
+    }
 }

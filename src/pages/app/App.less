@@ -360,3 +360,34 @@
         opacity: 1;
     }
 }
+
+.body-mobile {
+    .app {
+        .logo {
+            transform: scale(0.8);
+            transform-origin: left top;
+        }
+        .nav {
+            margin-left: -5px;
+            top: 4.3%;
+            &__item {
+                font-size: 14px;
+                line-height: 24px;
+                opacity: 0.85;
+                margin-right: 22px;
+            }
+        }
+        .badge-wrap {
+            transform: scale(0.75);
+            transform-origin: left bottom;
+        }
+        .footer {
+            transform: scale(0.8);
+            transform-origin: right bottom;
+        }
+    }
+
+    .coming-btn {
+        display: none;
+    }
+}
