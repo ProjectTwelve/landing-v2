@@ -7,12 +7,22 @@ body,
     overflow: hidden;
     background: #000;
 }
-body {
-    overflow: auto;
+
+.body-pc {
+    body {
+        overflow: auto;
+    }
+    #root {
+        min-width: 1250px;
+        min-height: 630px;
+    }
 }
-#root {
-    min-width: 1250px;
-    min-height: 630px;
+.body-mobile {
+    #root {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
 }
 
 @font-face {

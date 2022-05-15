@@ -100,6 +100,7 @@ const GlobalProgressTypes = [
     // LoadingSourceType.AVATAR_GLTF_LOWPOLY_PARTICLE,
     // LoadingSourceType.AVATAR_GLTF_CARTOON,
     // LoadingSourceType.AVATAR_GLTF_DOKV,
+    // LoadingSourceType.TREE_MODEL,
     // LoadingSourceType.POSTER_IMG_0,
     // LoadingSourceType.POSTER_IMG_1,
     // LoadingSourceType.POSTER_IMG_2,

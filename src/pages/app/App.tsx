@@ -7,7 +7,7 @@ import { AppContext, loadingEE } from './App.utils';
 
 export const App = () => {
     const [current, setCurrent] = useState(PageType.Loading);
-    // const [current, setCurrent] = useState(PageType.Home);
+    // const [current, setCurrent] = useState(PageType.Wall);
     const isLoading = current === PageType.Loading;
     const [musicPlaying, setMusicPlaying] = useState(true);
 

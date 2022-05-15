@@ -61,6 +61,7 @@
         display: block;
         content: '';
         .bgFull2x('home/gl-line@2x.png');
+        background-position: center right;
         position: absolute;
         top: 10px;
         left: -15px;
@@ -75,6 +76,18 @@
         line-height: 20px;
         opacity: 0.6;
         margin-top: 15px;
+    }
+}
+
+.body-mobile {
+    .home-extra {
+        transform: scale(0.7);
+        transform-origin: right center;
+        &-item {
+            &::before {
+                width: 240px;
+            }
+        }
     }
 }
 

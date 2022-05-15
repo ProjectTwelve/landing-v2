@@ -1,27 +1,36 @@
 /* eslint-disable */
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useLayoutEffect, useRef } from 'react';
 import { getPublicAssetPath } from '../../../utils';
 import { PageType } from '../../app/App.config';
 import { AppContext, usePageVisible } from '../../app/App.utils';
+import { useInView } from 'react-intersection-observer';
 import './LoadingGL.less';
 
 export const LoadingGL = (props) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    useLoadingGL(canvasRef);
+    const [containerRef, inView] = useInView();
+    useLoadingGL(canvasRef, inView);
 
     return (
-        <canvas
-            className='loading-canvas'
-            id='loading-canvas'
-            ref={canvasRef}
-        />
+        <div className='loading-gl' ref={containerRef}>
+            <canvas
+                className='loading-canvas'
+                id='loading-canvas'
+                ref={canvasRef}
+            />
+        </div>
     );
 };
 
+/** 根据 dom 显示与否，判断是否需要 render */
 function useLoadingGL(
-    canvasRef: React.RefObject<HTMLCanvasElement>
+    canvasRef: React.RefObject<HTMLCanvasElement>,
+    inView: boolean
 ) {
-    usePageVisible(PageType.Loading, () => {
+    const visibleFunRef = useRef<Function>();
+    const hiddenFunRef = useRef<Function>();
+
+    useLayoutEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) {
             return;
@@ -1364,6 +1373,7 @@ function useLoadingGL(
         let colorUpdateTimer = 0.0;
 
         function update() {
+            // console.log('loadinggl update');
             const dt = calcDeltaTime();
             if (resizeCanvas()) initFramebuffers();
             updateColors(dt);
@@ -2022,20 +2032,24 @@ function useLoadingGL(
             window.addEventListener('touchend', handleTouchEnd);
             window.addEventListener('keydown', handleKeyDown);
         }
-
-        return {
-            onVisible: () => {
-                startUpdate();
-            },
-            onHide: () => {
-                clearInterval(timeId);
-                cancelAnimationFrame(frameId);
-                window.removeEventListener('mouseup', handleMouseUp);
-                window.removeEventListener('touchend', handleTouchEnd);
-                window.removeEventListener('keydown', handleKeyDown);
-            },
-            onDestroy: () => {
-            },
+        visibleFunRef.current = () => {
+            startUpdate();
         };
-    });
+        hiddenFunRef.current = () => {
+            clearInterval(timeId);
+            cancelAnimationFrame(frameId);
+            window.removeEventListener('mouseup', handleMouseUp);
+            window.removeEventListener('touchend', handleTouchEnd);
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+        return () => {};
+    }, []);
+
+    useLayoutEffect(() => {
+        if (inView) {
+            visibleFunRef.current?.();
+        } else {
+            hiddenFunRef.current?.();
+        }
+    }, [inView]);
 }

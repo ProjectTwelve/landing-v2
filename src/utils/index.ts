@@ -1,4 +1,6 @@
+import gsap from 'gsap';
 import { Howl } from 'howler';
+import { throttle } from 'lodash-es';
 
 /** hack raf */
 const vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -33,4 +35,29 @@ const clickSound = new Howl({
 });
 export function playClickAudio() {
     clickSound.play();
+}
+
+export const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+);
+
+export const resizeBodyRotation = throttle(() => {
+    if (window.innerWidth > window.innerHeight) {
+        document.body.classList.add('body-landscape');
+        document.body.classList.remove('body-portrait');
+    } else {
+        document.body.classList.add('body-portrait');
+        document.body.classList.remove('body-landscape');
+    }
+}, 100);
+
+export function addResizeHandle(fn: Function) {
+    window.addEventListener('resize', () => fn());
+    window.addEventListener('orientationchange', () =>
+        setTimeout(() => fn(), 100)
+    );
+    fn();
+    setTimeout(() => {
+        fn();
+    }, 100);
 }
