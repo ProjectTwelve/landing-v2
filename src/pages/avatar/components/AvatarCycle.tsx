@@ -74,7 +74,7 @@ export class AvatarCycle {
                 position: new Vector3().copy(position),
                 velocity: new Vector3(direction.x, direction.y, 0).multiplyScalar(.01),
                 opacity,
-                lifeSpan: 600,
+                lifeSpan: 1200,
                 age: 0, 
                 color: [1, 1, 1, 1],
             }
@@ -90,7 +90,7 @@ export class AvatarCycle {
                 cp.position.add(cp.velocity);
                 collisionParticlePositions.push(cp.position.x, cp.position.y, cp.position.z);
                 if(cp.color) {
-                    collisionParticleColors.push(...cp.color);
+                    collisionParticleColors.push(...cp.color.slice(0,3), cp.opacity * (1 - cp.age / cp.lifeSpan));
                 }
                 if(cp.age > cp.lifeSpan) {
                     deleteCurrentNode();
@@ -305,9 +305,9 @@ export class AvatarCycle {
         if(this.points) {
             this.scene.add(this.points);
         }
-        if(this.cube) {
-            this.scene.add(this.cube);
-        }
+        // if(this.cube) {
+        //     this.scene.add(this.cube);
+        // }
         if(this.collisionPointsCloud) {
             this.scene.add(this.collisionPointsCloud);
         }
