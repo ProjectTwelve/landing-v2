@@ -1,13 +1,14 @@
 import * as THREE from 'three';
-import {Points, PointsMaterial, BufferGeometry, Float32BufferAttribute, Vector3, ShaderMaterial} from 'three';
-import shaders from './utils/shader';
-
-
-
+import {Points, PointsMaterial, BufferGeometry, Float32BufferAttribute, Vector3} from 'three';
 interface OrbitParticle {
     speed: number; // 轨道粒子的速度是一个弧度值，表示每一帧绕圆形旋转的弧度
     currentAngle: number; // 当前弧度数值
     opacity: number; // 粒子透明度;
+}
+
+interface CirclePlaneBaseVectors {
+  base1: Vector3,
+  base2: Vector3
 }
 
 export class AvatarCycle {
@@ -33,7 +34,7 @@ export class AvatarCycle {
     private origin = new Vector3(0, 0, 0.5);
     private GAP_ANGLE = Math.PI * 45 / 100; // 豁口大小
     private alphas: Array<number> = [];
-    private ALPHA_CANDIDATES = [1, .8, .8, .6, .4 , .6, .4, .2, .2]; // 例子透明度分布，每个粒子的透明度从这个数组中随机抽取
+    private ALPHA_CANDIDATES = [.8, .64, .64, .48, .32 , .48, .32, .16, .16]; // 例子透明度分布，每个粒子的透明度从这个数组中随机抽取
     private POINT_MATERIAL: PointsMaterial = new PointsMaterial({
         size: 0.05,
         vertexColors: true,
@@ -41,17 +42,10 @@ export class AvatarCycle {
         alphaTest: 0,
         map: this.createCanvasMaterial('#'+new THREE.Color(1, 1, 1).getHexString(), 256),
     });
-
-    // private POINT_MATERIAL: ShaderMaterial = new THREE.ShaderMaterial( {
-    //     uniforms: {
-    //         color: { value: new THREE.Color( 0xffffff5 ) },
-    //         scale: { value : 1}
-    //     },
-    //     colorWrite: true,
-    //     vertexShader:   shaders.verterxShader,
-    //     fragmentShader: shaders.fragmentShader,
-    //     transparent:    true,
-    // });
+    private circlePlaneBaseVectors: CirclePlaneBaseVectors = {
+        base1: new Vector3(1, 0, 0),
+        base2: new Vector3(0, 1, 0)
+    };
 
     // 绘制圆形材质
     createCanvasMaterial(color, size) {
@@ -87,10 +81,46 @@ export class AvatarCycle {
 
         this.container.appendChild(this.rendererWrap);
         this.container.className = 'avatar-gl-container';
+        this.calcBaseVector();
+    }
+
+    // this.points?.rotateX(-Math.PI / 2.49);
+    // this.points?.rotateY(Math.PI / 12);
+    // this.points?.rotateZ(Math.PI * 18 / 100);
+    // 获得圆环所在平面的基向量
+    calcBaseVector() {
+        const rotateX = -Math.PI * 40 / 100, rotateY = Math.PI * 3 / 13, rotateZ = Math.PI * - 4 / 100;
+        var base1 = new Vector3(1, 0, 0);
+        var base2 = new Vector3(0, 1, 0);
+        var xAxis = new Vector3(1, 0, 0);
+        var yAxis = new Vector3(0, 1, 0);
+        var zAxis = new Vector3(0, 0, 1);
+        base1.applyAxisAngle(xAxis, rotateX);
+        base2.applyAxisAngle(xAxis, rotateX);
+        base1.applyAxisAngle(yAxis, rotateY);
+        base2.applyAxisAngle(yAxis, rotateY);
+        base1.applyAxisAngle(zAxis, rotateZ);
+        base2.applyAxisAngle(zAxis, rotateZ);
+        this.circlePlaneBaseVectors = {
+            base1: base1.multiplyScalar(this.R),
+            base2: base2.multiplyScalar(this.R)
+        }
+    }
+
+    getCirclePlaneBaseVectorsCopy() {
+        return [
+            this.circlePlaneBaseVectors.base1.clone(),
+            this.circlePlaneBaseVectors.base2.clone(),
+        ];
     }
     
+    
     getPositionByAngle(angle: number): Array<number> {
-        return [this.R * Math.cos(angle) + this.origin.x, this.R * Math.sin(angle) + this.origin.y,0 + this.origin.z];
+        const [ base1, base2 ] = this.getCirclePlaneBaseVectorsCopy();
+        base1.multiplyScalar(Math.cos(angle));
+        base2.multiplyScalar(Math.sin(angle));
+        base1.add(base2).add(this.origin);
+        return [base1.x, base1.y, base1.z];
     }
 
     getAlphaByAngle(angle: number, cap = 1): number {
@@ -174,12 +204,13 @@ export class AvatarCycle {
         this.updateColor();
     }
 
-    // 调整圆环姿态
+    // 调整圆环姿态 (弃用，现在使用基底向量控制姿态)
     modifyCriclePosture() {
         this.points?.rotateX(-Math.PI / 2.49);
         this.points?.rotateY(Math.PI / 12);
         this.points?.rotateZ(Math.PI * 18 / 100);
     }
+
 
     load() {
         if (this.loaded || this.loading) {
@@ -190,7 +221,7 @@ export class AvatarCycle {
         if(this.points) {
             this.scene.add(this.points);
         }
-        this.modifyCriclePosture();
+        // this.modifyCriclePosture();
         this.loaded= true;
         this.loading = false;
         this.animate();
