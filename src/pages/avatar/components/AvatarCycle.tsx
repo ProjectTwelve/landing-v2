@@ -63,19 +63,22 @@ export class AvatarCycle {
     private geometryBufferOfCollisionParticle = new BufferGeometry();
     private collisionPaticles: LinkedList<CollisionPaticle> = new LinkedList<CollisionPaticle>();
     private collisionPointsCloud?: Points<BufferGeometry, PointsMaterial>;
-    private MOUSER_PROJECT_PLANE_Z = 10;
+    private MOUSER_PROJECT_PLANE_Z = 2.0;
 
     initCollisionPaticles() {
         this.collisionPointsCloud = new Points(this.geometryBufferOfCollisionParticle, this.POINT_MATERIAL);
     }
 
     createCollisionParticles(position: Vector3, direction: Vector3, opacity: number = .64) {
+        const normalizedDirection = direction.normalize().
+            applyAxisAngle(new Vector3(1,0 ,0), Math.random() * 2 * Math.PI).
+            applyAxisAngle(new Vector3(0, 1, 0), Math.random() * 2 * Math.PI);
         this.collisionPaticles.add(
             {
                 position: new Vector3().copy(position),
-                velocity: new Vector3(direction.x, direction.y, 0).multiplyScalar(.01),
+                velocity: new Vector3(normalizedDirection.x, normalizedDirection.y, 0).multiplyScalar(.01),
                 opacity,
-                lifeSpan: 1200,
+                lifeSpan: 600,
                 age: 0, 
                 color: [1, 1, 1, 1],
             }
