@@ -1,6 +1,7 @@
 import * as THREE from 'three';
-import {Points, PointsMaterial, BufferGeometry, Float32BufferAttribute, Vector3, Mesh} from 'three';
+import {Points, PointsMaterial, BufferGeometry, Float32BufferAttribute, Vector3, Mesh, CylinderGeometry, MeshBasicMaterial} from 'three';
 import { LinkedList, Node } from './utils/LinkedList';
+import { calculateDistance } from './utils/PointLineDistance';
 
 interface OrbitParticle {
     speed: number; // 轨道粒子的速度是一个弧度值，表示每一帧绕圆形旋转的弧度
@@ -57,18 +58,18 @@ export class AvatarCycle {
         base1: new Vector3(1, 0, 0),
         base2: new Vector3(0, 1, 0)
     };
-    private cube?: Mesh<THREE.BoxGeometry, THREE.MeshBasicMaterial>;
-    private MouseCollisionRange = 0.2;
+    private cube?: Mesh<CylinderGeometry, MeshBasicMaterial>;
+    private MouseCollisionRange = 0.1;
     private geometryBufferOfCollisionParticle = new BufferGeometry();
     private collisionPaticles: LinkedList<CollisionPaticle> = new LinkedList<CollisionPaticle>();
     private collisionPointsCloud?: Points<BufferGeometry, PointsMaterial>;
+    private MOUSER_PROJECT_PLANE_Z = 10;
 
     initCollisionPaticles() {
         this.collisionPointsCloud = new Points(this.geometryBufferOfCollisionParticle, this.POINT_MATERIAL);
     }
 
     createCollisionParticles(position: Vector3, direction: Vector3, opacity: number = .64) {
-        console.log('createCollisionParticles');
         this.collisionPaticles.add(
             {
                 position: new Vector3().copy(position),
@@ -181,7 +182,7 @@ export class AvatarCycle {
 
         this.vec.sub( this.camera.position ).normalize();
 
-        var distance = - this.camera.position.z / this.vec.z;
+        var distance = (this.MOUSER_PROJECT_PLANE_Z - this.camera.position.z) / this.vec.z;
 
         this.mousePos.copy( this.camera.position ).add( this.vec.multiplyScalar( distance ) );
         this.cube?.position.setX(this.mousePos.x);
@@ -258,7 +259,7 @@ export class AvatarCycle {
         this.updateColor();
         // this.updateAlpha();
         this.points = new Points(this.geometry, this.POINT_MATERIAL);
-        var g = new THREE.BoxGeometry( .2, .2, .2 );
+        var g = new CylinderGeometry( .2, .2, 10, 50 );
         var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
         this.cube = new THREE.Mesh( g, material );
     }
@@ -271,7 +272,8 @@ export class AvatarCycle {
             const currentMousPos = new Vector3(this.mousePos.x, this.mousePos.y, this.mousePos.z);
             // console.log(currenPosition, currentMousPos, currenPosition.distanceTo(currenPosition));
             if(
-                Math.pow(currenPosition.x - currentMousPos.x, 2) + Math.pow(currenPosition.y - currentMousPos.y, 2) < Math.pow(this.MouseCollisionRange, 2)
+                // Math.pow(currenPosition.x - currentMousPos.x, 2) + Math.pow(currenPosition.y - currentMousPos.y, 2) < Math.pow(this.MouseCollisionRange, 2)
+                calculateDistance(currenPosition, this.camera.position, currentMousPos) <= this.MouseCollisionRange
             ) {
                 this.createCollisionParticles(currenPosition, new Vector3().copy(currenPosition).sub(currentMousPos), this.getAlphaByAngle(particle.currentAngle, particle.opacity));
             }
@@ -307,6 +309,7 @@ export class AvatarCycle {
         }
         // if(this.cube) {
         //     this.scene.add(this.cube);
+        //     this.cube.rotateX(Math.PI / 2);
         // }
         if(this.collisionPointsCloud) {
             this.scene.add(this.collisionPointsCloud);
