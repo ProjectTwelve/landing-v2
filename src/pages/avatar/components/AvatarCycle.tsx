@@ -84,7 +84,7 @@ export class AvatarCycle {
     updateCollisionParticles() {
         const collisionParticlePositions: number[] = [];
         const collisionParticleColors: number[] = [];
-        this.collisionPaticles.forEach( (currentNode: Node<CollisionPaticle>, prevNode: Node<CollisionPaticle>, index: Number) => {
+        this.collisionPaticles.forEach( (currentNode: Node<CollisionPaticle>, prevNode: Node<CollisionPaticle>, index: Number, deleteCurrentNode) => {
             const { value: cp } = currentNode;
             if(cp) {
                 cp.position.add(cp.velocity);
@@ -93,8 +93,7 @@ export class AvatarCycle {
                     collisionParticleColors.push(...cp.color);
                 }
                 if(cp.age > cp.lifeSpan) {
-                    prevNode.next = currentNode.next;
-                    currentNode.next = null;
+                    deleteCurrentNode();
                 } else {
                     cp.age += 1;
                 }
@@ -268,7 +267,7 @@ export class AvatarCycle {
         this.particles.forEach((particle: OrbitParticle, index: number) => {
             const positionIndex = index * 3;
             const colorIndex = index * 4;
-            const currenPosition = new Vector3(this.positions[positionIndex], this.positions[positionIndex+1], this.positions[index+2])
+            const currenPosition = new Vector3(this.positions[positionIndex], this.positions[positionIndex+1], this.positions[index+2]);
             const currentMousPos = new Vector3(this.mousePos.x, this.mousePos.y, this.mousePos.z);
             // console.log(currenPosition, currentMousPos, currenPosition.distanceTo(currenPosition));
             if(

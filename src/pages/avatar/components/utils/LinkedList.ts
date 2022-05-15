@@ -21,14 +21,25 @@ export class LinkedList<T> {
         this.tail = newNode;
     }
 
-    forEach(interator: (node: Node<T>, prevNode: Node<T>, index: number) => void) {
+    deleteNode(toBeDeleted: Node<T> , prevNode: Node<T> ) {
+        prevNode.next = toBeDeleted.next;
+        if(toBeDeleted.next === null) {
+            this.tail = prevNode;
+        } else {
+            toBeDeleted.next = null;
+        }
+    }
+
+    forEach(interator: (node: Node<T>, prevNode: Node<T>, index: number, deleteCurrentNode: Function) => void) {
         let currentNode: Node<T> | null = this.sentry.next!
         let prevNode = this.sentry;
         let nextNode: Node<T> | null = this.sentry;
         let index = 0;
         for(;currentNode !== null;currentNode = nextNode) {
             nextNode = currentNode.next;
-            interator(currentNode, prevNode, index);
+            interator(currentNode, prevNode, index, () => {
+                this.deleteNode(currentNode!, prevNode);
+            });
             prevNode = currentNode;
             index += 1;
         }
