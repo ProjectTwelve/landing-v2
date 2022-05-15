@@ -51,18 +51,13 @@ export const resizeBodyRotation = throttle(() => {
     }
 }, 100);
 
-export const resizeMobileRoot = throttle(() => {
-    // 最多缩放 1.2 倍，防止过大，导致手机端，不断重新刷新
-    let baseWidth = Math.min(1250, window.innerWidth * 1.2);
-    baseWidth = Math.max(window.innerWidth, baseWidth);
-    const ratio = window.innerWidth / window.innerHeight;
-    const baseHeight = baseWidth / ratio;
-    gsap.set('#root', {
-        width: baseWidth,
-        height: baseHeight,
-        scaleX: window.innerWidth / baseWidth,
-        scaleY: window.innerWidth / baseWidth,
-        left: -(baseWidth - window.innerWidth) / 2,
-        top: -(baseHeight - window.innerHeight) / 2,
-    });
-}, 100);
+export function addResizeHandle(fn: Function) {
+    window.addEventListener('resize', () => fn());
+    window.addEventListener('orientationchange', () =>
+        setTimeout(() => fn(), 100)
+    );
+    fn();
+    setTimeout(() => {
+        fn();
+    }, 100);
+}

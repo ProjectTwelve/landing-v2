@@ -95,12 +95,12 @@ const LoadingSourceTypeArray = Object.values(LoadingSourceType);
 
 /** 参与 全局loading 进度计算的类型 */
 const GlobalProgressTypes = [
-    // LoadingSourceType.HOME_GLTF,
+    LoadingSourceType.HOME_GLTF,
     // LoadingSourceType.AVATAR_GLTF_LOWPOLY,
     // LoadingSourceType.AVATAR_GLTF_LOWPOLY_PARTICLE,
     // LoadingSourceType.AVATAR_GLTF_CARTOON,
     // LoadingSourceType.AVATAR_GLTF_DOKV,
-    LoadingSourceType.TREE_MODEL,
+    // LoadingSourceType.TREE_MODEL,
     // LoadingSourceType.POSTER_IMG_0,
     // LoadingSourceType.POSTER_IMG_1,
     // LoadingSourceType.POSTER_IMG_2,
