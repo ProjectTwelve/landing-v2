@@ -1,11 +1,19 @@
 import * as THREE from 'three';
 import {Points, PointsMaterial, BufferGeometry, Float32BufferAttribute, Vector3, Mesh} from 'three';
-import {getMousePos} from './utils/mouse';
+import { LinkedList } from './utils/LinkedList';
 
 interface OrbitParticle {
     speed: number; // 轨道粒子的速度是一个弧度值，表示每一帧绕圆形旋转的弧度
     currentAngle: number; // 当前弧度数值
     opacity: number; // 粒子透明度;
+}
+interface CollisionPaticle {
+    velocity: Vector3;
+    opacity: number;
+    lifeSpan: number;
+    age: number;
+    position: Vector3,
+    color: [number, number, number, number]
 }
 
 interface CirclePlaneBaseVectors {
@@ -34,7 +42,7 @@ export class AvatarCycle {
     private geometry: BufferGeometry = new BufferGeometry();
     private points: Points| null = null;
     private origin = new Vector3(0, 0, 0.5);
-    private GAP_ANGLE = Math.PI * 45 / 100; // 豁口大小
+    private GAP_ANGLE = Math.PI * 45 / 100; // 圆环豁口大小
     private alphas: Array<number> = [];
     private ALPHA_CANDIDATES = [.8, .64, .64, .48, .32 , .48, .32, .16, .16]; // 例子透明度分布，每个粒子的透明度从这个数组中随机抽取
     private POINT_MATERIAL: PointsMaterial = new PointsMaterial({
@@ -43,12 +51,55 @@ export class AvatarCycle {
         transparent: true,
         alphaTest: 0,
         map: this.createCanvasMaterial('#'+new THREE.Color(1, 1, 1).getHexString(), 256),
+        sizeAttenuation: true,
     });
     private circlePlaneBaseVectors: CirclePlaneBaseVectors = {
         base1: new Vector3(1, 0, 0),
         base2: new Vector3(0, 1, 0)
     };
     private cube?: Mesh<THREE.BoxGeometry, THREE.MeshBasicMaterial>;
+    private MouseCollisionRange = 0.2;
+    private geometryBufferOfCollisionParticle = new BufferGeometry();
+    private collisionPaticles: CollisionPaticle[] = [];
+    private collisionPointsCloud?: Points<BufferGeometry, PointsMaterial>;
+
+
+    initCollisionPaticles() {
+        this.collisionPointsCloud = new Points(this.geometryBufferOfCollisionParticle, this.POINT_MATERIAL);
+    }
+
+    createCollisionParticles(position: Vector3, direction: Vector3, opacity: number = .64) {
+        this.collisionPaticles.push(
+            {
+                position: new Vector3().copy(position),
+                velocity: new Vector3().copy(direction).multiplyScalar(2),
+                opacity,
+                lifeSpan: 120,
+                age: 0, 
+                color: [1, 1, 1, 1],
+            }
+        )
+    }
+
+    updateCollisionParticles() {
+        const collisionParticlePositions = this.collisionPaticles.flatMap((c: CollisionPaticle) => {
+            c.position.add(c.velocity);
+            c.age += 1;
+            return [c.position.x, c.position.y, c.position.z];
+        });
+        const collisionParticleColors = this.collisionPaticles.flatMap((c: CollisionPaticle) => {
+            return [...c.color];
+        });
+        this.geometryBufferOfCollisionParticle.setAttribute(
+            'position',
+            new Float32BufferAttribute(collisionParticlePositions, 3),
+        )
+
+        this.geometryBufferOfCollisionParticle.setAttribute(
+            'color',
+            new THREE.Float32BufferAttribute(collisionParticleColors, 4)
+        )
+    }
 
     // 绘制圆形材质
     createCanvasMaterial(color, size) {
@@ -106,16 +157,15 @@ export class AvatarCycle {
             base2: base2.multiplyScalar(this.R)
         }
     }
-    private vec = new THREE.Vector3(); // create once and reuse
-    private mousePos: Vector3 = new THREE.Vector3(); // create once and reuse
+    
+    private vec = new THREE.Vector3();
+    private mousePos: Vector3 = new THREE.Vector3(); // 鼠标投影到XY平面上的位置
     onMouseMove(event) {
-        getMousePos(event, this.renderer.domElement);
-
-
         this.vec.set(
-            ( event.clientX / this.container.clientWidth ) * 2 - 1,
+            (event.clientX / this.container.clientWidth ) * 2 - 1,
             - ( event.clientY / this.container.clientHeight ) * 2 + 1,
-            0.5 );
+            0.5
+        );
 
         this.vec.unproject( this.camera );
 
@@ -126,7 +176,6 @@ export class AvatarCycle {
         this.mousePos.copy( this.camera.position ).add( this.vec.multiplyScalar( distance ) );
         this.cube?.position.setX(this.mousePos.x);
         this.cube?.position.setY(this.mousePos.y);
-
     }
 
     getCirclePlaneBaseVectorsCopy() {
@@ -199,15 +248,24 @@ export class AvatarCycle {
         this.updateColor();
         // this.updateAlpha();
         this.points = new Points(this.geometry, this.POINT_MATERIAL);
-        var geometry = new THREE.BoxGeometry( .2, .2, .2 );
+        var g = new THREE.BoxGeometry( .2, .2, .2 );
         var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-        this.cube = new THREE.Mesh( geometry, material );
+        this.cube = new THREE.Mesh( g, material );
     }
 
     updateParticles() {
         this.particles.forEach((particle: OrbitParticle, index: number) => {
             const positionIndex = index * 3;
             const colorIndex = index * 4;
+            const currenPosition = new Vector3(this.positions[positionIndex], this.positions[positionIndex+1], 0)
+            const currentMousPos = new Vector3(this.mousePos.x, this.mousePos.y, 0);
+            if(
+                currenPosition.distanceTo(currenPosition) < this.MouseCollisionRange
+            ) {
+                // console.log(currenPosition, currentMousPos, currenPosition.distanceTo(currenPosition));
+                this.createCollisionParticles(currenPosition, new Vector3().copy(currenPosition).sub(currentMousPos), this.getAlphaByAngle(particle.currentAngle, particle.opacity));
+            }
+
             particle.currentAngle += particle.speed;
             if(particle.currentAngle > Math.PI * 2) {
                 particle.currentAngle = particle.currentAngle - Math.PI * 2;
@@ -227,26 +285,22 @@ export class AvatarCycle {
         this.updateColor();
     }
 
-    // 调整圆环姿态 (弃用，现在使用基底向量控制姿态)
-    modifyCriclePosture() {
-        this.points?.rotateX(-Math.PI / 2.49);
-        this.points?.rotateY(Math.PI / 12);
-        this.points?.rotateZ(Math.PI * 18 / 100);
-    }
-
     load() {
         if (this.loaded || this.loading) {
             return;
         }
         this.loading = true;
         this.initParticles();
+        this.initCollisionPaticles();
         if(this.points) {
             this.scene.add(this.points);
         }
         if(this.cube) {
             this.scene.add(this.cube);
         }
-        // this.modifyCriclePosture();
+        if(this.collisionPointsCloud) {
+            this.scene.add(this.collisionPointsCloud);
+        }
         this.loaded= true;
         this.loading = false;
         this.animate();
@@ -275,6 +329,7 @@ export class AvatarCycle {
         }
         const delta = this.clock.getDelta();
         this.updateParticles();
+        this.updateCollisionParticles();
         this.mixer?.update(delta);
         this.renderer.render(this.scene, this.camera);
     }

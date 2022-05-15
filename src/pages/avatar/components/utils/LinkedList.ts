@@ -6,7 +6,7 @@ class Node<T> {
     }
 }
 
-export default class LinkedList<T> {
+export class LinkedList<T> {
     sentry: Node<T> = new Node<T>(null);
     tail: Node<T> | null = null;
 
