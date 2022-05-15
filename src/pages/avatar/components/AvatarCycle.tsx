@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {Points, PointsMaterial, BufferGeometry, Float32BufferAttribute, Vector3, Mesh} from 'three';
-import { LinkedList } from './utils/LinkedList';
+import { LinkedList, Node } from './utils/LinkedList';
 
 interface OrbitParticle {
     speed: number; // 轨道粒子的速度是一个弧度值，表示每一帧绕圆形旋转的弧度
@@ -60,21 +60,21 @@ export class AvatarCycle {
     private cube?: Mesh<THREE.BoxGeometry, THREE.MeshBasicMaterial>;
     private MouseCollisionRange = 0.2;
     private geometryBufferOfCollisionParticle = new BufferGeometry();
-    private collisionPaticles: CollisionPaticle[] = [];
+    private collisionPaticles: LinkedList<CollisionPaticle> = new LinkedList<CollisionPaticle>();
     private collisionPointsCloud?: Points<BufferGeometry, PointsMaterial>;
-
 
     initCollisionPaticles() {
         this.collisionPointsCloud = new Points(this.geometryBufferOfCollisionParticle, this.POINT_MATERIAL);
     }
 
     createCollisionParticles(position: Vector3, direction: Vector3, opacity: number = .64) {
-        this.collisionPaticles.push(
+        console.log('createCollisionParticles');
+        this.collisionPaticles.add(
             {
                 position: new Vector3().copy(position),
-                velocity: new Vector3().copy(direction).multiplyScalar(0.1),
+                velocity: new Vector3(direction.x, direction.y, 0).multiplyScalar(.01),
                 opacity,
-                lifeSpan: 120,
+                lifeSpan: 600,
                 age: 0, 
                 color: [1, 1, 1, 1],
             }
@@ -82,27 +82,38 @@ export class AvatarCycle {
     }
 
     updateCollisionParticles() {
-        const collisionParticlePositions = this.collisionPaticles.flatMap((c: CollisionPaticle) => {
-            c.position.add(c.velocity);
-            c.age += 1;
-            return [c.position.x, c.position.y, c.position.z];
+        const collisionParticlePositions: number[] = [];
+        const collisionParticleColors: number[] = [];
+        this.collisionPaticles.forEach( (currentNode: Node<CollisionPaticle>, prevNode: Node<CollisionPaticle>, index: Number) => {
+            const { value: cp } = currentNode;
+            if(cp) {
+                cp.position.add(cp.velocity);
+                collisionParticlePositions.push(cp.position.x, cp.position.y, cp.position.z);
+                if(cp.color) {
+                    collisionParticleColors.push(...cp.color);
+                }
+                if(cp.age > cp.lifeSpan) {
+                    prevNode.next = currentNode.next;
+                    currentNode.next = null;
+                } else {
+                    cp.age += 1;
+                }
+            }
         });
-        const collisionParticleColors = this.collisionPaticles.flatMap((c: CollisionPaticle) => {
-            return [...c.color];
-        });
+
         this.geometryBufferOfCollisionParticle.setAttribute(
             'position',
             new Float32BufferAttribute(collisionParticlePositions, 3),
-        )
+        );
 
         this.geometryBufferOfCollisionParticle.setAttribute(
             'color',
-            new THREE.Float32BufferAttribute(collisionParticleColors, 4)
-        )
+            new THREE.Float32BufferAttribute(collisionParticleColors, 4),
+        );
     }
 
     // 绘制圆形材质
-    createCanvasMaterial(color, size) {
+    createCanvasMaterial(color: string, size: number) {
         var matCanvas = document.createElement('canvas');
         matCanvas.width = matCanvas.height = size;
         var matContext = matCanvas.getContext('2d');
@@ -160,7 +171,7 @@ export class AvatarCycle {
     
     private vec = new THREE.Vector3();
     private mousePos: Vector3 = new THREE.Vector3(); // 鼠标投影到XY平面上的位置
-    onMouseMove(event) {
+    onMouseMove(event: MouseEvent) {
         this.vec.set(
             (event.clientX / this.container.clientWidth ) * 2 - 1,
             - ( event.clientY / this.container.clientHeight ) * 2 + 1,
@@ -259,7 +270,7 @@ export class AvatarCycle {
             const colorIndex = index * 4;
             const currenPosition = new Vector3(this.positions[positionIndex], this.positions[positionIndex+1], this.positions[index+2])
             const currentMousPos = new Vector3(this.mousePos.x, this.mousePos.y, this.mousePos.z);
-            console.log(currenPosition, currentMousPos, currenPosition.distanceTo(currenPosition));
+            // console.log(currenPosition, currentMousPos, currenPosition.distanceTo(currenPosition));
             if(
                 Math.pow(currenPosition.x - currentMousPos.x, 2) + Math.pow(currenPosition.y - currentMousPos.y, 2) < Math.pow(this.MouseCollisionRange, 2)
             ) {

@@ -1,4 +1,4 @@
-class Node<T> {
+export class Node<T> {
     public next: Node<T> | null = null;
     public value: T | null = null;
     constructor (value: T | null) {
@@ -16,18 +16,21 @@ export class LinkedList<T> {
     }
 
     add(value: T) {
-        this.tail!.next = new Node(value);
-        this.tail!.next = this.tail;
+        const newNode: Node<T> = new Node(value);
+        this.tail!.next = newNode;
+        this.tail = newNode;
     }
 
     forEach(interator: (node: Node<T>, prevNode: Node<T>, index: number) => void) {
-        let currentNode = this.sentry.next!
+        let currentNode: Node<T> | null = this.sentry.next!
         let prevNode = this.sentry;
+        let nextNode: Node<T> | null = this.sentry;
         let index = 0;
-        for(;currentNode.next != null;currentNode = currentNode.next!) {
+        for(;currentNode !== null;currentNode = nextNode) {
+            nextNode = currentNode.next;
             interator(currentNode, prevNode, index);
             prevNode = currentNode;
+            index += 1;
         }
-        index += 1;
     }
 }
