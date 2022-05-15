@@ -7,6 +7,7 @@ interface OrbitParticle {
     speed: number; // 轨道粒子的速度是一个弧度值，表示每一帧绕圆形旋转的弧度
     currentAngle: number; // 当前弧度数值
     opacity: number; // 粒子透明度;
+    opacityDelta: number;
 }
 interface CollisionPaticle {
     velocity: Vector3;
@@ -63,7 +64,7 @@ export class AvatarCycle {
     private geometryBufferOfCollisionParticle = new BufferGeometry();
     private collisionPaticles: LinkedList<CollisionPaticle> = new LinkedList<CollisionPaticle>();
     private collisionPointsCloud?: Points<BufferGeometry, PointsMaterial>;
-    private MOUSER_PROJECT_PLANE_Z = 2.0;
+    private MOUSER_PROJECT_PLANE_Z = 7.0;
 
     initCollisionPaticles() {
         this.collisionPointsCloud = new Points(this.geometryBufferOfCollisionParticle, this.POINT_MATERIAL);
@@ -256,6 +257,7 @@ export class AvatarCycle {
                 speed: Math.PI / 3200,
                 currentAngle: angle,
                 opacity,
+                opacityDelta: 0,
             });
         }
         this.updatePosition();
@@ -278,7 +280,8 @@ export class AvatarCycle {
                 // Math.pow(currenPosition.x - currentMousPos.x, 2) + Math.pow(currenPosition.y - currentMousPos.y, 2) < Math.pow(this.MouseCollisionRange, 2)
                 calculateDistance(currenPosition, this.camera.position, currentMousPos) <= this.MouseCollisionRange
             ) {
-                this.createCollisionParticles(currenPosition, new Vector3().copy(currenPosition).sub(currentMousPos), this.getAlphaByAngle(particle.currentAngle, particle.opacity));
+                this.createCollisionParticles(currenPosition, new Vector3().copy(currenPosition).sub(currentMousPos), this.getAlphaByAngle(particle.currentAngle, particle.opacity + particle.opacityDelta));
+                particle.opacityDelta -= 0.01;
             }
 
             particle.currentAngle += particle.speed;
@@ -287,10 +290,11 @@ export class AvatarCycle {
             }
             let newPosition: Array<number> = [];
             if(particle.currentAngle > 0 && particle.currentAngle < this.GAP_ANGLE) {
-                particle.currentAngle = this.GAP_ANGLE;
+                particle.currentAngle = this.GAP_ANGLE; // 复位
+                particle.opacityDelta = 0;
             }
             newPosition = this.getPositionByAngle(particle.currentAngle);
-            const newAlpha = this.getAlphaByAngle(particle.currentAngle, particle.opacity);
+            const newAlpha = this.getAlphaByAngle(particle.currentAngle, particle.opacity + particle.opacityDelta);
             this.positions[positionIndex] = newPosition[0]
             this.positions[positionIndex+1] = newPosition[1];
             this.positions[positionIndex+2] = newPosition[2];
