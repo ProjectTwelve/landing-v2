@@ -72,7 +72,7 @@ export class AvatarCycle {
         this.collisionPaticles.push(
             {
                 position: new Vector3().copy(position),
-                velocity: new Vector3().copy(direction).multiplyScalar(2),
+                velocity: new Vector3().copy(direction).multiplyScalar(0.1),
                 opacity,
                 lifeSpan: 120,
                 age: 0, 
@@ -257,12 +257,12 @@ export class AvatarCycle {
         this.particles.forEach((particle: OrbitParticle, index: number) => {
             const positionIndex = index * 3;
             const colorIndex = index * 4;
-            const currenPosition = new Vector3(this.positions[positionIndex], this.positions[positionIndex+1], 0)
-            const currentMousPos = new Vector3(this.mousePos.x, this.mousePos.y, 0);
+            const currenPosition = new Vector3(this.positions[positionIndex], this.positions[positionIndex+1], this.positions[index+2])
+            const currentMousPos = new Vector3(this.mousePos.x, this.mousePos.y, this.mousePos.z);
+            console.log(currenPosition, currentMousPos, currenPosition.distanceTo(currenPosition));
             if(
-                currenPosition.distanceTo(currenPosition) < this.MouseCollisionRange
+                Math.pow(currenPosition.x - currentMousPos.x, 2) + Math.pow(currenPosition.y - currentMousPos.y, 2) < Math.pow(this.MouseCollisionRange, 2)
             ) {
-                // console.log(currenPosition, currentMousPos, currenPosition.distanceTo(currenPosition));
                 this.createCollisionParticles(currenPosition, new Vector3().copy(currenPosition).sub(currentMousPos), this.getAlphaByAngle(particle.currentAngle, particle.opacity));
             }
 
@@ -351,7 +351,5 @@ export class AvatarCycle {
         this.mountContainer.appendChild(this.container);
         this.container.style.zIndex = '4';
         this.container.addEventListener('pointermove', this.onMouseMove.bind(this));
-        // this.renderer.domElement.addEventListener('pointermove', this.onMouseMove);
-        // this.container.style.pointerEvents = 'none';
     }
 }
