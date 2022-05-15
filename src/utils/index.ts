@@ -41,6 +41,16 @@ export const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Ope
     navigator.userAgent
 );
 
+export const resizeBodyRotation = throttle(() => {
+    if (window.innerWidth > window.innerHeight) {
+        document.body.classList.add('body-landscape');
+        document.body.classList.remove('body-portrait');
+    } else {
+        document.body.classList.add('body-portrait');
+        document.body.classList.remove('body-landscape');
+    }
+}, 100);
+
 export const resizeMobileRoot = throttle(() => {
     // 最多缩放 1.2 倍，防止过大，导致手机端，不断重新刷新
     let baseWidth = Math.min(1250, window.innerWidth * 1.2);

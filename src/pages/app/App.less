@@ -205,18 +205,6 @@
             }
         }
     }
-
-    &.app--loading {
-        > * {
-            display: none;
-            pointer-events: none;
-        }
-
-        > .content {
-            display: block;
-            pointer-events: auto;
-        }
-    }
 }
 
 .nav-community {
@@ -358,6 +346,28 @@
 
     &.loading::after {
         opacity: 1;
+    }
+}
+
+/** 竖屏和 loading，都隐藏其余内容 */
+.body-portrait .app,
+.app.app--loading {
+    > * {
+        display: none;
+        pointer-events: none;
+    }
+
+    > .content {
+        display: block;
+        pointer-events: auto;
+    }
+}
+
+.body-portrait {
+    /** 竖屏时强制loading */
+    .page-wrap-loading {
+        opacity: 1 !important;
+        display: block !important;
     }
 }
 
