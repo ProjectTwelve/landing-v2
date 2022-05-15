@@ -6,6 +6,18 @@
     position: relative;
     overflow: hidden;
 
+    &::after {
+        content: '';
+        position: absolute;
+        z-index: 10;
+        left: 0;
+        width: 100%;
+        top: 0;
+        height: 100px;
+        pointer-events: none;
+        background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    }
+
     &__nav {
         z-index: 20;
         position: absolute;
@@ -50,14 +62,17 @@
     &__slogan {
         .bgFull2x('avatar/slogan@2x.png');
         margin-left: -6px;
+        pointer-events: none;
     }
     &__small-title {
         margin-top: 24px;
         margin-bottom: 10px;
+        pointer-events: none;
     }
     &__small-text-1 {
         line-height: 22px;
         margin-bottom: 44px;
+        pointer-events: none;
     }
 
     &__btn {
@@ -80,5 +95,20 @@
 
     .butterfly-canvas-avatar {
         opacity: 0.1;
+    }
+}
+
+.body-mobile {
+    .avatar {
+        &::after {
+            height: 70px;
+        }
+        &__info {
+            transform: translate(0, -50%) scale(0.6);
+            transform-origin: left center;
+        }
+        &__small-text-1 {
+            margin-bottom: 18px;
+        }
     }
 }

@@ -38,15 +38,24 @@
     }
 
     &__logo-1 {
-        .bgFull2x('wall/logo-1@2x.png');
+        .bgFull('wall/logo-1.png');
         margin-bottom: 100px;
     }
 
     &__logo-2 {
-        .bgFull2x('wall/logo-2@2x.png');
+        .bgFull('wall/logo-2.png');
     }
 
     .butterfly-canvas-wall {
         opacity: 0.6;
+    }
+}
+
+.body-mobile {
+    .wall {
+        &__info {
+            transform: translate(-50%, -50%) scale(0.47);
+            transform-origin: center center;
+        }
     }
 }

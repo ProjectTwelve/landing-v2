@@ -50,6 +50,10 @@ export const Loading: React.FC = () => {
     return (
         <div className='loading'>
             <LoadingGL />
+            <div className='loading__rotate'>
+                Please rotate to horizontal
+                <br /> to experience P12 site
+            </div>
             <div className='loading__progress'>
                 <div className='loading__progress-dot loading__progress-dot--1'></div>
                 <div className='loading__progress-dot loading__progress-dot--2'></div>

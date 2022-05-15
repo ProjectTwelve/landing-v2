@@ -17,6 +17,7 @@ import { AvatarGLItemDokv } from './utils/AvatarGLItemDokv';
 import { AvatarGLItemLowpoly } from './utils/AvatarGLItemLowpoly';
 import { AvatarCycle } from './AvatarCycle';
 import { ButterflyGL } from '../../../components/butterfly-gl/ButterflyGL';
+import { IS_MOBILE } from '../../../utils';
 export interface AvatarGLRef {
     switchTo: (type: AvatarType | null) => void;
 }
@@ -117,7 +118,6 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             });
         };
         const handleMouseDown = () => {
-            // console.log('window', 'handleMouseDown');
             mouseDom?.classList.add('active');
         };
         const handleMouseUp = () => {
@@ -135,15 +135,19 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                         }
                     }
                 })();
-                handleMouseUp();
-                window.addEventListener('mousemove', handleMouseMove);
-                window.addEventListener('mousedown', handleMouseDown);
-                window.addEventListener('mouseup', handleMouseUp);
+                if (!IS_MOBILE) {
+                    handleMouseUp();
+                    window.addEventListener('mousemove', handleMouseMove);
+                    window.addEventListener('mousedown', handleMouseDown);
+                    window.addEventListener('mouseup', handleMouseUp);
+                }
             },
             onHide: () => {
-                window.removeEventListener('mousemove', handleMouseMove);
-                window.removeEventListener('mousedown', handleMouseDown);
-                window.removeEventListener('mouseup', handleMouseUp);
+                if (!IS_MOBILE) {
+                    window.removeEventListener('mousemove', handleMouseMove);
+                    window.removeEventListener('mousedown', handleMouseDown);
+                    window.removeEventListener('mouseup', handleMouseUp);
+                }
             },
             onDestroy: () => {},
         };

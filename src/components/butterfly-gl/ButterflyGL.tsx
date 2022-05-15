@@ -3,14 +3,16 @@ import { PageType } from '../../pages/app/App.config';
 import { usePageVisible } from '../../pages/app/App.utils';
 import butterflyHelpers from './butterflyHelpers';
 import './ButterflyGL.less';
+import { IS_MOBILE } from '../../utils';
 
 export interface ButterflyGLProps {
     page: PageType;
 }
-export const ButterflyGL = (props: ButterflyGLProps) => {
+const ButterflyGLComponent = (props: ButterflyGLProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const currentDefaultProperties = butterflyHelpers.defaultProperties[props.page];
+    const currentDefaultProperties =
+        butterflyHelpers.defaultProperties[props.page];
 
     usePageVisible(props.page, () => {
         const canvas = canvasRef.current;
@@ -22,7 +24,7 @@ export const ButterflyGL = (props: ButterflyGLProps) => {
         let timeoutId: number;
         let intervalId: number;
         let gui: dat.GUI;
-        const hpgButterfly = (window as any).hpgButterfly;
+        const hpgButterfly = window.hpgButterfly;
         // for render timedelta calc
         let time;
         // butterfly properties obj ref
@@ -153,7 +155,17 @@ export const ButterflyGL = (props: ButterflyGLProps) => {
 
     return (
         <div className='butterfly-gl' ref={containerRef}>
-            <canvas className={`butterfly-canvas butterfly-canvas-${props.page}`} ref={canvasRef}></canvas>
+            <canvas
+                className={`butterfly-canvas butterfly-canvas-${props.page}`}
+                ref={canvasRef}
+            ></canvas>
         </div>
     );
+};
+
+export const ButterflyGL = (props: ButterflyGLProps) => {
+    if (IS_MOBILE || !window.hpgButterfly) {
+        return null;
+    }
+    return <ButterflyGLComponent {...props} />;
 };

@@ -1,5 +1,5 @@
 {
-  "name": "p12-2022-pc",
+  "name": "p12-202-landing",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -16,13 +16,14 @@
     "parallax-js": "^3.1.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-intersection-observer": "^9.1.0",
     "resize-observer-polyfill": "^1.5.1",
     "swiper": "^8.1.4",
     "three": "^0.139.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "PUBLIC_URL=/ IMAGE_INLINE_SIZE_LIMIT=100000 react-app-rewired build",
+    "build": "PUBLIC_URL=/ IMAGE_INLINE_SIZE_LIMIT=40000 react-app-rewired build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

@@ -48,14 +48,12 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        top: 40%;
+        top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -155%);
         user-select: none;
 
         > img {
-            // width: 18vw;
-            // width: 141px;
             cursor: pointer;
         }
     }
@@ -77,7 +75,85 @@
         }
     }
     &__icon-link {
-        width: 6vw;
+        width: 5%;
         max-width: 60px;
+    }
+    &__rotate {
+        display: none;
+    }
+}
+
+.body-mobile {
+    .loading {
+        &__logo {
+            transform: translate(-50%, -155%) scale(0.7);
+        }
+        &__links {
+            max-width: unset;
+        }
+        &__icon-link {
+            max-width: unset;
+            width: 34px;
+        }
+    }
+    &.body-portrait {
+        .loading {
+            &__links {
+                width: 65%;
+                bottom: auto;
+                top: 50%;
+                margin-top: -25px;
+            }
+            &__icon-link {
+                width: 30px;
+            }
+            &__progress {
+                transform: scale(0.6);
+                top: auto;
+                margin-top: 0;
+                bottom: -3%;
+            }
+            &__rotate {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                left: 0;
+                color: #fff;
+                text-align: center;
+                .f-font-tt;
+                font-size: 14px;
+                line-height: 18px;
+                pointer-events: none;
+                bottom: 15%;
+
+                &::before {
+                    content: '';
+                    display: block;
+                    .bg('loading/loading-rotate.png');
+                    background-size: 100%;
+                    width: 52px;
+                    height: 55px;
+                    margin-bottom: 10px;
+                    margin-left: -14px;
+                }
+            }
+        }
+    }
+    &.body-landscape {
+        .loading {
+            &__logo {
+                transform: translate(-50%, -110%) scale(0.8);
+            }
+            &__progress {
+                transform: scale(0.75);
+                margin-top: -10px;
+            }
+            &__links {
+                bottom: 8%;
+            }
+        }
     }
 }

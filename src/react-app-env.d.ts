@@ -18,4 +18,6 @@ declare interface Window {
     appVisibleAnimating: number;
     /** 旧界面正在隐藏 */
     appHideAnimating: number;
+
+    hpgButterfly?: any;
 }

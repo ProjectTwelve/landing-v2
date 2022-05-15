@@ -18,7 +18,7 @@ import {
     CSS2DObject,
     CSS2DRenderer,
 } from 'three/examples/jsm/renderers/CSS2DRenderer';
-import { getPublicAssetPath, toRadians } from '../../../utils';
+import { getPublicAssetPath, IS_MOBILE, toRadians } from '../../../utils';
 import { gsap } from 'gsap';
 import './HomeGL.less';
 import {
@@ -258,14 +258,36 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         function handleControlUp() {
             isDragging = false;
         }
-        function handleControlDown() {
+        function handleControlDown(e: MouseEvent | TouchEvent) {
             isDragging = true;
+            let x = 0;
+            let y = 0;
+            if (e instanceof MouseEvent) {
+                x = e.screenX;
+                y = e.screenY;
+            } else {
+                x = e.touches?.[0]?.screenX;
+                y = e.touches?.[0]?.screenY;
+            }
+            previousMousePosition = {
+                x: x,
+                y: y,
+            };
         }
-        function handleControlMove(e: MouseEvent) {
+        function handleControlMove(e: MouseEvent | TouchEvent) {
+            let x = 0;
+            let y = 0;
+            if (e instanceof MouseEvent) {
+                x = e.screenX;
+                y = e.screenY;
+            } else {
+                x = e.touches?.[0]?.screenX;
+                y = e.touches?.[0]?.screenY;
+            }
             if (isDragging && autoRotating) {
                 const deltaMove = {
-                    x: e.screenX - previousMousePosition.x,
-                    y: e.screenY - previousMousePosition.y,
+                    x: x - previousMousePosition.x,
+                    y: y - previousMousePosition.y,
                 };
                 const deltaRotationQuaternion = new THREE.Quaternion().setFromEuler(
                     new THREE.Euler(
@@ -280,11 +302,11 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                     group.quaternion
                 );
             }
-
             previousMousePosition = {
-                x: e.screenX,
-                y: e.screenY,
+                x: x,
+                y: y,
             };
+            // console.log(previousMousePosition);
         }
 
         function render() {
@@ -311,17 +333,30 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             onVisible: () => {
                 animate();
                 autoRotating = true;
-                window.addEventListener('mouseup', handleControlUp);
-                window.addEventListener('mousedown', handleControlDown);
-                window.addEventListener('mousemove', handleControlMove);
+                if (IS_MOBILE) {
+                    window.addEventListener('touchend', handleControlUp);
+                    window.addEventListener('touchstart', handleControlDown);
+                    window.addEventListener('touchmove', handleControlMove);
+                } else {
+                    window.addEventListener('mouseup', handleControlUp);
+                    window.addEventListener('mousedown', handleControlDown);
+                    window.addEventListener('mousemove', handleControlMove);
+                }
                 // document.body.appendChild(gui.domElement);
             },
             onHide: () => {
                 cancelAnimationFrame(frameId);
                 autoRotating = false;
-                window.removeEventListener('mouseup', handleControlUp);
-                window.removeEventListener('mousedown', handleControlDown);
-                window.removeEventListener('mousemove', handleControlMove);
+                if (IS_MOBILE) {
+                    window.removeEventListener('touchend', handleControlUp);
+                    window.removeEventListener('touchstart', handleControlDown);
+                    window.removeEventListener('touchmove', handleControlMove);
+                } else {
+                    window.removeEventListener('mouseup', handleControlUp);
+                    window.removeEventListener('mousedown', handleControlDown);
+                    window.removeEventListener('mousemove', handleControlMove);
+                }
+
                 // document.body.removeChild(gui.domElement);
             },
             onDestroy: () => {
