@@ -5,7 +5,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     public particleCanvasWidth = 1920;
     public particleCanvasHeight = 1080;
     // 序列帧和 glb 模型位置对应，所需的 offset 图片张数
-    public particleImgOffset = 140;
+    public particleImgOffset = 0;
 
     public canvasWrap = document.createElement('div');
     public canvas = document.createElement('canvas');
@@ -41,7 +41,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
                 Math.abs(e.clientY - downY) < 50
             ) {
                 // 没有移动太远，表明是点击事件。以此来兼容 gl 的拖动
-                this.toggleParticle();
+                this.toggleParticle(!this.isShowParticle);
             }
         });
         this.btnWrap.addEventListener('mouseenter', () => {
@@ -58,10 +58,11 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         this.canvasWrap.style.height = '100%';
     }
     enter() {
+        this.emit('enter', { isShowParticle: this.isShowParticle });
         super.enter();
         // 4秒自动切换
         this.toggleTimeId = window.setTimeout(() => {
-            this.toggleParticle();
+            this.toggleParticle(false);
         }, 4000);
     }
     leave() {
@@ -69,18 +70,22 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         clearTimeout(this.toggleTimeId);
     }
 
+    getParticleIndex() {
+        return Math.floor(
+            (((this.controls.getAzimuthalAngle() / Math.PI + 1) / 2) *
+                this.imageDataArray.length +
+                this.imageDataArray.length +
+                0) %
+                this.imageDataArray.length
+        );
+    }
+
     protected render() {
         super.render();
         if (!this.loaded) {
             return;
         }
-        const index = Math.floor(
-            (((this.controls.getAzimuthalAngle() / Math.PI + 1) / 2) *
-                this.imageDataArray.length +
-                this.imageDataArray.length +
-                this.particleImgOffset) %
-                this.imageDataArray.length
-        );
+        const index = this.getParticleIndex();
         // console.log(index);
         if (this.renderedImageIndex !== index && this.context) {
             this.renderedImageIndex = index;
@@ -93,14 +98,9 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
             // );
             // const data = imageData.data;
             // for (let i = 0; i < data.length; i += 4) {
-            //     if (data[i] + data[i + 1] + data[i + 2] < 5) {
+            //     // 提出黑边
+            //     if (data[i] + data[i + 1] + data[i + 2] < 2) {
             //         data[i + 3] = 0;
-            //     } else if (data[i] + data[i + 1] + data[i + 2] < 10) {
-            //         data[i + 3] = 0.1;
-            //     } else if (data[i] + data[i + 1] + data[i + 2] < 20) {
-            //         data[i + 3] = 0.3;
-            //     } else if (data[i] + data[i + 1] + data[i + 2] < 40) {
-            //         data[i + 3] = 0.7;
             //     }
             // }
             // this.context.putImageData(imageData, 0, 0);
@@ -114,9 +114,13 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         this.canvas.height = this.particleCanvasHeight;
     }
 
-    toggleParticle() {
+    toggleParticle(isShow) {
         clearTimeout(this.toggleTimeId);
-        this.isShowParticle = !this.isShowParticle;
+        if (isShow === this.isShowParticle) {
+            return;
+        }
+        this.isShowParticle = isShow;
+        this.emit('toggled', { isShowParticle: this.isShowParticle });
         const _this = this;
         gsap.to(
             {},

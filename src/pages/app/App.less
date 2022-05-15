@@ -64,7 +64,7 @@
             cursor: pointer;
             margin-right: 36px;
             position: relative;
-            font-family: TTLakes;
+            .f-font-tt;
 
             // 用于扩大可触摸范围
             &::before {
@@ -299,7 +299,7 @@
 }
 
 .app-sub-title {
-    font-family: TTLakes;
+    .f-font-tt;
     font-size: 40px;
     line-height: 40px;
     color: #fff;
@@ -316,7 +316,7 @@
 }
 
 .app-small-title {
-    font-family: TTLakes;
+    .f-font-tt;
     font-size: 27px;
     line-height: 27px;
     color: #fff;
@@ -334,8 +334,29 @@
     }
 }
 .app-small-text {
-    font-family: TTLakes;
+    .f-font-tt;
     font-size: 16px;
     line-height: 18px;
     color: rgba(255, 255, 255, 0.6);
+}
+
+.app-container-loading {
+    &::after {
+        content: 'Loading...';
+        .f-font-tt;
+        font-size: 20px;
+        color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: 99;
+    }
+
+    &.loading::after {
+        opacity: 1;
+    }
 }

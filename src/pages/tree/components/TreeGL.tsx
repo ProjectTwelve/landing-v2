@@ -29,13 +29,13 @@ export const TreeGL = (props) => {
         let loading = false;
 
         const context = canvas.getContext('2d');
-        canvas.width = 1080;
+        canvas.width = 960;
         canvas.height = 1080;
 
         const camera = new THREE.PerspectiveCamera(40, 1, 1, 100);
         camera.position.set(5, 2, 8);
+        camera.lookAt(0, 0, 0);
         const controls = new OrbitControls(camera, container);
-        controls.target.set(0, 0, 0);
         controls.update();
         controls.enablePan = false;
         controls.enableDamping = true;
@@ -50,9 +50,11 @@ export const TreeGL = (props) => {
                 return;
             }
             loading = true;
+            container?.classList.add('app-container-loading');
+            container?.classList.add('loading');
             const imageUrls = new Array(480).fill(0).map((_, i) => {
                 return getPublicAssetPath(
-                    `files/tree/tree-model/tree_${i + 1 + 1000}.jpg`
+                    `files/tree/tree-model/${i + 1 + 1000}.jpg`
                 );
             });
             const imageLoader = new THREE.ImageLoader();
@@ -68,6 +70,7 @@ export const TreeGL = (props) => {
                 })
                 .finally(() => {
                     loading = false;
+                    container?.classList.remove('loading');
                 });
         }
         function render() {
@@ -93,10 +96,12 @@ export const TreeGL = (props) => {
             render();
         }
 
-        load();
+        /** 首页loading结束后，再开始loading */
+        loadingEE.on('loaded', () => setTimeout(load, 200));
 
         return {
             onVisible: () => {
+                load();
                 animate();
             },
             onHide: () => {

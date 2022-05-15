@@ -14,11 +14,12 @@
         display: flex;
         align-items: center;
         flex-direction: column;
+        pointer-events: none;
     }
 
     &__title-1,
     &__title-2 {
-        font-family: TTLakes;
+        .f-font-tt;
         color: #fff;
         font-size: 22px;
         line-height: 22px;
@@ -43,5 +44,9 @@
 
     &__logo-2 {
         .bgFull2x('wall/logo-2@2x.png');
+    }
+
+    .butterfly-canvas-wall {
+        opacity: 0.6;
     }
 }

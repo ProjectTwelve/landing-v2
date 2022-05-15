@@ -5,6 +5,36 @@
     overflow: hidden;
     background: #000;
 
+    &::before {
+        content: '';
+        .f-pseudo;
+        .bg('avatar/bg-1.jpg');
+        background-position: center;
+        background-repeat: repeat;
+        pointer-events: none;
+        transition: opacity 0.5s;
+    }
+
+    .butterfly-gl {
+        transition: opacity 0.5s;
+    }
+    &.show-particle {
+        &::before {
+            opacity: 0;
+        }
+        .butterfly-gl {
+            opacity: 0;
+        }
+    }
+    &.hidden-particle {
+        &::before {
+            opacity: 1;
+        }
+        .butterfly-gl {
+            opacity: 1;
+        }
+    }
+
     .avatar-gl-renderer-wrap,
     .avatar-gl-container {
         .f-pseudo();
@@ -25,6 +55,7 @@
         top: auto;
         bottom: 0;
         overflow: hidden;
+        background: #000;
 
         canvas {
             position: absolute;
@@ -40,12 +71,6 @@
         z-index: 10;
         .f-align(55vw, 85vh);
     }
-}
-
-.avatar-circle {
-    .f-alignImg2x('avatar/circle@2x.png');
-    pointer-events: none;
-    z-index: 10;
 }
 
 .avatar-mouse {
@@ -114,7 +139,7 @@
         left: 20px;
         top: 0;
         transform: translate(0, -50%);
-        font-family: TTLakes;
+        .f-font-tt;
 
         &.active {
             opacity: 1;

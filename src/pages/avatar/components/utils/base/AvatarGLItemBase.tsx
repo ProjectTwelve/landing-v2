@@ -2,8 +2,9 @@ import * as THREE from 'three';
 import ResizeObserver from 'resize-observer-polyfill';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { gsap } from 'gsap';
+import EventEmitter from 'eventemitter3';
 
-export class AvatarGLItemBase {
+export class AvatarGLItemBase extends EventEmitter {
     /** 额外的 node，用于放置说明等文案 */
     public extraNode?: JSX.Element = void 0;
 
@@ -23,10 +24,12 @@ export class AvatarGLItemBase {
     protected clock = new THREE.Clock();
 
     constructor() {
+        super();
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.outputEncoding = THREE.sRGBEncoding;
         this.camera = new THREE.PerspectiveCamera(40, 1, 1, 100);
         this.camera.position.set(5, 2, 8);
+        this.scene.add(this.camera);
 
         const axesHelper = new THREE.AxesHelper(10);
         // this.scene.add(axesHelper);
@@ -46,13 +49,15 @@ export class AvatarGLItemBase {
         this.rendererWrap.className = 'avatar-gl-renderer-wrap';
 
         this.container.appendChild(this.rendererWrap);
-        this.container.className = 'avatar-gl-container';
+        this.container.className =
+            'avatar-gl-container app-container-loading loading';
     }
     load() {
         if (this.loadingPromise) {
             return this.loadingPromise;
         }
         this.loadingPromise = Promise.resolve();
+        this.container.classList.remove('loading');
         return this.loadingPromise;
     }
     mount(mountContainer: HTMLDivElement) {
@@ -110,9 +115,9 @@ export class AvatarGLItemBase {
     }
 
     protected render() {
-        if (!this.loaded) {
-            return;
-        }
+        // if (!this.loaded) {
+        //     return;
+        // }
         const delta = this.clock.getDelta();
         this.mixer?.update(delta);
         this.controls.update();

@@ -9,13 +9,14 @@ import React, {
     useRef,
 } from 'react';
 import { PageType } from '../../app/App.config';
-import { usePageVisible } from '../../app/App.utils';
+import { loadingEE, usePageVisible } from '../../app/App.utils';
 import { AvatarType } from '../Avatar.config';
 import './AvatarGL.less';
 import { AvatarGLItemCartoon } from './utils/AvatarGLItemCartoon';
 import { AvatarGLItemDokv } from './utils/AvatarGLItemDokv';
 import { AvatarGLItemLowpoly } from './utils/AvatarGLItemLowpoly';
 import { AvatarCycle } from './AvatarCycle';
+import { ButterflyGL } from '../../../components/butterfly-gl/ButterflyGL';
 export interface AvatarGLRef {
     switchTo: (type: AvatarType | null) => void;
 }
@@ -29,7 +30,7 @@ export const AVATAR_GL_MAP = {
 export const AVATAR_GL_CYCLE = new AvatarCycle();
 
 /** 决定要显示的 avatar 的顺序（第 0 个会优先加载，其他的会在界面进入后加载） */
-const AVATAR_GL_KEYS = Object.keys(AVATAR_GL_MAP);
+const AVATAR_GL_KEYS = Object.keys(AVATAR_GL_MAP) as AvatarType[];
 // 随机打乱的数组，打开注释即可使用
 // const AVATAR_GL_KEYS = shuffle(Object.keys(AVATAR_GL_MAP));
 const AVATAR_GL_ARRAY = AVATAR_GL_KEYS.map((k) => AVATAR_GL_MAP[k]);
@@ -61,16 +62,44 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             return;
         }
         AVATAR_GL_ARRAY.map((v) => v.mount(container));
+
+        /** 首页loading结束后，再开始loading */
         // 先只加载首个资源
-        first(AVATAR_GL_ARRAY)?.load();
+        loadingEE.on('loaded', () => first(AVATAR_GL_ARRAY)?.load());
 
         // 圆环加载
         AVATAR_GL_CYCLE.mount(container);
         AVATAR_GL_CYCLE.load();
+
+        AVATAR_GL_ARRAY.forEach((v) => {
+            v.on('enter', ({ isShowParticle }) =>
+                handleToggleParticle(isShowParticle)
+            );
+            v.on('toggled', ({ isShowParticle }) => {
+                handleToggleParticle(isShowParticle);
+                AVATAR_GL_ARRAY.forEach((av) =>
+                    av.toggleParticle(isShowParticle)
+                );
+            });
+        });
+
         return () => {
             AVATAR_GL_ARRAY.map((v) => container && v.unMount());
             container && AVATAR_GL_CYCLE.unMount();
+            AVATAR_GL_ARRAY.forEach((v) => {
+                v.off('toggled');
+            });
         };
+
+        function handleToggleParticle(isShowParticle: boolean) {
+            if (isShowParticle) {
+                container?.classList.add('show-particle');
+                container?.classList.remove('hidden-particle');
+            } else {
+                container?.classList.remove('show-particle');
+                container?.classList.add('hidden-particle');
+            }
+        }
     }, []);
 
     usePageVisible(PageType.Avatar, () => {
@@ -122,7 +151,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
 
     return (
         <div className='avatar-gl' ref={containerRef}>
-            {/* <div className='avatar-circle'></div> */}
+            <ButterflyGL page={PageType.Avatar} />
             <div className='avatar-mouse' id='avatar-mouse' ref={mouseRef}>
                 <div className='avatar-mouse__circle'></div>
                 <div className='avatar-mouse__dot'></div>

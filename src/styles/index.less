@@ -18,5 +18,6 @@ body {
 @font-face {
     font-family: TTLakes;
     font-weight: bold;
-    src: url('../assets/app/fonts/TTLakes-DemiBold.otf') format('opentype');
+    /** 内联字体，性能优化 */
+    src: data-uri('../assets/app/fonts/TTLakes-DemiBold.otf') format('opentype');
 }

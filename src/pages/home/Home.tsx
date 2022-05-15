@@ -4,6 +4,7 @@ import './Home.less';
 import { gsap } from 'gsap';
 import { usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
+import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 
 export const Home: React.FC = () => {
     const homeGLRef = useRef<HomeGLRef>(null);
@@ -44,18 +45,21 @@ export const Home: React.FC = () => {
                             z: 1,
                         }
                     );
+                const initRotation = {
+                    x: 1.96,
+                    y: 0.38,
+                    z: 1.06,
+                };
                 homeGLRef.current?.group &&
                     tl.fromTo(
                         [homeGLRef.current?.group.rotation],
                         {
-                            x: Math.PI * -0.25,
-                            y: Math.PI * -0.25,
-                            z: Math.PI * 1.75,
+                            x: initRotation.x + Math.PI * 0.5,
+                            y: initRotation.y,
+                            z: initRotation.z - Math.PI * 0.75,
                         },
                         {
-                            x: Math.PI * -0.25,
-                            y: Math.PI * 0.25,
-                            z: Math.PI * 1.75,
+                            ...initRotation,
                             duration: 2,
                             delay: -1,
                             ease: 'power2.out',
@@ -95,6 +99,7 @@ export const Home: React.FC = () => {
 
     return (
         <div className='home'>
+            <ButterflyGL page={PageType.Home} />
             <HomeGL ref={homeGLRef} />
             <div className='home__info'>
                 <div className='home__slogan'></div>

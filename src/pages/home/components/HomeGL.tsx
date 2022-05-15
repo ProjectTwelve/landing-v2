@@ -13,7 +13,7 @@ import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 // import { ObjectControls } from 'threejs-object-controls';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
 import {
     CSS2DObject,
     CSS2DRenderer,
@@ -29,6 +29,7 @@ import {
 import { PageType } from '../../app/App.config';
 import { HOME_GL_ACTIVE_DATA } from './HomeGL.config';
 import classnames from 'classnames';
+import { GUI } from 'dat.gui';
 
 export interface HomeGLRef {
     group?: THREE.Group;
@@ -52,9 +53,10 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         if (!container) {
             return;
         }
+
         const group = new THREE.Group();
         groupRef.current = group;
-
+        let frameId: number;
         let mixer: THREE.AnimationMixer;
         let autoRotating = false;
         const clock = new THREE.Clock();
@@ -84,50 +86,16 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             1,
             100
         );
-
-        // camera.position.set(2, 2, 2);
         camera.position.set(0, 0, 3.33);
         camera.lookAt(0, 0, 0);
         camera.layers.enable(1);
+        scene.add(camera);
 
-        const hemisphereLight = new THREE.HemisphereLight(
-            0xffffbb,
-            0xffffbb,
-            // 0x080820,
-            1
-        );
-        scene.add(hemisphereLight);
-        const hemisphereHelper = new THREE.HemisphereLightHelper(
-            hemisphereLight,
-            10
-        );
-        // scene.add(hemisphereHelper);
-
-        // const directionalLight = new THREE.DirectionalLight(0x9bbdfe, 1);
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(-99.75 / 400, -979.9 / 400, 3694 / 400);
-        scene.add(directionalLight);
-        const directionalHelper = new THREE.DirectionalLightHelper(
-            directionalLight,
-            5
-            // 10
-        );
-        // scene.add(directionalHelper);
-
-        const ambientLight = new THREE.AmbientLight(0xff0000, 0.5);
-        scene.add(ambientLight);
-
-        // const spotLight = new THREE.SpotLight(0xffffff, 1.5);
-        // spotLight.position.set(1046 / 400, 2958 / 400, -1425 / 400);
-        // spotLight.castShadow = true;
-        // spotLight.shadow.mapSize.width = 512;
-        // spotLight.shadow.mapSize.height = 512;
-        // spotLight.shadow.camera.near = 0;
-        // spotLight.shadow.camera.far = 200;
-        // spotLight.shadow.focus = 1;
-        // scene.add(spotLight);
-        // const spotLightHelper = new THREE.SpotLightHelper(spotLight, 10);
-        // scene.add(spotLightHelper);
+        const ambientLight = new THREE.AmbientLight(0xb7d4f9, 0.4);
+        camera.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xf9e8cf, 1.3);
+        directionalLight.position.set(0.5, 0, 0.866); // ~60º
+        camera.add(directionalLight);
 
         const axesHelper = new THREE.AxesHelper(10);
         // scene.add(axesHelper);
@@ -148,11 +116,8 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         // gui.domElement.id = 'home-gl-gui';
 
         const loader = new GLTFLoader();
-        // const dracoLoader = new DRACOLoader();
-        // dracoLoader.setDecoderPath(getPublicAssetPath('files/lib-draco/gltf/'));
-        // loader.setDRACOLoader(dracoLoader);
         loader.load(
-            getPublicAssetPath('files/home/home.glb?v051001'),
+            getPublicAssetPath('files/home/home.glb?v051101'),
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
@@ -175,11 +140,11 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             (event) => {
                 loadingEE.emit(
                     `progress.${LoadingSourceType.HOME_GLTF}`,
-                    event.total ? (event.loaded / event.total) * 0.95 : 0.5
+                    Math.min(
+                        event.loaded / (event.total || 1024 * 1024 * 25),
+                        0.95
+                    )
                 );
-            },
-            function (e) {
-                console.error(e);
             }
         );
 
@@ -322,13 +287,14 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             };
         }
 
-        let frameId: number;
-
         function render() {
             const delta = clock.getDelta();
             mixer?.update?.(delta);
             if (autoRotating && !isDragging) {
-                group.rotation.y += ((2 * Math.PI) / 60 / 60) * delta * 30;
+                group.rotation.y =
+                    (group.rotation.y +
+                        ((2 * Math.PI) / 60 / 60) * delta * 30) %
+                    (2 * Math.PI);
             }
 
             renderer.render(scene, camera);
@@ -348,13 +314,14 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 window.addEventListener('mouseup', handleControlUp);
                 window.addEventListener('mousedown', handleControlDown);
                 window.addEventListener('mousemove', handleControlMove);
-                // if (process.env.NODE_ENV === 'development') {
-                //     document.body.appendChild(gui.domElement);
-                // }
+                // document.body.appendChild(gui.domElement);
             },
             onHide: () => {
-                autoRotating = false;
                 cancelAnimationFrame(frameId);
+                autoRotating = false;
+                window.removeEventListener('mouseup', handleControlUp);
+                window.removeEventListener('mousedown', handleControlDown);
+                window.removeEventListener('mousemove', handleControlMove);
                 // document.body.removeChild(gui.domElement);
             },
             onDestroy: () => {
@@ -364,9 +331,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                     'pointerup',
                     handleResetCamera
                 );
-                window.removeEventListener('mouseup', handleControlUp);
-                window.removeEventListener('mousedown', handleControlDown);
-                window.removeEventListener('mousemove', handleControlMove);
                 container.removeChild(renderer.domElement);
                 container.removeChild(labelRenderer.domElement);
             },

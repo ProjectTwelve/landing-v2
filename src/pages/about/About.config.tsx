@@ -119,6 +119,14 @@ export const LOCATION_INFO = [
         y: 792,
         namePosition: 'none',
     },
+    {
+        type: 'origin',
+        img: require('../../assets/about/origin-usa.png'),
+        name: 'USA',
+        x: 388,
+        y: 681,
+        namePosition: 'none',
+    },
 ];
 
 export const ABOUT_PARTNERS = [
@@ -133,8 +141,8 @@ export const ABOUT_PARTNERS = [
             </>
         ),
         links: {
-            linkedin: 'https://baidu.com',
-            twitter: 'https://google.com',
+            linkedin: 'https://www.linkedin.com/in/wangboyang/',
+            twitter: null,
         },
     },
     {
@@ -148,8 +156,8 @@ export const ABOUT_PARTNERS = [
             </>
         ),
         links: {
-            linkedin: 'https://baidu.com',
-            twitter: 'https://google.com',
+            linkedin: 'https://www.linkedin.com/in/maciejburno/',
+            twitter: null,
         },
     },
     {
@@ -163,8 +171,8 @@ export const ABOUT_PARTNERS = [
             </>
         ),
         links: {
-            linkedin: 'https://baidu.com',
-            twitter: 'https://google.com',
+            linkedin: 'https://www.linkedin.com/in/kelsangdrolma/',
+            twitter: null,
         },
     },
 ];

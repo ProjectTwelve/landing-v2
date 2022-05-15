@@ -118,10 +118,13 @@ export const loadingEE = new EE();
 LoadingSourceTypeArray.forEach((type) => {
     loadingEE.on(`progress.${type}`, (progress: number) => {
         globalLoadingState[type] = Math.min(Math.max(0, progress), 1);
-        // 触发 progress 事件，更新进度
-        loadingEE.emit(
-            'progress',
-            mean(Object.values(pick(globalLoadingState, GlobalProgressTypes)))
+        const total = mean(
+            Object.values(pick(globalLoadingState, GlobalProgressTypes))
         );
+        // 触发 progress 事件，更新进度
+        loadingEE.emit('progress', total);
+        if (total >= 1) {
+            loadingEE.emit('loaded');
+        }
     });
 });

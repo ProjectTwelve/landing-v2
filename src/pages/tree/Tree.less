@@ -7,6 +7,18 @@
     overflow: hidden;
     background: #000;
 
+    &::after {
+        content: '';
+        position: absolute;
+        z-index: 10;
+        left: 0;
+        width: 100%;
+        top: 0;
+        height: 150px;
+        pointer-events: none;
+        background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    }
+
     &__info {
         position: absolute;
         z-index: 10;
@@ -31,7 +43,7 @@
     }
     &__details {
         position: relative;
-        font-family: TTLakes;
+        .f-font-tt;
         padding-left: 24px;
 
         &::before {
@@ -73,7 +85,7 @@
         transform: translate(0, -50%);
         right: (60 / @designWidth * 100%);
         user-select: none;
-        font-family: TTLakes;
+        .f-font-tt;
         color: #fff;
 
         &-info {

@@ -1,14 +1,15 @@
+import { padStart } from 'lodash-es';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { getPublicAssetPath } from '../../../../utils';
 import { loadingEE, LoadingSourceType } from '../../../app/App.utils';
 import { AvatarGLItemBase } from './base/AvatarGLItemBase';
 import { AvatarGLItemBaseWithParticle } from './base/AvatarGLItemBaseWithParticle';
+import { GUI } from 'dat.gui';
 
 export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
-    public particleCanvasWidth = 1920;
+    public particleCanvasWidth = 1200;
     public particleCanvasHeight = 1080;
-    public particleImgOffset = 140;
 
     public extraNode = (
         <>
@@ -18,6 +19,16 @@ export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
             <div className='avatar-extra-text'>→ For tokenomics</div>
         </>
     );
+
+    getParticleIndex() {
+        return Math.floor(
+            (((this.controls.getAzimuthalAngle() / Math.PI + 1) / 2) *
+                this.imageDataArray.length +
+                this.imageDataArray.length +
+                -266) %
+                this.imageDataArray.length
+        );
+    }
 
     load() {
         if (this.loadingPromise) {
@@ -29,21 +40,43 @@ export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
             new GLTFLoader().load(
                 getPublicAssetPath('files/avatar/avatar-dokv.glb?v051001'),
                 (gltf) => {
+                    const ambientLight = new THREE.AmbientLight(0xb4d1f2, 0.61);
+                    this.camera.add(ambientLight);
+                    const directionalLight = new THREE.DirectionalLight(
+                        0xeacfc1,
+                        0.8
+                    );
+                    directionalLight.position.set(0.5, 0, 0.866); // ~60º
+                    this.camera.add(directionalLight);
+
                     const model = gltf.scene;
-                    model.position.set(0.2, -2.6, -1);
-                    model.scale.set(3, 3, 3);
+                    model.position.set(0.41, -2.64, -1.3);
+                    model.scale.set(3.55, 3.55, 3.55);
+
+                    // const gui = new GUI();
+                    // const folderScale = gui.addFolder('model.scale');
+                    // folderScale.add(model.scale, 'x').step(0.01);
+                    // folderScale.add(model.scale, 'y').step(0.01);
+                    // folderScale.add(model.scale, 'z').step(0.01);
+                    // const folderPosition = gui.addFolder('model.position');
+                    // folderPosition.add(model.position, 'x').step(0.01);
+                    // folderPosition.add(model.position, 'y').step(0.01);
+                    // folderPosition.add(model.position, 'z').step(0.01);
+                    // const cameraPosition = gui.addFolder('camera.position');
+                    // cameraPosition.add(this.camera.position, 'x').step(0.01);
+                    // cameraPosition.add(this.camera.position, 'y').step(0.01);
+                    // cameraPosition.add(this.camera.position, 'z').step(0.01);
+                    // gui.domElement.id = 'home-gl-gui';
+                    // document.body.appendChild(gui.domElement);
+
                     this.scene.add(model);
                     this.mixer = new THREE.AnimationMixer(model);
-                    // this.mixer?.clipAction(gltf.animations?.[0])?.play();
                     gltfLoaded = true;
                     this.loaded = gltfLoaded && imageLoaded;
-                    this.render();
                     if (this.loaded) {
-                        resolve();
+                        this.container.classList.remove('loading');
+                        resolve(true);
                     }
-                    this.scene.add(
-                        new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6)
-                    );
                     loadingEE.emit(
                         `progress.${LoadingSourceType.AVATAR_GLTF_DOKV}`,
                         1
@@ -52,14 +85,21 @@ export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
                 (event) => {
                     loadingEE.emit(
                         `progress.${LoadingSourceType.AVATAR_GLTF_DOKV}`,
-                        event.total ? (event.loaded / event.total) * 0.95 : 0.5
+                        Math.min(
+                            event.loaded / (event.total || 1024 * 1024 * 25),
+                            0.95
+                        )
                     );
                 }
             );
 
             const imageUrls = new Array(480).fill(0).map((_, i) => {
                 return getPublicAssetPath(
-                    `files/avatar/avatar-dokv-particle/${i + 1 + 3000}.jpg`
+                    `files/avatar/avatar-dokv-particle/${padStart(
+                        `${i + 1}`,
+                        3,
+                        '0'
+                    )}.jpg`
                 );
             });
             const imageLoader = new THREE.ImageLoader();
@@ -68,9 +108,9 @@ export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
                     this.imageDataArray = data;
                     imageLoaded = true;
                     this.loaded = gltfLoaded && imageLoaded;
-                    this.render();
                     if (this.loaded) {
-                        resolve();
+                        this.container.classList.remove('loading');
+                        resolve(true);
                     }
                     loadingEE.emit(
                         `progress.${LoadingSourceType.AVATAR_GLTF_DOKV_PARTICLE}`,
@@ -78,6 +118,11 @@ export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
                     );
                 }
             );
+        }).then(() => {
+            setTimeout(() => {
+                // 首次渲染，做个延时防止影响首屏的入场
+                this.render();
+            }, 3000);
         });
         return this.loadingPromise;
     }
