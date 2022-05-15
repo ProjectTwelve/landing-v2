@@ -84,9 +84,6 @@ export class AvatarCycle {
         this.calcBaseVector();
     }
 
-    // this.points?.rotateX(-Math.PI / 2.49);
-    // this.points?.rotateY(Math.PI / 12);
-    // this.points?.rotateZ(Math.PI * 18 / 100);
     // 获得圆环所在平面的基向量
     calcBaseVector() {
         const rotateX = -Math.PI * 40 / 100, rotateY = Math.PI * 3 / 13, rotateZ = Math.PI * - 4 / 100;
