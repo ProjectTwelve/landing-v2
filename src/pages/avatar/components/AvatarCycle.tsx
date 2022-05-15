@@ -277,7 +277,10 @@ export class AvatarCycle {
             const currentMousPos = new Vector3(this.mousePos.x, this.mousePos.y, this.mousePos.z);
             // console.log(currenPosition, currentMousPos, currenPosition.distanceTo(currenPosition));
             if(
-                // TODO： 碰撞检测的优化思路，从环上采样，将采样点按照与鼠标投影相反的方式投影回窗口坐标系，这样就能够根据指针的窗口坐标系位置得到其最合适的投影平面的Z坐标
+                /**
+                 * 目前的碰撞检测原理: 相机位置与鼠标投影位置确定一条直线
+                 * TODO： 碰撞检测的优化思路，从环上采样，将采样点按照与【鼠标(窗口坐标系)投影到世界坐标系】相反的方式投影回窗口坐标系，这样就能够根据指针的窗口坐标系位置得到其最合适的投影平面的Z坐标 
+                 * */ 
                 calculateDistance(currenPosition, this.camera.position, currentMousPos) <= this.MouseCollisionRange
             ) {
                 this.createCollisionParticles(currenPosition, new Vector3().copy(currenPosition).sub(currentMousPos), this.getAlphaByAngle(particle.currentAngle, particle.opacity + particle.opacityDelta));
@@ -314,7 +317,7 @@ export class AvatarCycle {
         if(this.points) {
             this.scene.add(this.points);
         }
-        // if(this.cube) {
+        // if(this.cube) { // debug 垂直投影方式所用的柱体
         //     this.scene.add(this.cube);
         //     this.cube.rotateX(Math.PI / 2);
         // }
