@@ -1,5 +1,7 @@
 import * as THREE from 'three';
-import {Points, PointsMaterial, BufferGeometry, Float32BufferAttribute, Vector3} from 'three';
+import {Points, PointsMaterial, BufferGeometry, Float32BufferAttribute, Vector3, Mesh} from 'three';
+import {getMousePos} from './utils/mouse';
+
 interface OrbitParticle {
     speed: number; // 轨道粒子的速度是一个弧度值，表示每一帧绕圆形旋转的弧度
     currentAngle: number; // 当前弧度数值
@@ -46,6 +48,7 @@ export class AvatarCycle {
         base1: new Vector3(1, 0, 0),
         base2: new Vector3(0, 1, 0)
     };
+    private cube?: Mesh<THREE.BoxGeometry, THREE.MeshBasicMaterial>;
 
     // 绘制圆形材质
     createCanvasMaterial(color, size) {
@@ -103,6 +106,28 @@ export class AvatarCycle {
             base2: base2.multiplyScalar(this.R)
         }
     }
+    private vec = new THREE.Vector3(); // create once and reuse
+    private mousePos: Vector3 = new THREE.Vector3(); // create once and reuse
+    onMouseMove(event) {
+        getMousePos(event, this.renderer.domElement);
+
+
+        this.vec.set(
+            ( event.clientX / this.container.clientWidth ) * 2 - 1,
+            - ( event.clientY / this.container.clientHeight ) * 2 + 1,
+            0.5 );
+
+        this.vec.unproject( this.camera );
+
+        this.vec.sub( this.camera.position ).normalize();
+
+        var distance = - this.camera.position.z / this.vec.z;
+
+        this.mousePos.copy( this.camera.position ).add( this.vec.multiplyScalar( distance ) );
+        this.cube?.position.setX(this.mousePos.x);
+        this.cube?.position.setY(this.mousePos.y);
+
+    }
 
     getCirclePlaneBaseVectorsCopy() {
         return [
@@ -110,7 +135,6 @@ export class AvatarCycle {
             this.circlePlaneBaseVectors.base2.clone(),
         ];
     }
-    
     
     getPositionByAngle(angle: number): Array<number> {
         const [ base1, base2 ] = this.getCirclePlaneBaseVectorsCopy();
@@ -167,7 +191,6 @@ export class AvatarCycle {
             this.colors.push(...this.getColorByAngle(angle, opacity));
             this.particles.push({
                 speed: Math.PI / 3200,
-                // speed: Math.PI / 3200 + Math.random() * Math.PI / 6400,
                 currentAngle: angle,
                 opacity,
             });
@@ -176,6 +199,9 @@ export class AvatarCycle {
         this.updateColor();
         // this.updateAlpha();
         this.points = new Points(this.geometry, this.POINT_MATERIAL);
+        var geometry = new THREE.BoxGeometry( .2, .2, .2 );
+        var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+        this.cube = new THREE.Mesh( geometry, material );
     }
 
     updateParticles() {
@@ -208,7 +234,6 @@ export class AvatarCycle {
         this.points?.rotateZ(Math.PI * 18 / 100);
     }
 
-
     load() {
         if (this.loaded || this.loading) {
             return;
@@ -217,6 +242,9 @@ export class AvatarCycle {
         this.initParticles();
         if(this.points) {
             this.scene.add(this.points);
+        }
+        if(this.cube) {
+            this.scene.add(this.cube);
         }
         // this.modifyCriclePosture();
         this.loaded= true;
@@ -267,7 +295,8 @@ export class AvatarCycle {
         this.observer.observe(this.container);
         this.mountContainer.appendChild(this.container);
         this.container.style.zIndex = '4';
-        this.container.style.pointerEvents = 'none';
+        this.container.addEventListener('pointermove', this.onMouseMove.bind(this));
+        // this.renderer.domElement.addEventListener('pointermove', this.onMouseMove);
+        // this.container.style.pointerEvents = 'none';
     }
-
 }
