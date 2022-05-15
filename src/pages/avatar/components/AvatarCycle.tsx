@@ -174,7 +174,7 @@ export class AvatarCycle {
     }
     
     private vec = new THREE.Vector3();
-    private mousePos: Vector3 = new THREE.Vector3(); // 鼠标投影到XY平面上的位置
+    private mousePos: Vector3 = new THREE.Vector3(); // 鼠标投影到XY平面上的坐标
     onMouseMove(event: MouseEvent) {
         this.vec.set(
             (event.clientX / this.container.clientWidth ) * 2 - 1,
@@ -277,7 +277,7 @@ export class AvatarCycle {
             const currentMousPos = new Vector3(this.mousePos.x, this.mousePos.y, this.mousePos.z);
             // console.log(currenPosition, currentMousPos, currenPosition.distanceTo(currenPosition));
             if(
-                // Math.pow(currenPosition.x - currentMousPos.x, 2) + Math.pow(currenPosition.y - currentMousPos.y, 2) < Math.pow(this.MouseCollisionRange, 2)
+                // TODO： 碰撞检测的优化思路，从环上采样，将采样点按照与鼠标投影相反的方式投影回窗口坐标系，这样就能够根据指针的窗口坐标系位置得到其最合适的投影平面的Z坐标
                 calculateDistance(currenPosition, this.camera.position, currentMousPos) <= this.MouseCollisionRange
             ) {
                 this.createCollisionParticles(currenPosition, new Vector3().copy(currenPosition).sub(currentMousPos), this.getAlphaByAngle(particle.currentAngle, particle.opacity + particle.opacityDelta));
