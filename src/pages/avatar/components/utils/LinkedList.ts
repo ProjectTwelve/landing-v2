@@ -30,14 +30,14 @@ export class LinkedList<T> {
         }
     }
 
-    forEach(interator: (node: Node<T>, prevNode: Node<T>, index: number, deleteCurrentNode: Function) => void) {
+    forEach(interator: (node: Node<T>, index: number, deleteCurrentNode: Function) => void) {
         let currentNode: Node<T> | null = this.sentry.next!
         let prevNode = this.sentry;
         let nextNode: Node<T> | null = this.sentry;
         let index = 0;
         for(;currentNode !== null;currentNode = nextNode) {
             nextNode = currentNode.next;
-            interator(currentNode, prevNode, index, () => {
+            interator(currentNode, index, () => {
                 this.deleteNode(currentNode!, prevNode);
             });
             prevNode = currentNode;

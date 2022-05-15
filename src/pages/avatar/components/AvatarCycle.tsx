@@ -84,7 +84,7 @@ export class AvatarCycle {
     updateCollisionParticles() {
         const collisionParticlePositions: number[] = [];
         const collisionParticleColors: number[] = [];
-        this.collisionPaticles.forEach( (currentNode: Node<CollisionPaticle>, prevNode: Node<CollisionPaticle>, index: Number, deleteCurrentNode) => {
+        this.collisionPaticles.forEach( (currentNode: Node<CollisionPaticle>, index: Number, deleteCurrentNode) => {
             const { value: cp } = currentNode;
             if(cp) {
                 cp.position.add(cp.velocity);
