@@ -70,7 +70,7 @@ export const Tree: React.FC = () => {
                 </div>
                 <a
                     className='tree__extra-link'
-                    href='https://github.com/ProjectTwelve/whitepaper/blob/f7d1751253bac063d8cec04be8d593a2341bd2d2/P12-Whitepaper-v0.1.pdf'
+                    href='https://p12.dev/whitepaper'
                     target='_blank'
                     onClick={() => {
                         playClickAudio();

@@ -1,11 +1,14 @@
-# P12 landing
+# Project Twelve landing site v2
 
-## 环境和规范
+Empowering MetaWorlds
 
--   环境要求：nodejs >= 12.14
--   技术栈：Typescript、React、ThreeJs、GreenSock
--   编码规范：见`.eslintrc.json`
--   CSS 规范：使用 `BEM`
+Under construction
+
+## Env & Conventions
+
+- nodejs >= 12.14
+- Coding convention: see `.eslintrc.json`
+- CSS convention: `BEM`
 
 ## Get Started
 
@@ -13,8 +16,19 @@
 2. `npm run start`
 3. http://localhost:3000 enjoy!
 
-## 打包部署
+## Deployment
 
-1. `package.json`中的 `scripts` 确认 `PUBLIC_URL` 环境变量
+1. `PUBLIC_URL` in `package.json`
 2. `npm run build`
-3. 上传 build 目录
+3. Vercel based. Direct CI / CD
+
+## Credits
+https://paveldogreat.github.io/WebGL-Fluid-Simulation/
+
+http://developer.download.nvidia.com/books/HTML/gpugems/gpugems_ch38.html
+
+https://github.com/mharrys/fluids-2d
+
+https://github.com/haxiomic/GPU-Fluid-Experiments
+
+https://iohk.io/
