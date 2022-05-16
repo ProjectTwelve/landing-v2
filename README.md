@@ -1,4 +1,4 @@
-# Project Twelve landing site v1
+# Project Twelve landing site v2
 
 Empowering MetaWorlds
 
