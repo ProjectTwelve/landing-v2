@@ -111,7 +111,7 @@ export const Home: React.FC = () => {
                     Empowering Metaworlds
                 </div>
                 <div className='app-small-text home__small-text-1'>
-                    Project Twelve, P12 for short, is a GameFi ecosystem
+                    Project Twelve, P12 in short, is a GameFi ecosystem
                     <br /> with sustainable economy
                 </div>
                 <div className='app-small-text home__small-text-2'>
