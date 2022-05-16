@@ -77,9 +77,9 @@ export class AvatarCycle {
         this.collisionPaticles.add(
             {
                 position: new Vector3().copy(position),
-                velocity: new Vector3(normalizedDirection.x, normalizedDirection.y, 0).multiplyScalar(.01),
-                opacity,
-                lifeSpan: 600,
+                velocity: new Vector3(normalizedDirection.x, normalizedDirection.y, 0).multiplyScalar(.005),
+                opacity: opacity * 0.5,
+                lifeSpan: 250,
                 age: 0, 
                 color: [1, 1, 1, 1],
             }
@@ -373,6 +373,7 @@ export class AvatarCycle {
         this.observer.observe(this.container);
         this.mountContainer.appendChild(this.container);
         this.container.style.zIndex = '4';
-        this.container.addEventListener('pointermove', this.onMouseMove.bind(this));
+        this.container.style.pointerEvents = 'none';
+        // this.container.addEventListener('pointermove', this.onMouseMove.bind(this));
     }
 }
