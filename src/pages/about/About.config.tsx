@@ -36,7 +36,7 @@ export const LOCATION_INFO = [
     },
     {
         type: 'remote',
-        name: 'Charpel Hill,NC',
+        name: 'Chapel Hill,NC',
         x: 519,
         y: 623,
         namePosition: 'right',
