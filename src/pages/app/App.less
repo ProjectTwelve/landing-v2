@@ -376,9 +376,13 @@
         .logo {
             transform: scale(0.75);
             transform-origin: left top;
+            // margin-left: env(safe-area-inset-left);
+            // margin-left: constant(safe-area-inset-left);
         }
         .nav {
-            margin-left: -8px;
+            transform: translate(-8px, 0);
+            // margin-left: env(safe-area-inset-left);
+            // margin-left: constant(safe-area-inset-left);
             top: 4%;
             &__item {
                 font-size: 12px;
