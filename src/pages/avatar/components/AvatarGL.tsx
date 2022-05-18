@@ -67,8 +67,6 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         /** 首页loading结束后，再开始loading */
         // 先只加载首个资源
         loadingEE.on('loaded', () => first(AVATAR_GL_ARRAY)?.load());
-        console.log('===== container.parentElement =====', container.parentElement);
-        container.parentElement?.addEventListener('mousemove', AVATAR_GL_CYCLE.onMouseMove.bind(AVATAR_GL_CYCLE));
 
         // 圆环加载
         AVATAR_GL_CYCLE.mount(container);
