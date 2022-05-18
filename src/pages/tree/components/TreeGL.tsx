@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { getPublicAssetPath } from '../../../utils';
+import { getPublicAssetPath, IS_MOBILE } from '../../../utils';
 import { PageType } from '../../app/App.config';
 import {
     AppContext,
@@ -29,8 +29,8 @@ export const TreeGL = (props) => {
         let loading = false;
 
         const context = canvas.getContext('2d');
-        canvas.width = 960;
-        canvas.height = 1080;
+        canvas.width = IS_MOBILE ? 284 : 960;
+        canvas.height = IS_MOBILE ? 320 : 1080;
 
         const camera = new THREE.PerspectiveCamera(40, 1, 1, 100);
         camera.position.set(5, 2, 8);
@@ -54,7 +54,9 @@ export const TreeGL = (props) => {
             container?.classList.add('loading');
             const imageUrls = new Array(480).fill(0).map((_, i) => {
                 return getPublicAssetPath(
-                    `files/tree/tree-model/${i + 1 + 1000}.jpg`
+                    `files/tree/tree-model${IS_MOBILE ? '-mobile' : ''}/${
+                        i + 1 + 1000
+                    }.jpg`
                 );
             });
             const imageLoader = new THREE.ImageLoader();

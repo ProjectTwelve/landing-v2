@@ -18,9 +18,11 @@ export const Loading: React.FC = () => {
                 duration: 0.6,
                 num: progress * 100,
                 onUpdate: function () {
-                    progressTextRef.current!.innerHTML = `${Math.floor(
-                        loadingProgressObj.num
-                    )}`;
+                    if (progressTextRef.current) {
+                        progressTextRef.current.innerHTML = `${Math.floor(
+                            loadingProgressObj.num
+                        )}`;
+                    }
                 },
             });
         };

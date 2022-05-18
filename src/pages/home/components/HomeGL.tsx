@@ -117,7 +117,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
 
         const loader = new GLTFLoader();
         loader.load(
-            getPublicAssetPath('files/home/home.glb?v051101'),
+            getPublicAssetPath('files/home/home.glb'),
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;

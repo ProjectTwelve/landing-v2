@@ -1,14 +1,14 @@
 import { padStart } from 'lodash-es';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { getPublicAssetPath } from '../../../../utils';
+import { getPublicAssetPath, IS_MOBILE } from '../../../../utils';
 import { loadingEE, LoadingSourceType } from '../../../app/App.utils';
 import { AvatarGLItemBaseWithParticle } from './base/AvatarGLItemBaseWithParticle';
 import { GUI } from 'dat.gui';
 
 export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
-    public particleCanvasWidth = 600;
-    public particleCanvasHeight = 1080;
+    public particleCanvasWidth = IS_MOBILE ? 178 : 600;
+    public particleCanvasHeight = IS_MOBILE ? 320 : 1080;
 
     public extraNode = (
         <>
@@ -37,7 +37,7 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
             let gltfLoaded = false;
             let imageLoaded = false;
             new GLTFLoader().load(
-                getPublicAssetPath('files/avatar/avatar-cartoon.glb?v051001'),
+                getPublicAssetPath('files/avatar/avatar-cartoon.glb'),
                 (gltf) => {
                     const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
                     this.camera.add(ambientLight);
@@ -78,11 +78,9 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
 
             const imageUrls = new Array(480).fill(0).map((_, i) => {
                 return getPublicAssetPath(
-                    `files/avatar/avatar-cartoon-particle/${padStart(
-                        `${i + 1}`,
-                        3,
-                        '0'
-                    )}.jpg`
+                    `files/avatar/avatar-cartoon-particle${
+                        IS_MOBILE ? '-mobile' : ''
+                    }/${padStart(`${i + 1}`, 3, '0')}.jpg`
                 );
             });
             const imageLoader = new THREE.ImageLoader();
