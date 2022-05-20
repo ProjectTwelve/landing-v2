@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import { ABOUT_PARTNERS, LOCATION_INFO } from './About.config';
 import { usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
+import { GAevent } from '../../utils';
 import gsap from 'gsap';
 
 export const About: React.FC = () => {
@@ -12,6 +13,7 @@ export const About: React.FC = () => {
     usePageVisible(PageType.About, () => {
         return {
             onVisible: () => {
+                GAevent('webview','Team-webview');
                 const tl = gsap.timeline();
                 tl.fromTo(
                     '.page-wrap-about',

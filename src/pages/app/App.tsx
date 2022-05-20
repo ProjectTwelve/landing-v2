@@ -4,6 +4,7 @@ import { playClickAudio } from '../../utils';
 import { CONTENT_PAGES, PageBadges, PageType } from './App.config';
 import './App.less';
 import { AppContext, loadingEE } from './App.utils';
+import { initGA } from '../../utils';
 
 export const App = () => {
     const [current, setCurrent] = useState(PageType.Loading);
@@ -12,6 +13,8 @@ export const App = () => {
     const [musicPlaying, setMusicPlaying] = useState(true);
 
     useEffect(() => {
+        initGA();
+
         const handleProgress = (progress) => {
             // 当前是 loading 界面 且 loading 完成
             if (progress >= 1) {
@@ -26,7 +29,8 @@ export const App = () => {
         return () => {
             loadingEE.off('progress', handleProgress);
         };
-    }, [isLoading]);
+
+    }, [isLoading, current]);
 
     const contextValue = useMemo(
         () => ({
@@ -64,6 +68,7 @@ export const App = () => {
                         );
                     })}
                 </div>
+
                 <div
                     className='logo'
                     onClick={() => {

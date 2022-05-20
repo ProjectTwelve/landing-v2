@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import { usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
 import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
+import { GAevent } from '../../utils';
 
 export const Home: React.FC = () => {
     const homeGLRef = useRef<HomeGLRef>(null);
@@ -12,6 +13,7 @@ export const Home: React.FC = () => {
     usePageVisible(PageType.Home, () => {
         return {
             onVisible: () => {
+                GAevent('webview','Vision-webview');
                 const tl = gsap.timeline();
                 tl.set('.page-wrap-home', {
                     display: 'block',

@@ -3,12 +3,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
+import { GAevent } from '../../utils';
 import './Wall.less';
 
 export const Wall: React.FC = () => {
     usePageVisible(PageType.Wall, () => {
         return {
             onVisible: () => {
+                GAevent('webview','Partners-webview');
                 const tl = gsap.timeline();
                 tl.fromTo(
                     '.page-wrap-wall',

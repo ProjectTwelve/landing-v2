@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AvatarGL, AvatarGLRef, AVATAR_GL_MAP } from './components/AvatarGL';
 import './Avatar.less';
 import { AvatarType, AvatarTypeArray } from './Avatar.config';
-import { playClickAudio } from '../../utils';
+import { playClickAudio, GAevent } from '../../utils';
 import classnames from 'classnames';
 import { usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
@@ -35,6 +35,7 @@ export const Avatar: React.FC = () => {
 
         return {
             onVisible: () => {
+                GAevent('webview','Infra-webview');
                 handleTouchUp();
                 window.addEventListener('pointerdown', handleTouchDown);
                 window.addEventListener('pointerup', handleTouchUp);
@@ -114,6 +115,7 @@ export const Avatar: React.FC = () => {
                     <div
                         className='avatar__btn avatar__btn--left'
                         onClick={() => {
+                            GAevent('event', 'Infra-swap');
                             playClickAudio();
                             handlePrev();
                         }}
@@ -121,6 +123,7 @@ export const Avatar: React.FC = () => {
                     <div
                         className='avatar__btn avatar__btn--right'
                         onClick={() => {
+                            GAevent('event', 'Infra-swap');
                             playClickAudio();
                             handleNext();
                         }}

@@ -18,7 +18,7 @@ import {
     CSS2DObject,
     CSS2DRenderer,
 } from 'three/examples/jsm/renderers/CSS2DRenderer';
-import { getPublicAssetPath, IS_MOBILE, toRadians } from '../../../utils';
+import { getPublicAssetPath, IS_MOBILE, toRadians, GAevent } from '../../../utils';
 import { gsap } from 'gsap';
 import './HomeGL.less';
 import {
@@ -117,7 +117,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
 
         const loader = new GLTFLoader();
         loader.load(
-            getPublicAssetPath('files/home/home.glb'),
+            getPublicAssetPath('files/home/home.glb?v051101'),
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
@@ -196,6 +196,18 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             const data = HOME_GL_ACTIVE_DATA[index];
             return (event) => {
                 setActivatedIndex(index);
+                if (index === 0) {
+                    GAevent('event','Vision-dragon');
+                } 
+                else if (index === 1) { 
+                    GAevent('event','Vision-cat');
+                }
+                else if (index === 2) {
+                    GAevent('event', 'Vision-car');
+                }
+                else if (index === 3) {
+                    GAevent('event', 'Vision-econ');
+                }
                 oldGroupRot = group.rotation.clone();
                 autoRotating = false;
                 camera.layers.disable(1);
