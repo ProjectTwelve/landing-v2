@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { HomeGL, HomeGLRef } from './components/HomeGL';
 import './Home.less';
 import { gsap } from 'gsap';
-import { usePageVisible, GAevent } from '../app/App.utils';
+import { usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
 import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
+import { GAevent } from '../../utils';
 
 export const Home: React.FC = () => {
     const homeGLRef = useRef<HomeGLRef>(null);

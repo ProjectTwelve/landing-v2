@@ -18,7 +18,7 @@ import {
     CSS2DObject,
     CSS2DRenderer,
 } from 'three/examples/jsm/renderers/CSS2DRenderer';
-import { getPublicAssetPath, IS_MOBILE, toRadians } from '../../../utils';
+import { getPublicAssetPath, IS_MOBILE, toRadians, GAevent } from '../../../utils';
 import { gsap } from 'gsap';
 import './HomeGL.less';
 import {
@@ -30,7 +30,6 @@ import { PageType } from '../../app/App.config';
 import { HOME_GL_ACTIVE_DATA } from './HomeGL.config';
 import classnames from 'classnames';
 import { GUI } from 'dat.gui';
-import { GAevent } from '../../app/App.utils';
 
 export interface HomeGLRef {
     group?: THREE.Group;

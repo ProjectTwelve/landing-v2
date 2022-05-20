@@ -1,8 +1,8 @@
 import gsap from 'gsap';
 import React, { useEffect, useRef, useState } from 'react';
-import { playClickAudio } from '../../utils';
+import { playClickAudio, GAevent } from '../../utils';
 import { PageType } from '../app/App.config';
-import { usePageVisible, GAevent } from '../app/App.utils';
+import { usePageVisible } from '../app/App.utils';
 import { TreeGL } from './components/TreeGL';
 import './Tree.less';
 

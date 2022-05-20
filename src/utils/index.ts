@@ -1,6 +1,7 @@
 import gsap from 'gsap';
 import { Howl } from 'howler';
 import { throttle } from 'lodash-es';
+import ReactGA from 'react-ga4';
 
 /** hack raf */
 const vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -60,4 +61,55 @@ export function addResizeHandle(fn: Function) {
     setTimeout(() => {
         fn();
     }, 100);
+}
+
+/** GA **/
+
+const GAtiming = {
+    startTime : -1,
+    endTime : -1,
+    prevView: '',
+    calcTiming: function(webview: string) {
+        let diff = 0;
+        if (this.startTime === -1) { // begin timing
+            this.startTime = new Date().getTime(); 
+        }
+        else if (this.prevView !== webview) { // changed webview
+            this.endTime = new Date().getTime(); 
+
+            diff = this.endTime -  this.startTime;
+            GAevent("timing", this.prevView.split('-')[0] + '-timing', diff);
+            
+            this.startTime = this.endTime;
+        }
+        this.prevView = webview;
+    }
+}
+
+export const initGA = () => {
+    const GA_ID : string = (process.env.REACT_APP_GOOGLE_ANALYTICS_ID as string);
+    // initialize ga
+    ReactGA.initialize(GA_ID);
+}
+
+export const GAevent = (category: string, action:string, value=-1) => {
+    // event tracking
+    if (value === -1) {
+        ReactGA.event({
+            category: category,
+            action: action
+        });
+    }
+    else {
+        ReactGA.event({
+            category: category,
+            action: action,
+            value: value
+        });
+    }
+
+    if (category === "webview") {
+        GAtiming.calcTiming(action);
+    }
+    
 }

@@ -3,7 +3,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { playClickAudio } from '../../utils';
 import { CONTENT_PAGES, PageBadges, PageType } from './App.config';
 import './App.less';
-import { AppContext, initGA, loadingEE } from './App.utils';
+import { AppContext, loadingEE } from './App.utils';
+import { initGA } from '../../utils';
 
 export const App = () => {
     const [current, setCurrent] = useState(PageType.Loading);

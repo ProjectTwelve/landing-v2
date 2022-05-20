@@ -2,13 +2,12 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AvatarGL, AvatarGLRef, AVATAR_GL_MAP } from './components/AvatarGL';
 import './Avatar.less';
 import { AvatarType, AvatarTypeArray } from './Avatar.config';
-import { playClickAudio } from '../../utils';
+import { playClickAudio, GAevent } from '../../utils';
 import classnames from 'classnames';
 import { usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
 import gsap from 'gsap';
 import { first } from 'lodash-es';
-import { GAevent } from '../app/App.utils';
 
 export const Avatar: React.FC = () => {
     const avatarGLRef = useRef<AvatarGLRef>(null);

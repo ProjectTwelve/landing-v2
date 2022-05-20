@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { LoadingGL } from './components/LoadingGL';
-import { AppContext, GAevent, loadingEE, usePageVisible } from '../app/App.utils';
+import { AppContext, loadingEE, usePageVisible } from '../app/App.utils';
 import './Loading.less';
 import { PageType } from '../app/App.config';
 import gsap from 'gsap';
+import { GAevent } from '../../utils';
 
 const loadingProgressObj = { num: 0 };
 

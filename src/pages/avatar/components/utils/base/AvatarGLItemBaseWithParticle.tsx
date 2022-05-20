@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 import { AvatarGLItemBase } from './AvatarGLItemBase';
-import { GAevent } from '../../../../app/App.utils';
+import { GAevent } from '../../../../../utils';
 
 export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     public particleCanvasWidth = 1920;

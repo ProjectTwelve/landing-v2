@@ -6,7 +6,7 @@ import { Poster } from '../poster/Poster';
 import { About } from '../about/About';
 import { Loading } from '../loading/Loading';
 import { Wall } from '../wall/Wall';
-import { GAevent } from './App.utils';
+import { GAevent } from '../../utils';
 
 export enum PageType {
     Loading = 'loading',
