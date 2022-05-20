@@ -6,6 +6,7 @@ import { Poster } from '../poster/Poster';
 import { About } from '../about/About';
 import { Loading } from '../loading/Loading';
 import { Wall } from '../wall/Wall';
+import { GAevent } from './App.utils';
 
 export enum PageType {
     Loading = 'loading',
@@ -80,6 +81,7 @@ export const CONTENT_PAGES = [
                         target='_blank'
                         className='nav-community__item nav-community__item--twitter'
                         rel='noreferrer'
+                        onClick = {() => GAevent('event', 'Soc-twi')}
                     >
                         <i></i>
                         Twitter
@@ -89,6 +91,7 @@ export const CONTENT_PAGES = [
                         target='_blank'
                         className='nav-community__item nav-community__item--discord'
                         rel='noreferrer'
+                        onClick = {() => GAevent('event','Soc-discord')}
                     >
                         <i></i>
                         Discord
@@ -98,6 +101,7 @@ export const CONTENT_PAGES = [
                         target='_blank'
                         className='nav-community__item nav-community__item--telegram'
                         rel='noreferrer'
+                        onClick = {() => GAevent('event','Soc-tele')}
                     >
                         <i></i>
                         Telegram

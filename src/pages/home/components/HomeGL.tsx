@@ -30,6 +30,7 @@ import { PageType } from '../../app/App.config';
 import { HOME_GL_ACTIVE_DATA } from './HomeGL.config';
 import classnames from 'classnames';
 import { GUI } from 'dat.gui';
+import { GAevent } from '../../app/App.utils';
 
 export interface HomeGLRef {
     group?: THREE.Group;
@@ -117,7 +118,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
 
         const loader = new GLTFLoader();
         loader.load(
-            getPublicAssetPath('files/home/home.glb'),
+            getPublicAssetPath('files/home/home.glb?v051101'),
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
@@ -196,6 +197,18 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             const data = HOME_GL_ACTIVE_DATA[index];
             return (event) => {
                 setActivatedIndex(index);
+                if (index === 0) {
+                    GAevent('event','Vision-dragon');
+                } 
+                else if (index === 1) { 
+                    GAevent('event','Vision-cat');
+                }
+                else if (index === 2) {
+                    GAevent('event', 'Vision-car');
+                }
+                else if (index === 3) {
+                    GAevent('event', 'Vision-econ');
+                }
                 oldGroupRot = group.rotation.clone();
                 autoRotating = false;
                 camera.layers.disable(1);

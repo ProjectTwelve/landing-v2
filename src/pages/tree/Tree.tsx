@@ -2,7 +2,7 @@ import gsap from 'gsap';
 import React, { useEffect, useRef, useState } from 'react';
 import { playClickAudio } from '../../utils';
 import { PageType } from '../app/App.config';
-import { usePageVisible } from '../app/App.utils';
+import { usePageVisible, GAevent } from '../app/App.utils';
 import { TreeGL } from './components/TreeGL';
 import './Tree.less';
 
@@ -10,6 +10,7 @@ export const Tree: React.FC = () => {
     usePageVisible(PageType.Tree, () => {
         return {
             onVisible: () => {
+                GAevent('webview','Econs-webview');
                 const tl = gsap.timeline();
                 tl.fromTo(
                     '.page-wrap-tree',
@@ -73,6 +74,7 @@ export const Tree: React.FC = () => {
                     href='https://p12.dev/whitepaper'
                     target='_blank'
                     onClick={() => {
+                        GAevent('event','Econs-Whitepaper');
                         playClickAudio();
                     }}
                 ></a>

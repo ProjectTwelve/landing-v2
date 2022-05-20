@@ -8,6 +8,7 @@ import { usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
 import gsap from 'gsap';
 import { first } from 'lodash-es';
+import { GAevent } from '../app/App.utils';
 
 export const Avatar: React.FC = () => {
     const avatarGLRef = useRef<AvatarGLRef>(null);
@@ -35,6 +36,7 @@ export const Avatar: React.FC = () => {
 
         return {
             onVisible: () => {
+                GAevent('webview','Infra-webview');
                 handleTouchUp();
                 window.addEventListener('pointerdown', handleTouchDown);
                 window.addEventListener('pointerup', handleTouchUp);
@@ -114,6 +116,7 @@ export const Avatar: React.FC = () => {
                     <div
                         className='avatar__btn avatar__btn--left'
                         onClick={() => {
+                            GAevent('event', 'Infra-swap');
                             playClickAudio();
                             handlePrev();
                         }}
@@ -121,6 +124,7 @@ export const Avatar: React.FC = () => {
                     <div
                         className='avatar__btn avatar__btn--right'
                         onClick={() => {
+                            GAevent('event', 'Infra-swap');
                             playClickAudio();
                             handleNext();
                         }}

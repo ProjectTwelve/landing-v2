@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { LoadingGL } from './components/LoadingGL';
-import { AppContext, loadingEE, usePageVisible } from '../app/App.utils';
+import { AppContext, GAevent, loadingEE, usePageVisible } from '../app/App.utils';
 import './Loading.less';
 import { PageType } from '../app/App.config';
 import gsap from 'gsap';
@@ -18,17 +18,16 @@ export const Loading: React.FC = () => {
                 duration: 0.6,
                 num: progress * 100,
                 onUpdate: function () {
-                    if (progressTextRef.current) {
-                        progressTextRef.current.innerHTML = `${Math.floor(
-                            loadingProgressObj.num
-                        )}`;
-                    }
+                    progressTextRef.current!.innerHTML = `${Math.floor(
+                        loadingProgressObj.num
+                    )}`;
                 },
             });
         };
 
         return {
             onVisible: () => {
+                GAevent('webview','loadin-webview');
                 loadingEE.on('progress', handleProgress);
                 gsap.set('.page-wrap-loading', {
                     display: 'block',
@@ -75,17 +74,18 @@ export const Loading: React.FC = () => {
                 />
             </div>
             <div className='loading__links'>
-                <a
+                <a  
                     className='loading__icon-link'
                     target='_blank'
                     href='https://t.me/project_twelve'
                     rel='noreferrer'
                 >
-                    <svg
+                    <svg 
                         className='telegram-icon'
                         viewBox='0 0 1024 1024'
                         version='1.1'
                         xmlns='http://www.w3.org/2000/svg'
+                        onClick = {() => GAevent('event', 'loadin-tele')}
                     >
                         <path
                             d='M417.28 795.733333 429.226667 615.253333 756.906667 320C771.413333 306.773333 753.92 300.373333 734.72 311.893333L330.24 567.466667 155.306667 512C117.76 501.333333 117.333333 475.306667 163.84 456.533333L845.226667 193.706667C876.373333 179.626667 906.24 201.386667 894.293333 249.173333L778.24 795.733333C770.133333 834.56 746.666667 843.946667 714.24 826.026667L537.6 695.466667 452.693333 777.813333C442.88 787.626667 434.773333 795.733333 417.28 795.733333Z'
@@ -97,6 +97,7 @@ export const Loading: React.FC = () => {
                     className='loading__icon-link'
                     target='_blank'
                     href='https://twitter.com/_p12_'
+                    onClick = {() => GAevent('event','loadin-twi')}
                 >
                     <svg
                         className='twitter-icon'
@@ -111,6 +112,7 @@ export const Loading: React.FC = () => {
                     target='_blank'
                     href='https://discord.gg/EMrbsZPbxs'
                     rel='noreferrer'
+                    onClick = {() => GAevent('event', 'loadin-discord')}
                 >
                     <svg
                         className='discord-icon'

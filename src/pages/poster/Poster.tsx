@@ -6,7 +6,7 @@ import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/effect-fade';
 import './Poster.less';
-import { loadingEE, LoadingSourceType, usePageVisible } from '../app/App.utils';
+import { loadingEE, LoadingSourceType, usePageVisible, GAevent } from '../app/App.utils';
 import { PageType } from '../app/App.config';
 import gsap from 'gsap';
 import { POSTER_FEATURES } from './Poster.config';
@@ -40,6 +40,7 @@ export const Poster: React.FC = () => {
         }, 1000);
         return {
             onVisible: () => {
+                GAevent('webview','Editor-webview');
                 gsap.set('.page-wrap-poster', {
                     visibility: 'visible',
                 });

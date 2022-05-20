@@ -1,5 +1,6 @@
 import { gsap } from 'gsap';
 import { AvatarGLItemBase } from './AvatarGLItemBase';
+import { GAevent } from '../../../../app/App.utils';
 
 export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     public particleCanvasWidth = 1920;
@@ -34,6 +35,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
             downY = e.clientY;
         });
         this.container.addEventListener('pointerup', (e) => {
+            GAevent('event','Infra-switch');
             if (
                 downTime &&
                 +new Date() - downTime < 300 &&
