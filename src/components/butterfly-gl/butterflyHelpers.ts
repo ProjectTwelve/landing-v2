@@ -187,6 +187,21 @@ const startParamDrift = (defaultProperties, properties) => {
                 break;
             default:
         }
+        /**
+         * We implement here 'revert to default' mechanism, when param goes too extreme
+         */
+        // not needed for colorparams
+        if (colorParams.includes(param)) {
+            continue;
+        }
+        // when param goes too extreme, revert at 80% chance
+        if (Math.random() < 0.8) {
+            if (Math.abs(properties[param]) > Math.abs(defaultProperties[param] * 64)) {
+                properties[param] = defaultProperties[param] * 4;
+            } else if (Math.abs(properties[param]) < Math.abs(defaultProperties[param] / 64)) {
+                properties[param] = defaultProperties[param] / 4;
+            }
+        }
     }
     const presentValues = params.reduce((prev, cur) => {
         prev[cur] = properties[cur];
