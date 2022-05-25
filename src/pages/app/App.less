@@ -205,6 +205,38 @@
             }
         }
     }
+
+    &__mouse-tips {
+        .f-alignImg2x('home/mouse-tips@2x.png');
+        transform-origin: bottom center;
+        transform: scale(0.4);
+        top: auto;
+        margin-top: 0;
+        z-index: 20;
+        bottom: 30px;
+        animation: mouseupdownpc 0.5s infinite alternate;
+        cursor: pointer;
+    }
+}
+
+@keyframes mouseupdownpc {
+    0% {
+        transform: scale(0.4) translateY(10px);
+    }
+
+    100% {
+        transform: scale(0.4) translateY(-10px);
+    }
+}
+
+@keyframes mouseupdownmobile {
+    0% {
+        transform: scale(0.3) translateY(10px);
+    }
+
+    100% {
+        transform: scale(0.3) translateY(-10px);
+    }
 }
 
 .nav-community {
@@ -398,6 +430,13 @@
         .footer {
             transform: scale(0.75);
             transform-origin: right bottom;
+        }
+
+        &__mouse-tips {
+            // transform: scale(0.75);
+            // display: none;
+            animation: mouseupdownmobile 0.5s infinite alternate;
+            bottom: 20px;
         }
     }
 
