@@ -37,6 +37,27 @@
     .butterfly-canvas-home {
         opacity: 0.2;
     }
+    &__mouse-tips {
+        .f-alignImg2x('home/mouse-tips@2x.png');
+        transform-origin: bottom center;
+        transform: scale(0.4);
+        top: auto;
+        margin-top: 0;
+        z-index: 20;
+        bottom: 30px;
+        animation: mouseupdown 0.5s infinite alternate;
+        cursor: pointer;
+    }
+}
+
+@keyframes mouseupdown {
+    0% {
+        transform: scale(0.4) translateY(10px);
+    }
+
+    100% {
+        transform: scale(0.4) translateY(-10px);
+    }
 }
 
 .body-mobile {
@@ -46,6 +67,9 @@
             padding-left: constant(safe-area-inset-left);
             transform: translate(0, -50%) scale(0.6);
             transform-origin: left center;
+        }
+        &__mouse-tips {
+            display: none;
         }
     }
 }

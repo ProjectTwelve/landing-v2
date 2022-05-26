@@ -2,18 +2,19 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { HomeGL, HomeGLRef } from './components/HomeGL';
 import './Home.less';
 import { gsap } from 'gsap';
-import { usePageVisible } from '../app/App.utils';
+import { AppContext, usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
 import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 import { GAevent } from '../../utils';
 
 export const Home: React.FC = () => {
     const homeGLRef = useRef<HomeGLRef>(null);
+    const setVisiblePage = useContext(AppContext)?.setVisiblePage;
 
     usePageVisible(PageType.Home, () => {
         return {
             onVisible: () => {
-                GAevent('webview','Vision-webview');
+                GAevent('webview', 'Vision-webview');
                 const tl = gsap.timeline();
                 tl.set('.page-wrap-home', {
                     display: 'block',
@@ -121,6 +122,10 @@ export const Home: React.FC = () => {
                     <br /> and the Econs
                 </div>
             </div>
+            <div
+                className='home__mouse-tips'
+                onClick={() => setVisiblePage?.(PageType.Poster)}
+            ></div>
         </div>
     );
 };
