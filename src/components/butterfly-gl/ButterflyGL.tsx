@@ -164,7 +164,7 @@ const ButterflyGLComponent = (props: ButterflyGLProps) => {
 };
 
 export const ButterflyGL = (props: ButterflyGLProps) => {
-    if (IS_MOBILE || !window.hpgButterfly) {
+    if (!window.hpgButterfly) {
         return null;
     }
     return <ButterflyGLComponent {...props} />;
