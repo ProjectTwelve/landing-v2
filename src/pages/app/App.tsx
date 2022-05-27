@@ -1,16 +1,21 @@
 import classnames from 'classnames';
 import React, { useEffect, useMemo, useState } from 'react';
-import { playClickAudio } from '../../utils';
+import { IS_MOBILE, playClickAudio } from '../../utils';
 import { CONTENT_PAGES, PageBadges, PageType } from './App.config';
 import './App.less';
 import { AppContext, loadingEE } from './App.utils';
 import { initGA } from '../../utils';
+
+const pageTypes = CONTENT_PAGES.filter(
+    (v) => v.Content && v.type !== PageType.Loading
+).map((v) => v.type);
 
 export const App = () => {
     const [current, setCurrent] = useState(PageType.Loading);
     // const [current, setCurrent] = useState(PageType.Wall);
     const isLoading = current === PageType.Loading;
     const [musicPlaying, setMusicPlaying] = useState(true);
+    const nextPageType = getNextPageType();
 
     useEffect(() => {
         initGA();
@@ -29,7 +34,6 @@ export const App = () => {
         return () => {
             loadingEE.off('progress', handleProgress);
         };
-
     }, [isLoading, current]);
 
     const contextValue = useMemo(
@@ -134,6 +138,20 @@ export const App = () => {
                     <i className='footer__audio-item'></i>
                 </div> */}
                 </div>
+                {/* pc 端只在第一页展示 */}
+                {!IS_MOBILE && current === PageType.Home && (
+                    <div
+                        className='app__mouse-tips'
+                        onClick={() => nextPageType && setCurrent(nextPageType)}
+                    ></div>
+                )}
+                {/* 手机端一直展示 */}
+                {IS_MOBILE && nextPageType && (
+                    <div
+                        className='app__mouse-tips'
+                        onClick={() => setCurrent(nextPageType)}
+                    ></div>
+                )}
             </div>
         </AppContext.Provider>
     );
@@ -154,15 +172,10 @@ export const App = () => {
         }
 
         let newPage: PageType | null = null;
-        const pages = CONTENT_PAGES.filter(
-            (v) => v.Content && v.type !== PageType.Loading
-        ).map((v) => v.type);
-        let index = pages.indexOf(current) || 0;
         if (e.deltaY <= 0) {
             if (document.body.scrollTop <= 0) {
                 // 滚动到达顶部了，切换至上一页
-                index = index - 1;
-                // index = (index - 1 + pages.length) % pages.length;
+                newPage = getPrevPageType();
             }
         } else {
             const rootDom = document.getElementById('root');
@@ -173,12 +186,19 @@ export const App = () => {
                     rootDom.clientHeight
             ) {
                 // 滚动到达底部了
-                index = index + 1;
-                // index = (index + 1 + pages.length) % pages.length;
+                newPage = getNextPageType();
             }
         }
-        newPage = pages[index];
         if (!newPage || newPage === current) return;
         setCurrent(newPage);
+    }
+
+    function getPrevPageType() {
+        const index = pageTypes.indexOf(current) || 0;
+        return pageTypes[index - 1] || null;
+    }
+    function getNextPageType() {
+        const index = pageTypes.indexOf(current) || 0;
+        return pageTypes[index + 1] || null;
     }
 };

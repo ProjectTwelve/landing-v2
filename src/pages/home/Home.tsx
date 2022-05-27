@@ -9,7 +9,6 @@ import { GAevent } from '../../utils';
 
 export const Home: React.FC = () => {
     const homeGLRef = useRef<HomeGLRef>(null);
-    const setVisiblePage = useContext(AppContext)?.setVisiblePage;
 
     usePageVisible(PageType.Home, () => {
         return {
@@ -122,10 +121,6 @@ export const Home: React.FC = () => {
                     <br /> and the Econs
                 </div>
             </div>
-            <div
-                className='home__mouse-tips'
-                onClick={() => setVisiblePage?.(PageType.Poster)}
-            ></div>
         </div>
     );
 };
