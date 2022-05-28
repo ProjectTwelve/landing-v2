@@ -12,18 +12,23 @@
     .gl-pointer {
         .f-hover-opa();
         cursor: pointer;
-        width: 22px;
-        height: 22px;
-        background: #fff;
-        border-radius: 50%;
+        width: 53px;
+        height: 53px;
+        position: absolute;
 
-        &::after {
+        &-inner {
             .f-pseudo;
-            content: '';
             background: #fff;
-            opacity: 0.8;
-            animation: glpointer 2s infinite;
             border-radius: 50%;
+
+            &::after {
+                .f-pseudo;
+                content: '';
+                background: #fff;
+                opacity: 0.8;
+                animation: glpointer 2s infinite;
+                border-radius: 50%;
+            }
         }
     }
 }
