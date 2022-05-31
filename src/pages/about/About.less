@@ -253,3 +253,26 @@
         }
     }
 }
+
+
+/**  小屏幕适配 */
+@media only screen and (max-width: 1550px) {
+    .body-pc {
+        .about {
+            &__info {
+                transform: scale(0.85);
+                transform-origin: center 20%;
+            }
+        }
+    }
+}
+@media only screen and (max-width: 1350px) {
+    .body-pc {
+        .about {
+            &__info {
+                transform: scale(0.73);
+                transform-origin: center 20%;
+            }
+        }
+    }
+}
