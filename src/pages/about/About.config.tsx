@@ -84,6 +84,13 @@ export const LOCATION_INFO = [
         namePosition: 'left',
     },
     {
+        type: 'presence',
+        name: 'Seoul',
+        x: 1625,
+        y: 699,
+        namePosition: 'left',
+    },
+    {
         type: 'origin',
         img: require('../../assets/about/origin-poland.png'),
         name: 'Poland',
@@ -111,7 +118,7 @@ export const LOCATION_INFO = [
         type: 'origin',
         img: require('../../assets/about/origin-korea.png'),
         name: 'Korea',
-        x: 1625,
+        x: 1640,
         y: 699,
         namePosition: 'none',
     },
