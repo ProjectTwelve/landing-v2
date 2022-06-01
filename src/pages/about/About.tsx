@@ -143,12 +143,12 @@ export const About: React.FC = () => {
             </div>
             <div className='about__helper'>
                 <div className='about__helper-item'>
-                    <i className='about__dot about__dot--office'></i>
-                    Office
+                    <i className='about__dot about__dot--headquarter'></i>
+                    Headquarters
                 </div>
                 <div className='about__helper-item'>
-                    <i className='about__dot about__dot--remote'></i>
-                    Remote
+                    <i className='about__dot about__dot--presence'></i>
+                    Presence
                 </div>
                 <div className='about__helper-item'>
                     <img

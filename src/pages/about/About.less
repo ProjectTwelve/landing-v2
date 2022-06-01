@@ -41,7 +41,7 @@
             opacity: 0.8;
             &--left {
                 right: 16px;
-                &.about__info-name--office {
+                &.about__info-name--headquarter {
                     right: 22px;
                 }
                 &.about__info-name--origin {
@@ -50,7 +50,7 @@
             }
             &--right {
                 left: 16px;
-                &.about__info-name--office {
+                &.about__info-name--headquarter {
                     left: 22px;
                 }
                 &.about__info-name--origin {
@@ -78,11 +78,11 @@
             color: rgba(255, 255, 255, 0.8);
             margin-top: 22px;
 
-            .about__dot--remote {
-                margin-right: 10px;
+            .about__dot--presence {
+                margin-right: 18px;
             }
-            .about__dot--office {
-                margin-right: 15px;
+            .about__dot--headquarter {
+                margin-right: 20px;
             }
             .about__dot--origin {
                 width: 20px;
@@ -97,13 +97,13 @@
         position: relative;
         border-radius: 50%;
 
-        &--remote {
+        &--presence {
             width: 11px;
             height: 11px;
             background: #1ee3ff;
         }
 
-        &--office {
+        &--headquarter {
             width: 10px;
             height: 10px;
             background: #2372ff;
@@ -138,6 +138,7 @@
         left: 0;
         bottom: (58 / @designHeight * 100%);
         z-index: 10;
+
         &-dot {
             margin: 0 22px;
             .bgFull('about/partner-dot.png');
