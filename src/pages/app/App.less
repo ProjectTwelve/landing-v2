@@ -161,6 +161,7 @@
 
         &__info {
             .bgFull('app/footer-info.png');
+            transform: scale(0.87);
         }
 
         &__audio {
@@ -207,7 +208,7 @@
     }
 
     &__mouse-tips {
-        .f-alignImg2x('home/mouse-tips@2x.png');
+        .f-alignImg2x('app/mouse-tips-pc@2x.png');
         transform-origin: bottom center;
         transform: scale(0.4);
         top: auto;
@@ -245,7 +246,7 @@
     margin-top: 6px;
     margin-left: -20px;
     top: 100%;
-    background: rgba(70, 69, 69, 0.8);
+    background: rgba(20, 20, 20, 0.75);
     overflow: hidden;
     box-sizing: border-box;
     height: 0;
@@ -433,8 +434,7 @@
         }
 
         &__mouse-tips {
-            // transform: scale(0.75);
-            // display: none;
+            .bg('app/mouse-tips-mobile@2x.png');
             animation: mouseupdownmobile 0.5s infinite alternate;
             bottom: 20px;
         }

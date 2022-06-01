@@ -30,6 +30,7 @@ import { PageType } from '../../app/App.config';
 import { HOME_GL_ACTIVE_DATA } from './HomeGL.config';
 import classnames from 'classnames';
 import { GUI } from 'dat.gui';
+import { Vector3 } from 'three';
 
 export interface HomeGLRef {
     group?: THREE.Group;
@@ -238,9 +239,12 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             };
         }
 
-        const pointersRemoveHandle = HOME_GL_ACTIVE_DATA.map((p, index) => {
+        const pointersData = HOME_GL_ACTIVE_DATA.map((p, index) => {
             const btn = document.createElement('div');
             btn.className = 'gl-pointer';
+            const btnInner = document.createElement('div');
+            btnInner.className = 'gl-pointer-inner';
+            btn.appendChild(btnInner);
             const label = new CSS2DObject(btn);
             label.position.set(p.position.x, p.position.y, p.position.z);
 
@@ -254,8 +258,8 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
 
             const handle = getHandleMouseClick(index);
             btn.addEventListener('mousedown', handle);
-            return () => {
-                btn.removeEventListener('mousedown', handle);
+            return {
+                label, btn, btnInner
             };
         });
 
@@ -333,7 +337,16 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
 
             renderer.render(scene, camera);
             labelRenderer.render(scene, camera);
+
             // gui.updateDisplay();
+            // 更新触摸点的大小样式
+            pointersData.forEach(({ label, btnInner }, i) => {
+                const worldPos = new Vector3();
+                label.getWorldPosition(worldPos);
+                const distance = worldPos.distanceTo(camera.position);
+                // console.log('distance', i, 1 / distance);
+                gsap.set(btnInner, { scale: 1 / distance });
+            });
         }
 
         function animate() {
@@ -373,7 +386,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             },
             onDestroy: () => {
                 observer.disconnect();
-                pointersRemoveHandle.forEach((removeHandle) => removeHandle());
                 labelRenderer.domElement.removeEventListener(
                     'pointerup',
                     handleResetCamera

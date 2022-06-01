@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { PageType } from '../../pages/app/App.config';
 import { usePageVisible } from '../../pages/app/App.utils';
 import butterflyHelpers from './butterflyHelpers';
+import ResizeObserver from 'resize-observer-polyfill';
 import './ButterflyGL.less';
 import { IS_MOBILE } from '../../utils';
 
@@ -60,7 +61,10 @@ const ButterflyGLComponent = (props: ButterflyGLProps) => {
         };
         const onResize = () => {
             // resize the web canvas to the screen size
-            hpgButterfly.resize(window.innerWidth, window.innerHeight);
+            // hpgButterfly.resize(window.innerWidth, window.innerHeight);
+            if (container.offsetWidth && container.offsetHeight) {
+                hpgButterfly.resize(container.offsetWidth, container.offsetHeight);
+            }
         };
         const loop = () => {
             // 性能优化：只在 butterfly 显示时调用
@@ -98,7 +102,6 @@ const ButterflyGLComponent = (props: ButterflyGLProps) => {
                 butterflyHelpers.getTouchBound(onUp, touchEvents, container)
             );
             container!.addEventListener('click', onClick);
-            window.addEventListener('resize', onResize);
             onResize();
 
             properties = hpgButterfly.properties;
@@ -140,6 +143,10 @@ const ButterflyGLComponent = (props: ButterflyGLProps) => {
             clearInterval(intervalId);
             cancelAnimationFrame(frameId);
         };
+
+        const observer = new ResizeObserver(onResize);
+        observer.observe(container);
+
         return {
             onVisible: () => {
                 onVisible();
@@ -148,6 +155,7 @@ const ButterflyGLComponent = (props: ButterflyGLProps) => {
                 onHide();
             },
             onDestroy: () => {
+                observer.disconnect();
                 window.removeEventListener('resize', onResize);
             },
         };

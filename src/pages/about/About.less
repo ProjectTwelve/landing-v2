@@ -21,8 +21,7 @@
 
     &__info {
         .f-align(2018px, 1306px);
-        .bg('about/info@0.5x.png');
-        // .bg('about/info@2x.png');
+        .bg('about/info@2x.png');
         background-size: contain;
 
         // info位置
@@ -241,6 +240,7 @@
             height: 70px;
         }
         &__info {
+            .bg('about/info@0.5x.png');
             transform: translate(1%, -5%) scale(0.42);
             transform-origin: center center;
         }
@@ -251,6 +251,29 @@
         }
         &__partner {
             transform: scale(0.6);
+        }
+    }
+}
+
+
+/**  小屏幕适配 */
+@media only screen and (max-width: 1550px) {
+    .body-pc {
+        .about {
+            &__info {
+                transform: scale(0.85);
+                transform-origin: center 20%;
+            }
+        }
+    }
+}
+@media only screen and (max-width: 1350px) {
+    .body-pc {
+        .about {
+            &__info {
+                transform: scale(0.73);
+                transform-origin: center 20%;
+            }
         }
     }
 }
