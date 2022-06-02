@@ -16,9 +16,14 @@ export const App = () => {
     const isLoading = current === PageType.Loading;
     const [musicPlaying, setMusicPlaying] = useState(true);
     const nextPageType = getNextPageType();
+    const [pulseText, setPulseText] = useState('pulse');
 
     useEffect(() => {
         initGA();
+
+        if (pulseText !== localStorage['pulse-state']) {
+            setPulse();
+        }
 
         const handleProgress = (progress) => {
             // 当前是 loading 界面 且 loading 完成
@@ -34,7 +39,7 @@ export const App = () => {
         return () => {
             loadingEE.off('progress', handleProgress);
         };
-    }, [isLoading, current]);
+    }, [isLoading, current, pulseText, localStorage]);
 
     const contextValue = useMemo(
         () => ({
@@ -122,7 +127,10 @@ export const App = () => {
                         ))}
                     </div>
                 )}
-                <div className='coming-btn'></div>
+                <div className='coming-wrap'>
+                    <div className='coming-info'></div>
+                    <div className={'coming-btn ' + pulseText} onMouseEnter={() => setPulse() }></div>
+                </div>
                 <div className='footer'>
                     <div className='footer__info'></div>
                     {/* <div
@@ -200,5 +208,17 @@ export const App = () => {
     function getNextPageType() {
         const index = pageTypes.indexOf(current) || 0;
         return pageTypes[index + 1] || null;
+    }
+
+    function setPulse() {
+        if (localStorage.getItem('pulse-state') === null) {
+            localStorage['pulse-state'] = 'pulse';
+        }
+        else {
+            localStorage['pulse-state'] = '';
+        }
+        setPulseText(localStorage['pulse-state']);
+        // localStorage.removeItem('pulse-state'); 
+        // for tests
     }
 };
