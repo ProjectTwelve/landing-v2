@@ -139,15 +139,39 @@
         }
     }
 
-    .coming-btn {
+    .coming-wrap {
+        z-index: 99;
+        display:flex;
+        align-items:center;
         position: absolute;
-        .bgFull2x('app/coming-btn@2x.png');
         top: (45 / @designHeight * 100%);
         right: (40 / @designWidth * 100%);
-        z-index: 99;
-        cursor: not-allowed;
-        .f-hover-opa;
-        transform: scale(0.85);
+        transform:scale(0.87);  
+
+        .coming-info {
+            .bgFull2x('app/coming-info@2x.png');
+            color: #fff;
+            z-index: 99;
+            margin-right:28px;
+        }
+
+        .coming-btn {
+            z-index: 99;
+            .bgFull2x('app/coming-btn-ongoing@2x.png');
+            cursor: not-allowed;
+
+            .f-hover-opa;
+
+            @keyframes pulse {
+                50% {
+                    transform:scale(0.95);
+                }
+            }
+
+            &.pulse {
+                animation:pulse 1s ease infinite;
+            }
+        }
     }
 
     .footer {
@@ -440,7 +464,7 @@
         }
     }
 
-    .coming-btn {
+    .coming-wrap {
         display: none;
     }
 }
