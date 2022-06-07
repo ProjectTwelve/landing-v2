@@ -26,7 +26,7 @@ export function sleep(ms: number) {
 }
 
 export function getPublicAssetPath(path: string) {
-    return `${process.env.PUBLIC_URL}/${path}`;
+    return `${process.env.REACT_APP_CDN_PREFIX}/${path}`;
 }
 
 const clickSound = new Howl({
