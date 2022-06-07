@@ -3,7 +3,7 @@ name: S3 Sync
 on:
   push:
     branches: [ "main" ]
-    # paths: [ "public/files/**" ]
+    paths: [ "public/files/**" ]
 
 jobs:
   s3-sync:
