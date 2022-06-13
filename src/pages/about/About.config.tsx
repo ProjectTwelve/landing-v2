@@ -37,8 +37,8 @@ export const LOCATION_INFO = [
     {
         type: 'presence',
         name: 'Chapel Hill,NC',
-        x: 519,
-        y: 623,
+        x: 505,
+        y: 703,
         namePosition: 'right',
     },
     {
@@ -110,8 +110,8 @@ export const LOCATION_INFO = [
         type: 'origin',
         img: require('../../assets/about/origin-china.png'),
         name: 'China',
-        x: 1400,
-        y: 704,
+        x: 1500,
+        y: 694,
         namePosition: 'none',
     },
     {
