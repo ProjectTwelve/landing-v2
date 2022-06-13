@@ -73,13 +73,13 @@ export const CONTENT_PAGES = [
     {
         type: null,
         NavText: (
-            <div className='nav-community-wrap'>
+            <div className='nav-dropdown-wrap'>
                 Social
-                <div className='nav-community'>
+                <div className='nav-dropdown nav-dropdown--community'>
                     <a
                         href='https://twitter.com/_p12_'
                         target='_blank'
-                        className='nav-community__item nav-community__item--twitter'
+                        className='nav-dropdown__item nav-dropdown__item--twitter'
                         rel='noreferrer'
                         onClick = {() => GAevent('event', 'Soc-twi')}
                     >
@@ -89,7 +89,7 @@ export const CONTENT_PAGES = [
                     <a
                         href='https://discord.com/invite/EMrbsZPbxs'
                         target='_blank'
-                        className='nav-community__item nav-community__item--discord'
+                        className='nav-dropdown__item nav-dropdown__item--discord'
                         rel='noreferrer'
                         onClick = {() => GAevent('event','Soc-discord')}
                     >
@@ -99,12 +99,48 @@ export const CONTENT_PAGES = [
                     <a
                         href='https://t.me/project_twelve'
                         target='_blank'
-                        className='nav-community__item nav-community__item--telegram'
+                        className='nav-dropdown__item nav-dropdown__item--telegram'
                         rel='noreferrer'
                         onClick = {() => GAevent('event','Soc-tele')}
                     >
                         <i></i>
                         Telegram
+                    </a>
+                </div>
+            </div>
+        ),
+        Content: null,
+        dropdown: true,
+    },
+    {
+        type: null,
+        NavText: (
+            <div className='nav-dropdown-wrap'>
+                Link Tree
+                <div className='nav-dropdown nav-dropdown--tree'>
+                    <a
+                        href='https://airdrop.p12.games'
+                        target='_blank'
+                        className='nav-dropdown__item nav-dropdown__item'
+                        rel='noreferrer'
+                    >
+                        Airdrop
+                    </a>
+                    <a
+                        href='https://galaxy.eco/P12/'
+                        target='_blank'
+                        className='nav-dropdown__item nav-dropdown__item'
+                        rel='noreferrer'
+                    >
+                        Badge
+                    </a>
+                    <a
+                        href='https://p12.dev/whitepaper'
+                        target='_blank'
+                        className='nav-dropdown__item nav-dropdown__item'
+                        rel='noreferrer'
+                    >
+                        Whitepaper
                     </a>
                 </div>
             </div>
