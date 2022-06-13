@@ -5,6 +5,7 @@ import { CONTENT_PAGES, PageBadges, PageType } from './App.config';
 import './App.less';
 import { AppContext, loadingEE } from './App.utils';
 import { initGA } from '../../utils';
+import { useLocalStorageState } from 'ahooks';
 
 const pageTypes = CONTENT_PAGES.filter(
     (v) => v.Content && v.type !== PageType.Loading
@@ -16,6 +17,7 @@ export const App = () => {
     const isLoading = current === PageType.Loading;
     const [musicPlaying, setMusicPlaying] = useState(true);
     const nextPageType = getNextPageType();
+    const [pulseState, setPulseState] = useLocalStorageState('hasPulse', { defaultValue: 'pulse' });
 
     useEffect(() => {
         initGA();
@@ -122,7 +124,15 @@ export const App = () => {
                         ))}
                     </div>
                 )}
-                <div className='coming-btn'></div>
+                <div className={classnames(['coming-btn', pulseState])}>
+                    <a
+                        href='https://airdrop.p12.games'
+                        target='_blank'
+                        rel='noreferrer'
+                    >
+                        <div className='coming-btn__item' onMouseEnter={() => setPulseState('')}></div>
+                    </a>
+                </div>
                 <div className='footer'>
                     <div className='footer__info'></div>
                     {/* <div
