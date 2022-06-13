@@ -240,7 +240,7 @@
     }
 }
 
-.nav-community {
+.nav-dropdown {
     position: absolute;
     left: 0;
     margin-top: 6px;
@@ -270,7 +270,7 @@
             margin-right: 10px;
         }
 
-        &--twitter {
+        &:first-child {
             margin-top: 8px;
         }
 
@@ -288,6 +288,13 @@
     &-wrap {
         position: relative;
     }
+
+    &--tree {
+        width:190px;
+         &__item {
+             display:block;
+         }
+    }
 }
 
 .nav__item {
@@ -295,8 +302,14 @@
 }
 
 .nav__item:hover {
-    .nav-community {
-        height: (42px * 3 + 8px * 2);
+    .nav-dropdown {
+        &--community {
+            height: (42px * 3 + 8px * 2);
+        }
+
+        &--tree {
+            height: (42px * 3 + 8px * 2);
+        }
     }
 }
 
