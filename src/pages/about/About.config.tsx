@@ -64,27 +64,6 @@ export const LOCATION_INFO = [
     },
     {
         type: 'presence',
-        name: 'Paris',
-        x: 960,
-        y: 602,
-        namePosition: 'right',
-    },
-    {
-        type: 'presence',
-        name: 'Copenhagen',
-        x: 1000,
-        y: 555,
-        namePosition: 'left',
-    },
-    {
-        type: 'presence',
-        name: 'Birmingham',
-        x: 925,
-        y: 580,
-        namePosition: 'left',
-    },
-    {
-        type: 'presence',
         name: 'Seoul',
         x: 1625,
         y: 699,
