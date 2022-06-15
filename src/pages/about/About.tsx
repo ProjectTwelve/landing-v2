@@ -121,7 +121,7 @@ export const About: React.FC = () => {
                 {showingAbouts.map((v, i) => {
                     return (
                         <div
-                            key={i}
+                            key={v.name}
                             className={classnames(
                                 'about__partner-item',
                                 `about__partner-item--${i + 1}`,
