@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './About.less';
 import classnames from 'classnames';
 import { ABOUT_PARTNERS, LOCATION_INFO, PartnerInfo } from './About.config';
@@ -10,7 +10,7 @@ import gsap from 'gsap';
 export const About: React.FC = () => {
     const [currentPartner, setCurrentPartner] = useState(0);
     const [currentAbouts, setCurrentAbouts] = useState<PartnerInfo[]>([]);
-    const [showingAbouts, setShowingAbouts] = useState<PartnerInfo[]>([]);
+    // const [showingAbouts, setShowingAbouts] = useState<PartnerInfo[]>([]);
 
     usePageVisible(PageType.About, () => {
         return {
@@ -50,12 +50,9 @@ export const About: React.FC = () => {
             },
         };
     });
-
-    useEffect(() => {
-        if (showingAbouts !== currentAbouts.slice(0,3)) {
-            setShowingAbouts(currentAbouts.slice(0,3));
-        }
-    }, [currentAbouts, showingAbouts]);
+    const showingAbouts = useMemo(() => {
+        return currentAbouts.slice(0,3);
+    }, [currentAbouts]);
 
     return (
         <div className='about'>
@@ -183,21 +180,23 @@ export const About: React.FC = () => {
     );
 
     function handlePrev() {
-        console.log("prev")
-        const last : PartnerInfo | undefined = currentAbouts.pop()
-        if (last !== undefined) {
-            currentAbouts.unshift(last);
-        }
-        setCurrentAbouts(currentAbouts);
+        setCurrentAbouts((old) => {
+            const last : PartnerInfo | undefined = currentAbouts.pop();
+            if (last !== undefined) {
+                return [last, ...old];
+            }
+            return [...old];
+        });
         
     }
     
     function handleNext() {
-        console.log("next")
-        const first : PartnerInfo | undefined = currentAbouts.shift()
-        if (first !== undefined) {
-            currentAbouts.push(first);
-        }
-        setCurrentAbouts(currentAbouts);
+        setCurrentAbouts((old) => {
+            const first : PartnerInfo | undefined = currentAbouts.shift();
+            if (first !== undefined) {
+                return [...old, first];
+            }
+            return [...old];
+        });
     }
 };
