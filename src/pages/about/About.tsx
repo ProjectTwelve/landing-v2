@@ -10,7 +10,22 @@ import gsap from 'gsap';
 export const About: React.FC = () => {
     const [currentPartner, setCurrentPartner] = useState(0);
     const [currentAbouts, setCurrentAbouts] = useState<PartnerInfo[]>([]);
-    // const [showingAbouts, setShowingAbouts] = useState<PartnerInfo[]>([]);
+    const showingAbouts = useMemo(() => currentAbouts.length > 3 ? currentAbouts.slice(0, 3) : currentAbouts, [currentAbouts]);
+
+    const handlePrev = () => {
+        setCurrentAbouts((prevState) => {
+            const last = prevState.pop();
+            return last ? [last, ...prevState] : [...prevState];
+        });
+        
+    }
+    
+    const handleNext = () => {
+        setCurrentAbouts((prevState) => {
+            const [first, ...rest] = prevState;
+            return [...rest, first];
+        });
+    }
 
     usePageVisible(PageType.About, () => {
         return {
@@ -50,9 +65,6 @@ export const About: React.FC = () => {
             },
         };
     });
-    const showingAbouts = useMemo(() => {
-        return currentAbouts.slice(0,3);
-    }, [currentAbouts]);
 
     return (
         <div className='about'>
@@ -178,25 +190,4 @@ export const About: React.FC = () => {
             </div>
         </div>
     );
-
-    function handlePrev() {
-        setCurrentAbouts((old) => {
-            const last : PartnerInfo | undefined = currentAbouts.pop();
-            if (last !== undefined) {
-                return [last, ...old];
-            }
-            return [...old];
-        });
-        
-    }
-    
-    function handleNext() {
-        setCurrentAbouts((old) => {
-            const first : PartnerInfo | undefined = currentAbouts.shift();
-            if (first !== undefined) {
-                return [...old, first];
-            }
-            return [...old];
-        });
-    }
 };
