@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './About.less';
 import classnames from 'classnames';
-import { ABOUT_PARTNERS, LOCATION_INFO } from './About.config';
+import { ABOUT_PARTNERS, LOCATION_INFO, PartnerInfo } from './About.config';
 import { usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
 import { GAevent } from '../../utils';
@@ -9,11 +9,15 @@ import gsap from 'gsap';
 
 export const About: React.FC = () => {
     const [currentPartner, setCurrentPartner] = useState(0);
+    const [currentAbouts, setCurrentAbouts] = useState<PartnerInfo[]>([]);
+    const [showingAbouts, setShowingAbouts] = useState<PartnerInfo[]>([]);
 
     usePageVisible(PageType.About, () => {
         return {
             onVisible: () => {
                 GAevent('webview','Team-webview');
+                setCurrentAbouts(ABOUT_PARTNERS);
+
                 const tl = gsap.timeline();
                 tl.fromTo(
                     '.page-wrap-about',
@@ -46,6 +50,12 @@ export const About: React.FC = () => {
             },
         };
     });
+
+    useEffect(() => {
+        if (showingAbouts !== currentAbouts.slice(0,3)) {
+            setShowingAbouts(currentAbouts.slice(0,3));
+        }
+    }, [currentAbouts, showingAbouts]);
 
     return (
         <div className='about'>
@@ -97,8 +107,9 @@ export const About: React.FC = () => {
                 })}
             </div>
             <div className='about__partner'>
+                <div className='about__btn about__btn--left' onClick={() => handlePrev()}></div>
                 <i className='about__partner-dot about__partner-dot--left'></i>
-                {ABOUT_PARTNERS.map((v, i) => {
+                {showingAbouts.map((v, i) => {
                     return (
                         <div
                             key={i}
@@ -134,12 +145,21 @@ export const About: React.FC = () => {
                                             rel='noreferrer'
                                         ></a>
                                     )}
+                                    {!!v.links.github && (
+                                        <a
+                                            className='about__partner-text-link about__partner-text-link--github'
+                                            href={v.links.github}
+                                            target='_blank'
+                                            rel='noreferrer'
+                                        ></a>
+                                    )}
                                 </div>
                             </div>
                         </div>
                     );
                 })}
                 <i className='about__partner-dot about__partner-dot--right'></i>
+                <div className='about__btn about__btn--right' onClick={() => handleNext()}></div>
             </div>
             <div className='about__helper'>
                 <div className='about__helper-item'>
@@ -161,4 +181,23 @@ export const About: React.FC = () => {
             </div>
         </div>
     );
+
+    function handlePrev() {
+        console.log("prev")
+        const last : PartnerInfo | undefined = currentAbouts.pop()
+        if (last !== undefined) {
+            currentAbouts.unshift(last);
+        }
+        setCurrentAbouts(currentAbouts);
+        
+    }
+    
+    function handleNext() {
+        console.log("next")
+        const first : PartnerInfo | undefined = currentAbouts.shift()
+        if (first !== undefined) {
+            currentAbouts.push(first);
+        }
+        setCurrentAbouts(currentAbouts);
+    }
 };
