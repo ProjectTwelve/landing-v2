@@ -32,6 +32,7 @@ export const AVATAR_GL_CYCLE = new AvatarCycle();
 
 /** 决定要显示的 avatar 的顺序（第 0 个会优先加载，其他的会在界面进入后加载） */
 const AVATAR_GL_KEYS = Object.keys(AVATAR_GL_MAP) as AvatarType[];
+
 // 随机打乱的数组，打开注释即可使用
 // const AVATAR_GL_KEYS = shuffle(Object.keys(AVATAR_GL_MAP));
 const AVATAR_GL_ARRAY = AVATAR_GL_KEYS.map((k) => AVATAR_GL_MAP[k]);

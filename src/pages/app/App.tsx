@@ -136,17 +136,17 @@ export const App = () => {
                 <div className='footer'>
                     <div className='footer__info'></div>
                     {/* <div
-                    className={classnames(
-                        'footer__audio',
-                        'audio-btn',
-                        musicPlaying && 'active'
-                    )}
-                    onClick={() => setMusicPlaying(!musicPlaying)}
-                >
-                    <i className='footer__audio-item'></i>
-                    <i className='footer__audio-item'></i>
-                    <i className='footer__audio-item'></i>
-                </div> */}
+                        className={classnames(
+                            'footer__audio',
+                            'audio-btn',
+                            musicPlaying && 'active'
+                        )}
+                        onClick={() => setMusicPlaying(!musicPlaying)}
+                    >
+                        <i className='footer__audio-item'></i>
+                        <i className='footer__audio-item'></i>
+                        <i className='footer__audio-item'></i>
+                    </div> */}
                 </div>
                 {/* pc 端只在第一页展示 */}
                 {!IS_MOBILE && current === PageType.Home && (

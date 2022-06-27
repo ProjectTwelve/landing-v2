@@ -3,8 +3,8 @@ import ReactDOMClient from 'react-dom/client';
 import './styles/reset.less';
 import './styles/index.less';
 import './utils';
-import { App } from './pages/app/App';
 import { addResizeHandle, IS_MOBILE, resizeBodyRotation } from './utils';
+import { App } from './pages/app/App';
 
 // 初始化的相关逻辑
 if (IS_MOBILE) {
