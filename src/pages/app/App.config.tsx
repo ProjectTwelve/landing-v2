@@ -97,14 +97,14 @@ export const CONTENT_PAGES = [
                         Discord
                     </a>
                     <a
-                        href='https://t.me/project_twelve'
+                        href='https://mirror.xyz/p12.eth'
                         target='_blank'
-                        className='nav-dropdown__item nav-dropdown__item--telegram'
+                        className='nav-dropdown__item nav-dropdown__item--mirror'
                         rel='noreferrer'
                         onClick = {() => GAevent('event','Soc-tele')}
                     >
                         <i></i>
-                        Telegram
+                        Mirror
                     </a>
                 </div>
             </div>

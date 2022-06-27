@@ -135,7 +135,7 @@ export const App = () => {
                 </div>
                 <div className='footer'>
                     <div className='footer__info'></div>
-                    {/* <div
+                    <div
                     className={classnames(
                         'footer__audio',
                         'audio-btn',
@@ -146,7 +146,7 @@ export const App = () => {
                     <i className='footer__audio-item'></i>
                     <i className='footer__audio-item'></i>
                     <i className='footer__audio-item'></i>
-                </div> */}
+                </div>
                 </div>
                 {/* pc 端只在第一页展示 */}
                 {!IS_MOBILE && current === PageType.Home && (
