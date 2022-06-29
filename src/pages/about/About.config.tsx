@@ -496,22 +496,6 @@ export const ABOUT_PARTNERS : PartnerInfo[] = [
         },
     },
     {
-        img: require('../../assets/about/partner-members/24.png'),
-        name: 'Ramping',
-        desc: (
-            <>
-                Psychologically Revacholian;
-                <br/>
-                TRUE Godardiste  
-            </>
-        ),
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null
-        },
-    },
-    {
         img: require('../../assets/about/partner-members/25.png'),
         name: '0xSteven',
         desc: (
