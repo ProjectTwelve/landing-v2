@@ -142,6 +142,14 @@ export const CONTENT_PAGES = [
                     >
                         Whitepaper
                     </a>
+                    <a
+                        href='mailto:hi@p12.dev'
+                        target='_blank'
+                        className='nav-dropdown__item nav-dropdown__item'
+                        rel='noreferrer'
+                    >
+                        Say Hi
+                    </a>
                 </div>
             </div>
         ),
