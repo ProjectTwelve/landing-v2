@@ -10,7 +10,7 @@ import gsap from 'gsap';
 export const About: React.FC = () => {
     const [currentPartner, setCurrentPartner] = useState(0);
     const [currentAbouts, setCurrentAbouts] = useState<PartnerInfo[]>([]);
-    const showingAbouts = useMemo(() => currentAbouts.length > 3 ? currentAbouts.slice(0, 3) : currentAbouts, [currentAbouts]);
+    const showingAbouts = useMemo(() => currentAbouts.length > 5 ? currentAbouts.slice(0, 5) : currentAbouts, [currentAbouts]);
 
     const handlePrev = () => {
         setCurrentAbouts((prevState) => {
