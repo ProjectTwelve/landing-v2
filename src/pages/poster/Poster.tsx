@@ -222,6 +222,9 @@ export const Poster: React.FC = () => {
                             <div className='swiper-slide swiper-slide--5'></div>
                             <div className='swiper-slide swiper-slide--6'></div>
                             <div className='swiper-slide swiper-slide--7'></div>
+                            <div className='swiper-slide swiper-slide--8'></div>
+                            <div className='swiper-slide swiper-slide--9'></div>
+                            <div className='swiper-slide swiper-slide--10'></div>
                         </div>
                         <div className='swiper-pagination'></div>
                     </div>
