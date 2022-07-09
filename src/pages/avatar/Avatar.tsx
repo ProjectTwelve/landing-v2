@@ -8,7 +8,6 @@ import { usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
 import gsap from 'gsap';
 import { first } from 'lodash-es';
-import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 
 export const Avatar: React.FC = () => {
     const avatarGLRef = useRef<AvatarGLRef>(null);
@@ -101,8 +100,7 @@ export const Avatar: React.FC = () => {
 
     return (
         <div className='avatar'>
-            {/* <AvatarGL ref={avatarGLRef} /> */}
-            <ButterflyGL page={PageType.Avatar} />
+            <AvatarGL ref={avatarGLRef} />
             <div className='avatar__info'>
                 <div className='avatar__slogan'></div>
                 <div className='app-small-title app-small-title--with-block avatar__small-title'>
