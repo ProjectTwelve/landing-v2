@@ -130,10 +130,6 @@ export class AvatarGLItemBase extends EventEmitter {
         this.renderer.render(this.scene, this.camera);
     }
 
-    public animate() {
-        this.frameId = requestAnimationFrame(() => this.animate());
-        this.render();
-    }
 
     protected resize() {
         this.camera.aspect =

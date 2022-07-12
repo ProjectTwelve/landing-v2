@@ -78,7 +78,7 @@ export class AvatarGLItemDokv extends AvatarGLItemBaseWithParticle {
                     // gui.domElement.id = 'home-gl-gui';
                     // document.body.appendChild(gui.domElement);
 
-                    // this.scene.add(model);
+                    this.scene.add(model);
                     this.mixer = new THREE.AnimationMixer(model);
                     gltfLoaded = true;
                     this.loaded = gltfLoaded;

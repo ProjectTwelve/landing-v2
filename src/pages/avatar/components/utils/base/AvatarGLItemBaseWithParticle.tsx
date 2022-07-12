@@ -128,7 +128,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         // const index = this.getParticleIndex();
         // // console.log(index);
         this.controls_particle.update();
-        this.renderer.render(this.scene_particle, this.camera_particle);
+        this.renderer_particle.render(this.scene_particle, this.camera_particle);
 
         // if (this.renderedImageIndex !== index && this.context) {
         //     this.renderedImageIndex = index;
@@ -148,12 +148,6 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         //     // }
         //     // this.context.putImageData(imageData, 0, 0);
         // }
-    }
-
-    public animate() {
-        super.animate();
-        this.frameId_particle = requestAnimationFrame(() => this.animate());
-        this.render();
     }
 
     protected resize() {
