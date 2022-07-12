@@ -1,12 +1,13 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { getPublicAssetPath, IS_MOBILE } from '../../../../utils';
+import { AvatarGLItemBase } from './base/AvatarGLItemBase';
 import { AvatarGLItemBaseWithParticle } from './base/AvatarGLItemBaseWithParticle';
 import { loadingEE, LoadingSourceType } from '../../../app/App.utils';
 import { padStart } from 'lodash-es';
 import { GUI } from 'dat.gui';
 
-export class AvatarGLItemLowpoly extends AvatarGLItemBaseWithParticle {
+export class AvatarGLItemLowpoly extends AvatarGLItemBase {
     public particleCanvasWidth = IS_MOBILE ? 249 : 840;
     public particleCanvasHeight = IS_MOBILE ? 320 : 1080;
 
@@ -19,15 +20,15 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBaseWithParticle {
         </>
     );
 
-    getParticleIndex() {
-        return Math.floor(
-            (((this.controls.getAzimuthalAngle() / Math.PI + 1) / 2) *
-                this.imageDataArray.length +
-                this.imageDataArray.length +
-                215) %
-                this.imageDataArray.length
-        );
-    }
+    // getParticleIndex() {
+    //     return Math.floor(
+    //         (((this.controls.getAzimuthalAngle() / Math.PI + 1) / 2) *
+    //             this.imageDataArray.length +
+    //             this.imageDataArray.length +
+    //             215) %
+    //             this.imageDataArray.length
+    //     );
+    // }
 
     load() {
         if (this.loadingPromise) {
@@ -94,30 +95,30 @@ export class AvatarGLItemLowpoly extends AvatarGLItemBaseWithParticle {
                 }
             );
 
-            const imageUrls = new Array(480).fill(0).map((_, i) => {
-                padStart(`${i + 1}`, 3, '0');
-                return getPublicAssetPath(
-                    `files/avatar/avatar-lowpoly-particle${
-                        IS_MOBILE ? '-mobile' : ''
-                    }/${padStart(`${i + 1}`, 3, '0')}.jpg`
-                );
-            });
-            const imageLoader = new THREE.ImageLoader();
-            Promise.all(imageUrls.map((url) => imageLoader.load(url))).then(
-                (data) => {
-                    this.imageDataArray = data;
-                    imageLoaded = true;
-                    this.loaded = gltfLoaded && imageLoaded;
-                    if (this.loaded) {
-                        this.container.classList.remove('loading');
-                        resolve(true);
-                    }
-                    loadingEE.emit(
-                        `progress.${LoadingSourceType.AVATAR_GLTF_LOWPOLY_PARTICLE}`,
-                        1
-                    );
-                }
-            );
+            // const imageUrls = new Array(480).fill(0).map((_, i) => {
+            //     padStart(`${i + 1}`, 3, '0');
+            //     return getPublicAssetPath(
+            //         `files/avatar/avatar-lowpoly-particle${
+            //             IS_MOBILE ? '-mobile' : ''
+            //         }/${padStart(`${i + 1}`, 3, '0')}.jpg`
+            //     );
+            // });
+            // const imageLoader = new THREE.ImageLoader();
+            // Promise.all(imageUrls.map((url) => imageLoader.load(url))).then(
+            //     (data) => {
+            //         this.imageDataArray = data;
+            //         imageLoaded = true;
+            //         this.loaded = gltfLoaded && imageLoaded;
+            //         if (this.loaded) {
+            //             this.container.classList.remove('loading');
+            //             resolve(true);
+            //         }
+            //         loadingEE.emit(
+            //             `progress.${LoadingSourceType.AVATAR_GLTF_LOWPOLY_PARTICLE}`,
+            //             1
+            //         );
+            //     }
+            // );
         }).then(() => {
             setTimeout(() => {
                 // 首次渲染，做个延时防止影响首屏的入场

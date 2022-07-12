@@ -1,0 +1,355 @@
+{
+	"asset":
+	{
+		"version": "2.0",
+		"generator": "Unreal Engine 4.27.0 glTF Exporter 1.0.6"
+	},
+	"scene": 0,
+	"accessors": [
+		{
+			"bufferView": 0,
+			"count": 33390,
+			"type": "SCALAR",
+			"componentType": 5123
+		},
+		{
+			"bufferView": 1,
+			"count": 10682,
+			"type": "VEC3",
+			"componentType": 5126,
+			"min": [ -0.265411913,
+				-0.00131709955,
+				-0.108333185
+			],
+			"max": [ 0.264867127,
+				1.70937467,
+				0.256855518
+			]
+		},
+		{
+			"bufferView": 2,
+			"count": 10682,
+			"type": "VEC3",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 3,
+			"count": 10682,
+			"type": "VEC4",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 4,
+			"count": 10682,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 5,
+			"count": 10682,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 6,
+			"count": 10682,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 7,
+			"count": 10682,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 8,
+			"count": 10682,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 9,
+			"count": 39372,
+			"type": "SCALAR",
+			"componentType": 5123
+		},
+		{
+			"bufferView": 10,
+			"count": 12607,
+			"type": "VEC3",
+			"componentType": 5126,
+			"min": [ -0.26294896,
+				0.000852359051,
+				-0.105544567
+			],
+			"max": [ 0.263805121,
+				1.70679545,
+				0.253791988
+			]
+		},
+		{
+			"bufferView": 11,
+			"count": 12607,
+			"type": "VEC3",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 12,
+			"count": 12607,
+			"type": "VEC4",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 13,
+			"count": 12607,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 14,
+			"count": 12607,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 15,
+			"count": 12607,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 16,
+			"count": 12607,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 17,
+			"count": 12607,
+			"type": "VEC2",
+			"componentType": 5126
+		}
+	],
+	"buffers": [
+		{
+			"uri": "SK_Cartoon_Female_029.bin",
+			"byteLength": 2008644
+		}
+	],
+	"bufferViews": [
+		{
+			"buffer": 0,
+			"byteLength": 66780,
+			"target": 34963
+		},
+		{
+			"buffer": 0,
+			"byteLength": 128184,
+			"byteOffset": 66780,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 128184,
+			"byteOffset": 194964,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 170912,
+			"byteOffset": 323148,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 85456,
+			"byteOffset": 494060,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 85456,
+			"byteOffset": 579516,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 85456,
+			"byteOffset": 664972,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 85456,
+			"byteOffset": 750428,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 85456,
+			"byteOffset": 835884,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 78744,
+			"byteOffset": 921340,
+			"target": 34963
+		},
+		{
+			"buffer": 0,
+			"byteLength": 151284,
+			"byteOffset": 1000084,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 151284,
+			"byteOffset": 1151368,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 201712,
+			"byteOffset": 1302652,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 100856,
+			"byteOffset": 1504364,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 100856,
+			"byteOffset": 1605220,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 100856,
+			"byteOffset": 1706076,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 100856,
+			"byteOffset": 1806932,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 100856,
+			"byteOffset": 1907788,
+			"target": 34962
+		}
+	],
+	"images": [
+		{
+			"uri": "T_Cartoon_Female_029.png"
+		}
+	],
+	"materials": [
+		{
+			"name": "NewMaterial",
+			"pbrMetallicRoughness":
+			{
+				"baseColorFactor": [ 0,
+					0,
+					0,
+					1
+				]
+			},
+			"extensions":
+			{
+				"KHR_materials_unlit":
+				{
+				}
+			}
+		},
+		{
+			"name": "MI_Cartoon_Female_029",
+			"pbrMetallicRoughness":
+			{
+				"baseColorTexture":
+				{
+					"index": 0
+				}
+			},
+			"alphaMode": "MASK",
+			"alphaCutoff": 0.333299994,
+			"extensions":
+			{
+				"KHR_materials_unlit":
+				{
+				}
+			}
+		}
+	],
+	"meshes": [
+		{
+			"name": "SK_Cartoon_Female_029",
+			"primitives": [
+				{
+					"attributes":
+					{
+						"POSITION": 1,
+						"NORMAL": 2,
+						"TANGENT": 3,
+						"TEXCOORD_0": 4,
+						"TEXCOORD_1": 5,
+						"TEXCOORD_2": 6,
+						"TEXCOORD_3": 7,
+						"TEXCOORD_4": 8
+					},
+					"indices": 0,
+					"material": 0
+				},
+				{
+					"attributes":
+					{
+						"POSITION": 10,
+						"NORMAL": 11,
+						"TANGENT": 12,
+						"TEXCOORD_0": 13,
+						"TEXCOORD_1": 14,
+						"TEXCOORD_2": 15,
+						"TEXCOORD_3": 16,
+						"TEXCOORD_4": 17
+					},
+					"indices": 9,
+					"material": 1
+				}
+			]
+		}
+	],
+	"nodes": [
+		{
+			"mesh": 0
+		}
+	],
+	"samplers": [
+		{
+			"name": "T_Cartoon_Female_029",
+			"minFilter": 9987,
+			"magFilter": 9729
+		}
+	],
+	"scenes": [
+		{
+			"nodes": [ 0 ]
+		}
+	],
+	"textures": [
+		{
+			"name": "T_Cartoon_Female_029",
+			"sampler": 0,
+			"source": 0
+		}
+	],
+	"extensionsUsed": [
+		"KHR_materials_unlit"
+	]
+}

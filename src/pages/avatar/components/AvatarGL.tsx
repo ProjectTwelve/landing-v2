@@ -79,12 +79,12 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             v.on('enter', ({ isShowParticle }) =>
                 handleToggleParticle(isShowParticle)
             );
-            v.on('toggled', ({ isShowParticle }) => {
-                handleToggleParticle(isShowParticle);
-                AVATAR_GL_ARRAY.forEach((av) =>
-                    av.toggleParticle(isShowParticle)
-                );
-            });
+            // v.on('toggled', ({ isShowParticle }) => {
+            //     handleToggleParticle(isShowParticle);
+            //     AVATAR_GL_ARRAY.forEach((av) =>
+            //         av.toggleParticle(isShowParticle)
+            //     );
+            // });
         });
 
         return () => {

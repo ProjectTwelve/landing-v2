@@ -3,6 +3,8 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { gsap } from 'gsap';
 import EventEmitter from 'eventemitter3';
+import { Vector2 } from 'three';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 
 export class AvatarGLItemBase extends EventEmitter {
     /** 额外的 node，用于放置说明等文案 */
@@ -16,25 +18,28 @@ export class AvatarGLItemBase extends EventEmitter {
 
     public container = document.createElement('div');
     public rendererWrap = document.createElement('div');
-    public renderer = new THREE.WebGLRenderer({ alpha: true });
-    public readonly scene = new THREE.Scene();
+    public renderer = new THREE.WebGLRenderer({ 
+        alpha: true,
+    });
+    public scene = new THREE.Scene();
     public camera: THREE.PerspectiveCamera;
     public controls: OrbitControls;
     protected mixer?: THREE.AnimationMixer;
     protected clock = new THREE.Clock();
 
+
     constructor() {
         super();
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.outputEncoding = THREE.sRGBEncoding;
-        this.camera = new THREE.PerspectiveCamera(40, 1, 1, 100);
-        this.camera.position.set(5, 2, 8);
+        this.camera = new THREE.PerspectiveCamera(75, this.container.clientWidth / this.container.clientHeight, 0.1, 100);
+        this.camera.position.set(-2, 39, 72);
         this.scene.add(this.camera);
 
         const axesHelper = new THREE.AxesHelper(10);
         // this.scene.add(axesHelper);
         const controls = new OrbitControls(this.camera, this.container);
-        controls.target.set(0, 0, 0);
+        controls.target.set(0, 8, 0);
         controls.update();
         controls.enablePan = false;
         controls.enableDamping = true;
@@ -51,6 +56,7 @@ export class AvatarGLItemBase extends EventEmitter {
         this.container.appendChild(this.rendererWrap);
         this.container.className =
             'avatar-gl-container app-container-loading loading';
+        
     }
     load() {
         if (this.loadingPromise) {
@@ -114,7 +120,7 @@ export class AvatarGLItemBase extends EventEmitter {
         this.mountContainer?.removeChild(this.container);
     }
 
-    protected render() {
+    public render() {
         // if (!this.loaded) {
         //     return;
         // }
@@ -124,7 +130,7 @@ export class AvatarGLItemBase extends EventEmitter {
         this.renderer.render(this.scene, this.camera);
     }
 
-    protected animate() {
+    public animate() {
         this.frameId = requestAnimationFrame(() => this.animate());
         this.render();
     }
