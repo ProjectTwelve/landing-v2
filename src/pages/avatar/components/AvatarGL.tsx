@@ -18,6 +18,7 @@ import { AvatarGLItemLowpoly } from './utils/AvatarGLItemLowpoly';
 import { AvatarCycle } from './AvatarCycle';
 import { ButterflyGL } from '../../../components/butterfly-gl/ButterflyGL';
 import { IS_MOBILE } from '../../../utils';
+import { GAevent } from '../../../utils';
 export interface AvatarGLRef {
     switchTo: (type: AvatarType | null) => void;
 }
@@ -79,12 +80,12 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             v.on('enter', ({ isShowParticle }) =>
                 handleToggleParticle(isShowParticle)
             );
-            // v.on('toggled', ({ isShowParticle }) => {
-            //     handleToggleParticle(isShowParticle);
-            //     AVATAR_GL_ARRAY.forEach((av) =>
-            //         av.toggleParticle(isShowParticle)
-            //     );
-            // });
+            v.on('toggled', ({ isShowParticle }) => {
+                handleToggleParticle(isShowParticle);
+                // AVATAR_GL_ARRAY.forEach((av) =>
+                //     av.toggleParticle(isShowParticle)
+                // );
+            });
         });
 
         return () => {
@@ -120,12 +121,90 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                 y: e.clientY + document.body.scrollTop,
             });
         };
+
+        // 处理来自模型展示iframe的postMessage
+        const handlePostMessage = (e: MessageEvent) => {
+            if (e.data.type==='mousemove') {
+                let iframeElement;
+                switch (activatedRef.current) {
+                    case AvatarType.DOKV:
+                        iframeElement = document.getElementById(AvatarType.DOKV+'iframe')
+                        break;
+                    case AvatarType.CARTOON:
+                        iframeElement = document.getElementById(AvatarType.CARTOON+'iframe')
+                        break;
+                    case AvatarType.LOWPOLY:
+                        iframeElement = document.getElementById(AvatarType.LOWPOLY+'iframe')
+                        break;
+                    default:
+                        iframeElement = document.getElementById(AvatarType.DOKV+'iframe')
+                        break;
+                }
+                if (iframeElement) {
+                    gsap.to(mouseDom, {
+                        duration: 0.1,
+                        opacity: 1,
+                        // 计算iframe偏移量坐标+iframe内坐标，计算出在最外层鼠标坐标位置
+                        x: iframeElement.getBoundingClientRect().left + e.data.clientX + document.body.scrollLeft,
+                        y: iframeElement.getBoundingClientRect().top + e.data.clientY + document.body.scrollTop,
+                    });
+                    // 构造MouseEvent传入粒子光环特效的onMouseMove
+                    let event = new MouseEvent('mousemove', {
+                        clientX: (iframeElement.getBoundingClientRect().left+e.data.clientX),
+                        clientY: (iframeElement.getBoundingClientRect().top+e.data.clientY),
+                    });
+                    AVATAR_GL_CYCLE.onMouseMove(event)
+                }
+                // console.log(`e.data: ${JSON.stringify(e.data)}, iframeElement position: (${iframeElement?.offsetLeft}, ${iframeElement?.offsetTop}) | (${iframeElement!.getBoundingClientRect().left}, ${iframeElement!.getBoundingClientRect().top})`)
+            } else if (e.data.type==='pointerdown'||e.data.type==='pointerup') {
+                let downTime = +new Date();
+                let downX: number = 0;
+                let downY: number = 0;
+                if (e.data.type==='pointerdown') {
+                    // console.log(`pointerdown: (${e.data.clientX}, ${e.data.clientY})`)
+                    downTime = +new Date();
+                    downX = Math.round(e.data.clientX);
+                    downY = Math.round(e.data.clientY);
+                }
+                if (e.data.type==='pointerup') {
+                    GAevent('event','Infra-switch');
+                    if (
+                        downTime &&
+                        +new Date() - downTime < 300 &&
+                        Math.abs(e.data.clientX - downX) < 50 &&
+                        Math.abs(e.data.clientY - downY) < 50
+                    ) {
+                        // 没有移动太远，表明是点击事件。以此来兼容 gl 的拖动
+                        // this.toggleParticle(!this.isShowParticle);
+                    }
+                }
+            } else if (e.data.type==='mousedown') {
+                console.log(`mousedown handlePostMessage...`)
+                document.getElementById('avatar-mouse')?.classList.remove('hover');
+                document.getElementById('avatar-mouse')?.classList.add('active');
+            } else if (e.data.type==='mouseup') {
+                console.log(`mouseup handlePostMessage...`)
+                document.getElementById('avatar-mouse')?.classList.add('hover');
+                document.getElementById('avatar-mouse')?.classList.remove('active');
+            } else {
+                console.log(`not post handlePostMessage...`)
+            }
+        }
+
         const handleMouseDown = () => {
             mouseDom?.classList.add('active');
         };
         const handleMouseUp = () => {
             mouseDom?.classList.remove('active');
         };
+
+        const handleMouseLeave = () => {
+            if (document.getElementById('avatar-mouse')) {
+                document.getElementById('avatar-mouse')!.style.opacity='0';
+                // console.log(`avatar-mouse leave...`)
+            }
+        }
+        
         return {
             onVisible: () => {
                 // 进入界面后，“依次”加载所有内容（上一个加载完，再加载下一个）
@@ -141,15 +220,19 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                 if (!IS_MOBILE) {
                     handleMouseUp();
                     window.addEventListener('mousemove', handleMouseMove);
+                    window.addEventListener('message', handlePostMessage);
                     window.addEventListener('mousedown', handleMouseDown);
                     window.addEventListener('mouseup', handleMouseUp);
+                    window.addEventListener('mouseleave', handleMouseLeave);
                 }
             },
             onHide: () => {
                 if (!IS_MOBILE) {
                     window.removeEventListener('mousemove', handleMouseMove);
+                    window.removeEventListener('message', handlePostMessage);
                     window.removeEventListener('mousedown', handleMouseDown);
                     window.removeEventListener('mouseup', handleMouseUp);
+                    window.removeEventListener('mouseleave', handleMouseLeave);
                 }
             },
             onDestroy: () => {},
@@ -158,7 +241,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
 
     return (
         <div className='avatar-gl' ref={containerRef}>
-            <ButterflyGL page={PageType.Avatar} />
+            {/* <ButterflyGL page={PageType.Avatar} /> */}
             <div className='avatar-mouse' id='avatar-mouse' ref={mouseRef}>
                 <div className='avatar-mouse__circle'></div>
                 <div className='avatar-mouse__dot'></div>

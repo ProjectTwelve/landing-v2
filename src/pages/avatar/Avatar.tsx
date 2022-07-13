@@ -1,5 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AvatarGL, AvatarGLRef, AVATAR_GL_MAP } from './components/AvatarGL';
+import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 import './Avatar.less';
 import { AvatarType, AvatarTypeArray } from './Avatar.config';
 import { playClickAudio, GAevent } from '../../utils';
@@ -101,6 +102,7 @@ export const Avatar: React.FC = () => {
     return (
         <div className='avatar'>
             <AvatarGL ref={avatarGLRef} />
+            <ButterflyGL page={PageType.Avatar} />
             <div className='avatar__info'>
                 <div className='avatar__slogan'></div>
                 <div className='app-small-title app-small-title--with-block avatar__small-title'>
