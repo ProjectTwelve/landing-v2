@@ -23,8 +23,32 @@ export class AvatarGLItemBase extends EventEmitter {
     protected mixer?: THREE.AnimationMixer;
     protected clock = new THREE.Clock();
 
+    // For cluster
+    // All shining particles(tiny) are included in this cluster 
+    public g = new THREE.SphereBufferGeometry(0.07);
+    public m = new THREE.MeshStandardMaterial();
+
+    public m_color = new THREE.Color("#99ddff");
+    public pts: THREE.Vector3 [] = [];
+    public cluster;
+
+    // For cluster
+    // All shining particles(large) are included in this cluster 
+    public g_l = new THREE.SphereBufferGeometry(0.12);
+    public m_l = new THREE.MeshStandardMaterial();
+
+    public m_l_color = new THREE.Color("#99ddff");
+    public pts_l: THREE.Vector3 [] = [];
+    public cluster_l;
+    public center;
+
+
     constructor() {
         super();
+        this.m.transparent = true;
+        this.m.opacity = 0.8;
+        this.m_l.transparent = true;
+        this.m_l.opacity = 0.8;
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.outputEncoding = THREE.sRGBEncoding;
         this.camera = new THREE.PerspectiveCamera(40, 1, 1, 100);
@@ -90,7 +114,7 @@ export class AvatarGLItemBase extends EventEmitter {
                 y: 0,
                 opacity: 1,
                 delay: 0.2,
-                onComplete: () => {},
+                onComplete: () => { },
             }
         );
     }
