@@ -11,7 +11,7 @@ import { first } from 'lodash-es';
 
 export const Avatar: React.FC = () => {
     const avatarGLRef = useRef<AvatarGLRef>(null);
-    const [currentAvatar, setCurrentAvatar] = useState<AvatarType | null>(null);
+    const [currentAvatar, setCurrentAvatar] = useState<AvatarType | null>(AvatarType.CARTOON);
 
     usePageVisible(PageType.Avatar, () => {
         let timeId: number;

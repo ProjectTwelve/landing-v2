@@ -42,7 +42,7 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
             let gltfLoaded = false;
             let imageLoaded = false;
             new GLTFLoader().load(
-                getPublicAssetPath('files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021.glb'),
+                getPublicAssetPath('files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021.gltf'),
                 (gltf) => {
                     const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
                     this.camera.add(ambientLight);

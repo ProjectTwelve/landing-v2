@@ -92,7 +92,7 @@ export class AvatarGLItemBase extends EventEmitter {
 
         // 发光材质显示
         this.renderPass = new RenderPass(this.scene, this.camera)
-        this.unrealBloomPass = new UnrealBloomPass(new THREE.Vector2( window.innerWidth, window.innerHeight ), 2.7, 1, 0.5)
+        this.unrealBloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 2.7, 1, 0.5)
         this.effectComposer = new EffectComposer(this.renderer)
         this.effectComposer.setSize(window.innerWidth, window.innerHeight)
         this.effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
@@ -170,10 +170,10 @@ export class AvatarGLItemBase extends EventEmitter {
         this.mixer?.update(delta);
         this.controls.update();
         this.renderer.render(this.scene, this.camera);
-        if(this.light){
+        if (this.light) {
             this.effectComposer.render()
         }
-        
+
     }
 
     protected animate() {
@@ -191,5 +191,6 @@ export class AvatarGLItemBase extends EventEmitter {
         );
         this.renderer.domElement.style.width = `${this.container.clientWidth}px`;
         this.renderer.domElement.style.height = `${this.container.clientHeight}px`;
+        this.effectComposer.setSize(this.container.clientWidth, this.container.clientHeight);
     }
 }
