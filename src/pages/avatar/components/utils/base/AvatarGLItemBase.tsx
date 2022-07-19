@@ -47,9 +47,11 @@ export class AvatarGLItemBase extends EventEmitter {
 
     public effectComposer;
     public renderPass;
+    public unrealBloomPass;
 
     public modelGroup: THREE.Group = new THREE.Group();
     public particlesGroup: THREE.Group = new THREE.Group();
+    public light: boolean = false;
 
 
     constructor() {
@@ -89,17 +91,14 @@ export class AvatarGLItemBase extends EventEmitter {
 
 
         // 发光材质显示
-        this.effectComposer = new EffectComposer(this.renderer)
-        this.effectComposer.setSize(this.renderer.domElement.clientWidth, this.renderer.domElement.clientHeight)
-        this.effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
         this.renderPass = new RenderPass(this.scene, this.camera)
+        this.unrealBloomPass = new UnrealBloomPass(new THREE.Vector2( window.innerWidth, window.innerHeight ), 2.7, 1, 0.5)
+        this.effectComposer = new EffectComposer(this.renderer)
+        this.effectComposer.setSize(window.innerWidth, window.innerHeight)
+        this.effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
         this.effectComposer.addPass(this.renderPass)
-        // @ts-ignore
-        const unrealBloomPass = new UnrealBloomPass()
-        unrealBloomPass.strength = 2.7
-        unrealBloomPass.radius = 1
-        unrealBloomPass.threshold = 0.5
-        this.effectComposer.addPass(unrealBloomPass)
+        this.effectComposer.addPass(this.unrealBloomPass)
+        this.effectComposer.renderToScreen = true;
     }
     load() {
         if (this.loadingPromise) {
@@ -171,7 +170,10 @@ export class AvatarGLItemBase extends EventEmitter {
         this.mixer?.update(delta);
         this.controls.update();
         this.renderer.render(this.scene, this.camera);
-        // this.effectComposer.render(delta)
+        if(this.light){
+            this.effectComposer.render()
+        }
+        
     }
 
     protected animate() {

@@ -22,8 +22,8 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         super();
         this.canvas.style.pointerEvents = 'none';
         this.canvasWrap.className = 'avatar-gl-canvas-wrap';
-        this.canvasWrap.appendChild(this.canvas);
-        this.container.appendChild(this.canvasWrap);
+        // this.canvasWrap.appendChild(this.canvas);
+        // this.container.appendChild(this.canvasWrap);
 
         this.btnWrap.className = 'avatar-particle-btn-wrap';
         let downTime = +new Date();
@@ -124,9 +124,10 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         }
         console.log('toggled');
         
-        this.modelGroup.visible = isShow;
-        this.particlesGroup.visible = !isShow;
+        this.modelGroup.visible = !isShow;
+        this.particlesGroup.visible = isShow;
         this.isShowParticle = isShow;
+        this.light = !this.light;
         this.emit('toggled', { isShowParticle: this.isShowParticle });
         const _this = this;
         // gsap.to(

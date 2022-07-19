@@ -100,8 +100,8 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
                         let pos = child.geometry.attributes.position;
                         console.log(pos, 'pos.count');
 
-                        child.material = new THREE.MeshStandardMaterial({ color: "black" })
-                        for (let i = 1; i < pos.count; i += 40) {
+                        child.material = new THREE.MeshBasicMaterial({ color: "black" })
+                        for (let i = 1; i < pos.count; i += 20) {
                             v3.fromBufferAttribute(pos, i)
                             v3.x = v3.x * param + 0.06;
                             v3.y = v3.y * param - 3.09;
