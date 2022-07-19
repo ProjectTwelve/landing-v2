@@ -19,7 +19,7 @@ export class AvatarGLItemBase extends EventEmitter {
 
     public container = document.createElement('div');
     public rendererWrap = document.createElement('div');
-    public renderer = new THREE.WebGLRenderer({ alpha: true });
+    public renderer = new THREE.WebGLRenderer();
     public readonly scene = new THREE.Scene();
     public camera: THREE.PerspectiveCamera;
     public controls: OrbitControls;
@@ -45,6 +45,9 @@ export class AvatarGLItemBase extends EventEmitter {
     public cluster_l;
     public center;
 
+    public effectComposer;
+    public renderPass;
+
 
     constructor() {
         super();
@@ -54,6 +57,8 @@ export class AvatarGLItemBase extends EventEmitter {
         this.m_l.opacity = 0.8;
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.outputEncoding = THREE.sRGBEncoding;
+        this.renderer.shadowMap.enabled = true
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
         this.camera = new THREE.PerspectiveCamera(40, 1, 1, 100);
         this.camera.position.set(5, 2, 8);
         this.scene.add(this.camera);
@@ -78,6 +83,20 @@ export class AvatarGLItemBase extends EventEmitter {
         this.container.appendChild(this.rendererWrap);
         this.container.className =
             'avatar-gl-container app-container-loading loading';
+
+
+        // 发光材质显示
+        this.effectComposer = new EffectComposer(this.renderer)
+        this.effectComposer.setSize(this.renderer.domElement.clientWidth, this.renderer.domElement.clientHeight)
+        this.effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        this.renderPass = new RenderPass(this.scene, this.camera)
+        this.effectComposer.addPass(this.renderPass)
+        // @ts-ignore
+        const unrealBloomPass = new UnrealBloomPass()
+        unrealBloomPass.strength = 2.7
+        unrealBloomPass.radius = 1
+        unrealBloomPass.threshold = 0.5
+        this.effectComposer.addPass(unrealBloomPass)
     }
     load() {
         if (this.loadingPromise) {
@@ -149,6 +168,7 @@ export class AvatarGLItemBase extends EventEmitter {
         this.mixer?.update(delta);
         this.controls.update();
         this.renderer.render(this.scene, this.camera);
+        // this.effectComposer.render(delta)
     }
 
     protected animate() {
