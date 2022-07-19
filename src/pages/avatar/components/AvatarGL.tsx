@@ -18,6 +18,7 @@ import { AvatarGLItemLowpoly } from './utils/AvatarGLItemLowpoly';
 import { AvatarCycle } from './AvatarCycle';
 import { ButterflyGL } from '../../../components/butterfly-gl/ButterflyGL';
 import { IS_MOBILE } from '../../../utils';
+import { AvatarGLModel } from './utils/base/AvatarGLItemBaseWithModel'
 export interface AvatarGLRef {
     switchTo: (type: AvatarType | null) => void;
 }
@@ -25,7 +26,18 @@ export interface AvatarGLRef {
 export const AVATAR_GL_MAP = {
     [AvatarType.DOKV]: new AvatarGLItemDokv(),
     [AvatarType.LOWPOLY]: new AvatarGLItemLowpoly(),
-    [AvatarType.CARTOON]: new AvatarGLItemCartoon(),
+    [AvatarType.CARTOON]: new AvatarGLModel({
+        name: AvatarType.CARTOON,
+        GLTFURL: 'files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021.gltf',
+        LFBXURL: 'files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021_H.fbx',
+        HFBXURL: 'files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021_L.fbx',
+        extraNode:
+            (<>
+                <div className='avatar-extra-subtitle'>Server DevOps</div>
+                <div className='avatar-extra-subtitle'>Data Analytics</div>
+                <div className='avatar-extra-subtitle'>Community / Social</div>
+            </>)
+    }),
 };
 
 export const AVATAR_GL_CYCLE = new AvatarCycle();
@@ -152,7 +164,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                     window.removeEventListener('mouseup', handleMouseUp);
                 }
             },
-            onDestroy: () => {},
+            onDestroy: () => { },
         };
     });
 
