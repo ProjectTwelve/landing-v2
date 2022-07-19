@@ -2,6 +2,9 @@ import * as THREE from 'three';
 import ResizeObserver from 'resize-observer-polyfill';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { gsap } from 'gsap';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 import EventEmitter from 'eventemitter3';
 
 export class AvatarGLItemBase extends EventEmitter {
@@ -25,20 +28,20 @@ export class AvatarGLItemBase extends EventEmitter {
 
     // For cluster
     // All shining particles(tiny) are included in this cluster 
-    public g = new THREE.SphereBufferGeometry(0.07);
+    public g = new THREE.SphereBufferGeometry(0.007);
     public m = new THREE.MeshStandardMaterial();
 
     public m_color = new THREE.Color("#99ddff");
-    public pts: THREE.Vector3 [] = [];
+    public pts: THREE.Vector3[] = [];
     public cluster;
 
     // For cluster
     // All shining particles(large) are included in this cluster 
-    public g_l = new THREE.SphereBufferGeometry(0.12);
+    public g_l = new THREE.SphereBufferGeometry(0.012);
     public m_l = new THREE.MeshStandardMaterial();
 
     public m_l_color = new THREE.Color("#99ddff");
-    public pts_l: THREE.Vector3 [] = [];
+    public pts_l: THREE.Vector3[] = [];
     public cluster_l;
     public center;
 
