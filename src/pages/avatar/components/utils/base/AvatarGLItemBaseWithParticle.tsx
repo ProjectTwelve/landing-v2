@@ -16,7 +16,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     private btnWrap = document.createElement('div');
     private toggleTimeId = 0;
 
-    private isShowParticle = true;
+    private isShowParticle = false;
 
     constructor() {
         super();
@@ -55,9 +55,10 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         this.container.appendChild(this.btnWrap);
 
         this.rendererWrap.style.height = '100%';
-        this.rendererWrap.style.opacity = '0';
+        this.rendererWrap.style.opacity = '1';
         // this.rendererWrap.style.height = '0%';
         this.canvasWrap.style.height = '100%';
+        this.canvasWrap.style.opacity = '0';
     }
     enter() {
         this.emit('enter', { isShowParticle: this.isShowParticle });
@@ -121,36 +122,40 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         if (isShow === this.isShowParticle) {
             return;
         }
+        console.log('toggled');
+        
+        this.modelGroup.visible = isShow;
+        this.particlesGroup.visible = !isShow;
         this.isShowParticle = isShow;
         this.emit('toggled', { isShowParticle: this.isShowParticle });
         const _this = this;
-        gsap.to(
-            {},
-            {
-                duration: 0.4,
-                ease: 'none',
-                onStart: function () {
-                    // _this.controls.autoRotate = false;
-                },
-                onUpdate: function () {
-                    const pro = this.progress();
-                    // _this.canvasWrap.style.height = `${
-                    //     (_this.isShowParticle ? pro : 1 - pro) * 100
-                    // }%`;
-                    // _this.rendererWrap.style.height = `${
-                    //     (_this.isShowParticle ? 1 - pro : pro) * 100
-                    // }%`;
-                    _this.canvasWrap.style.opacity = `${
-                        _this.isShowParticle ? pro : 1 - pro
-                    }`;
-                    _this.rendererWrap.style.opacity = `${
-                        _this.isShowParticle ? 1 - pro : pro
-                    }`;
-                },
-                onComplete: function () {
-                    // _this.controls.autoRotate = true;
-                },
-            }
-        );
+        // gsap.to(
+        //     {},
+        //     {
+        //         duration: 0.4,
+        //         ease: 'none',
+        //         onStart: function () {
+        //             // _this.controls.autoRotate = false;
+        //         },
+        //         onUpdate: function () {
+        //             const pro = this.progress();
+        //             // _this.canvasWrap.style.height = `${
+        //             //     (_this.isShowParticle ? pro : 1 - pro) * 100
+        //             // }%`;
+        //             // _this.rendererWrap.style.height = `${
+        //             //     (_this.isShowParticle ? 1 - pro : pro) * 100
+        //             // }%`;
+        //             _this.canvasWrap.style.opacity = `${
+        //                 _this.isShowParticle ? pro : 1 - pro
+        //             }`;
+        //             _this.rendererWrap.style.opacity = `${
+        //                 _this.isShowParticle ? 1 - pro : pro
+        //             }`;
+        //         },
+        //         onComplete: function () {
+        //             // _this.controls.autoRotate = true;
+        //         },
+        //     }
+        // );
     }
 }

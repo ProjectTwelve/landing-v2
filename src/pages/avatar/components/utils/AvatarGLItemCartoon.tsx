@@ -56,7 +56,8 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
                     const model = gltf.scene;
                     model.position.set(0.06, -3.09, -0.2);
                     model.scale.set(3.5, 3.5, 3.5);
-                    // this.scene.add(model);
+                    this.modelGroup.add(model);
+                    this.scene.add(this.modelGroup);
                     this.mixer = new THREE.AnimationMixer(model);
                     // this.mixer?.clipAction(gltf.animations?.[0])?.play();
                     gltfLoaded = true;
@@ -109,9 +110,10 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
                         }
                     }
                 });
-
+                _this.particlesGroup.visible = false;
+                _this.particlesGroup.add(group);
                 // Group is the original model with a completely black skin
-                _this.scene.add(group)
+                // _this.scene.add(_this.particlesGroup)
 
                 _this.m.emissive = _this.m_color
                 _this.m.emissiveIntensity = 0.3
@@ -126,8 +128,8 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
                     dummy.updateMatrix()
                     _this.cluster.setMatrixAt(i, dummy.matrix)
                 }
-
-                _this.scene.add(_this.cluster)
+                _this.particlesGroup.add(_this.cluster);
+                _this.scene.add(_this.particlesGroup)
             });
 
             loader.load(getPublicAssetPath('files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021_L.fbx'), function (group) {
@@ -169,8 +171,9 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
                     dummy.updateMatrix()
                     _this.cluster_l.setMatrixAt(i, dummy.matrix)
                 }
-
-                _this.scene.add(_this.cluster_l)
+                _this.particlesGroup.visible = false;
+                _this.particlesGroup.add(_this.cluster_l);
+                _this.scene.add(_this.particlesGroup)
             });
 
 

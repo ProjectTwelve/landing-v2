@@ -96,13 +96,13 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         };
 
         function handleToggleParticle(isShowParticle: boolean) {
-            if (isShowParticle) {
-                container?.classList.add('show-particle');
-                container?.classList.remove('hidden-particle');
-            } else {
-                container?.classList.remove('show-particle');
-                container?.classList.add('hidden-particle');
-            }
+            // if (isShowParticle) {
+            //     container?.classList.add('show-particle');
+            //     container?.classList.remove('hidden-particle');
+            // } else {
+            //     container?.classList.remove('show-particle');
+            //     container?.classList.add('hidden-particle');
+            // }
         }
     }, []);
 
