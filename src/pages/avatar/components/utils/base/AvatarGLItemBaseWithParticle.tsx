@@ -122,8 +122,6 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         if (isShow === this.isShowParticle) {
             return;
         }
-        console.log('toggled');
-        
         this.modelGroup.visible = !isShow;
         this.particlesGroup.visible = isShow;
         this.isShowParticle = isShow;
