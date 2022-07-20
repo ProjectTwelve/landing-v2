@@ -49,8 +49,25 @@ export class AvatarGLItemBase extends EventEmitter {
     public renderPass;
     public unrealBloomPass;
 
+    // triangles
+    public trianglePts: THREE.Vector3[] = [];
+    public triangleGeometry = new THREE.BufferGeometry();
+    public trianglePositions: number[] = [];
+    public triangleNormals: number[] = [];
+    public triangleColors: number[] = [];
+    public triangleColor = new THREE.Color();
+    public d = 1.5;
+    public d2 = this.d / 2;
+    public pA = new THREE.Vector3();
+    public pB = new THREE.Vector3();
+    public pC = new THREE.Vector3();
+    public cb = new THREE.Vector3();
+    public ab = new THREE.Vector3();
+
+
     public modelGroup: THREE.Group = new THREE.Group();
     public particlesGroup: THREE.Group = new THREE.Group();
+    public trianglesGroup: THREE.Group = new THREE.Group();
     public light: boolean = false;
 
 

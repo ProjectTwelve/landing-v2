@@ -29,8 +29,8 @@ export const AVATAR_GL_MAP = {
     [AvatarType.CARTOON]: new AvatarGLModel({
         name: AvatarType.CARTOON,
         GLTFURL: 'files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021.gltf',
-        LFBXURL: 'files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021_H.fbx',
-        HFBXURL: 'files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021_L.fbx',
+        LFBXURL: 'files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021_L.fbx',
+        HFBXURL: 'files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021_H.fbx',
         extraNode:
             (<>
                 <div className='avatar-extra-subtitle'>Server DevOps</div>
