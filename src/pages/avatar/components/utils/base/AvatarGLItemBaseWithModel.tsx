@@ -18,7 +18,7 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
     public HFBXURL: string = '';
     public LFBXURL: string = '';
     public name: string = '';
-    public loadingStatus: boolean[] = [false, false, false]
+    public loadingStatus: boolean[] = [false, false, false, false]
 
     constructor(props) {
         super();
@@ -96,7 +96,6 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
         group.traverse(child => {
             if (child instanceof THREE.Mesh) {
                 let pos = child.geometry.attributes.position;
-                console.log(pos.count)
                 for (let i = 1; i < pos.count; i += 10) {
                     v3.fromBufferAttribute(pos, i)
                     v3.x = v3.x * param + 0.06;
@@ -299,18 +298,18 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
                 }
             });
 
-            loader.load(getPublicAssetPath('files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021_H.fbx'), function (group) {
-                _this.dealWithTriangle(group);
-                _this.loadingStatus[1] = true;
+            loader.load(getPublicAssetPath(this.LFBXURL), function (group) {
+                _this.dealWithLParticles(group);
+                _this.loadingStatus[2] = true;
                 if (!includes(_this.loadingStatus, false)) {
                     _this.container.classList.remove('loading');
                     resolve(true);
                 }
             });
 
-            loader.load(getPublicAssetPath(this.LFBXURL), function (group) {
-                _this.dealWithLParticles(group);
-                _this.loadingStatus[2] = true;
+            loader.load(getPublicAssetPath(this.HFBXURL), function (group) {
+                _this.dealWithTriangle(group);
+                _this.loadingStatus[3] = true;
                 if (!includes(_this.loadingStatus, false)) {
                     _this.container.classList.remove('loading');
                     resolve(true);

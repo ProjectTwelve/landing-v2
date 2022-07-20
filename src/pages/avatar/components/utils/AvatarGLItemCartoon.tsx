@@ -85,11 +85,9 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
             const loader = new FBXLoader();
             const _this = this;
             loader.load(getPublicAssetPath('files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021_H.fbx'), function (group) {
-                console.log(group, 'group--')
                 var box3 = new THREE.Box3().setFromObject(group);
                 var size = new THREE.Vector3();
                 box3.getSize(size);
-                console.log(size.x, size.y, size.z, '------');
 
                 const param = 0.035
                 group.scale.set(param, param, param);
@@ -98,7 +96,6 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
                 group.traverse(child => {
                     if (child instanceof THREE.Mesh) {
                         let pos = child.geometry.attributes.position;
-                        console.log(pos, 'pos.count');
 
                         child.material = new THREE.MeshBasicMaterial({ color: "black" })
                         for (let i = 1; i < pos.count; i += 20) {
@@ -147,7 +144,6 @@ export class AvatarGLItemCartoon extends AvatarGLItemBaseWithParticle {
                 group.traverse(child => {
                     if (child instanceof THREE.Mesh) {
                         let pos = child.geometry.attributes.position;
-                        console.log(pos.count)
                         for (let i = 1; i < pos.count; i += 10) {
                             v3.fromBufferAttribute(pos, i)
                             v3.x = v3.x * param + 0.06;

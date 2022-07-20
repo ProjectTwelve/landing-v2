@@ -133,15 +133,16 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
 
     toggleParticle() {
         clearTimeout(this.toggleTimeId);
-        console.log('toggle');
-        console.log('this.showType', this.showType);
-
-        if (this.showType < 2) {
-            this.showType = this.showType + 1;
-        } else {
+        if(this.showType === 0){
+            if(Math.random() < 0.5){
+                this.showType = 1;
+            }else {
+                this.showType = 2;
+            }
+        }else {
             this.showType = 0;
         }
-        console.log(this.showType, showWayArray[this.showType]);
+        
         if (showWayArray[this.showType] === ShowWayEnum.NORMAL) {
             this.modelGroup.visible = true;
             this.particlesGroup.visible = false;
