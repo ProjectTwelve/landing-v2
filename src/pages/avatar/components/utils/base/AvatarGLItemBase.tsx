@@ -189,7 +189,7 @@ export class AvatarGLItemBase extends EventEmitter {
         this.controls.update();
         this.renderer.render(this.scene, this.camera);
         if (this.light) {
-            this.effectComposer.render()
+            this.effectComposer.render();
         }
 
     }

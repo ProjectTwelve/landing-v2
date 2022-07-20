@@ -161,9 +161,13 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
             this.particlesGroup.visible = false;
             this.trianglesGroup.visible = true;
             // TODO 灯光处理
-            this.unrealBloomPass.strength = 1.3;
-            this.unrealBloomPass.radius = 0.5;
-            this.unrealBloomPass.threshold = 0;
+            this.ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            this.unrealBloomPass.strength = 2.7;
+            this.unrealBloomPass.radius = 1;
+            this.unrealBloomPass.threshold = 0.5;
+            // this.unrealBloomPass.strength = 1.3;
+            // this.unrealBloomPass.radius = 0.5;
+            // this.unrealBloomPass.threshold = 0;
             this.light = true;
         } else {
             this.modelGroup.visible = true;

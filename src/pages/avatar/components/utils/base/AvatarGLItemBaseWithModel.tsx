@@ -52,11 +52,10 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
         group.traverse(child => {
             if (child instanceof THREE.Mesh) {
                 let pos = child.geometry.attributes.position;
-                console.log(pos, 'pos.count');
-
                 child.material = new THREE.MeshBasicMaterial({ color: "black" })
                 for (let i = 1; i < pos.count; i += 20) {
-                    v3.fromBufferAttribute(pos, i)
+                    v3.fromBufferAttribute(pos, i);
+                    
                     v3.x = v3.x * param + 0.06;
                     v3.y = v3.y * param - 3.09;
                     v3.z = v3.z * param - 0.2;
@@ -126,14 +125,14 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
         this.scene.add(this.particlesGroup)
     }
 
-    dealWithTriangle(g: THREE.Group) {
-        const group = cloneDeep(g);
+    dealWithTriangle(group: THREE.Group) {
         const box3 = new THREE.Box3().setFromObject(group);
         const size = new THREE.Vector3();
         box3.getSize(size);
-        const param = 60 / Math.max(size.x, size.y, size.z);
+        const param = 0.035;
         group.scale.set(param, param, param);
-        const d = 1.5;
+        group.position.set(0.06, -3.09, -0.2);
+        const d = 0.1;
         const d2 = d / 2;
         let v3 = new THREE.Vector3();
         group.traverse(child => {
@@ -141,10 +140,11 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
                 let pos = child.geometry.attributes.position;
                 child.material = new THREE.MeshBasicMaterial({ color: "black" })
                 for (let i = 1; i < pos.count; i += 40) {
-                    v3.fromBufferAttribute(pos, i)
-                    v3.x = v3.x * param
-                    v3.y = v3.y * param
-                    v3.z = v3.z * param
+                    v3.fromBufferAttribute(pos, i);
+                    
+                    v3.x = v3.x * param + 0.06;
+                    v3.y = v3.y * param - 3.09;
+                    v3.z = v3.z * param - 0.2;
                     this.trianglePts.push(v3.clone());
                 }
             }
@@ -290,6 +290,15 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
             const _this = this;
             loader.load(getPublicAssetPath(this.HFBXURL), function (group) {
                 _this.dealWithHParticles(group);
+                // _this.dealWithTriangle(group);
+                _this.loadingStatus[1] = true;
+                if (!includes(_this.loadingStatus, false)) {
+                    _this.container.classList.remove('loading');
+                    resolve(true);
+                }
+            });
+
+            loader.load(getPublicAssetPath('files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021_H.fbx'), function (group) {
                 _this.dealWithTriangle(group);
                 _this.loadingStatus[1] = true;
                 if (!includes(_this.loadingStatus, false)) {
