@@ -139,7 +139,7 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
             if (child instanceof THREE.Mesh) {
                 let pos = child.geometry.attributes.position;
                 child.material = new THREE.MeshBasicMaterial({ color: "black" })
-                for (let i = 1; i < pos.count; i += 40) {
+                for (let i = 1; i < pos.count; i += 10) {
                     v3.fromBufferAttribute(pos, i);
                     
                     v3.x = v3.x * param + 0.06;
@@ -196,9 +196,9 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
             this.triangleNormals.push(nx, ny, nz);
 
             // colors
-            const vx = (x / 50) + 0.2;
-            const vy = (y / 50) + 0.17;
-            const vz = (z / 50) + 0.95;
+            const vx = (x / 3) + 0.2;
+            const vy = (y / 3) + 0.17;
+            const vz = (z / 3) + 0.95;
 
             // const vx = 0.6;
             // const vy = 0.87;
@@ -225,6 +225,7 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
 
         this.triangleGeometry.computeBoundingSphere();
 
+       
         const material = new THREE.MeshStandardMaterial({
             color: 0xaaaaaa,
             // specular: 0xffffff,

@@ -47,9 +47,9 @@ export class AvatarGLItemBase extends EventEmitter {
     public cluster_l;
     public center;
 
-    public effectComposer;
-    public renderPass;
-    public unrealBloomPass;
+    public effectComposer: EffectComposer;
+    public renderPass: RenderPass;
+    public unrealBloomPass: UnrealBloomPass;
 
     // triangles
     public trianglePts: THREE.Vector3[] = [];
@@ -110,12 +110,11 @@ export class AvatarGLItemBase extends EventEmitter {
 
         // 发光材质显示
         this.renderPass = new RenderPass(this.scene, this.camera)
-        this.unrealBloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 2.7, 1, 0.5)
         this.effectComposer = new EffectComposer(this.renderer)
+        this.unrealBloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 2.7, 1, 0.5)
         this.effectComposer.setSize(window.innerWidth, window.innerHeight)
         this.effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
         this.effectComposer.addPass(this.renderPass)
-        this.effectComposer.addPass(this.unrealBloomPass)
         this.effectComposer.renderToScreen = true;
     }
     load() {

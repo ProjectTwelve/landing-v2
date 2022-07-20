@@ -2,7 +2,9 @@ import { gsap } from 'gsap';
 import * as THREE from 'three';
 import { AvatarGLItemBase } from './AvatarGLItemBase';
 import { GAevent } from '../../../../../utils';
-
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 
 enum ShowWayEnum {
     NORMAL = 'NORMAL',
@@ -133,10 +135,10 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         clearTimeout(this.toggleTimeId);
         console.log('toggle');
         console.log('this.showType', this.showType);
-        
-        if(this.showType < 2){
+
+        if (this.showType < 2) {
             this.showType = this.showType + 1;
-        }else {
+        } else {
             this.showType = 0;
         }
         console.log(this.showType, showWayArray[this.showType]);
@@ -144,30 +146,34 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
             this.modelGroup.visible = true;
             this.particlesGroup.visible = false;
             this.trianglesGroup.visible = false;
-            this.ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
             this.light = false;
         } else if (showWayArray[this.showType] === ShowWayEnum.PARTICLE) {
             this.modelGroup.visible = false;
             this.particlesGroup.visible = true;
             this.trianglesGroup.visible = false;
-            // TODO 灯光处理
-            this.ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            // 灯光处理
+            this.scene.remove(this.ambientLight)
+            this.ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+            this.scene.add(this.ambientLight)
+            this.effectComposer.removePass(this.unrealBloomPass);
             this.unrealBloomPass.strength = 2.7;
             this.unrealBloomPass.radius = 1;
             this.unrealBloomPass.threshold = 0.5;
+            this.effectComposer.addPass(this.unrealBloomPass)
             this.light = true;
         } else if (showWayArray[this.showType] === ShowWayEnum.TRIANGLE) {
             this.modelGroup.visible = false;
             this.particlesGroup.visible = false;
             this.trianglesGroup.visible = true;
-            // TODO 灯光处理
+            // 灯光处理
+            this.scene.remove(this.ambientLight)
             this.ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-            this.unrealBloomPass.strength = 2.7;
-            this.unrealBloomPass.radius = 1;
-            this.unrealBloomPass.threshold = 0.5;
-            // this.unrealBloomPass.strength = 1.3;
-            // this.unrealBloomPass.radius = 0.5;
-            // this.unrealBloomPass.threshold = 0;
+            this.scene.add(this.ambientLight);
+            this.effectComposer.removePass(this.unrealBloomPass);
+            this.unrealBloomPass.strength = 2.4;
+            this.unrealBloomPass.radius = 0.5;
+            this.unrealBloomPass.threshold = 0;
+            this.effectComposer.addPass(this.unrealBloomPass);
             this.light = true;
         } else {
             this.modelGroup.visible = true;
@@ -175,7 +181,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
             this.trianglesGroup.visible = false;
             this.light = false;
         }
-        
+
         // this.emit('toggled');
 
     }
