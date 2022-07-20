@@ -88,13 +88,9 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         AVATAR_GL_CYCLE.load();
 
         AVATAR_GL_ARRAY.forEach((v) => {
-            v.on('enter', ({ isShowParticle }) =>
-                handleToggleParticle(isShowParticle)
-            );
-            v.on('toggled', ({ isShowParticle }) => {
-                handleToggleParticle(isShowParticle);
+            v.on('toggled', () => {
                 AVATAR_GL_ARRAY.forEach((av) =>
-                    av.toggleParticle(isShowParticle)
+                    av.toggleParticle()
                 );
             });
         });
@@ -107,15 +103,6 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             });
         };
 
-        function handleToggleParticle(isShowParticle: boolean) {
-            // if (isShowParticle) {
-            //     container?.classList.add('show-particle');
-            //     container?.classList.remove('hidden-particle');
-            // } else {
-            //     container?.classList.remove('show-particle');
-            //     container?.classList.add('hidden-particle');
-            // }
-        }
     }, []);
 
     usePageVisible(PageType.Avatar, () => {

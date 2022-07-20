@@ -1,6 +1,16 @@
 import { gsap } from 'gsap';
+import * as THREE from 'three';
 import { AvatarGLItemBase } from './AvatarGLItemBase';
 import { GAevent } from '../../../../../utils';
+
+
+enum ShowWayEnum {
+    NORMAL = 'NORMAL',
+    PARTICLE = 'PARTICLE',
+    TRIANGLE = 'TRIANGLE',
+}
+type ShowWayType = ShowWayEnum.NORMAL | ShowWayEnum.PARTICLE | ShowWayEnum.TRIANGLE;
+const showWayArray = Object.values(ShowWayEnum);
 
 export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     public particleCanvasWidth = 1920;
@@ -17,6 +27,8 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     private toggleTimeId = 0;
 
     private isShowParticle = false;
+
+    private showType: number = 0;
 
     constructor() {
         super();
@@ -35,7 +47,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
             downY = e.clientY;
         });
         this.container.addEventListener('pointerup', (e) => {
-            GAevent('event','Infra-switch');
+            GAevent('event', 'Infra-switch');
             if (
                 downTime &&
                 +new Date() - downTime < 300 &&
@@ -43,7 +55,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
                 Math.abs(e.clientY - downY) < 50
             ) {
                 // 没有移动太远，表明是点击事件。以此来兼容 gl 的拖动
-                this.toggleParticle(!this.isShowParticle);
+                this.toggleParticle();
             }
         });
         this.btnWrap.addEventListener('mouseenter', () => {
@@ -65,7 +77,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         super.enter();
         // 4秒自动切换
         this.toggleTimeId = window.setTimeout(() => {
-            this.toggleParticle(false);
+            this.toggleParticle();
         }, 4000);
     }
     leave() {
@@ -79,7 +91,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
                 this.imageDataArray.length +
                 this.imageDataArray.length +
                 0) %
-                this.imageDataArray.length
+            this.imageDataArray.length
         );
     }
 
@@ -117,44 +129,50 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         this.canvas.height = this.particleCanvasHeight;
     }
 
-    toggleParticle(isShow) {
+    toggleParticle() {
         clearTimeout(this.toggleTimeId);
-        if (isShow === this.isShowParticle) {
-            return;
+        console.log('toggle');
+        console.log('this.showType', this.showType);
+        
+        if(this.showType < 2){
+            this.showType = this.showType + 1;
+        }else {
+            this.showType = 0;
         }
-        this.modelGroup.visible = !isShow;
-        this.particlesGroup.visible = isShow;
-        this.isShowParticle = isShow;
-        this.light = !this.light;
-        this.emit('toggled', { isShowParticle: this.isShowParticle });
-        const _this = this;
-        // gsap.to(
-        //     {},
-        //     {
-        //         duration: 0.4,
-        //         ease: 'none',
-        //         onStart: function () {
-        //             // _this.controls.autoRotate = false;
-        //         },
-        //         onUpdate: function () {
-        //             const pro = this.progress();
-        //             // _this.canvasWrap.style.height = `${
-        //             //     (_this.isShowParticle ? pro : 1 - pro) * 100
-        //             // }%`;
-        //             // _this.rendererWrap.style.height = `${
-        //             //     (_this.isShowParticle ? 1 - pro : pro) * 100
-        //             // }%`;
-        //             _this.canvasWrap.style.opacity = `${
-        //                 _this.isShowParticle ? pro : 1 - pro
-        //             }`;
-        //             _this.rendererWrap.style.opacity = `${
-        //                 _this.isShowParticle ? 1 - pro : pro
-        //             }`;
-        //         },
-        //         onComplete: function () {
-        //             // _this.controls.autoRotate = true;
-        //         },
-        //     }
-        // );
+        console.log(this.showType, showWayArray[this.showType]);
+        if (showWayArray[this.showType] === ShowWayEnum.NORMAL) {
+            this.modelGroup.visible = true;
+            this.particlesGroup.visible = false;
+            this.trianglesGroup.visible = false;
+            this.ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+            this.light = false;
+        } else if (showWayArray[this.showType] === ShowWayEnum.PARTICLE) {
+            this.modelGroup.visible = false;
+            this.particlesGroup.visible = true;
+            this.trianglesGroup.visible = false;
+            // TODO 灯光处理
+            this.ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            this.unrealBloomPass.strength = 2.7;
+            this.unrealBloomPass.radius = 1;
+            this.unrealBloomPass.threshold = 0.5;
+            this.light = true;
+        } else if (showWayArray[this.showType] === ShowWayEnum.TRIANGLE) {
+            this.modelGroup.visible = false;
+            this.particlesGroup.visible = false;
+            this.trianglesGroup.visible = true;
+            // TODO 灯光处理
+            this.unrealBloomPass.strength = 1.3;
+            this.unrealBloomPass.radius = 0.5;
+            this.unrealBloomPass.threshold = 0;
+            this.light = true;
+        } else {
+            this.modelGroup.visible = true;
+            this.particlesGroup.visible = false;
+            this.trianglesGroup.visible = false;
+            this.light = false;
+        }
+        
+        // this.emit('toggled');
+
     }
 }

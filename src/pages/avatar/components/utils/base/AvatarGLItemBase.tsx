@@ -26,6 +26,8 @@ export class AvatarGLItemBase extends EventEmitter {
     protected mixer?: THREE.AnimationMixer;
     protected clock = new THREE.Clock();
 
+    public ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+
     // For cluster
     // All shining particles(tiny) are included in this cluster 
     public g = new THREE.SphereBufferGeometry(0.007);
@@ -56,8 +58,7 @@ export class AvatarGLItemBase extends EventEmitter {
     public triangleNormals: number[] = [];
     public triangleColors: number[] = [];
     public triangleColor = new THREE.Color();
-    public d = 1.5;
-    public d2 = this.d / 2;
+
     public pA = new THREE.Vector3();
     public pB = new THREE.Vector3();
     public pC = new THREE.Vector3();
