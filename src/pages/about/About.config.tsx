@@ -142,7 +142,7 @@ export interface PartnerInfo {
     links: any
 }
 
-export const ABOUT_PARTNERS : PartnerInfo[] = [
+export const ABOUT_PARTNERS: PartnerInfo[] = [
     {
         img: require('../../assets/about/partner-members/1.png'),
         name: <>Boyang <span className='sep'>|</span> Founder</>,
@@ -155,195 +155,6 @@ export const ABOUT_PARTNERS : PartnerInfo[] = [
         ),
         links: {
             linkedin: 'https://www.linkedin.com/in/wangboyang/',
-            twitter: null,
-            github: null
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/2.png'),
-        name: 'Maciej Burno',
-        desc: (
-            <>
-                Game Veteran. First game:
-                <br />
-                Contra, most /played: WoW
-            </>
-        ),
-        links: {
-            linkedin: 'https://www.linkedin.com/in/maciejburno/',
-            twitter: null,
-            github: null
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/3.png'),
-        name: 'Amber Drolma',
-        desc: (
-            <>
-                Capoeirista CBLA Clan;
-                <br />
-                Ecstatic dance Koh Phangan
-            </>
-        ),
-        links: {
-            linkedin: 'https://www.linkedin.com/in/kelsangdrolma/',
-            twitter: null,
-            github: null
-        },
-    },
-
-    {
-        img: require('../../assets/about/partner-members/4.png'),
-        name: 'RK',
-        desc: (
-            <>
-                DOTA2 4000+hours; 
-                <br />
-                WoW FD race member
-            </>
-        ),
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/5.png'),
-        name: 'Garden',
-        desc: (
-            <>
-                RPG lover, Mixed-race baby, 
-                <br />
-                Linguistics & football enthusiast
-            </>
-        ),
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/6.png'),
-        name: 'Blue Dragon',
-        desc: (
-            <>
-                Volcano lover; 
-                <br />
-                Cat slave
-            </>
-        ),
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/7.png'),
-        name: 'Yerim Choi',
-        desc: (
-            <>
-                Crazy Arcade was the last game I played, but believe me I love games
-            </>
-        ),
-        links: {
-            linkedin: 'https://www.linkedin.com/in/yerim-choi-52ba02200/',
-            twitter: null,
-            github: null
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/8.png'),
-        name: 'Chasey',
-        desc: (
-            <>
-                Pray return to The Walking Sands
-            </>
-        ),
-        links: {
-            linkedin: 'https://www.linkedin.com/in/yoko-y-94a99115b/',
-            twitter: null,
-            github: null
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/9.png'),
-        name: 'River',
-        desc: (
-            <>
-                Favorite game: WOW;
-                <br/>
-                Owner of all soul beasts
-            </>
-        ),
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: 'https://github.com/zh19910202'
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/10.png'),
-        name: 'Dongbo',
-        desc: (
-            <>
-                Game addict for 2 decades;
-                <br/>
-                Guild master
-            </>
-        ),
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/11.png'),
-        name: 'snow of tirisfal',
-        desc: (
-            <>
-                otaku,
-                <br/>
-                software engineer
-            </>
-        ),
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/12.png'),
-        name: 'Noy',
-        desc: (
-            <>
-                Folk dancer,
-                <br/>
-                newbie but junkie
-            </>
-        ),
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: 'https://github.com/Jerrywang959'
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/13.png'),
-        name: 'Anthony Lau',
-        desc: (
-            <>
-                Astrophysics enthusiast; 
-                <br/>
-                Story collector
-            </>
-        ),
-        links: {
-            linkedin: null,
             twitter: null,
             github: null
         },
@@ -364,11 +175,13 @@ export const ABOUT_PARTNERS : PartnerInfo[] = [
         },
     },
     {
-        img: require('../../assets/about/partner-members/15.png'),
-        name: 'Garfield',
+        img: require('../../assets/about/partner-members/10.png'),
+        name: 'Dongbo',
         desc: (
             <>
-                To live is to recognize life
+                Game addict for 2 decades;
+                <br />
+                Guild master
             </>
         ),
         links: {
@@ -378,29 +191,29 @@ export const ABOUT_PARTNERS : PartnerInfo[] = [
         },
     },
     {
-        img: require('../../assets/about/partner-members/16.png'),
-        name: 'Grace.J',
+        img: require('../../assets/about/partner-members/12.png'),
+        name: 'Noy',
         desc: (
             <>
-                metaphysics designer; 
-                <br/>
-                caffiene addict
+                Folk dancer,
+                <br />
+                newbie but junkie
             </>
         ),
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: 'https://github.com/Jerrywang959'
         },
     },
     {
-        img: require('../../assets/about/partner-members/17.png'),
-        name: 'Robin',
+        img: require('../../assets/about/partner-members/11.png'),
+        name: 'snow of tirisfal',
         desc: (
             <>
-                Encoder and decoder
-                <br/>
-                Digital and IRL nomad
+                otaku,
+                <br />
+                software engineer
             </>
         ),
         links: {
@@ -424,12 +237,44 @@ export const ABOUT_PARTNERS : PartnerInfo[] = [
         },
     },
     {
+        img: require('../../assets/about/partner-members/9.png'),
+        name: 'River',
+        desc: (
+            <>
+                Favorite game: WOW;
+                <br />
+                Owner of all soul beasts
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: 'https://github.com/zh19910202'
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/5.png'),
+        name: 'Garden',
+        desc: (
+            <>
+                RPG lover, Mixed-race baby,
+                <br />
+                Linguistics & football enthusiast
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null
+        },
+    },
+    {
         img: require('../../assets/about/partner-members/19.png'),
         name: 'Ramping',
         desc: (
             <>
                 Psychologically Revacholian;
-                <br/>
+                <br />
                 TRUE Godardiste
             </>
         ),
@@ -440,16 +285,108 @@ export const ABOUT_PARTNERS : PartnerInfo[] = [
         },
     },
     {
-        img: require('../../assets/about/partner-members/20.png'),
-        name: 'KK',
+        img: require('../../assets/about/partner-members/16.png'),
+        name: 'Grace.J',
         desc: (
             <>
-                A fanatic antique collector with a dreamlike collection of Victorian parasols.
+                metaphysics designer;
+                <br />
+                caffiene addict
             </>
         ),
         links: {
             linkedin: null,
-            twitter: 'https://twitter.com/ZeXinKang1',
+            twitter: null,
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/15.png'),
+        name: 'Garfield',
+        desc: (
+            <>
+                To live is to recognize life
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/7.png'),
+        name: 'Yerim Choi',
+        desc: (
+            <>
+                Crazy Arcade was the last game I played, but believe me I love games
+            </>
+        ),
+        links: {
+            linkedin: 'https://www.linkedin.com/in/yerim-choi-52ba02200/',
+            twitter: null,
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/13.png'),
+        name: 'Anthony Lau',
+        desc: (
+            <>
+                Astrophysics enthusiast;
+                <br />
+                Story collector
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/3.png'),
+        name: 'Amber Drolma',
+        desc: (
+            <>
+                Capoeirista CBLA Clan;
+                <br />
+                Ecstatic dance Koh Phangan
+            </>
+        ),
+        links: {
+            linkedin: 'https://www.linkedin.com/in/kelsangdrolma/',
+            twitter: null,
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/23.png'),
+        name: 'Ruby',
+        desc: (
+            <>
+                Enjoy cooking in Zelda...
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/4.png'),
+        name: 'RK',
+        desc: (
+            <>
+                DOTA2 4000+hours;
+                <br />
+                WoW FD race member
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
             github: null
         },
     },
@@ -482,11 +419,73 @@ export const ABOUT_PARTNERS : PartnerInfo[] = [
         },
     },
     {
-        img: require('../../assets/about/partner-members/23.png'),
-        name: 'Ruby',
+        img: require('../../assets/about/partner-members/2.png'),
+        name: 'Maciej Burno',
         desc: (
             <>
-                Enjoy cooking in Zelda...
+                Game Veteran. First game:
+                <br />
+                Contra, most /played: WoW
+            </>
+        ),
+        links: {
+            linkedin: 'https://www.linkedin.com/in/maciejburno/',
+            twitter: null,
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/6.png'),
+        name: 'Blue Dragon',
+        desc: (
+            <>
+                Volcano lover;
+                <br />
+                Cat slave
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/8.png'),
+        name: 'Chasey',
+        desc: (
+            <>
+                Pray return to The Walking Sands
+            </>
+        ),
+        links: {
+            linkedin: 'https://www.linkedin.com/in/yoko-y-94a99115b/',
+            twitter: null,
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/20.png'),
+        name: 'KK',
+        desc: (
+            <>
+                A fanatic antique collector with a dreamlike collection of Victorian parasols.
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: 'https://twitter.com/ZeXinKang1',
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/17.png'),
+        name: 'Robin',
+        desc: (
+            <>
+                Encoder and decoder
+                <br />
+                Digital and IRL nomad
             </>
         ),
         links: {
