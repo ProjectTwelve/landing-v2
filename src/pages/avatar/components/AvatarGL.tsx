@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { gsap } from 'gsap';
-import { first, shuffle } from 'lodash-es';
+import { first, shuffle, slice } from 'lodash-es';
 import React, {
     forwardRef,
     useEffect,
@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import { PageType } from '../../app/App.config';
 import { loadingEE, usePageVisible } from '../../app/App.utils';
-import { AvatarType } from '../Avatar.config';
+import { AvatarType, AVATAR_GL_INFO_MAP } from '../Avatar.config';
 import './AvatarGL.less';
 import { AvatarGLItemCartoon } from './utils/AvatarGLItemCartoon';
 import { AvatarGLItemDokv } from './utils/AvatarGLItemDokv';
@@ -24,20 +24,15 @@ export interface AvatarGLRef {
 }
 
 export const AVATAR_GL_MAP = {
-    [AvatarType.DOKV]: new AvatarGLItemDokv(),
-    [AvatarType.LOWPOLY]: new AvatarGLItemLowpoly(),
-    [AvatarType.CARTOON]: new AvatarGLModel({
-        name: AvatarType.CARTOON,
-        GLTFURL: 'files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021.gltf',
-        LFBXURL: 'files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021_L.fbx',
-        HFBXURL: 'files/avatar/pose/SK_Cartoon_Female_021/SK_Cartoon_Female_021_H.fbx',
-        extraNode:
-            (<>
-                <div className='avatar-extra-subtitle'>Server DevOps</div>
-                <div className='avatar-extra-subtitle'>Data Analytics</div>
-                <div className='avatar-extra-subtitle'>Community / Social</div>
-            </>)
-    }),
+    [AvatarType.Dokv]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Dokv]),
+    [AvatarType.Cartoon]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Cartoon]),
+    [AvatarType.Lowpoly]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Lowpoly]),
+    [AvatarType.SK_Cartoon_Female_021]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_021]),
+    [AvatarType.SK_Cartoon_Female_029]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_029]),
+    [AvatarType.SK_Cartoon_Female_059]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_059]),
+    [AvatarType.SK_Lowpoly_Male_002]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Lowpoly_Male_002]),
+    [AvatarType.SK_Lowpoly_Male_028]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Lowpoly_Male_028]),
+    [AvatarType.SK_Lowpoly_Male_040]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Lowpoly_Male_040]),
 };
 
 export const AVATAR_GL_CYCLE = new AvatarCycle();
@@ -45,9 +40,10 @@ export const AVATAR_GL_CYCLE = new AvatarCycle();
 /** 决定要显示的 avatar 的顺序（第 0 个会优先加载，其他的会在界面进入后加载） */
 const AVATAR_GL_KEYS = Object.keys(AVATAR_GL_MAP) as AvatarType[];
 
-// 随机打乱的数组，打开注释即可使用
-// const AVATAR_GL_KEYS = shuffle(Object.keys(AVATAR_GL_MAP));
+
+
 const AVATAR_GL_ARRAY = AVATAR_GL_KEYS.map((k) => AVATAR_GL_MAP[k]);
+
 
 export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -167,16 +163,21 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             <div className='avatar-extra'>
                 {AVATAR_GL_KEYS.map((key) => {
                     const gl = AVATAR_GL_MAP[key];
-                    return (
-                        <div
-                            className={classnames('avatar-extra-item', {
-                                active: activatedRef.current === key,
-                            })}
-                            key={key}
-                        >
-                            {gl.extraNode}
-                        </div>
-                    );
+                    if (gl.extraNode) {
+                        return (
+                            <div
+                                className={classnames('avatar-extra-item', {
+                                    active: activatedRef.current === key,
+                                })}
+                                key={key}
+                            >
+                                {gl.extraNode}
+                            </div>
+                        );
+                    }else {
+                        return null
+                    }
+
                 })}
             </div>
         </div>

@@ -7,11 +7,18 @@ import classnames from 'classnames';
 import { usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
 import gsap from 'gsap';
-import { first } from 'lodash-es';
+import { first, shuffle } from 'lodash-es';
+
+
+const AVATAR_GL_KEYS_FIRST_THREE = AvatarTypeArray.slice(0, 3);
+const AVATAR_GL_KEYS_REST = AvatarTypeArray.slice(3, AvatarTypeArray.length);
+// 随机打乱的数组，打开注释即可使用
+const AVATAR_GL_KEYS_SHUFFLE_REST = shuffle(AVATAR_GL_KEYS_REST);
+const AVATAR_GL_KEYS = AVATAR_GL_KEYS_FIRST_THREE.concat(AVATAR_GL_KEYS_SHUFFLE_REST);
 
 export const Avatar: React.FC = () => {
     const avatarGLRef = useRef<AvatarGLRef>(null);
-    const [currentAvatar, setCurrentAvatar] = useState<AvatarType | null>(AvatarType.CARTOON);
+    const [currentAvatar, setCurrentAvatar] = useState<AvatarType | null>(AvatarType.Dokv);
 
     usePageVisible(PageType.Avatar, () => {
         let timeId: number;
@@ -35,7 +42,7 @@ export const Avatar: React.FC = () => {
 
         return {
             onVisible: () => {
-                GAevent('webview','Infra-webview');
+                GAevent('webview', 'Infra-webview');
                 handleTouchUp();
                 window.addEventListener('pointerdown', handleTouchDown);
                 window.addEventListener('pointerup', handleTouchUp);
@@ -49,7 +56,7 @@ export const Avatar: React.FC = () => {
                     first(Object.keys(AVATAR_GL_MAP)) as AvatarType
                 );
                 const tl = gsap.timeline({
-                    onComplete: () => {},
+                    onComplete: () => { },
                 });
                 tl.fromTo(
                     '.page-wrap-avatar',
@@ -131,19 +138,24 @@ export const Avatar: React.FC = () => {
                 </div>
             </div>
             <div className='avatar__nav'>
-                {AvatarTypeArray.map((type) => {
+                {AVATAR_GL_KEYS.map((type, i) => {
                     const activated = type === currentAvatar;
-                    return (
-                        <div
-                            className={classnames('avatar__nav-item', {
-                                active: activated,
-                            })}
-                            key={type}
-                            onClick={() => {
-                                setCurrentAvatar(type);
-                            }}
-                        ></div>
-                    );
+                    if (i <= 2) {
+                        return (
+                            <div
+                                className={classnames('avatar__nav-item', {
+                                    active: activated,
+                                })}
+                                key={type}
+                                onClick={() => {
+                                    setCurrentAvatar(type);
+                                }}
+                            ></div>
+                        );
+                    } else {
+                        return null
+                    }
+
                 })}
             </div>
         </div>
@@ -152,20 +164,20 @@ export const Avatar: React.FC = () => {
     function handlePrev() {
         setCurrentAvatar((old) => {
             const newIndex = old
-                ? (AvatarTypeArray.indexOf(old) - 1 + AvatarTypeArray.length) %
-                      AvatarTypeArray.length || 0
+                ? (AVATAR_GL_KEYS.indexOf(old) - 1 + AVATAR_GL_KEYS.length) %
+                AVATAR_GL_KEYS.length || 0
                 : 0;
-            return AvatarTypeArray[newIndex];
+            return AVATAR_GL_KEYS[newIndex];
         });
     }
 
     function handleNext() {
         setCurrentAvatar((old) => {
             const newIndex = old
-                ? (AvatarTypeArray.indexOf(old) + 1 + AvatarTypeArray.length) %
-                      AvatarTypeArray.length || 0
+                ? (AVATAR_GL_KEYS.indexOf(old) + 1 + AVATAR_GL_KEYS.length) %
+                AVATAR_GL_KEYS.length || 0
                 : 0;
-            return AvatarTypeArray[newIndex];
+            return AVATAR_GL_KEYS[newIndex];
         });
     }
 };

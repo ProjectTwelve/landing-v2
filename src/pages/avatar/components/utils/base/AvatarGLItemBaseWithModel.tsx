@@ -18,16 +18,35 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
     public HFBXURL: string = '';
     public LFBXURL: string = '';
     public name: string = '';
-    public loadingStatus: boolean[] = [false, false, false, false]
+    public loadingStatus: boolean[] = [false, false, false, false];
+    // 点的密度
+    public HDensity:number = 40;
+    public LDensity:number = 40;
+    public TDensity:number = 40;
+    public scale: number = 0.035;
+    public gltfScale: number = 3;
+    public position = {
+        x: 0,
+        y: 0,
+        z: 0,
+    }
+
+
 
     constructor(props) {
         super();
-        const { extraNode, GLTFURL, HFBXURL, LFBXURL, name } = props;
+        const { extraNode, GLTFURL, HFBXURL, LFBXURL, name, HDensity, LDensity, TDensity, scale, position, gltfScale } = props;
         this.extraNode = extraNode;
         this.GLTFURL = GLTFURL;
         this.HFBXURL = HFBXURL;
         this.LFBXURL = LFBXURL;
         this.name = name;
+        this.HDensity = HDensity;
+        this.LDensity = LDensity;
+        this.TDensity = TDensity;
+        this.scale = scale;
+        this.position = position;
+        this.gltfScale = gltfScale;
     }
 
     getParticleIndex() {
@@ -44,10 +63,8 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
         const box3 = new THREE.Box3().setFromObject(group);
         const size = new THREE.Vector3();
         box3.getSize(size);
-
-        const param = 0.035;
-        group.scale.set(param, param, param);
-        group.position.set(0.06, -3.09, -0.2);
+        group.scale.set(this.scale, this.scale, this.scale);
+        group.position.set(this.position.x, this.position.y, this.position.z);
         let v3 = new THREE.Vector3();
         this.HFBXModel = group;
         group.traverse(child => {
@@ -55,12 +72,12 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
                 let pos = child.geometry.attributes.position;
                 child.material = new THREE.MeshBasicMaterial({ color: "#000000", opacity: 0, transparent: true });
                 // child.material.visible = false;
-                for (let i = 1; i < pos.count; i += 20) {
+                for (let i = 1; i < pos.count; i += this.HDensity) {
                     v3.fromBufferAttribute(pos, i);
 
-                    v3.x = v3.x * param + 0.06;
-                    v3.y = v3.y * param - 3.09;
-                    v3.z = v3.z * param - 0.2;
+                    v3.x = v3.x * this.scale + this.position.x;
+                    v3.y = v3.y * this.scale + this.position.y;
+                    v3.z = v3.z * this.scale + this.position.z;
                     this.pts.push(v3.clone());
                 }
             }
@@ -85,6 +102,7 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
             this.cluster.setMatrixAt(i, dummy.matrix)
         }
         this.particlesGroup.add(this.cluster);
+        this.particlesGroup.visible = false;
         this.scene.add(this.particlesGroup);
     }
 
@@ -92,9 +110,8 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
         const box3 = new THREE.Box3().setFromObject(group);
         const size = new THREE.Vector3();
         box3.getSize(size);
-        const param = 0.035;
-        group.scale.set(param, param, param);
-        group.position.set(0.06, -3.09, -0.2);
+        group.scale.set(this.scale, this.scale, this.scale);
+        group.position.set(this.position.x, this.position.y, this.position.z);
         this.center = new THREE.Vector3();
         box3.getCenter(this.center);
 
@@ -102,11 +119,11 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
         group.traverse(child => {
             if (child instanceof THREE.Mesh) {
                 let pos = child.geometry.attributes.position;
-                for (let i = 1; i < pos.count; i += 10) {
+                for (let i = 1; i < pos.count; i += this.LDensity) {
                     v3.fromBufferAttribute(pos, i)
-                    v3.x = v3.x * param + 0.06;
-                    v3.y = v3.y * param - 3.09;
-                    v3.z = v3.z * param - 0.2;
+                    v3.x = v3.x * this.scale + this.position.x;
+                    v3.y = v3.y * this.scale + this.position.y;
+                    v3.z = v3.z * this.scale + this.position.z;
                     this.pts_l.push(v3.clone());
                 }
             }
@@ -128,6 +145,7 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
             this.cluster_l.setMatrixAt(i, dummy.matrix)
         }
         this.particlesGroup.add(this.cluster_l);
+        this.particlesGroup.visible = false;
         this.scene.add(this.particlesGroup)
     }
 
@@ -135,9 +153,8 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
         const box3 = new THREE.Box3().setFromObject(group);
         const size = new THREE.Vector3();
         box3.getSize(size);
-        const param = 0.035;
-        group.scale.set(param, param, param);
-        group.position.set(0.06, -3.09, -0.2);
+        group.scale.set(this.scale, this.scale, this.scale);
+        group.position.set(this.position.x, this.position.y, this.position.z);
         const d = 0.1;
         const d2 = d / 2;
         let v3 = new THREE.Vector3();
@@ -146,12 +163,12 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
             if (child instanceof THREE.Mesh) {
                 let pos = child.geometry.attributes.position;
                 child.material = new THREE.MeshBasicMaterial({ color: "#000000", opacity: 0, transparent: true })
-                for (let i = 1; i < pos.count; i += 10) {
+                for (let i = 1; i < pos.count; i += this.TDensity) {
                     v3.fromBufferAttribute(pos, i);
 
-                    v3.x = v3.x * param + 0.06;
-                    v3.y = v3.y * param - 3.09;
-                    v3.z = v3.z * param - 0.2;
+                    v3.x = v3.x * this.scale + this.position.x;
+                    v3.y = v3.y * this.scale + this.position.y;
+                    v3.z = v3.z * this.scale + this.position.z;
                     this.trianglePts.push(v3.clone());
                 }
             }
@@ -247,6 +264,7 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
         this.triangleMesh = mesh;
 
         this.trianglesGroup.add(mesh);
+        this.trianglesGroup.visible = false;
         this.scene.add(this.trianglesGroup);
 
     }
@@ -278,8 +296,8 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
                             material.opacity = 1;
                         }
                     });
-                    model.position.set(0.06, -3.09, -0.2);
-                    model.scale.set(3.5, 3.5, 3.5);
+                    model.position.set(this.position.x, this.position.y, this.position.z);
+                    model.scale.set(this.gltfScale, this.gltfScale, this.gltfScale);
                     this.modelGroup.add(model);
                     this.scene.add(this.modelGroup);
                     this.mixer = new THREE.AnimationMixer(model);
