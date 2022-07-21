@@ -126,6 +126,7 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
             dummy.updateMatrix()
             this.cluster_l.setMatrixAt(i, dummy.matrix)
         }
+        this.clusterPoints = dummy;
         this.particlesGroup.add(this.cluster_l);
         this.scene.add(this.particlesGroup)
     }

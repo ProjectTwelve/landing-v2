@@ -37,6 +37,7 @@ export class AvatarGLItemBase extends EventEmitter {
     public m_color = new THREE.Color("#99ddff");
     public pts: THREE.Vector3[] = [];
     public cluster;
+    public clusterPoints;
 
     // For cluster
     // All shining particles(large) are included in this cluster 

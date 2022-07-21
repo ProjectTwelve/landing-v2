@@ -33,6 +33,8 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
 
     private showType: number = 0;
 
+    public easingEffect = TWEEN.Easing.Quadratic.InOut;
+
     constructor() {
         super();
         this.canvas.style.pointerEvents = 'none';
@@ -146,21 +148,23 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
 
         if (showWayArray[this.showType] === ShowWayEnum.NORMAL) {
             // 粒子or三角慢慢消失
-            this.modelOpacity(this.HFBXModel, 0, 1500);
-            new TWEEN.Tween(this.m).to({ opacity: 0 }, 1500).start();
-            new TWEEN.Tween(this.m_l).to({ opacity: 0 }, 1500).start();
-
-            this.modelOpacity(this.HFBX_TModel, 0, 1500);
-            new TWEEN.Tween(this.triangleMesh.material).to({ opacity: 0 }, 1500).start();
-
-            setTimeout(() => {
-                this.light = false;
+            this.modelOpacity(this.HFBXModel, 0, 1000);
+            new TWEEN.Tween(this.m).to({ opacity: 0 }, 1000).easing(this.easingEffect).onComplete(() => {
                 this.particlesGroup.visible = false;
                 this.trianglesGroup.visible = false;
-                this.modelGroup.visible = true;
-                this.modelOpacity(this.gltfModel, 1, 1500);
-            }, 500)
+                this.light = false;
+            }).start();
+            new TWEEN.Tween(this.m_l).to({ opacity: 0 }, 1000).easing(this.easingEffect).start();
 
+            this.modelOpacity(this.HFBX_TModel, 0, 1000);
+            new TWEEN.Tween(this.triangleMesh.material).to({ opacity: 0 }, 1000).easing(this.easingEffect).onComplete(() => {
+                this.trianglesGroup.visible = false;
+            }).start();
+
+            setTimeout(() => {
+                this.modelGroup.visible = true;
+                this.modelOpacity(this.gltfModel, 1, 1000);
+            }, 500)
         } else if (showWayArray[this.showType] === ShowWayEnum.PARTICLE) {
             this.modelOpacity(this.gltfModel, 0);
             setTimeout(() => {
@@ -177,15 +181,15 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
                 this.effectComposer.addPass(this.unrealBloomPass)
                 this.light = true;
                 this.modelOpacity(this.HFBXModel, 1, 0);
-                new TWEEN.Tween(this.m).to({ opacity: 1 }, 1500).start();
-                new TWEEN.Tween(this.m_l).to({ opacity: 1 }, 1500).start();
+                new TWEEN.Tween(this.m).to({ opacity: 1 }, 1500).easing(this.easingEffect).start();
+                new TWEEN.Tween(this.m_l).to({ opacity: 1 }, 1500).easing(this.easingEffect).start();
 
-            }, 1000)
+            }, 500)
             // this.particlesGroup.visible = true;
 
             this.trianglesGroup.visible = false;
             this.modelOpacity(this.HFBX_TModel, 0, 0);
-            new TWEEN.Tween(this.triangleMesh.material).to({ opacity: 0 }, 0).start();
+            new TWEEN.Tween(this.triangleMesh.material).to({ opacity: 0 }, 0).easing(this.easingEffect).start();
 
         } else if (showWayArray[this.showType] === ShowWayEnum.TRIANGLE) {
             // gltf 模型1.5s消失
@@ -205,39 +209,48 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
                 this.light = true;
                 // 三角数据
                 this.modelOpacity(this.HFBX_TModel, 1, 0);
-                new TWEEN.Tween(this.triangleMesh.material).to({ opacity: 1 }, 1500).start();
-                new TWEEN.Tween(this.triangleMesh.material).to({ opacity: 1 }, 1500).start();
-            }, 1000)
+                new TWEEN.Tween(this.triangleMesh.material).to({ opacity: 1 }, 1500).easing(this.easingEffect).start();
+                new TWEEN.Tween(this.triangleMesh.material).to({ opacity: 1 }, 1500).easing(this.easingEffect).start();
+            }, 500)
             this.particlesGroup.visible = false;
             this.modelOpacity(this.HFBXModel, 0, 0);
             new TWEEN.Tween(this.m).to({ opacity: 0 }, 0).start();
             new TWEEN.Tween(this.m_l).to({ opacity: 0 }, 0).start();
 
         } else {
-            this.modelOpacity(this.HFBXModel, 0, 1500);
-            new TWEEN.Tween(this.m).to({ opacity: 0 }, 1500).start();
-            new TWEEN.Tween(this.m_l).to({ opacity: 0 }, 1500).start();
-
-            this.modelOpacity(this.HFBX_TModel, 0, 1500);
-            new TWEEN.Tween(this.triangleMesh.material).to({ opacity: 0 }, 1500).start();
-
-            setTimeout(() => {
-                this.light = false;
+            this.modelOpacity(this.HFBXModel, 0, 1000);
+            new TWEEN.Tween(this.m).to({ opacity: 0 }, 1000).easing(this.easingEffect).onComplete(() => {
                 this.particlesGroup.visible = false;
                 this.trianglesGroup.visible = false;
+                this.light = false;
+            }).start();
+            new TWEEN.Tween(this.m_l).to({ opacity: 0 }, 1000).easing(this.easingEffect).start();
+
+            this.modelOpacity(this.HFBX_TModel, 0, 1000);
+            new TWEEN.Tween(this.triangleMesh.material).to({ opacity: 0 }, 1000).easing(this.easingEffect).onComplete(() => {
+                this.trianglesGroup.visible = false;
+            }).start();
+
+            setTimeout(() => {
                 this.modelGroup.visible = true;
-                this.modelOpacity(this.gltfModel, 1, 1500);
-            }, 1000)
+                this.modelOpacity(this.gltfModel, 1, 1000);
+            }, 500)
         }
 
         // this.emit('toggled');
     }
 
-    modelOpacity(model, opacity: number, delay = 1500) {
+    modelOpacity(model, opacity: number, delay = 1000) {
         model.traverse(child => {
             if (child instanceof THREE.Mesh) {
                 const material = child.material;
-                new TWEEN.Tween(material).to({ opacity: opacity }, delay).start();
+                let effect = TWEEN.Easing.Quartic.In;
+                if (opacity === 100) {
+                    effect = TWEEN.Easing.Quartic.Out;
+                } else {
+                    effect = TWEEN.Easing.Quartic.In;
+                }
+                new TWEEN.Tween(material).to({ opacity: opacity }, delay).easing(effect).start();
             }
         });
     }
