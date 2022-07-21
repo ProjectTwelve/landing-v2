@@ -6,6 +6,7 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 import EventEmitter from 'eventemitter3';
+import TWEEEN from '@tweenjs/tween.js'
 
 export class AvatarGLItemBase extends EventEmitter {
     /** 额外的 node，用于放置说明等文案 */
@@ -50,6 +51,13 @@ export class AvatarGLItemBase extends EventEmitter {
     public effectComposer: EffectComposer;
     public renderPass: RenderPass;
     public unrealBloomPass: UnrealBloomPass;
+
+    // gltf model
+    public gltfModel;
+    // HFBX model
+    public HFBXModel;
+    public HFBX_TModel;
+    public triangleMesh;
 
     // triangles
     public trianglePts: THREE.Vector3[] = [];
@@ -190,6 +198,7 @@ export class AvatarGLItemBase extends EventEmitter {
         if (this.light) {
             this.effectComposer.render();
         }
+        TWEEEN.update();
 
     }
 

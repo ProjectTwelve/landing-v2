@@ -5,6 +5,7 @@ import { GAevent } from '../../../../../utils';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
+import TWEEN from '@tweenjs/tween.js';
 
 enum ShowWayEnum {
     NORMAL = 'NORMAL',
@@ -133,57 +134,111 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
 
     toggleParticle() {
         clearTimeout(this.toggleTimeId);
-        if(this.showType === 0){
-            if(Math.random() < 0.5){
+        if (this.showType === 0) {
+            if (Math.random() < 0.5) {
                 this.showType = 1;
-            }else {
+            } else {
                 this.showType = 2;
             }
-        }else {
+        } else {
             this.showType = 0;
         }
-        
+
         if (showWayArray[this.showType] === ShowWayEnum.NORMAL) {
-            this.modelGroup.visible = true;
-            this.particlesGroup.visible = false;
-            this.trianglesGroup.visible = false;
-            this.light = false;
+            // 粒子or三角慢慢消失
+            this.modelOpacity(this.HFBXModel, 0, 1500);
+            new TWEEN.Tween(this.m).to({ opacity: 0 }, 1500).start();
+            new TWEEN.Tween(this.m_l).to({ opacity: 0 }, 1500).start();
+
+            this.modelOpacity(this.HFBX_TModel, 0, 1500);
+            new TWEEN.Tween(this.triangleMesh.material).to({ opacity: 0 }, 1500).start();
+
+            setTimeout(() => {
+                this.light = false;
+                this.particlesGroup.visible = false;
+                this.trianglesGroup.visible = false;
+                this.modelGroup.visible = true;
+                this.modelOpacity(this.gltfModel, 1, 1500);
+            }, 500)
+
         } else if (showWayArray[this.showType] === ShowWayEnum.PARTICLE) {
-            this.modelGroup.visible = false;
-            this.particlesGroup.visible = true;
+            this.modelOpacity(this.gltfModel, 0);
+            setTimeout(() => {
+                this.modelGroup.visible = false;
+                this.particlesGroup.visible = true;
+                // 灯光处理
+                this.scene.remove(this.ambientLight)
+                this.ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+                this.scene.add(this.ambientLight)
+                this.effectComposer.removePass(this.unrealBloomPass);
+                this.unrealBloomPass.strength = 2.7;
+                this.unrealBloomPass.radius = 1;
+                this.unrealBloomPass.threshold = 0.5;
+                this.effectComposer.addPass(this.unrealBloomPass)
+                this.light = true;
+                this.modelOpacity(this.HFBXModel, 1, 0);
+                new TWEEN.Tween(this.m).to({ opacity: 1 }, 1500).start();
+                new TWEEN.Tween(this.m_l).to({ opacity: 1 }, 1500).start();
+
+            }, 1000)
+            // this.particlesGroup.visible = true;
+
             this.trianglesGroup.visible = false;
-            // 灯光处理
-            this.scene.remove(this.ambientLight)
-            this.ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
-            this.scene.add(this.ambientLight)
-            this.effectComposer.removePass(this.unrealBloomPass);
-            this.unrealBloomPass.strength = 2.7;
-            this.unrealBloomPass.radius = 1;
-            this.unrealBloomPass.threshold = 0.5;
-            this.effectComposer.addPass(this.unrealBloomPass)
-            this.light = true;
+            this.modelOpacity(this.HFBX_TModel, 0, 0);
+            new TWEEN.Tween(this.triangleMesh.material).to({ opacity: 0 }, 0).start();
+
         } else if (showWayArray[this.showType] === ShowWayEnum.TRIANGLE) {
-            this.modelGroup.visible = false;
+            // gltf 模型1.5s消失
+            this.modelOpacity(this.gltfModel, 0);
+            setTimeout(() => {
+                this.modelGroup.visible = false;
+                this.trianglesGroup.visible = true;
+                // 灯光处理
+                this.scene.remove(this.ambientLight)
+                this.ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+                this.scene.add(this.ambientLight);
+                this.effectComposer.removePass(this.unrealBloomPass);
+                this.unrealBloomPass.strength = 2.4;
+                this.unrealBloomPass.radius = 0.5;
+                this.unrealBloomPass.threshold = 0;
+                this.effectComposer.addPass(this.unrealBloomPass);
+                this.light = true;
+                // 三角数据
+                this.modelOpacity(this.HFBX_TModel, 1, 0);
+                new TWEEN.Tween(this.triangleMesh.material).to({ opacity: 1 }, 1500).start();
+                new TWEEN.Tween(this.triangleMesh.material).to({ opacity: 1 }, 1500).start();
+            }, 1000)
             this.particlesGroup.visible = false;
-            this.trianglesGroup.visible = true;
-            // 灯光处理
-            this.scene.remove(this.ambientLight)
-            this.ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-            this.scene.add(this.ambientLight);
-            this.effectComposer.removePass(this.unrealBloomPass);
-            this.unrealBloomPass.strength = 2.4;
-            this.unrealBloomPass.radius = 0.5;
-            this.unrealBloomPass.threshold = 0;
-            this.effectComposer.addPass(this.unrealBloomPass);
-            this.light = true;
+            this.modelOpacity(this.HFBXModel, 0, 0);
+            new TWEEN.Tween(this.m).to({ opacity: 0 }, 0).start();
+            new TWEEN.Tween(this.m_l).to({ opacity: 0 }, 0).start();
+
         } else {
-            this.modelGroup.visible = true;
-            this.particlesGroup.visible = false;
-            this.trianglesGroup.visible = false;
-            this.light = false;
+            this.modelOpacity(this.HFBXModel, 0, 1500);
+            new TWEEN.Tween(this.m).to({ opacity: 0 }, 1500).start();
+            new TWEEN.Tween(this.m_l).to({ opacity: 0 }, 1500).start();
+
+            this.modelOpacity(this.HFBX_TModel, 0, 1500);
+            new TWEEN.Tween(this.triangleMesh.material).to({ opacity: 0 }, 1500).start();
+
+            setTimeout(() => {
+                this.light = false;
+                this.particlesGroup.visible = false;
+                this.trianglesGroup.visible = false;
+                this.modelGroup.visible = true;
+                this.modelOpacity(this.gltfModel, 1, 1500);
+            }, 1000)
         }
 
         // this.emit('toggled');
+    }
 
+    modelOpacity(model, opacity: number, delay = 1500) {
+        model.traverse(child => {
+            if (child instanceof THREE.Mesh) {
+                const material = child.material;
+                new TWEEN.Tween(material).to({ opacity: opacity }, delay).start();
+            }
+        });
     }
 }

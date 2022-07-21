@@ -49,13 +49,15 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
         group.scale.set(param, param, param);
         group.position.set(0.06, -3.09, -0.2);
         let v3 = new THREE.Vector3();
+        this.HFBXModel = group;
         group.traverse(child => {
             if (child instanceof THREE.Mesh) {
                 let pos = child.geometry.attributes.position;
-                child.material = new THREE.MeshBasicMaterial({ color: "black" })
+                child.material = new THREE.MeshBasicMaterial({ color: "#000000", opacity: 0, transparent: true });
+                // child.material.visible = false;
                 for (let i = 1; i < pos.count; i += 20) {
                     v3.fromBufferAttribute(pos, i);
-                    
+
                     v3.x = v3.x * param + 0.06;
                     v3.y = v3.y * param - 3.09;
                     v3.z = v3.z * param - 0.2;
@@ -63,11 +65,14 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
                 }
             }
         });
-        this.particlesGroup.visible = false;
+        // this.particlesGroup.visible = false;
         this.particlesGroup.add(group);
-        this.m.emissive = this.m_color
-        this.m.emissiveIntensity = 0.3
-        this.m.color = this.m_color
+        this.m.emissive = this.m_color;
+        this.m.emissiveIntensity = 0.3;
+        this.m.color = this.m_color;
+
+        this.m.transparent = true;
+        this.m.opacity = 0;
 
         this.cluster = new THREE.InstancedMesh(this.g, this.m, this.pts.length)
         this.cluster.instanceMatrix.needsUpdate = true
@@ -106,9 +111,11 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
             }
         });
 
-        this.m_l.emissive = this.m_l_color
-        this.m_l.emissiveIntensity = 0.3
-        this.m_l.color = this.m_l_color
+        this.m_l.emissive = this.m_l_color;
+        this.m_l.emissiveIntensity = 0.3;
+        this.m_l.color = this.m_l_color;
+        this.m.transparent = true;
+        this.m.opacity = 0;
 
         this.cluster_l = new THREE.InstancedMesh(this.g_l, this.m_l, this.pts_l.length)
         this.cluster_l.instanceMatrix.needsUpdate = true
@@ -119,7 +126,6 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
             dummy.updateMatrix()
             this.cluster_l.setMatrixAt(i, dummy.matrix)
         }
-        this.particlesGroup.visible = false;
         this.particlesGroup.add(this.cluster_l);
         this.scene.add(this.particlesGroup)
     }
@@ -134,13 +140,14 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
         const d = 0.1;
         const d2 = d / 2;
         let v3 = new THREE.Vector3();
+        this.HFBX_TModel = group;
         group.traverse(child => {
             if (child instanceof THREE.Mesh) {
                 let pos = child.geometry.attributes.position;
-                child.material = new THREE.MeshBasicMaterial({ color: "black" })
+                child.material = new THREE.MeshBasicMaterial({ color: "#000000", opacity: 0, transparent: true })
                 for (let i = 1; i < pos.count; i += 10) {
                     v3.fromBufferAttribute(pos, i);
-                    
+
                     v3.x = v3.x * param + 0.06;
                     v3.y = v3.y * param - 3.09;
                     v3.z = v3.z * param - 0.2;
@@ -224,17 +231,20 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
 
         this.triangleGeometry.computeBoundingSphere();
 
-       
+
         const material = new THREE.MeshStandardMaterial({
             color: 0xaaaaaa,
             // specular: 0xffffff,
             // shininess: 250,
             side: THREE.DoubleSide,
             vertexColors: true,
-            transparent: true
+            transparent: true,
+            opacity: 0,
         });
 
         const mesh = new THREE.Mesh(this.triangleGeometry, material);
+        this.triangleMesh = mesh;
+
         this.trianglesGroup.add(mesh);
         this.scene.add(this.trianglesGroup);
 
@@ -259,6 +269,14 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
                     this.camera.add(directionalLight);
 
                     const model = gltf.scene;
+                    this.gltfModel = model;
+                    model.traverse(child => {
+                        if (child instanceof THREE.Mesh) {
+                            const material = child.material;
+                            material.transparent = true; // enable to modify opacity correctly
+                            material.opacity = 1;
+                        }
+                    });
                     model.position.set(0.06, -3.09, -0.2);
                     model.scale.set(3.5, 3.5, 3.5);
                     this.modelGroup.add(model);
@@ -290,7 +308,6 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
             const _this = this;
             loader.load(getPublicAssetPath(this.HFBXURL), function (group) {
                 _this.dealWithHParticles(group);
-                // _this.dealWithTriangle(group);
                 _this.loadingStatus[1] = true;
                 if (!includes(_this.loadingStatus, false)) {
                     _this.container.classList.remove('loading');
