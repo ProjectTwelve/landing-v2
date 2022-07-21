@@ -77,8 +77,9 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
         this.cluster = new THREE.InstancedMesh(this.g, this.m, this.pts.length)
         this.cluster.instanceMatrix.needsUpdate = true
 
-        var dummy = new THREE.Object3D();
+        
         for (let i = 0; i < this.pts.length; i++) {
+            var dummy = new THREE.Object3D();
             dummy.position.set(this.pts[i].x, this.pts[i].y, this.pts[i].z);
             dummy.updateMatrix()
             this.cluster.setMatrixAt(i, dummy.matrix)
@@ -120,13 +121,12 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
         this.cluster_l = new THREE.InstancedMesh(this.g_l, this.m_l, this.pts_l.length)
         this.cluster_l.instanceMatrix.needsUpdate = true
 
-        var dummy = new THREE.Object3D();
         for (let i = 0; i < this.pts_l.length; i++) {
+            var dummy = new THREE.Object3D();
             dummy.position.set(this.pts_l[i].x, this.pts_l[i].y, this.pts_l[i].z);
             dummy.updateMatrix()
             this.cluster_l.setMatrixAt(i, dummy.matrix)
         }
-        this.clusterPoints = dummy;
         this.particlesGroup.add(this.cluster_l);
         this.scene.add(this.particlesGroup)
     }

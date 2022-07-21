@@ -151,7 +151,6 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
             this.modelOpacity(this.HFBXModel, 0, 1000);
             new TWEEN.Tween(this.m).to({ opacity: 0 }, 1000).easing(this.easingEffect).onComplete(() => {
                 this.particlesGroup.visible = false;
-                this.trianglesGroup.visible = false;
                 this.light = false;
             }).start();
             new TWEEN.Tween(this.m_l).to({ opacity: 0 }, 1000).easing(this.easingEffect).start();
@@ -162,9 +161,12 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
             }).start();
 
             setTimeout(() => {
+                this.particlesGroup.visible = false;
+                this.light = false;
+                this.trianglesGroup.visible = false;
                 this.modelGroup.visible = true;
                 this.modelOpacity(this.gltfModel, 1, 1000);
-            }, 500)
+            }, 700)
         } else if (showWayArray[this.showType] === ShowWayEnum.PARTICLE) {
             this.modelOpacity(this.gltfModel, 0);
             setTimeout(() => {
@@ -245,7 +247,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
             if (child instanceof THREE.Mesh) {
                 const material = child.material;
                 let effect = TWEEN.Easing.Quartic.In;
-                if (opacity === 100) {
+                if (opacity === 1) {
                     effect = TWEEN.Easing.Quartic.Out;
                 } else {
                     effect = TWEEN.Easing.Quartic.In;
