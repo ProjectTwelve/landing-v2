@@ -95,7 +95,7 @@ export const AVATAR_GL_INFO_MAP = {
         gltfScale: 3,
         position: {
             x: 0.06,
-            y: -3.09,
+            y: -2.95,
             z: -0.2,
         }
     },
