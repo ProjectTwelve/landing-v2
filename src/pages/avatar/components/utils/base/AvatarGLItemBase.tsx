@@ -153,7 +153,7 @@ export class AvatarGLItemBase extends EventEmitter {
             this.container,
             {
                 display: 'block',
-                x: 280,
+                x: 0,
                 y: 0,
                 opacity: 0,
             },
@@ -173,7 +173,7 @@ export class AvatarGLItemBase extends EventEmitter {
             duration: 0.4,
             display: 'none',
             opacity: 0,
-            x: -200,
+            x: 0,
             y: 0,
             onComplete: () => {
                 cancelAnimationFrame(this.frameId);

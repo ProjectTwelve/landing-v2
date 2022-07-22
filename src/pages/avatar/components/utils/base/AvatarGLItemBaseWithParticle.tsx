@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { AvatarGLItemBase } from './AvatarGLItemBase';
 import { GAevent } from '../../../../../utils';
 import TWEEN from '@tweenjs/tween.js';
+import { PageType } from '../../../../app/App.config';
 
 enum ShowWayEnum {
     NORMAL = 'NORMAL',
@@ -73,14 +74,22 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         this.canvasWrap.style.height = '100%';
         this.canvasWrap.style.opacity = '0';
     }
-    enter() {
+    enter(currentPage: PageType = PageType.Loading) {
         this.emit('enter', { isShowParticle: this.isShowParticle });
         super.enter();
+        if (currentPage === PageType.Avatar) {
+            this.startTime();
+        }
+
+    }
+
+    startTime() {
         // 4秒自动切换
         this.toggleTimeId = window.setTimeout(() => {
             this.toggleParticle();
         }, 4000);
     }
+
     leave() {
         super.leave();
         clearTimeout(this.toggleTimeId);

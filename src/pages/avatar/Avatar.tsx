@@ -16,7 +16,12 @@ const AVATAR_GL_KEYS_REST = AvatarTypeArray.slice(3, AvatarTypeArray.length);
 const AVATAR_GL_KEYS_SHUFFLE_REST = shuffle(AVATAR_GL_KEYS_REST);
 const AVATAR_GL_KEYS = AVATAR_GL_KEYS_FIRST_THREE.concat(AVATAR_GL_KEYS_SHUFFLE_REST);
 
-export const Avatar: React.FC = () => {
+interface AvatarProps {
+    currentPage?: PageType;
+}
+
+export const Avatar: React.FC<AvatarProps> = (props) => {
+    const { currentPage } = props;
     const avatarGLRef = useRef<AvatarGLRef>(null);
     const [currentAvatar, setCurrentAvatar] = useState<AvatarType | null>(AvatarType.Dokv);
 
@@ -102,7 +107,7 @@ export const Avatar: React.FC = () => {
     });
 
     useLayoutEffect(() => {
-        avatarGLRef.current?.switchTo(currentAvatar);
+        avatarGLRef.current?.switchTo(currentAvatar, currentPage);
     }, [currentAvatar]);
 
     return (

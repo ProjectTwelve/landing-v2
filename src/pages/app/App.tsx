@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, cloneElement } from 'react';
 import { IS_MOBILE, playClickAudio } from '../../utils';
 import { CONTENT_PAGES, PageBadges, PageType } from './App.config';
 import './App.less';
@@ -68,7 +68,7 @@ export const App = () => {
                                     )}
                                     key={`${p.type}-${i}`}
                                 >
-                                    {p.Content}
+                                    {p.type === PageType.Avatar ? cloneElement(p.Content, { currentPage: current }) : p.Content}
                                 </div>
                             )
                         );
@@ -192,8 +192,8 @@ export const App = () => {
             if (
                 rootDom &&
                 Math.ceil(document.body.scrollTop) +
-                    document.body.clientHeight >=
-                    rootDom.clientHeight
+                document.body.clientHeight >=
+                rootDom.clientHeight
             ) {
                 // 滚动到达底部了
                 newPage = getNextPageType();

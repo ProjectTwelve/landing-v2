@@ -15,9 +15,9 @@ import './AvatarGL.less';
 import { AvatarCycle } from './AvatarCycle';
 import { ButterflyGL } from '../../../components/butterfly-gl/ButterflyGL';
 import { IS_MOBILE } from '../../../utils';
-import { AvatarGLModel } from './utils/base/AvatarGLItemBaseWithModel'
+import { AvatarGLModel } from './utils/base/AvatarGLItemBaseWithModel';
 export interface AvatarGLRef {
-    switchTo: (type: AvatarType | null) => void;
+    switchTo: (type: AvatarType | null, currentPage?: PageType) => void;
 }
 
 export const AVATAR_GL_MAP = {
@@ -51,12 +51,12 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
     useImperativeHandle(
         ref,
         () => ({
-            switchTo: (type) => {
+            switchTo: (type, currentPage) => {
                 activatedRef.current &&
                     AVATAR_GL_MAP[activatedRef.current].leave();
                 activatedRef.current = type;
                 activatedRef.current &&
-                    AVATAR_GL_MAP[activatedRef.current].enter();
+                    AVATAR_GL_MAP[activatedRef.current].enter(currentPage);
                 forceUpdate();
             },
         }),
@@ -83,7 +83,6 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         AVATAR_GL_ARRAY.forEach((v) => {
             v.on('toggled', ({showType}) => {
                 AVATAR_GL_ARRAY.forEach((av) => {
-                    console.log('[ av.loadingStatus ] >', av.loadingStatus)
                     if(!includes(av.loadingStatus, false)){
                         av.toggleParticle(showType)
                     }
