@@ -1,4 +1,4 @@
-import { includes, cloneDeep } from 'lodash-es';
+import { includes } from 'lodash-es';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { getPublicAssetPath, IS_MOBILE } from '../../../../../utils';

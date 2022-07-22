@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { gsap } from 'gsap';
-import { first, shuffle, slice } from 'lodash-es';
+import { first, includes } from 'lodash-es';
 import React, {
     forwardRef,
     useEffect,
@@ -12,9 +12,6 @@ import { PageType } from '../../app/App.config';
 import { loadingEE, usePageVisible } from '../../app/App.utils';
 import { AvatarType, AVATAR_GL_INFO_MAP } from '../Avatar.config';
 import './AvatarGL.less';
-import { AvatarGLItemCartoon } from './utils/AvatarGLItemCartoon';
-import { AvatarGLItemDokv } from './utils/AvatarGLItemDokv';
-import { AvatarGLItemLowpoly } from './utils/AvatarGLItemLowpoly';
 import { AvatarCycle } from './AvatarCycle';
 import { ButterflyGL } from '../../../components/butterfly-gl/ButterflyGL';
 import { IS_MOBILE } from '../../../utils';
@@ -85,10 +82,12 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
 
         AVATAR_GL_ARRAY.forEach((v) => {
             v.on('toggled', ({showType}) => {
-                console.log('[ sssssssss ] >', showType)
-                AVATAR_GL_ARRAY.forEach((av) =>
-                    av.toggleParticle(showType)
-                );
+                AVATAR_GL_ARRAY.forEach((av) => {
+                    console.log('[ av.loadingStatus ] >', av.loadingStatus)
+                    if(!includes(av.loadingStatus, false)){
+                        av.toggleParticle(showType)
+                    }
+                });
             });
         });
 
