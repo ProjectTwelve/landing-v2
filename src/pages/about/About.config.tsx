@@ -237,6 +237,20 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         },
     },
     {
+        img: require('../../assets/about/partner-members/HH.png'),
+        name: 'HH',
+        desc: (
+            <>
+                Eco Research in P12; former quant developer, banker
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null
+        },
+    },
+    {
         img: require('../../assets/about/partner-members/9.png'),
         name: 'River',
         desc: (
@@ -260,6 +274,20 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
                 RPG lover, Mixed-race baby,
                 <br />
                 Linguistics & football enthusiast
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/Akira.png'),
+        name: 'Akira',
+        desc: (
+            <>
+                ACGholic; Start from here, start from now
             </>
         ),
         links: {
@@ -306,6 +334,20 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         desc: (
             <>
                 To live is to recognize life
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/Sangwa Chosen.png'),
+        name: 'Sangwa Chosen',
+        desc: (
+            <>
+                You know you were chosen once you were called 'CHOSEN'. So, why run away from it?
             </>
         ),
         links: {
@@ -391,6 +433,34 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         },
     },
     {
+        img: require('../../assets/about/partner-members/Momo.png'),
+        name: 'Momo',
+        desc: (
+            <>
+                My dream is to travel around the world
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/Vin.png'),
+        name: 'Vin',
+        desc: (
+            <>
+                Firmly believe that a good story is the soul of the game
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null
+        },
+    },
+    {
         img: require('../../assets/about/partner-members/21.png'),
         name: 'JJ Wilde',
         desc: (
@@ -416,6 +486,90 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
             linkedin: 'https://www.linkedin.com/in/zanhui-yang-26490b84/',
             twitter: null,
             github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/William.png'),
+        name: 'William',
+        desc: (
+            <>
+                Veteran fans of the Warring States period in Japan.
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/wanng.png'),
+        name: 'wanng',
+        desc: (
+            <>
+                MMO Maniac; A random guy from the space
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/Hanna.png'),
+        name: 'Hanna',
+        desc: (
+            <>
+                Game visual Designer; Cat slave
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/Charline.png'),
+        name: 'Charline',
+        desc: (
+            <>
+                Love music and music games
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/Green.C.png'),
+        name: 'Green.C',
+        desc: (
+            <>
+                Front-End  Engineer; Philosophy enthusiast;
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: 'https://github.com/ShallowGreen'
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/Sixian.png'),
+        name: 'Sixian',
+        desc: (
+            <>
+                Love Coding, ACG and Genshin! May enthusiasm last forever
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: 'https://github.com/yusixian'
         },
     },
     {
