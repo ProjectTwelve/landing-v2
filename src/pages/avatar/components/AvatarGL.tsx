@@ -24,12 +24,12 @@ export const AVATAR_GL_MAP = {
     [AvatarType.Dokv]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Dokv]),
     [AvatarType.Cartoon]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Cartoon]),
     [AvatarType.Lowpoly]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Lowpoly]),
-    [AvatarType.SK_Cartoon_Female_021]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_021]),
-    [AvatarType.SK_Cartoon_Female_029]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_029]),
-    [AvatarType.SK_Cartoon_Female_059]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_059]),
-    [AvatarType.SK_Lowpoly_Male_002]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Lowpoly_Male_002]),
-    [AvatarType.SK_Lowpoly_Male_028]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Lowpoly_Male_028]),
-    [AvatarType.SK_Lowpoly_Male_040]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Lowpoly_Male_040]),
+    // [AvatarType.SK_Cartoon_Female_021]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_021]),
+    // [AvatarType.SK_Cartoon_Female_029]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_029]),
+    // [AvatarType.SK_Cartoon_Female_059]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_059]),
+    // [AvatarType.SK_Lowpoly_Male_002]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Lowpoly_Male_002]),
+    // [AvatarType.SK_Lowpoly_Male_028]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Lowpoly_Male_028]),
+    // [AvatarType.SK_Lowpoly_Male_040]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Lowpoly_Male_040]),
 };
 
 export const AVATAR_GL_CYCLE = new AvatarCycle();
