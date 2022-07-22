@@ -1,20 +1,6 @@
-export enum AvatarType {
-    Dokv = 'Dokv',
-    Cartoon = 'Cartoon',
-    Lowpoly = 'Lowpoly',
-    SK_Cartoon_Female_021 = 'SK_Cartoon_Female_021',
-    SK_Cartoon_Female_029 = 'SK_Cartoon_Female_029',
-    SK_Cartoon_Female_059 = 'SK_Cartoon_Female_059',
-    SK_Lowpoly_Male_002 = 'SK_Lowpoly_Male_002',
-    SK_Lowpoly_Male_028 = 'SK_Lowpoly_Male_028',
-    SK_Lowpoly_Male_040 = 'SK_Lowpoly_Male_040',
-}
-
-export const AvatarTypeArray = Object.values(AvatarType);
-
 
 export const AVATAR_GL_INFO_MAP = {
-    [AvatarType.Dokv]: {
+    [AvatarType.Dokv]: { 
         name: AvatarType.Dokv,
         GLTFURL: 'files/avatar/pose/Dokv/Dokv.gltf',
         LFBXURL: 'files/avatar/pose/Dokv/SK_Dokev_Boy_001_POSE_L.fbx',
@@ -31,10 +17,10 @@ export const AVATAR_GL_INFO_MAP = {
         TDensity: 20, // 三角密度： 
         scale: 0.0355, // 粒子和三角模型大小：
         gltfScale: 3.55, // 原皮模型大小
-        position: { // 位置
-            x: 0.41, 
-            y: -2.64,
-            z: -1.3,
+        position: {
+            x: 0.41, // 位置X XY混合描述：例如，模型往右一点
+            y: -2.64, // 位置Y 
+            z: -1.3, // 位置Z 高低
         }
     },
     [AvatarType.Cartoon]: {
@@ -49,7 +35,7 @@ export const AVATAR_GL_INFO_MAP = {
                 <div className='avatar-extra-subtitle'>Community / Social</div>
             </>),
         HDensity: 40,
-        LDensity: 40, //大的粒子密度： 
+        LDensity: 40,
         TDensity: 20,
         scale: 0.03,
         gltfScale: 3,

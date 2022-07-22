@@ -134,17 +134,28 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         this.canvas.height = this.particleCanvasHeight;
     }
 
-    toggleParticle() {
+    toggleParticle(showType: number = -1) {
         clearTimeout(this.toggleTimeId);
-        if (this.showType === 0) {
-            if (Math.random() < 0.5) {
-                this.showType = 1;
-            } else {
-                this.showType = 2;
-            }
-        } else {
-            this.showType = 0;
+        if (showType === this.showType) {
+            return
         }
+        if (showType === -1) {
+            if (this.showType === 0) {
+                if (Math.random() < 0.5) {
+                    this.showType = 1;
+                } else {
+                    this.showType = 2;
+                }
+            } else {
+                this.showType = 0;
+            }
+            this.emit('toggled', { showType: this.showType });
+
+        } else {
+            this.showType = showType;
+            this.emit('toggled', { showType: showType });
+        }
+
 
         if (showWayArray[this.showType] === ShowWayEnum.NORMAL) {
             // 粒子or三角慢慢消失
@@ -239,7 +250,6 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
             }, 500)
         }
 
-        // this.emit('toggled');
     }
 
     modelOpacity(model, opacity: number, delay = 1000) {

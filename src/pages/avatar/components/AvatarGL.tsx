@@ -84,9 +84,10 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         AVATAR_GL_CYCLE.load();
 
         AVATAR_GL_ARRAY.forEach((v) => {
-            v.on('toggled', () => {
+            v.on('toggled', ({showType}) => {
+                console.log('[ sssssssss ] >', showType)
                 AVATAR_GL_ARRAY.forEach((av) =>
-                    av.toggleParticle()
+                    av.toggleParticle(showType)
                 );
             });
         });
