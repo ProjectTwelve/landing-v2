@@ -535,7 +535,7 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         name: 'Charline',
         desc: (
             <>
-                Game visual Designer; Cat slave;
+                Love music and music games
             </>
         ),
         links: {
