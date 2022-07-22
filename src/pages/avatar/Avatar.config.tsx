@@ -26,8 +26,8 @@ export const AVATAR_GL_INFO_MAP = {
                 <div className='avatar-extra-subtitle'>GameCoin API</div>
                 <div className='avatar-extra-text'>→ For tokenomics</div>
             </>),
-        HDensity: 40, // 大的粒子密度： 
-        LDensity: 40, // 小的粒子密度： 
+        HDensity: 30, // 小的粒子密度： 
+        LDensity: 40, // 大的粒子密度： 
         TDensity: 20, // 三角密度： 
         scale: 0.0355, // 粒子和三角模型大小：
         gltfScale: 3.55, // 原皮模型大小
@@ -51,11 +51,11 @@ export const AVATAR_GL_INFO_MAP = {
         HDensity: 40,
         LDensity: 40, //大的粒子密度： 
         TDensity: 20,
-        scale: 0.03,
-        gltfScale: 3,
+        scale: 0.032,
+        gltfScale: 3.2,
         position: {
             x: 0.06,
-            y: -3.09,
+            y: -2.9,
             z: -0.2,
         }
     },
@@ -108,11 +108,11 @@ export const AVATAR_GL_INFO_MAP = {
         HDensity: 30,
         LDensity: 30,
         TDensity: 20,
-        scale: 0.03,
-        gltfScale: 3,
+        scale: 0.032,
+        gltfScale: 3.2,
         position: {
             x: 0.06,
-            y: -3.09,
+            y: -2.9,
             z: -0.2,
         }
     },
@@ -125,11 +125,11 @@ export const AVATAR_GL_INFO_MAP = {
         HDensity: 40,
         LDensity: 40,
         TDensity: 30,
-        scale: 0.03,
-        gltfScale: 3,
+        scale: 0.032,
+        gltfScale: 3.2,
         position: {
             x: 0.06,
-            y: -3.09,
+            y: -2.9,
             z: -0.2,
         }
 
