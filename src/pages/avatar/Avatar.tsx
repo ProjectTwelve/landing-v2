@@ -25,9 +25,11 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
     usePageVisible(PageType.Avatar, () => {
         const handleTouchDown = () => {
             clearInterval(timeId);
+            avatarGLRef.current?.stopTimeout();
         };
         const handleTouchUp = () => {
             clearInterval(timeId);
+            avatarGLRef.current?.restartTimout();
             timeId = window.setInterval(() => {
                 handleNext();
             }, 8000);

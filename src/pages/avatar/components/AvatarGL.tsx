@@ -19,6 +19,8 @@ import { AvatarGLModel } from './utils/base/AvatarGLItemBaseWithModel';
 export interface AvatarGLRef {
     switchTo: (type: AvatarType | null, currentPage?: PageType) => void;
     acitveTo: (page: PageType) => void;
+    stopTimeout: () => void;
+    restartTimout: () => void;
 }
 export interface AvatarGLProps {
     allLoaded: () => void;
@@ -115,6 +117,12 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
             acitveTo: (page: PageType) => {
                 activatedRef.current && AVATAR_GL_MAP[activatedRef.current]!.active(page);
             },
+            stopTimeout: ()=> {
+                activatedRef.current && AVATAR_GL_MAP[activatedRef.current]!.stopTimeout();
+            },
+            restartTimout: () => {
+                activatedRef.current && AVATAR_GL_MAP[activatedRef.current]!.restartTimout();
+            }
         }),
 
         []

@@ -31,6 +31,8 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     public isAllLoaded = false;
     public clearRender = true;
 
+    public isChanged = false;
+
     private isShowParticle = false;
 
     public showType: number = 0;
@@ -62,7 +64,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
                 Math.abs(e.clientY - downY) < 50
             ) {
                 // 没有移动太远，表明是点击事件。以此来兼容 gl 的拖动
-                this.toggleParticle();
+                this.toggleParticle(-1, true);
             }
         });
         this.btnWrap.addEventListener('mouseenter', () => {
@@ -99,6 +101,18 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         }
     }
 
+    stopTimeout() {
+        clearTimeout(this.toggleTimeId);
+    }
+
+    restartTimout() {
+        clearTimeout(this.toggleTimeId);
+        // 4秒自动切换
+        this.toggleTimeId = window.setTimeout(() => {
+            this.toggleParticle(-1, false);
+        }, 4000);
+    }
+
     allLoaded() {
         this.isAllLoaded = true;
         if (this.isAvatarPage && this.isEnter) {
@@ -111,7 +125,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     startTime() {
         // 4秒自动切换
         this.toggleTimeId = window.setTimeout(() => {
-            this.toggleParticle();
+            this.toggleParticle(-1, false);
         }, 4000);
     }
 
@@ -119,7 +133,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         this.isEnter = false;
         super.leave(this.clearRender);
         if (!this.clearRender) {
-            this.toggleParticle(0);
+            this.toggleParticle(0, true, true);
         }
         clearTimeout(this.toggleTimeId);
     }
@@ -168,9 +182,16 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         this.canvas.height = this.particleCanvasHeight;
     }
 
-    toggleParticle(showType: number = -1) {
+    toggleParticle(showType: number = -1, forceChange: boolean, resetChanged: boolean = false) {
         clearTimeout(this.toggleTimeId);
-        this.startTime();
+        if (!forceChange && this.isChanged) {
+            // 非强制更改
+            return
+        }
+
+        this.isChanged = true;
+        
+        // this.startTime();
         if (showType === this.showType) {
             return
         }
@@ -283,6 +304,10 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
                 this.modelGroup.visible = true;
                 this.modelOpacity(this.gltfModel, 1, 1000);
             }, 500)
+        }
+
+        if(resetChanged){
+            this.isChanged = false;
         }
 
     }
