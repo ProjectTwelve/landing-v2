@@ -81,7 +81,6 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     enter(currentPage: PageType = PageType.Loading, isLoading = true) {
         super.enter();
         this.isEnter = true;
-        console.log('[ currentPage ] >', currentPage)
         this.isAvatarPage = currentPage === PageType.Avatar;
         if (currentPage === PageType.Avatar && !isLoading) {
             clearTimeout(this.toggleTimeId);
@@ -91,7 +90,6 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     }
 
     active(currentPage: PageType) {
-        console.log('[ active ] >', currentPage)
         this.isAvatarPage = currentPage === PageType.Avatar;
         if (this.isEnter && this.isAllLoaded) {
             clearTimeout(this.toggleTimeId);
@@ -104,8 +102,8 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         if (this.isAvatarPage && this.isEnter) {
             clearTimeout(this.toggleTimeId);
             this.startTime();
-            this.emit('allLoaded');
         }
+        this.emit('allLoaded');
     }
 
     startTime() {

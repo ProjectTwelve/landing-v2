@@ -107,7 +107,9 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                 if (type) {
                     isLoading = includes(AVATAR_GL_MAP[type]?.loadingStatus, false);
                 }
-
+                type && AVATAR_GL_MAP[type]!.on('allLoaded', () => {
+                    allLoaded();
+                })
                 type &&
                     AVATAR_GL_MAP[type]!.enter(currentPage, isLoading);
 

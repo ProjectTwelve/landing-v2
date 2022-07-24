@@ -120,7 +120,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         loader.load(
             getPublicAssetPath('files/home/home.glb?v051101'),
             function (gltf) {
-                console.log('gltf', gltf);
                 const model = gltf.scene;
                 // model.traverse((node: any) => {
                 //     if (node.isMesh) {
