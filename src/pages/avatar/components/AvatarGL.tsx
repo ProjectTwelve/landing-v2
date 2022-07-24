@@ -98,8 +98,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                     }
                     AVATAR_GL_MAP[type]!.mount(container);
                 }
-
-
+                 
                 type &&
                     AVATAR_GL_MAP[type]!.enter(currentPage);
 

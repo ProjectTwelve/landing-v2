@@ -20,9 +20,9 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
     public name: string = '';
     public loadingStatus: boolean[] = [false, false, false, false];
     // 点的密度
-    public HDensity:number = 40;
-    public LDensity:number = 40;
-    public TDensity:number = 40;
+    public HDensity: number = 40;
+    public LDensity: number = 40;
+    public TDensity: number = 40;
     public scale: number = 0.035;
     public gltfScale: number = 3;
     public position = {
@@ -94,7 +94,7 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
         this.cluster = new THREE.InstancedMesh(this.g, this.m, this.pts.length)
         this.cluster.instanceMatrix.needsUpdate = true
 
-        
+
         for (let i = 0; i < this.pts.length; i++) {
             var dummy = new THREE.Object3D();
             dummy.position.set(this.pts[i].x, this.pts[i].y, this.pts[i].z);

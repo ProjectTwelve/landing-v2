@@ -24,7 +24,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     private renderedImageIndex = -1;
     protected imageDataArray: HTMLImageElement[] = [];
     private btnWrap = document.createElement('div');
-    private toggleTimeId = 0;
+    public toggleTimeId = 0;
 
     private isShowParticle = false;
 
@@ -75,7 +75,6 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         this.canvasWrap.style.opacity = '0';
     }
     enter(currentPage: PageType = PageType.Loading) {
-        this.emit('enter', { isShowParticle: this.isShowParticle });
         super.enter();
         if (currentPage === PageType.Avatar) {
             this.startTime();
@@ -141,6 +140,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
 
     toggleParticle(showType: number = -1) {
         clearTimeout(this.toggleTimeId);
+        this.startTime();
         if (showType === this.showType) {
             return
         }
@@ -154,11 +154,11 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
             } else {
                 this.showType = 0;
             }
-            this.emit('toggled', { showType: this.showType });
+            // this.emit('toggled', { showType: this.showType });
 
         } else {
             this.showType = showType;
-            this.emit('toggled', { showType: showType });
+            // this.emit('toggled', { showType: showType });
         }
 
 
