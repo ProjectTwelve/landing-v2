@@ -29,6 +29,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     public isEnter = false;
     public isAvatarPage = false;
     public isAllLoaded = false;
+    public clearRender = true;
 
     private isShowParticle = false;
 
@@ -113,9 +114,9 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         }, 4000);
     }
 
-    leave(clearRender = true) {
+    leave() {
         this.isEnter = false;
-        super.leave(clearRender);
+        super.leave(this.clearRender);
         clearTimeout(this.toggleTimeId);
     }
 

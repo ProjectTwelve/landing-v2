@@ -37,10 +37,11 @@ export const AVATAR_GL_INFO_MAP = {
         scale: 0.0355, // 粒子和三角模型大小：
         gltfScale: 3.55, // 原皮模型大小
         position: { // 位置
-            x: 0.41, 
+            x: 0.41,
             y: -2.64,
             z: -1.3,
-        }
+        },
+        clearRender: false,
     },
     [AvatarType.Cartoon]: {
         name: AvatarType.Cartoon,
@@ -62,7 +63,8 @@ export const AVATAR_GL_INFO_MAP = {
             x: 0.06,
             y: -2.9,
             z: -0.2,
-        }
+        },
+        clearRender: false,
     },
     [AvatarType.Lowpoly]: {
         name: AvatarType.Lowpoly,

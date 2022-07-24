@@ -72,13 +72,9 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
         () => ({
             switchTo: (type: AvatarType | null, currentPage) => {
                 // 由于手机端只能显示三个WebGL render，所以需要维持只存在三个实例
-                if (type === AvatarType.Dokv || type === AvatarType.Cartoon || type === AvatarType.Lowpoly) {
-                    activatedRef.current &&
-                        AVATAR_GL_MAP[activatedRef.current]!.leave(false);
-                } else {
-                    activatedRef.current &&
-                        AVATAR_GL_MAP[activatedRef.current]!.leave();
-                }
+                activatedRef.current &&
+                    AVATAR_GL_MAP[activatedRef.current]!.leave();
+
 
                 activatedRef.current = type;
                 if (type) {
@@ -87,6 +83,7 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                             const element = lazyKeys[i];
                             AVATAR_GL_MAP[element] = null;
                         }
+                        console.log('[ AVATAR_GL_MAP[type] ] >', AVATAR_GL_MAP[type]?.renderer)
                     } else {
                         for (let i = 0; i < lazyKeys.length; i++) {
                             const element = lazyKeys[i];
@@ -143,13 +140,13 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
 
         AVATAR_GL_ARRAY.forEach((v) => {
             if (v) {
-                v.on('toggled', ({ showType }) => {
-                    AVATAR_GL_ARRAY.forEach((av) => {
-                        if (av && !includes(av.loadingStatus, false)) {
-                            av.toggleParticle(showType)
-                        }
-                    });
-                });
+                // v.on('toggled', ({ showType }) => {
+                //     AVATAR_GL_ARRAY.forEach((av) => {
+                //         if (av && !includes(av.loadingStatus, false)) {
+                //             av.toggleParticle(showType)
+                //         }
+                //     });
+                // });
                 v.on('allLoaded', () => {
                     allLoaded();
                 })
@@ -160,7 +157,7 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
             AVATAR_GL_ARRAY.map((v) => container && v && v.unMount());
             container && AVATAR_GL_CYCLE.unMount();
             AVATAR_GL_ARRAY.forEach((v) => {
-                v && v.off('toggled');
+                // v && v.off('toggled');
                 v && v.off('allLoaded');
             });
         };
