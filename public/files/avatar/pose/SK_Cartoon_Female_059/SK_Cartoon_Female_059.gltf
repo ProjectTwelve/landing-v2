@@ -1,0 +1,251 @@
+{
+	"asset":
+	{
+		"version": "2.0",
+		"generator": "Unreal Engine 4.27.0 glTF Exporter 1.0.6"
+	},
+	"scene": 0,
+	"accessors": [
+		{
+			"bufferView": 0,
+			"count": 41871,
+			"type": "SCALAR",
+			"componentType": 5123
+		},
+		{
+			"bufferView": 1,
+			"count": 26602,
+			"type": "VEC3",
+			"componentType": 5126,
+			"min": [ -0.420628875,
+				-0.00146004884,
+				-0.269538105
+			],
+			"max": [ 0.436810821,
+				1.66958666,
+				0.330993682
+			]
+		},
+		{
+			"bufferView": 2,
+			"count": 26602,
+			"type": "VEC3",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 3,
+			"count": 26602,
+			"type": "VEC4",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 4,
+			"count": 26602,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 5,
+			"count": 40761,
+			"type": "SCALAR",
+			"componentType": 5123
+		},
+		{
+			"bufferView": 6,
+			"count": 29055,
+			"type": "VEC3",
+			"componentType": 5126,
+			"min": [ -0.423108578,
+				-0.00454393215,
+				-0.271658689
+			],
+			"max": [ 0.440747142,
+				1.67200434,
+				0.334919125
+			]
+		},
+		{
+			"bufferView": 7,
+			"count": 29055,
+			"type": "VEC3",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 8,
+			"count": 29055,
+			"type": "VEC4",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 9,
+			"count": 29055,
+			"type": "VEC2",
+			"componentType": 5126
+		}
+	],
+	"buffers": [
+		{
+			"uri": "SK_Cartoon_Female_059.bin",
+			"byteLength": 2836804
+		}
+	],
+	"bufferViews": [
+		{
+			"buffer": 0,
+			"byteLength": 83742,
+			"target": 34963
+		},
+		{
+			"buffer": 0,
+			"byteLength": 319224,
+			"byteOffset": 83744,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 319224,
+			"byteOffset": 402968,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 425632,
+			"byteOffset": 722192,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 212816,
+			"byteOffset": 1147824,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 81522,
+			"byteOffset": 1360640,
+			"target": 34963
+		},
+		{
+			"buffer": 0,
+			"byteLength": 348660,
+			"byteOffset": 1442164,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 348660,
+			"byteOffset": 1790824,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 464880,
+			"byteOffset": 2139484,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 232440,
+			"byteOffset": 2604364,
+			"target": 34962
+		}
+	],
+	"images": [
+		{
+			"uri": "T_Cartoon_Female_059.png"
+		}
+	],
+	"materials": [
+		{
+			"name": "MI_Cartoon_Female_059",
+			"pbrMetallicRoughness":
+			{
+				"baseColorTexture":
+				{
+					"index": 0
+				}
+			},
+			"alphaMode": "MASK",
+			"alphaCutoff": 0.333299994,
+			"extensions":
+			{
+				"KHR_materials_unlit":
+				{
+				}
+			}
+		},
+		{
+			"name": "NewMaterial",
+			"pbrMetallicRoughness":
+			{
+				"baseColorFactor": [ 0,
+					0,
+					0,
+					1
+				]
+			},
+			"extensions":
+			{
+				"KHR_materials_unlit":
+				{
+				}
+			}
+		}
+	],
+	"meshes": [
+		{
+			"name": "SK_Cartoon_Female_059",
+			"primitives": [
+				{
+					"attributes":
+					{
+						"POSITION": 1,
+						"NORMAL": 2,
+						"TANGENT": 3,
+						"TEXCOORD_0": 4
+					},
+					"indices": 0,
+					"material": 0
+				},
+				{
+					"attributes":
+					{
+						"POSITION": 6,
+						"NORMAL": 7,
+						"TANGENT": 8,
+						"TEXCOORD_0": 9
+					},
+					"indices": 5,
+					"material": 1
+				}
+			]
+		}
+	],
+	"nodes": [
+		{
+			"mesh": 0
+		}
+	],
+	"samplers": [
+		{
+			"name": "T_Cartoon_Female_059",
+			"minFilter": 9987,
+			"magFilter": 9729
+		}
+	],
+	"scenes": [
+		{
+			"nodes": [ 0 ]
+		}
+	],
+	"textures": [
+		{
+			"name": "T_Cartoon_Female_059",
+			"sampler": 0,
+			"source": 0
+		}
+	],
+	"extensionsUsed": [
+		"KHR_materials_unlit"
+	]
+}
