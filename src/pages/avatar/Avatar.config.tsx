@@ -87,7 +87,8 @@ export const AVATAR_GL_INFO_MAP = {
             x: -0.1,
             y: -2.77,
             z: 0.1,
-        }
+        },
+        clearRender: true,
     },
     [AvatarType.SK_Cartoon_Female_021]: {
         name: AvatarType.SK_Cartoon_Female_021,
@@ -104,7 +105,8 @@ export const AVATAR_GL_INFO_MAP = {
             x: 0.06,
             y: -2.95,
             z: -0.2,
-        }
+        },
+        clearRender: true,
     },
     [AvatarType.SK_Cartoon_Female_029]: {
         name: AvatarType.SK_Cartoon_Female_029,
@@ -121,7 +123,8 @@ export const AVATAR_GL_INFO_MAP = {
             x: 0.06,
             y: -2.9,
             z: -0.2,
-        }
+        },
+        clearRender: true,
     },
     [AvatarType.SK_Cartoon_Female_059]: {
         name: AvatarType.SK_Cartoon_Female_059,
@@ -138,7 +141,8 @@ export const AVATAR_GL_INFO_MAP = {
             x: 0.06,
             y: -2.9,
             z: -0.2,
-        }
+        },
+        clearRender: true,
 
     },
     [AvatarType.SK_Lowpoly_Male_002]: {
@@ -156,7 +160,8 @@ export const AVATAR_GL_INFO_MAP = {
             x: 0.06,
             y: -2.8,
             z: -0.2,
-        }
+        },
+        clearRender: true,
     },
     [AvatarType.SK_Lowpoly_Male_028]: {
         name: AvatarType.SK_Lowpoly_Male_028,
@@ -173,7 +178,8 @@ export const AVATAR_GL_INFO_MAP = {
             x: 0.06,
             y: -3.09,
             z: -0.2,
-        }
+        },
+        clearRender: true,
     },
     [AvatarType.SK_Lowpoly_Male_040]: {
         name: AvatarType.SK_Lowpoly_Male_040,
@@ -190,6 +196,7 @@ export const AVATAR_GL_INFO_MAP = {
             x: 0.06,
             y: -2.2,
             z: -0.2,
-        }
+        },
+        clearRender: true,
     },
 };
