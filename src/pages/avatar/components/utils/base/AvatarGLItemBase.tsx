@@ -169,6 +169,7 @@ export class AvatarGLItemBase extends EventEmitter {
     }
     leave() {
         this.container.style.zIndex = '1';
+
         gsap.to(this.container, {
             duration: 0.4,
             display: 'none',
@@ -177,6 +178,8 @@ export class AvatarGLItemBase extends EventEmitter {
             y: 0,
             onComplete: () => {
                 cancelAnimationFrame(this.frameId);
+                this.renderer.forceContextLoss();
+                this.renderer = null as any;
             },
         });
     }
@@ -194,7 +197,8 @@ export class AvatarGLItemBase extends EventEmitter {
         const delta = this.clock.getDelta();
         this.mixer?.update(delta);
         this.controls.update();
-        this.renderer.render(this.scene, this.camera);
+        this.renderer && this.renderer.render(this.scene, this.camera);
+
         if (this.light) {
             this.effectComposer.render();
         }
@@ -211,12 +215,15 @@ export class AvatarGLItemBase extends EventEmitter {
         this.camera.aspect =
             this.container.clientWidth / this.container.clientHeight;
         this.camera.updateProjectionMatrix();
-        this.renderer.setSize(
-            this.container.clientWidth,
-            this.container.clientHeight
-        );
-        this.renderer.domElement.style.width = `${this.container.clientWidth}px`;
-        this.renderer.domElement.style.height = `${this.container.clientHeight}px`;
+        if (this.renderer) {
+            this.renderer.setSize(
+                this.container.clientWidth,
+                this.container.clientHeight
+            );
+            this.renderer.domElement.style.width = `${this.container.clientWidth}px`;
+            this.renderer.domElement.style.height = `${this.container.clientHeight}px`;
+        }
+
         this.effectComposer.setSize(this.container.clientWidth, this.container.clientHeight);
     }
 }

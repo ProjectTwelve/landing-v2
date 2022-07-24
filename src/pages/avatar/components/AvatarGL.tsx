@@ -45,7 +45,7 @@ export const AVATAR_GL_MAP: AVATARGLMAP = {
     // [AvatarType.SK_Lowpoly_Male_040]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Lowpoly_Male_040]),
 };
 
-export let AVATAR_GL_CYCLE = new AvatarCycle();
+export const AVATAR_GL_CYCLE = new AvatarCycle();
 
 /** 决定要显示的 avatar 的顺序（第 0 个会优先加载，其他的会在界面进入后加载） */
 // const AVATAR_GL_KEYS = Object.keys(AVATAR_GL_MAP) as AvatarType[];
@@ -83,11 +83,6 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                         return;
                     }
                     AVATAR_GL_MAP[type]!.mount(container);
-                    // 圆环加载
-                    container && AVATAR_GL_CYCLE.unMount();
-                    AVATAR_GL_CYCLE = new AvatarCycle();
-                    AVATAR_GL_CYCLE.mount(container);
-                    AVATAR_GL_CYCLE.load();
                 }
 
                 type &&
