@@ -27,6 +27,8 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     public toggleTimeId = 0;
 
     public isEnter = false;
+    public isAvatarPage = false;
+    public isAllLoaded = false;
 
     private isShowParticle = false;
 
@@ -79,14 +81,28 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     enter(currentPage: PageType = PageType.Loading, isLoading = true) {
         super.enter();
         this.isEnter = true;
+        console.log('[ currentPage ] >', currentPage)
+        this.isAvatarPage = currentPage === PageType.Avatar;
         if (currentPage === PageType.Avatar && !isLoading) {
+            clearTimeout(this.toggleTimeId);
             this.startTime();
         }
 
     }
 
+    active(currentPage: PageType) {
+        console.log('[ active ] >', currentPage)
+        this.isAvatarPage = currentPage === PageType.Avatar;
+        if (this.isEnter && this.isAllLoaded) {
+            clearTimeout(this.toggleTimeId);
+            this.startTime();
+        }
+    }
+
     allLoaded() {
-        if (this.isEnter) {
+        this.isAllLoaded = true;
+        if (this.isAvatarPage && this.isEnter) {
+            clearTimeout(this.toggleTimeId);
             this.startTime();
             this.emit('allLoaded');
         }
@@ -151,7 +167,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
 
     toggleParticle(showType: number = -1) {
         clearTimeout(this.toggleTimeId);
-        this.startTime();
+        // this.startTime();
         if (showType === this.showType) {
             return
         }

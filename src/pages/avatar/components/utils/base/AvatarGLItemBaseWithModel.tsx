@@ -353,6 +353,7 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
                     _this.container.classList.remove('loading');
                     _this.allLoaded();
                     resolve(true);
+
                 }
             });
 

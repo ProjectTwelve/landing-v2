@@ -113,9 +113,13 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
         avatarGLRef.current?.switchTo(currentAvatar, currentPage);
     }, [currentAvatar]);
 
+    useLayoutEffect(() => {
+        avatarGLRef.current?.acitveTo(currentPage as PageType);
+    }, [currentPage])
+
     return (
         <div className='avatar'>
-            <AvatarGL ref={avatarGLRef} allLoaded={allLoaded}/>
+            <AvatarGL ref={avatarGLRef} allLoaded={allLoaded} />
             <div className='avatar__info'>
                 <div className='avatar__slogan'></div>
                 <div className='app-small-title app-small-title--with-block avatar__small-title'>

@@ -18,6 +18,7 @@ import { IS_MOBILE } from '../../../utils';
 import { AvatarGLModel } from './utils/base/AvatarGLItemBaseWithModel';
 export interface AvatarGLRef {
     switchTo: (type: AvatarType | null, currentPage?: PageType) => void;
+    acitveTo: (page: PageType) => void;
 }
 export interface AvatarGLProps {
     allLoaded: () => void;
@@ -113,7 +114,11 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                 forceUpdate();
 
             },
+            acitveTo: (page: PageType) => {
+                activatedRef.current && AVATAR_GL_MAP[activatedRef.current]!.active(page);
+            },
         }),
+
         []
     );
 
@@ -143,7 +148,7 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                         }
                     });
                 });
-                v.on('allLoaded', ()=> {
+                v.on('allLoaded', () => {
                     allLoaded();
                 })
             }
