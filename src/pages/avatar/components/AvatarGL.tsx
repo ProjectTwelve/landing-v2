@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import { PageType } from '../../app/App.config';
 import { loadingEE, usePageVisible } from '../../app/App.utils';
-import { AvatarType, AVATAR_GL_INFO_MAP } from '../Avatar.config';
+import { AvatarType, AVATAR_GL_INFO_MAP, AVATAR_GL_KEYS_SHUFFLE_REST, AVATAR_GL_KEYS } from '../Avatar.config';
 import './AvatarGL.less';
 import { AvatarCycle } from './AvatarCycle';
 import { ButterflyGL } from '../../../components/butterfly-gl/ButterflyGL';
@@ -20,10 +20,23 @@ export interface AvatarGLRef {
     switchTo: (type: AvatarType | null, currentPage?: PageType) => void;
 }
 
-export const AVATAR_GL_MAP = {
+type AvatarTypeStrings = keyof typeof AvatarType;
+
+type AVATARGLMAP = {
+    [avatar in AvatarTypeStrings]: AvatarGLModel | null;
+}
+
+export const AVATAR_GL_MAP: AVATARGLMAP = {
     [AvatarType.Dokv]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Dokv]),
     [AvatarType.Cartoon]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Cartoon]),
-    [AvatarType.Lowpoly]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Lowpoly]),
+    [AvatarType.Lowpoly]: null,
+    [AvatarType.SK_Cartoon_Female_021]: null,
+    [AvatarType.SK_Cartoon_Female_029]: null,
+    [AvatarType.SK_Cartoon_Female_059]: null,
+    [AvatarType.SK_Lowpoly_Male_002]: null,
+    [AvatarType.SK_Lowpoly_Male_028]: null,
+    [AvatarType.SK_Lowpoly_Male_040]: null,
+    // [AvatarType.Lowpoly]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Lowpoly]),
     // [AvatarType.SK_Cartoon_Female_021]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_021]),
     // [AvatarType.SK_Cartoon_Female_029]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_029]),
     // [AvatarType.SK_Cartoon_Female_059]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_059]),
@@ -35,7 +48,7 @@ export const AVATAR_GL_MAP = {
 export const AVATAR_GL_CYCLE = new AvatarCycle();
 
 /** 决定要显示的 avatar 的顺序（第 0 个会优先加载，其他的会在界面进入后加载） */
-const AVATAR_GL_KEYS = Object.keys(AVATAR_GL_MAP) as AvatarType[];
+// const AVATAR_GL_KEYS = Object.keys(AVATAR_GL_MAP) as AvatarType[];
 
 
 
@@ -51,13 +64,33 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
     useImperativeHandle(
         ref,
         () => ({
-            switchTo: (type, currentPage) => {
+            switchTo: (type: AvatarType | null, currentPage) => {
+                // 由于手机端只能显示三个WebGL render，所以需要维持只存在三个实例
                 activatedRef.current &&
-                    AVATAR_GL_MAP[activatedRef.current].leave();
+                    AVATAR_GL_MAP[activatedRef.current]!.leave();
                 activatedRef.current = type;
-                activatedRef.current &&
-                    AVATAR_GL_MAP[activatedRef.current].enter(currentPage);
+                if (type) {
+                    if (type !== AvatarType.Dokv && type !== AvatarType.Cartoon) {
+                        const lazyKeys = AVATAR_GL_KEYS.slice(2, AVATAR_GL_KEYS.length);
+                        for (let i = 0; i < lazyKeys.length; i++) {
+                            const element = lazyKeys[i];
+                            if (element !== type) {
+                                AVATAR_GL_MAP[element] = null;
+                            }
+                        }
+                        AVATAR_GL_MAP[type] = new AvatarGLModel(AVATAR_GL_INFO_MAP[type]);
+                        const container = containerRef.current;
+                        if (!container) {
+                            return;
+                        }
+                        AVATAR_GL_MAP[type]!.mount(container);
+                    }
+                }
+                type &&
+                    AVATAR_GL_MAP[type]!.enter(currentPage);
+
                 forceUpdate();
+
             },
         }),
         []
@@ -68,7 +101,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         if (!container) {
             return;
         }
-        AVATAR_GL_ARRAY.map((v) => v.mount(container));
+        AVATAR_GL_ARRAY.map((v) => v && v.mount(container));
 
         /** 首页loading结束后，再开始loading */
         // 先只加载首个资源
@@ -81,20 +114,22 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         AVATAR_GL_CYCLE.load();
 
         AVATAR_GL_ARRAY.forEach((v) => {
-            v.on('toggled', ({showType}) => {
-                AVATAR_GL_ARRAY.forEach((av) => {
-                    if(!includes(av.loadingStatus, false)){
-                        av.toggleParticle(showType)
-                    }
+            if (v) {
+                v.on('toggled', ({ showType }) => {
+                    AVATAR_GL_ARRAY.forEach((av) => {
+                        if (av && !includes(av.loadingStatus, false)) {
+                            av.toggleParticle(showType)
+                        }
+                    });
                 });
-            });
+            }
         });
 
         return () => {
-            AVATAR_GL_ARRAY.map((v) => container && v.unMount());
+            AVATAR_GL_ARRAY.map((v) => container && v && v.unMount());
             container && AVATAR_GL_CYCLE.unMount();
             AVATAR_GL_ARRAY.forEach((v) => {
-                v.off('toggled');
+                v && v.off('toggled');
             });
         };
 
@@ -126,7 +161,10 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                 (async () => {
                     for (let i = 0; i < AVATAR_GL_ARRAY.length; i++) {
                         try {
-                            await AVATAR_GL_ARRAY[i].load();
+                            const item = AVATAR_GL_ARRAY[i];
+                            if (item !== null) {
+                                await item.load();
+                            }
                         } catch (e) {
                             console.error('load error', e);
                         }
@@ -162,7 +200,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             <div className='avatar-extra'>
                 {AVATAR_GL_KEYS.map((key) => {
                     const gl = AVATAR_GL_MAP[key];
-                    if (gl.extraNode) {
+                    if (gl && gl.extraNode) {
                         return (
                             <div
                                 className={classnames('avatar-extra-item', {
@@ -173,7 +211,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                                 {gl.extraNode}
                             </div>
                         );
-                    }else {
+                    } else {
                         return null
                     }
 

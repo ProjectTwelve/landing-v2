@@ -1,20 +1,16 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { AvatarGL, AvatarGLRef, AVATAR_GL_MAP } from './components/AvatarGL';
 import './Avatar.less';
-import { AvatarType, AvatarTypeArray } from './Avatar.config';
+import { AvatarType, AVATAR_GL_KEYS } from './Avatar.config';
 import { playClickAudio, GAevent } from '../../utils';
 import classnames from 'classnames';
 import { usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
 import gsap from 'gsap';
-import { first, shuffle } from 'lodash-es';
+import { first } from 'lodash-es';
 
 
-const AVATAR_GL_KEYS_FIRST_THREE = AvatarTypeArray.slice(0, 3);
-const AVATAR_GL_KEYS_REST = AvatarTypeArray.slice(3, AvatarTypeArray.length);
-// 随机打乱的数组，打开注释即可使用
-const AVATAR_GL_KEYS_SHUFFLE_REST = shuffle(AVATAR_GL_KEYS_REST);
-const AVATAR_GL_KEYS = AVATAR_GL_KEYS_FIRST_THREE.concat(AVATAR_GL_KEYS_SHUFFLE_REST);
+
 
 interface AvatarProps {
     currentPage?: PageType;

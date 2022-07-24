@@ -1,3 +1,4 @@
+import { shuffle } from "lodash-es";
 export enum AvatarType {
     Dokv = 'Dokv',
     Cartoon = 'Cartoon',
@@ -11,7 +12,11 @@ export enum AvatarType {
 }
 
 export const AvatarTypeArray = Object.values(AvatarType);
-
+export const AVATAR_GL_KEYS_FIRST_THREE = AvatarTypeArray.slice(0, 3);
+export const AVATAR_GL_KEYS_REST = AvatarTypeArray.slice(3, AvatarTypeArray.length);
+// 随机打乱的数组，打开注释即可使用
+export const AVATAR_GL_KEYS_SHUFFLE_REST = shuffle(AVATAR_GL_KEYS_REST);
+export const AVATAR_GL_KEYS = AVATAR_GL_KEYS_FIRST_THREE.concat(AVATAR_GL_KEYS_SHUFFLE_REST);
 
 export const AVATAR_GL_INFO_MAP = {
     [AvatarType.Dokv]: {
