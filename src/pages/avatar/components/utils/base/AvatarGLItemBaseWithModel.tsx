@@ -305,6 +305,7 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
                     this.loadingStatus[0] = true;
                     if (!includes(this.loadingStatus, false)) {
                         this.container.classList.remove('loading');
+                        this.allLoaded();
                         resolve(true);
                     }
                     loadingEE.emit(
@@ -330,6 +331,7 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
                 _this.loadingStatus[1] = true;
                 if (!includes(_this.loadingStatus, false)) {
                     _this.container.classList.remove('loading');
+                    _this.allLoaded();
                     resolve(true);
                 }
             });
@@ -339,6 +341,7 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
                 _this.loadingStatus[2] = true;
                 if (!includes(_this.loadingStatus, false)) {
                     _this.container.classList.remove('loading');
+                    _this.allLoaded();
                     resolve(true);
                 }
             });
@@ -348,6 +351,7 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
                 _this.loadingStatus[3] = true;
                 if (!includes(_this.loadingStatus, false)) {
                     _this.container.classList.remove('loading');
+                    _this.allLoaded();
                     resolve(true);
                 }
             });

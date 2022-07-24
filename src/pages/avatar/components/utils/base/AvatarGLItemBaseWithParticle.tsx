@@ -26,6 +26,8 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     private btnWrap = document.createElement('div');
     public toggleTimeId = 0;
 
+    public isEnter = false;
+
     private isShowParticle = false;
 
     private showType: number = 0;
@@ -74,12 +76,19 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         this.canvasWrap.style.height = '100%';
         this.canvasWrap.style.opacity = '0';
     }
-    enter(currentPage: PageType = PageType.Loading) {
+    enter(currentPage: PageType = PageType.Loading, isLoading = true) {
         super.enter();
-        if (currentPage === PageType.Avatar) {
+        this.isEnter = true;
+        if (currentPage === PageType.Avatar && !isLoading) {
             this.startTime();
         }
 
+    }
+
+    allLoaded() {
+        if (this.isEnter) {
+            this.startTime();
+        }
     }
 
     startTime() {

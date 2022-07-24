@@ -98,9 +98,13 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                     }
                     AVATAR_GL_MAP[type]!.mount(container);
                 }
-                 
+                let isLoading = true;
+                if (type) {
+                    isLoading = includes(AVATAR_GL_MAP[type]?.loadingStatus, false);
+                }
+
                 type &&
-                    AVATAR_GL_MAP[type]!.enter(currentPage);
+                    AVATAR_GL_MAP[type]!.enter(currentPage,isLoading);
 
                 forceUpdate();
 
