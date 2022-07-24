@@ -70,21 +70,20 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                     AVATAR_GL_MAP[activatedRef.current]!.leave();
                 activatedRef.current = type;
                 if (type) {
-                    if (type !== AvatarType.Dokv && type !== AvatarType.Cartoon) {
-                        const lazyKeys = AVATAR_GL_KEYS.slice(2, AVATAR_GL_KEYS.length);
-                        for (let i = 0; i < lazyKeys.length; i++) {
-                            const element = lazyKeys[i];
-                            if (element !== type) {
-                                AVATAR_GL_MAP[element] = null;
-                            }
+                    const lazyKeys = AVATAR_GL_KEYS.slice(2, AVATAR_GL_KEYS.length);
+                    for (let i = 0; i < lazyKeys.length; i++) {
+                        const element = lazyKeys[i];
+                        if (element !== type) {
+                            AVATAR_GL_MAP[element] = null;
                         }
-                        AVATAR_GL_MAP[type] = new AvatarGLModel(AVATAR_GL_INFO_MAP[type]);
-                        const container = containerRef.current;
-                        if (!container) {
-                            return;
-                        }
-                        AVATAR_GL_MAP[type]!.mount(container);
                     }
+                    AVATAR_GL_MAP[type] = new AvatarGLModel(AVATAR_GL_INFO_MAP[type]);
+                    const container = containerRef.current;
+                    if (!container) {
+                        return;
+                    }
+                    AVATAR_GL_MAP[type]!.mount(container);
+
                 }
                 type &&
                     AVATAR_GL_MAP[type]!.enter(currentPage);
