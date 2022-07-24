@@ -19,6 +19,7 @@ import { AvatarGLModel } from './utils/base/AvatarGLItemBaseWithModel';
 export interface AvatarGLRef {
     switchTo: (type: AvatarType | null, currentPage?: PageType) => void;
 }
+const lazyKeys = AVATAR_GL_KEYS.slice(2, AVATAR_GL_KEYS.length);
 
 type AvatarTypeStrings = keyof typeof AvatarType;
 
@@ -66,24 +67,38 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         () => ({
             switchTo: (type: AvatarType | null, currentPage) => {
                 // 由于手机端只能显示三个WebGL render，所以需要维持只存在三个实例
-                activatedRef.current &&
-                    AVATAR_GL_MAP[activatedRef.current]!.leave();
+                if (type === AvatarType.Dokv || type === AvatarType.Cartoon || type === AvatarType.Lowpoly) {
+                    activatedRef.current &&
+                        AVATAR_GL_MAP[activatedRef.current]!.leave(false);
+                } else {
+                    activatedRef.current &&
+                        AVATAR_GL_MAP[activatedRef.current]!.leave();
+                }
+
                 activatedRef.current = type;
                 if (type) {
-                    const lazyKeys = AVATAR_GL_KEYS.slice(2, AVATAR_GL_KEYS.length);
-                    for (let i = 0; i < lazyKeys.length; i++) {
-                        const element = lazyKeys[i];
-                        if (element !== type) {
+                    if (type === AvatarType.Dokv || type === AvatarType.Cartoon) {
+                        for (let i = 0; i < lazyKeys.length; i++) {
+                            const element = lazyKeys[i];
                             AVATAR_GL_MAP[element] = null;
                         }
+                    } else {
+                        for (let i = 0; i < lazyKeys.length; i++) {
+                            const element = lazyKeys[i];
+                            if (element !== type) {
+                                AVATAR_GL_MAP[element] = null;
+                            }
+                        }
+                        AVATAR_GL_MAP[type] = new AvatarGLModel(AVATAR_GL_INFO_MAP[type]);
+
                     }
-                    AVATAR_GL_MAP[type] = new AvatarGLModel(AVATAR_GL_INFO_MAP[type]);
                     const container = containerRef.current;
                     if (!container) {
                         return;
                     }
                     AVATAR_GL_MAP[type]!.mount(container);
                 }
+
 
                 type &&
                     AVATAR_GL_MAP[type]!.enter(currentPage);

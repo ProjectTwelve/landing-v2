@@ -90,8 +90,8 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         }, 4000);
     }
 
-    leave() {
-        super.leave();
+    leave(clearRender = true) {
+        super.leave(clearRender);
         clearTimeout(this.toggleTimeId);
     }
 

@@ -167,7 +167,7 @@ export class AvatarGLItemBase extends EventEmitter {
             }
         );
     }
-    leave() {
+    leave(clearRender) {
         this.container.style.zIndex = '1';
 
         gsap.to(this.container, {
@@ -178,8 +178,10 @@ export class AvatarGLItemBase extends EventEmitter {
             y: 0,
             onComplete: () => {
                 cancelAnimationFrame(this.frameId);
-                this.renderer.forceContextLoss();
-                this.renderer = null as any;
+                if (clearRender) {
+                    this.renderer.forceContextLoss();
+                    this.renderer = null as any;
+                }
             },
         });
     }
