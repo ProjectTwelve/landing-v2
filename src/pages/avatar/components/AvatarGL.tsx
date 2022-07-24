@@ -19,6 +19,9 @@ import { AvatarGLModel } from './utils/base/AvatarGLItemBaseWithModel';
 export interface AvatarGLRef {
     switchTo: (type: AvatarType | null, currentPage?: PageType) => void;
 }
+export interface AvatarGLProps {
+    allLoaded: () => void;
+}
 const lazyKeys = AVATAR_GL_KEYS.slice(2, AVATAR_GL_KEYS.length);
 
 type AvatarTypeStrings = keyof typeof AvatarType;
@@ -56,7 +59,8 @@ export const AVATAR_GL_CYCLE = new AvatarCycle();
 const AVATAR_GL_ARRAY = AVATAR_GL_KEYS.map((k) => AVATAR_GL_MAP[k]);
 
 
-export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
+export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
+    const { allLoaded } = props;
     const containerRef = useRef<HTMLDivElement>(null);
     const activatedRef = useRef<AvatarType | null>(null);
     const mouseRef = useRef<HTMLDivElement>(null);
@@ -104,7 +108,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                 }
 
                 type &&
-                    AVATAR_GL_MAP[type]!.enter(currentPage,isLoading);
+                    AVATAR_GL_MAP[type]!.enter(currentPage, isLoading);
 
                 forceUpdate();
 
@@ -139,6 +143,9 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                         }
                     });
                 });
+                v.on('allLoaded', ()=> {
+                    allLoaded();
+                })
             }
         });
 
@@ -147,6 +154,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             container && AVATAR_GL_CYCLE.unMount();
             AVATAR_GL_ARRAY.forEach((v) => {
                 v && v.off('toggled');
+                v && v.off('allLoaded');
             });
         };
 

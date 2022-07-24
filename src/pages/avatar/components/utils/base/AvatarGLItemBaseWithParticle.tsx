@@ -88,6 +88,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     allLoaded() {
         if (this.isEnter) {
             this.startTime();
+            this.emit('allLoaded');
         }
     }
 
@@ -99,6 +100,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     }
 
     leave(clearRender = true) {
+        this.isEnter = false;
         super.leave(clearRender);
         clearTimeout(this.toggleTimeId);
     }

@@ -20,9 +20,9 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
     const { currentPage } = props;
     const avatarGLRef = useRef<AvatarGLRef>(null);
     const [currentAvatar, setCurrentAvatar] = useState<AvatarType | null>(AvatarType.Dokv);
+    let timeId: number;
 
     usePageVisible(PageType.Avatar, () => {
-        let timeId: number;
         const handleTouchDown = () => {
             clearInterval(timeId);
         };
@@ -102,13 +102,20 @@ export const Avatar: React.FC<AvatarProps> = (props) => {
         };
     });
 
+    const allLoaded = () => {
+        clearInterval(timeId);
+        timeId = window.setInterval(() => {
+            handleNext();
+        }, 8000);
+    }
+
     useLayoutEffect(() => {
         avatarGLRef.current?.switchTo(currentAvatar, currentPage);
     }, [currentAvatar]);
 
     return (
         <div className='avatar'>
-            <AvatarGL ref={avatarGLRef} />
+            <AvatarGL ref={avatarGLRef} allLoaded={allLoaded}/>
             <div className='avatar__info'>
                 <div className='avatar__slogan'></div>
                 <div className='app-small-title app-small-title--with-block avatar__small-title'>
