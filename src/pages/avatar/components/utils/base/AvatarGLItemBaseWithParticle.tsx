@@ -165,7 +165,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
 
     toggleParticle(showType: number = -1) {
         clearTimeout(this.toggleTimeId);
-        // this.startTime();
+        this.startTime();
         if (showType === this.showType) {
             return
         }
