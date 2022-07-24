@@ -33,7 +33,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
 
     private isShowParticle = false;
 
-    private showType: number = 0;
+    public showType: number = 0;
 
     public easingEffect = TWEEN.Easing.Quadratic.InOut;
 
@@ -88,6 +88,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
             this.startTime();
         }
 
+
     }
 
     active(currentPage: PageType) {
@@ -117,6 +118,9 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     leave() {
         this.isEnter = false;
         super.leave(this.clearRender);
+        if (!this.clearRender) {
+            this.toggleParticle(0);
+        }
         clearTimeout(this.toggleTimeId);
     }
 

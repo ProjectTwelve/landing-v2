@@ -83,7 +83,6 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                             const element = lazyKeys[i];
                             AVATAR_GL_MAP[element] = null;
                         }
-                        console.log('[ AVATAR_GL_MAP[type] ] >', AVATAR_GL_MAP[type]?.renderer)
                     } else {
                         for (let i = 0; i < lazyKeys.length; i++) {
                             const element = lazyKeys[i];
