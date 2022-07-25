@@ -1,7 +1,7 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { AvatarGL, AvatarGLRef, AVATAR_GL_MAP } from './components/AvatarGL';
 import './Avatar.less';
-import { AvatarType, AvatarTypeArray } from './Avatar.config';
+import { AvatarType, AVATAR_GL_KEYS } from './Avatar.config';
 import { playClickAudio, GAevent } from '../../utils';
 import classnames from 'classnames';
 import { usePageVisible } from '../app/App.utils';
@@ -9,17 +9,27 @@ import { PageType } from '../app/App.config';
 import gsap from 'gsap';
 import { first } from 'lodash-es';
 
-export const Avatar: React.FC = () => {
+
+
+
+interface AvatarProps {
+    currentPage?: PageType;
+}
+
+export const Avatar: React.FC<AvatarProps> = (props) => {
+    const { currentPage } = props;
     const avatarGLRef = useRef<AvatarGLRef>(null);
-    const [currentAvatar, setCurrentAvatar] = useState<AvatarType | null>(null);
+    const [currentAvatar, setCurrentAvatar] = useState<AvatarType | null>(AvatarType.Dokv);
+    let timeId: number;
 
     usePageVisible(PageType.Avatar, () => {
-        let timeId: number;
         const handleTouchDown = () => {
             clearInterval(timeId);
+            avatarGLRef.current?.stopTimeout();
         };
         const handleTouchUp = () => {
             clearInterval(timeId);
+            avatarGLRef.current?.restartTimout();
             timeId = window.setInterval(() => {
                 handleNext();
             }, 8000);
@@ -35,7 +45,7 @@ export const Avatar: React.FC = () => {
 
         return {
             onVisible: () => {
-                GAevent('webview','Infra-webview');
+                GAevent('webview', 'Infra-webview');
                 handleTouchUp();
                 window.addEventListener('pointerdown', handleTouchDown);
                 window.addEventListener('pointerup', handleTouchUp);
@@ -49,7 +59,7 @@ export const Avatar: React.FC = () => {
                     first(Object.keys(AVATAR_GL_MAP)) as AvatarType
                 );
                 const tl = gsap.timeline({
-                    onComplete: () => {},
+                    onComplete: () => { },
                 });
                 tl.fromTo(
                     '.page-wrap-avatar',
@@ -94,13 +104,24 @@ export const Avatar: React.FC = () => {
         };
     });
 
+    const allLoaded = () => {
+        clearInterval(timeId);
+        timeId = window.setInterval(() => {
+            handleNext();
+        }, 8000);
+    }
+
     useLayoutEffect(() => {
-        avatarGLRef.current?.switchTo(currentAvatar);
+        avatarGLRef.current?.switchTo(currentAvatar, currentPage);
     }, [currentAvatar]);
+
+    useLayoutEffect(() => {
+        avatarGLRef.current?.acitveTo(currentPage as PageType);
+    }, [currentPage])
 
     return (
         <div className='avatar'>
-            <AvatarGL ref={avatarGLRef} />
+            <AvatarGL ref={avatarGLRef} allLoaded={allLoaded} />
             <div className='avatar__info'>
                 <div className='avatar__slogan'></div>
                 <div className='app-small-title app-small-title--with-block avatar__small-title'>
@@ -131,19 +152,24 @@ export const Avatar: React.FC = () => {
                 </div>
             </div>
             <div className='avatar__nav'>
-                {AvatarTypeArray.map((type) => {
+                {AVATAR_GL_KEYS.map((type, i) => {
                     const activated = type === currentAvatar;
-                    return (
-                        <div
-                            className={classnames('avatar__nav-item', {
-                                active: activated,
-                            })}
-                            key={type}
-                            onClick={() => {
-                                setCurrentAvatar(type);
-                            }}
-                        ></div>
-                    );
+                    if (i <= 2) {
+                        return (
+                            <div
+                                className={classnames('avatar__nav-item', {
+                                    active: activated,
+                                })}
+                                key={type}
+                                onClick={() => {
+                                    setCurrentAvatar(type);
+                                }}
+                            ></div>
+                        );
+                    } else {
+                        return null
+                    }
+
                 })}
             </div>
         </div>
@@ -152,20 +178,20 @@ export const Avatar: React.FC = () => {
     function handlePrev() {
         setCurrentAvatar((old) => {
             const newIndex = old
-                ? (AvatarTypeArray.indexOf(old) - 1 + AvatarTypeArray.length) %
-                      AvatarTypeArray.length || 0
+                ? (AVATAR_GL_KEYS.indexOf(old) - 1 + AVATAR_GL_KEYS.length) %
+                AVATAR_GL_KEYS.length || 0
                 : 0;
-            return AvatarTypeArray[newIndex];
+            return AVATAR_GL_KEYS[newIndex];
         });
     }
 
     function handleNext() {
         setCurrentAvatar((old) => {
             const newIndex = old
-                ? (AvatarTypeArray.indexOf(old) + 1 + AvatarTypeArray.length) %
-                      AvatarTypeArray.length || 0
+                ? (AVATAR_GL_KEYS.indexOf(old) + 1 + AVATAR_GL_KEYS.length) %
+                AVATAR_GL_KEYS.length || 0
                 : 0;
-            return AvatarTypeArray[newIndex];
+            return AVATAR_GL_KEYS[newIndex];
         });
     }
 };

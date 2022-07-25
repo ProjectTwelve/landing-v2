@@ -2,7 +2,11 @@ import * as THREE from 'three';
 import ResizeObserver from 'resize-observer-polyfill';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { gsap } from 'gsap';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 import EventEmitter from 'eventemitter3';
+import TWEEEN from '@tweenjs/tween.js'
 
 export class AvatarGLItemBase extends EventEmitter {
     /** 额外的 node，用于放置说明等文案 */
@@ -23,10 +27,69 @@ export class AvatarGLItemBase extends EventEmitter {
     protected mixer?: THREE.AnimationMixer;
     protected clock = new THREE.Clock();
 
+    public ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+
+    // For cluster
+    // All shining particles(tiny) are included in this cluster 
+    public g = new THREE.SphereBufferGeometry(0.007);
+    public m = new THREE.MeshStandardMaterial();
+
+    public m_color = new THREE.Color("#99ddff");
+    public pts: THREE.Vector3[] = [];
+    public cluster;
+
+    // For cluster
+    // All shining particles(large) are included in this cluster 
+    public g_l = new THREE.SphereBufferGeometry(0.012);
+    public m_l = new THREE.MeshStandardMaterial();
+
+    public m_l_color = new THREE.Color("#99ddff");
+    public pts_l: THREE.Vector3[] = [];
+    public cluster_l;
+    public center;
+
+    public effectComposer: EffectComposer;
+    public renderPass: RenderPass;
+    public unrealBloomPass: UnrealBloomPass;
+
+    // gltf model
+    public gltfModel;
+    // HFBX model
+    public HFBXModel;
+    public HFBX_TModel;
+    public triangleMesh;
+
+    // triangles
+    public trianglePts: THREE.Vector3[] = [];
+    public triangleGeometry = new THREE.BufferGeometry();
+    public trianglePositions: number[] = [];
+    public triangleNormals: number[] = [];
+    public triangleColors: number[] = [];
+    public triangleColor = new THREE.Color();
+
+    public pA = new THREE.Vector3();
+    public pB = new THREE.Vector3();
+    public pC = new THREE.Vector3();
+    public cb = new THREE.Vector3();
+    public ab = new THREE.Vector3();
+
+
+    public modelGroup: THREE.Group = new THREE.Group();
+    public particlesGroup: THREE.Group = new THREE.Group();
+    public trianglesGroup: THREE.Group = new THREE.Group();
+    public light: boolean = false;
+
+
     constructor() {
         super();
+        this.m.transparent = true;
+        this.m.opacity = 0.8;
+        this.m_l.transparent = true;
+        this.m_l.opacity = 0.8;
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.outputEncoding = THREE.sRGBEncoding;
+        this.renderer.shadowMap.enabled = true
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
         this.camera = new THREE.PerspectiveCamera(40, 1, 1, 100);
         this.camera.position.set(5, 2, 8);
         this.scene.add(this.camera);
@@ -51,6 +114,16 @@ export class AvatarGLItemBase extends EventEmitter {
         this.container.appendChild(this.rendererWrap);
         this.container.className =
             'avatar-gl-container app-container-loading loading';
+
+
+        // 发光材质显示
+        this.renderPass = new RenderPass(this.scene, this.camera)
+        this.effectComposer = new EffectComposer(this.renderer)
+        this.unrealBloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 2.7, 1, 0.5)
+        this.effectComposer.setSize(window.innerWidth, window.innerHeight)
+        this.effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        this.effectComposer.addPass(this.renderPass)
+        this.effectComposer.renderToScreen = true;
     }
     load() {
         if (this.loadingPromise) {
@@ -80,7 +153,7 @@ export class AvatarGLItemBase extends EventEmitter {
             this.container,
             {
                 display: 'block',
-                x: 280,
+                x: 0,
                 y: 0,
                 opacity: 0,
             },
@@ -90,20 +163,25 @@ export class AvatarGLItemBase extends EventEmitter {
                 y: 0,
                 opacity: 1,
                 delay: 0.2,
-                onComplete: () => {},
+                onComplete: () => { },
             }
         );
     }
-    leave() {
+    leave(clearRender) {
         this.container.style.zIndex = '1';
+
         gsap.to(this.container, {
             duration: 0.4,
             display: 'none',
             opacity: 0,
-            x: -200,
+            x: 0,
             y: 0,
             onComplete: () => {
                 cancelAnimationFrame(this.frameId);
+                if (clearRender) {
+                    this.renderer.forceContextLoss();
+                    this.renderer = null as any;
+                }
             },
         });
     }
@@ -121,7 +199,13 @@ export class AvatarGLItemBase extends EventEmitter {
         const delta = this.clock.getDelta();
         this.mixer?.update(delta);
         this.controls.update();
-        this.renderer.render(this.scene, this.camera);
+        this.renderer && this.renderer.render(this.scene, this.camera);
+
+        if (this.light) {
+            this.effectComposer.render();
+        }
+        TWEEEN.update();
+
     }
 
     protected animate() {
@@ -133,11 +217,15 @@ export class AvatarGLItemBase extends EventEmitter {
         this.camera.aspect =
             this.container.clientWidth / this.container.clientHeight;
         this.camera.updateProjectionMatrix();
-        this.renderer.setSize(
-            this.container.clientWidth,
-            this.container.clientHeight
-        );
-        this.renderer.domElement.style.width = `${this.container.clientWidth}px`;
-        this.renderer.domElement.style.height = `${this.container.clientHeight}px`;
+        if (this.renderer) {
+            this.renderer.setSize(
+                this.container.clientWidth,
+                this.container.clientHeight
+            );
+            this.renderer.domElement.style.width = `${this.container.clientWidth}px`;
+            this.renderer.domElement.style.height = `${this.container.clientHeight}px`;
+        }
+
+        this.effectComposer.setSize(this.container.clientWidth, this.container.clientHeight);
     }
 }

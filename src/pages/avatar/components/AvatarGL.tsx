@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { gsap } from 'gsap';
-import { first, shuffle } from 'lodash-es';
+import { first, includes, indexOf } from 'lodash-es';
 import React, {
     forwardRef,
     useEffect,
@@ -10,34 +10,52 @@ import React, {
 } from 'react';
 import { PageType } from '../../app/App.config';
 import { loadingEE, usePageVisible } from '../../app/App.utils';
-import { AvatarType } from '../Avatar.config';
+import { AvatarType, AVATAR_GL_INFO_MAP, AVATAR_GL_KEYS_SHUFFLE_REST, AVATAR_GL_KEYS } from '../Avatar.config';
 import './AvatarGL.less';
-import { AvatarGLItemCartoon } from './utils/AvatarGLItemCartoon';
-import { AvatarGLItemDokv } from './utils/AvatarGLItemDokv';
-import { AvatarGLItemLowpoly } from './utils/AvatarGLItemLowpoly';
 import { AvatarCycle } from './AvatarCycle';
 import { ButterflyGL } from '../../../components/butterfly-gl/ButterflyGL';
 import { IS_MOBILE } from '../../../utils';
+import { AvatarGLModel } from './utils/base/AvatarGLItemBaseWithModel';
 export interface AvatarGLRef {
-    switchTo: (type: AvatarType | null) => void;
+    switchTo: (type: AvatarType | null, currentPage?: PageType) => void;
+    acitveTo: (page: PageType) => void;
+    stopTimeout: () => void;
+    restartTimout: () => void;
+}
+export interface AvatarGLProps {
+    allLoaded: () => void;
+}
+const lazyKeys = AVATAR_GL_KEYS.slice(2, AVATAR_GL_KEYS.length);
+
+type AvatarTypeStrings = keyof typeof AvatarType;
+
+type AVATARGLMAP = {
+    [avatar in AvatarTypeStrings]: AvatarGLModel | null;
 }
 
-export const AVATAR_GL_MAP = {
-    [AvatarType.DOKV]: new AvatarGLItemDokv(),
-    [AvatarType.LOWPOLY]: new AvatarGLItemLowpoly(),
-    [AvatarType.CARTOON]: new AvatarGLItemCartoon(),
+export const AVATAR_GL_MAP: AVATARGLMAP = {
+    [AvatarType.Dokv]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Dokv]),
+    [AvatarType.Cartoon]: null,
+    [AvatarType.Lowpoly]: null,
+    [AvatarType.SK_Cartoon_Female_021]: null,
+    [AvatarType.SK_Cartoon_Female_029]: null,
+    [AvatarType.SK_Cartoon_Female_059]: null,
+    [AvatarType.SK_Lowpoly_Male_002]: null,
+    [AvatarType.SK_Lowpoly_Male_028]: null,
+    [AvatarType.SK_Lowpoly_Male_040]: null,
 };
 
 export const AVATAR_GL_CYCLE = new AvatarCycle();
 
 /** 决定要显示的 avatar 的顺序（第 0 个会优先加载，其他的会在界面进入后加载） */
-const AVATAR_GL_KEYS = Object.keys(AVATAR_GL_MAP) as AvatarType[];
+// const AVATAR_GL_KEYS = Object.keys(AVATAR_GL_MAP) as AvatarType[];
 
-// 随机打乱的数组，打开注释即可使用
-// const AVATAR_GL_KEYS = shuffle(Object.keys(AVATAR_GL_MAP));
+
 const AVATAR_GL_ARRAY = AVATAR_GL_KEYS.map((k) => AVATAR_GL_MAP[k]);
 
-export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
+
+export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
+    const { allLoaded } = props;
     const containerRef = useRef<HTMLDivElement>(null);
     const activatedRef = useRef<AvatarType | null>(null);
     const mouseRef = useRef<HTMLDivElement>(null);
@@ -46,15 +64,74 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
     useImperativeHandle(
         ref,
         () => ({
-            switchTo: (type) => {
-                activatedRef.current &&
-                    AVATAR_GL_MAP[activatedRef.current].leave();
+            switchTo: (type: AvatarType | null, currentPage) => {
+
+                const currentIndex = indexOf(AVATAR_GL_KEYS, type);
+                const length = AVATAR_GL_KEYS.length;
+                let nextType = AvatarType.Dokv;
+                if (currentIndex === length - 1) {
+                    nextType = AvatarType.Dokv;
+                } else {
+                    nextType = AVATAR_GL_KEYS[currentIndex + 1];
+                }
+
+                // 由于手机端只能显示三个WebGL render，所以需要维持只存在三个实例
+                if (activatedRef.current === nextType) {
+                    activatedRef.current &&
+                        AVATAR_GL_MAP[nextType]!.leave(false);
+                } else {
+                    activatedRef.current &&
+                        AVATAR_GL_MAP[activatedRef.current]!.leave(true);
+                }
+
                 activatedRef.current = type;
-                activatedRef.current &&
-                    AVATAR_GL_MAP[activatedRef.current].enter();
+
+                if (type) {
+                    // 加载当前和下一个， 其他的全部销毁
+                    for (let i = 0; i < AVATAR_GL_KEYS.length; i++) {
+                        const element = AVATAR_GL_KEYS[i];
+                        if (element === type || element === nextType) {
+                            if (AVATAR_GL_MAP[element] === null) {
+                                AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
+                                AVATAR_GL_MAP[element]?.load();
+                            }
+
+                        } else {
+                            AVATAR_GL_MAP[element] = null;
+                        }
+                    }
+                    const container = containerRef.current;
+                    if (!container) {
+                        return;
+                    }
+                    AVATAR_GL_MAP[type]!.mount(container);
+                }
+                let isLoading = true;
+                if (type) {
+                    isLoading = includes(AVATAR_GL_MAP[type]?.loadingStatus, false);
+                }
+                type && AVATAR_GL_MAP[type]!.on('allLoaded', () => {
+                    if (AVATAR_GL_MAP[type]?.isAvatarPage && AVATAR_GL_MAP[type]?.isEnter) {
+                        allLoaded();
+                    }
+                })
+                type &&
+                    AVATAR_GL_MAP[type]!.enter(currentPage, isLoading);
+
                 forceUpdate();
+
             },
+            acitveTo: (page: PageType) => {
+                activatedRef.current && AVATAR_GL_MAP[activatedRef.current]!.active(page);
+            },
+            stopTimeout: () => {
+                activatedRef.current && AVATAR_GL_MAP[activatedRef.current]!.stopTimeout();
+            },
+            restartTimout: () => {
+                activatedRef.current && AVATAR_GL_MAP[activatedRef.current]!.restartTimout();
+            }
         }),
+
         []
     );
 
@@ -63,7 +140,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         if (!container) {
             return;
         }
-        AVATAR_GL_ARRAY.map((v) => v.mount(container));
+        AVATAR_GL_ARRAY.map((v) => v && v.mount(container));
 
         /** 首页loading结束后，再开始loading */
         // 先只加载首个资源
@@ -76,34 +153,23 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
         AVATAR_GL_CYCLE.load();
 
         AVATAR_GL_ARRAY.forEach((v) => {
-            v.on('enter', ({ isShowParticle }) =>
-                handleToggleParticle(isShowParticle)
-            );
-            v.on('toggled', ({ isShowParticle }) => {
-                handleToggleParticle(isShowParticle);
-                AVATAR_GL_ARRAY.forEach((av) =>
-                    av.toggleParticle(isShowParticle)
-                );
-            });
+            if (v) {
+                v.on('allLoaded', () => {
+                    if (v?.isAvatarPage && v?.isEnter) {
+                        allLoaded();
+                    }
+                })
+            }
         });
 
         return () => {
-            AVATAR_GL_ARRAY.map((v) => container && v.unMount());
+            AVATAR_GL_ARRAY.map((v) => container && v && v.unMount());
             container && AVATAR_GL_CYCLE.unMount();
             AVATAR_GL_ARRAY.forEach((v) => {
-                v.off('toggled');
+                v && v.off('allLoaded');
             });
         };
 
-        function handleToggleParticle(isShowParticle: boolean) {
-            if (isShowParticle) {
-                container?.classList.add('show-particle');
-                container?.classList.remove('hidden-particle');
-            } else {
-                container?.classList.remove('show-particle');
-                container?.classList.add('hidden-particle');
-            }
-        }
     }, []);
 
     usePageVisible(PageType.Avatar, () => {
@@ -132,7 +198,10 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                 (async () => {
                     for (let i = 0; i < AVATAR_GL_ARRAY.length; i++) {
                         try {
-                            await AVATAR_GL_ARRAY[i].load();
+                            const item = AVATAR_GL_ARRAY[i];
+                            if (item !== null) {
+                                await item.load();
+                            }
                         } catch (e) {
                             console.error('load error', e);
                         }
@@ -152,7 +221,7 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
                     window.removeEventListener('mouseup', handleMouseUp);
                 }
             },
-            onDestroy: () => {},
+            onDestroy: () => { },
         };
     });
 
@@ -168,16 +237,21 @@ export const AvatarGL = forwardRef<AvatarGLRef>((props, ref) => {
             <div className='avatar-extra'>
                 {AVATAR_GL_KEYS.map((key) => {
                     const gl = AVATAR_GL_MAP[key];
-                    return (
-                        <div
-                            className={classnames('avatar-extra-item', {
-                                active: activatedRef.current === key,
-                            })}
-                            key={key}
-                        >
-                            {gl.extraNode}
-                        </div>
-                    );
+                    if (gl && gl.extraNode) {
+                        return (
+                            <div
+                                className={classnames('avatar-extra-item', {
+                                    active: activatedRef.current === key,
+                                })}
+                                key={key}
+                            >
+                                {gl.extraNode}
+                            </div>
+                        );
+                    } else {
+                        return null
+                    }
+
                 })}
             </div>
         </div>
