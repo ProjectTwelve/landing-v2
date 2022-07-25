@@ -129,12 +129,10 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         }, 4000);
     }
 
-    leave(clearRender: boolean= true) {
+    leave(clearRender: boolean = true) {
         this.isEnter = false;
         super.leave(clearRender);
-        if (!this.clearRender) {
-            this.toggleParticle(0, true, true);
-        }
+        this.toggleParticle(0, true, true);
         clearTimeout(this.toggleTimeId);
     }
 
@@ -190,7 +188,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         }
 
         this.isChanged = true;
-        
+
         // this.startTime();
         if (showType === this.showType) {
             return
@@ -306,7 +304,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
             }, 500)
         }
 
-        if(resetChanged){
+        if (resetChanged) {
             this.isChanged = false;
         }
 
