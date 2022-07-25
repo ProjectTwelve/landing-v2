@@ -78,9 +78,13 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                 const currentIndex = indexOf(AVATAR_GL_KEYS, type);
                 const nextType = AVATAR_GL_KEYS[currentIndex + 1];
                 // 由于手机端只能显示三个WebGL render，所以需要维持只存在三个实例
-                activatedRef.current &&
-                    AVATAR_GL_MAP[activatedRef.current]!.leave();
-
+                if(activatedRef.current === nextType){
+                    activatedRef.current &&
+                    AVATAR_GL_MAP[nextType]!.leave(false);
+                }else {
+                    activatedRef.current &&
+                    AVATAR_GL_MAP[activatedRef.current]!.leave(true);
+                }
 
                 activatedRef.current = type;
 
@@ -89,16 +93,13 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                     for (let i = 0; i < AVATAR_GL_KEYS.length; i++) {
                         const element = AVATAR_GL_KEYS[i];
                         if (element === type || element === nextType) {
-                            if (element !== AvatarType.Dokv) {
-                                if(AVATAR_GL_MAP[element] === null){
-                                    AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
-                                    AVATAR_GL_MAP[element]?.load();
-                                }
+                            if (AVATAR_GL_MAP[element] === null) {
+                                AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
+                                AVATAR_GL_MAP[element]?.load();
                             }
+                            
                         } else {
-                            if (element !== AvatarType.Dokv) {
-                                AVATAR_GL_MAP[element] = null;
-                            }
+                            AVATAR_GL_MAP[element] = null;
                         }
                     }
                     // if (type === AvatarType.Dokv || type === AvatarType.Cartoon) {

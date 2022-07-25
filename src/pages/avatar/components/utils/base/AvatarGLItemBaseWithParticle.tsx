@@ -129,9 +129,9 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         }, 4000);
     }
 
-    leave() {
+    leave(clearRender: boolean= true) {
         this.isEnter = false;
-        super.leave(this.clearRender);
+        super.leave(clearRender);
         if (!this.clearRender) {
             this.toggleParticle(0, true, true);
         }
