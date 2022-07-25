@@ -43,21 +43,12 @@ export const AVATAR_GL_MAP: AVATARGLMAP = {
     [AvatarType.SK_Lowpoly_Male_002]: null,
     [AvatarType.SK_Lowpoly_Male_028]: null,
     [AvatarType.SK_Lowpoly_Male_040]: null,
-    // [AvatarType.Cartoon]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Cartoon]),
-    // [AvatarType.Lowpoly]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Lowpoly]),
-    // [AvatarType.SK_Cartoon_Female_021]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_021]),
-    // [AvatarType.SK_Cartoon_Female_029]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_029]),
-    // [AvatarType.SK_Cartoon_Female_059]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_059]),
-    // [AvatarType.SK_Lowpoly_Male_002]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Lowpoly_Male_002]),
-    // [AvatarType.SK_Lowpoly_Male_028]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Lowpoly_Male_028]),
-    // [AvatarType.SK_Lowpoly_Male_040]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Lowpoly_Male_040]),
 };
 
 export const AVATAR_GL_CYCLE = new AvatarCycle();
 
 /** 决定要显示的 avatar 的顺序（第 0 个会优先加载，其他的会在界面进入后加载） */
 // const AVATAR_GL_KEYS = Object.keys(AVATAR_GL_MAP) as AvatarType[];
-
 
 
 const AVATAR_GL_ARRAY = AVATAR_GL_KEYS.map((k) => AVATAR_GL_MAP[k]);
@@ -109,21 +100,6 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                             AVATAR_GL_MAP[element] = null;
                         }
                     }
-                    // if (type === AvatarType.Dokv || type === AvatarType.Cartoon) {
-                    //     for (let i = 0; i < lazyKeys.length; i++) {
-                    //         const element = lazyKeys[i];
-                    //         AVATAR_GL_MAP[element] = null;
-                    //     }
-                    // } else {
-                    //     for (let i = 0; i < lazyKeys.length; i++) {
-                    //         const element = lazyKeys[i];
-                    //         if (element !== type) {
-                    //             AVATAR_GL_MAP[element] = null;
-                    //         }
-                    //     }
-                    //     AVATAR_GL_MAP[type] = new AvatarGLModel(AVATAR_GL_INFO_MAP[type]);
-
-                    // }
                     const container = containerRef.current;
                     if (!container) {
                         return;
@@ -135,8 +111,6 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                     isLoading = includes(AVATAR_GL_MAP[type]?.loadingStatus, false);
                 }
                 type && AVATAR_GL_MAP[type]!.on('allLoaded', () => {
-                    console.log('----allLoaded', AVATAR_GL_MAP[type]?.isAvatarPage, AVATAR_GL_MAP[type]?.isEnter);
-
                     if (AVATAR_GL_MAP[type]?.isAvatarPage && AVATAR_GL_MAP[type]?.isEnter) {
                         allLoaded();
                     }
@@ -180,13 +154,6 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
 
         AVATAR_GL_ARRAY.forEach((v) => {
             if (v) {
-                // v.on('toggled', ({ showType }) => {
-                //     AVATAR_GL_ARRAY.forEach((av) => {
-                //         if (av && !includes(av.loadingStatus, false)) {
-                //             av.toggleParticle(showType)
-                //         }
-                //     });
-                // });
                 v.on('allLoaded', () => {
                     if (v?.isAvatarPage && v?.isEnter) {
                         allLoaded();
@@ -199,7 +166,6 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
             AVATAR_GL_ARRAY.map((v) => container && v && v.unMount());
             container && AVATAR_GL_CYCLE.unMount();
             AVATAR_GL_ARRAY.forEach((v) => {
-                // v && v.off('toggled');
                 v && v.off('allLoaded');
             });
         };

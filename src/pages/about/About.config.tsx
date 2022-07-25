@@ -241,7 +241,7 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         name: 'HH',
         desc: (
             <>
-                Eco Research in P12; former quant developer, banker
+                Econ Research in P12; former quant developer, banker
             </>
         ),
         links: {

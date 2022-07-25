@@ -179,7 +179,6 @@ export class AvatarGLItemBase extends EventEmitter {
             onComplete: () => {
                 cancelAnimationFrame(this.frameId);
                 if (clearRender) {
-                    console.log('[ clear ] >', clearRender)
                     this.renderer.forceContextLoss();
                     this.renderer = null as any;
                 }
