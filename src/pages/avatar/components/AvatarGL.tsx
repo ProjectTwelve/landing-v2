@@ -135,7 +135,11 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                     isLoading = includes(AVATAR_GL_MAP[type]?.loadingStatus, false);
                 }
                 type && AVATAR_GL_MAP[type]!.on('allLoaded', () => {
-                    allLoaded();
+                    console.log('----allLoaded', AVATAR_GL_MAP[type]?.isAvatarPage, AVATAR_GL_MAP[type]?.isEnter);
+
+                    if (AVATAR_GL_MAP[type]?.isAvatarPage && AVATAR_GL_MAP[type]?.isEnter) {
+                        allLoaded();
+                    }
                 })
                 type &&
                     AVATAR_GL_MAP[type]!.enter(currentPage, isLoading);
@@ -184,7 +188,9 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                 //     });
                 // });
                 v.on('allLoaded', () => {
-                    allLoaded();
+                    if (v?.isAvatarPage && v?.isEnter) {
+                        allLoaded();
+                    }
                 })
             }
         });

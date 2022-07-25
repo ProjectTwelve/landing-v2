@@ -95,7 +95,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
 
     active(currentPage: PageType) {
         this.isAvatarPage = currentPage === PageType.Avatar;
-        if (this.isEnter && this.isAllLoaded) {
+        if (currentPage === PageType.Avatar && this.isEnter && this.isAllLoaded) {
             clearTimeout(this.toggleTimeId);
             this.startTime();
         }
