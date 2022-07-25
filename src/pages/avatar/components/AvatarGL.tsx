@@ -90,8 +90,10 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                         const element = AVATAR_GL_KEYS[i];
                         if (element === type || element === nextType) {
                             if (element !== AvatarType.Dokv) {
-                                AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
-                                AVATAR_GL_MAP[element]?.load();
+                                if(AVATAR_GL_MAP[element] === null){
+                                    AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
+                                    AVATAR_GL_MAP[element]?.load();
+                                }
                             }
                         } else {
                             if (element !== AvatarType.Dokv) {
