@@ -64,7 +64,7 @@ export const AVATAR_GL_INFO_MAP = {
             y: -2.9,
             z: -0.2,
         },
-        clearRender: false,
+        clearRender: true,
     },
     [AvatarType.Lowpoly]: {
         name: AvatarType.Lowpoly,

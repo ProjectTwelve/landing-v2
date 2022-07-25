@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { gsap } from 'gsap';
-import { first, includes } from 'lodash-es';
+import { first, includes, indexOf } from 'lodash-es';
 import React, {
     forwardRef,
     useEffect,
@@ -35,7 +35,7 @@ type AVATARGLMAP = {
 
 export const AVATAR_GL_MAP: AVATARGLMAP = {
     [AvatarType.Dokv]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Dokv]),
-    [AvatarType.Cartoon]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Cartoon]),
+    [AvatarType.Cartoon]: null,
     [AvatarType.Lowpoly]: null,
     [AvatarType.SK_Cartoon_Female_021]: null,
     [AvatarType.SK_Cartoon_Female_029]: null,
@@ -43,6 +43,7 @@ export const AVATAR_GL_MAP: AVATARGLMAP = {
     [AvatarType.SK_Lowpoly_Male_002]: null,
     [AvatarType.SK_Lowpoly_Male_028]: null,
     [AvatarType.SK_Lowpoly_Male_040]: null,
+    // [AvatarType.Cartoon]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Cartoon]),
     // [AvatarType.Lowpoly]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Lowpoly]),
     // [AvatarType.SK_Cartoon_Female_021]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_021]),
     // [AvatarType.SK_Cartoon_Female_029]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.SK_Cartoon_Female_029]),
@@ -73,28 +74,46 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
         ref,
         () => ({
             switchTo: (type: AvatarType | null, currentPage) => {
+
+                const currentIndex = indexOf(AVATAR_GL_KEYS, type);
+                const nextType = AVATAR_GL_KEYS[currentIndex + 1];
                 // 由于手机端只能显示三个WebGL render，所以需要维持只存在三个实例
                 activatedRef.current &&
                     AVATAR_GL_MAP[activatedRef.current]!.leave();
 
 
                 activatedRef.current = type;
+
                 if (type) {
-                    if (type === AvatarType.Dokv || type === AvatarType.Cartoon) {
-                        for (let i = 0; i < lazyKeys.length; i++) {
-                            const element = lazyKeys[i];
-                            AVATAR_GL_MAP[element] = null;
-                        }
-                    } else {
-                        for (let i = 0; i < lazyKeys.length; i++) {
-                            const element = lazyKeys[i];
-                            if (element !== type) {
+                    // 加载当前和下一个， 其他的全部销毁
+                    for (let i = 0; i < AVATAR_GL_KEYS.length; i++) {
+                        const element = AVATAR_GL_KEYS[i];
+                        if (element === type || element === nextType) {
+                            if (element !== AvatarType.Dokv) {
+                                AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
+                                AVATAR_GL_MAP[element]?.load();
+                            }
+                        } else {
+                            if (element !== AvatarType.Dokv) {
                                 AVATAR_GL_MAP[element] = null;
                             }
                         }
-                        AVATAR_GL_MAP[type] = new AvatarGLModel(AVATAR_GL_INFO_MAP[type]);
-
                     }
+                    // if (type === AvatarType.Dokv || type === AvatarType.Cartoon) {
+                    //     for (let i = 0; i < lazyKeys.length; i++) {
+                    //         const element = lazyKeys[i];
+                    //         AVATAR_GL_MAP[element] = null;
+                    //     }
+                    // } else {
+                    //     for (let i = 0; i < lazyKeys.length; i++) {
+                    //         const element = lazyKeys[i];
+                    //         if (element !== type) {
+                    //             AVATAR_GL_MAP[element] = null;
+                    //         }
+                    //     }
+                    //     AVATAR_GL_MAP[type] = new AvatarGLModel(AVATAR_GL_INFO_MAP[type]);
+
+                    // }
                     const container = containerRef.current;
                     if (!container) {
                         return;
@@ -117,7 +136,7 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
             acitveTo: (page: PageType) => {
                 activatedRef.current && AVATAR_GL_MAP[activatedRef.current]!.active(page);
             },
-            stopTimeout: ()=> {
+            stopTimeout: () => {
                 activatedRef.current && AVATAR_GL_MAP[activatedRef.current]!.stopTimeout();
             },
             restartTimout: () => {
