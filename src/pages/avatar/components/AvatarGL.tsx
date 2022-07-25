@@ -76,14 +76,21 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
             switchTo: (type: AvatarType | null, currentPage) => {
 
                 const currentIndex = indexOf(AVATAR_GL_KEYS, type);
-                const nextType = AVATAR_GL_KEYS[currentIndex + 1];
+                const length = AVATAR_GL_KEYS.length;
+                let nextType = AvatarType.Dokv;
+                if (currentIndex === length - 1) {
+                    nextType = AvatarType.Dokv;
+                } else {
+                    nextType = AVATAR_GL_KEYS[currentIndex + 1];
+                }
+
                 // 由于手机端只能显示三个WebGL render，所以需要维持只存在三个实例
-                if(activatedRef.current === nextType){
+                if (activatedRef.current === nextType) {
                     activatedRef.current &&
-                    AVATAR_GL_MAP[nextType]!.leave(false);
-                }else {
+                        AVATAR_GL_MAP[nextType]!.leave(false);
+                } else {
                     activatedRef.current &&
-                    AVATAR_GL_MAP[activatedRef.current]!.leave(true);
+                        AVATAR_GL_MAP[activatedRef.current]!.leave(true);
                 }
 
                 activatedRef.current = type;
@@ -97,7 +104,7 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                                 AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
                                 AVATAR_GL_MAP[element]?.load();
                             }
-                            
+
                         } else {
                             AVATAR_GL_MAP[element] = null;
                         }
