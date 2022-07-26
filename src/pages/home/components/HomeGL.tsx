@@ -14,6 +14,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 // import { ObjectControls } from 'threejs-object-controls';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import {
     CSS2DObject,
     CSS2DRenderer,
@@ -116,10 +117,15 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         // folderScale.add(group.scale, 'z').step(0.01);
         // gui.domElement.id = 'home-gl-gui';
 
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath(getPublicAssetPath('files/home/gltf'));
+
         const loader = new GLTFLoader();
+        loader.setDRACOLoader( dracoLoader );
         loader.load(
-            getPublicAssetPath('files/home/home.glb?v051101'),
+            getPublicAssetPath('files/home/qiu_4__Anim.gltf'),
             function (gltf) {
+                console.log('gltf', gltf);
                 const model = gltf.scene;
                 // model.traverse((node: any) => {
                 //     if (node.isMesh) {
@@ -128,11 +134,11 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 //     }
                 // });
                 model.position.set(0, 0, 0);
-                model.scale.set(1, 1, 1);
+                model.scale.set(0.1, 0.1, 0.1);
                 group.add(model);
 
                 mixer = new THREE.AnimationMixer(model);
-                // mixer.clipAction(gltf.animations[0]).play();
+                mixer.clipAction(gltf.animations[0]).play();
 
                 render();
                 loadingEE.emit(`progress.${LoadingSourceType.HOME_GLTF}`, 1);
@@ -197,10 +203,10 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             return (event) => {
                 setActivatedIndex(index);
                 if (index === 0) {
-                    GAevent('event','Vision-dragon');
-                } 
-                else if (index === 1) { 
-                    GAevent('event','Vision-cat');
+                    GAevent('event', 'Vision-dragon');
+                }
+                else if (index === 1) {
+                    GAevent('event', 'Vision-cat');
                 }
                 else if (index === 2) {
                     GAevent('event', 'Vision-car');
