@@ -1338,6 +1338,7 @@ function useLoadingGL(
             };
 
             let image = new Image();
+            image.crossOrigin = "anonymous";
             image.onload = () => {
                 obj.width = image.width;
                 obj.height = image.height;
