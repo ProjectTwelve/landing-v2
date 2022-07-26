@@ -1,104 +1,104 @@
 @import '../../../styles/variables.less';
 
 .home-gl {
+  .f-pseudo();
+  overflow: hidden;
+
+  > canvas,
+  > div {
     .f-pseudo();
-    overflow: hidden;
+  }
 
-    > canvas,
-    > div {
-        .f-pseudo();
+  .gl-pointer {
+    .f-hover-opa();
+    cursor: pointer;
+    width: 53px;
+    height: 53px;
+    position: absolute;
+
+    &-inner {
+      .f-pseudo;
+      background: #fff;
+      border-radius: 50%;
+
+      &::after {
+        .f-pseudo;
+        content: '';
+        background: #fff;
+        opacity: 0.8;
+        animation: glpointer 2s infinite;
+        border-radius: 50%;
+      }
     }
-
-    .gl-pointer {
-        .f-hover-opa();
-        cursor: pointer;
-        width: 53px;
-        height: 53px;
-        position: absolute;
-
-        &-inner {
-            .f-pseudo;
-            background: #fff;
-            border-radius: 50%;
-
-            &::after {
-                .f-pseudo;
-                content: '';
-                background: #fff;
-                opacity: 0.8;
-                animation: glpointer 2s infinite;
-                border-radius: 50%;
-            }
-        }
-    }
+  }
 }
 
 #home-gl-gui {
-    position: absolute;
-    z-index: 100;
-    left: auto;
-    right: 0;
-    top: 50%;
-    transform: translate(0, -50%);
+  position: absolute;
+  z-index: 100;
+  left: auto;
+  right: 0;
+  top: 50%;
+  transform: translate(0, -50%);
 }
 
 .home-extra {
-    pointer-events: none;
-    .f-pseudo;
+  pointer-events: none;
+  .f-pseudo;
 }
 
 .home-extra-item {
+  position: absolute;
+  .f-font-tt;
+  opacity: 0;
+  transition: opacity 0.5s;
+  color: #fff;
+  top: 50%;
+  transform: translate(0, -64%);
+  right: (130 / @designWidth * 100%);
+
+  &.active {
+    opacity: 1;
+    transition-delay: 0.6s;
+  }
+
+  &::before {
+    display: block;
+    content: '';
+    .bgFull2x('home/gl-line@2x.png');
+    background-position: center right;
     position: absolute;
-    .f-font-tt;
-    opacity: 0;
-    transition: opacity 0.5s;
-    color: #fff;
-    top: 50%;
-    transform: translate(0, -64%);
-    right: (130 / @designWidth * 100%);
-
-    &.active {
-        opacity: 1;
-        transition-delay: 0.6s;
-    }
-
-    &::before {
-        display: block;
-        content: '';
-        .bgFull2x('home/gl-line@2x.png');
-        background-position: center right;
-        position: absolute;
-        top: 10px;
-        left: -15px;
-        transform: translate(-100%, 0);
-    }
-    &__title {
-        font-size: 27px;
-        line-height: 27px;
-    }
-    &__desc {
-        font-size: 16px;
-        line-height: 20px;
-        opacity: 0.6;
-        margin-top: 15px;
-    }
+    top: 10px;
+    left: -15px;
+    transform: translate(-100%, 0);
+  }
+  &__title {
+    font-size: 27px;
+    line-height: 27px;
+  }
+  &__desc {
+    font-size: 16px;
+    line-height: 20px;
+    opacity: 0.6;
+    margin-top: 15px;
+  }
 }
 
 .body-mobile {
-    .home-extra {
-        transform: scale(0.7);
-        transform-origin: right center;
-        &-item {
-            &::before {
-                width: 240px;
-            }
-        }
+  .home-extra {
+    transform: scale(0.7);
+    transform-origin: right center;
+    &-item {
+      &::before {
+        width: 240px;
+      }
     }
+  }
 }
 
 @keyframes glpointer {
-    100% {
-        transform: scale(4, 4);
-        opacity: 0;
-    }
+  100% {
+    transform: scale(4, 4);
+    opacity: 0;
+  }
 }

@@ -1,87 +1,86 @@
 @import '../../styles/variables.less';
 
 .wall {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-    background: #000;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #000;
 
-    &__info {
-        .f-pal50;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        pointer-events: auto;
+  &__info {
+    .f-pal50;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    pointer-events: auto;
+  }
 
+  &__title-1,
+  &__title-2 {
+    .f-font-tt;
+    color: #fff;
+    font-size: 22px;
+    line-height: 22px;
+    opacity: 0.8;
+  }
+
+  &__dot-1,
+  &__dot-2 {
+    display: inline-block;
+    width: 10px;
+    height: 2px;
+    background: #00d628;
+    margin-top: 30px;
+    margin-bottom: 36px;
+    opacity: 0.8;
+  }
+
+  &__logo-1 {
+    .bgFull2x('wall/logo-1@2x.png');
+    margin-bottom: 80px;
+    height: 136px;
+  }
+
+  &__logo-2 {
+    .bgFull2x('wall/logo-2@2x.png');
+    margin-bottom: 80px;
+  }
+
+  &__auditor_btn {
+    .bgFull2x('app/corners@2x.png');
+    .f-hover-opa;
+    transform: scale(0.9);
+    font-size: 22px;
+    line-height: 52px;
+    text-align: center;
+    a {
+      color: #fff;
+      .f-font-tt;
+      cursor: pointer;
+      opacity: 0.8;
     }
+  }
 
-    &__title-1,
-    &__title-2 {
-        .f-font-tt;
-        color: #fff;
-        font-size: 22px;
-        line-height: 22px;
-        opacity: 0.8;
-    }
-
-    &__dot-1,
-    &__dot-2 {
-        display: inline-block;
-        width: 10px;
-        height: 2px;
-        background: #00d628;
-        margin-top: 30px;
-        margin-bottom: 36px;
-        opacity: 0.8;
-    }
-
-    &__logo-1 {
-        .bgFull2x('wall/logo-1@2x.png');
-        margin-bottom: 80px;
-        height: 136px;
-    }
-
-    &__logo-2 {
-        .bgFull2x('wall/logo-2@2x.png');
-        margin-bottom: 80px;
-    }
-
-    &__auditor_btn {
-        .bgFull2x('app/corners@2x.png');
-        .f-hover-opa;
-        transform: scale(0.9);
-        font-size: 22px;
-        line-height: 52px;
-        text-align: center;
-        a {
-            color: #fff;
-            .f-font-tt;
-            cursor: pointer;
-            opacity: 0.8;
-        }
-    }
-
-    .butterfly-canvas-wall {
-        opacity: 0.6;
-    }
+  .butterfly-canvas-wall {
+    opacity: 0.6;
+  }
 }
 
 .body-mobile {
-    .wall {
-        &__info {
-            transform: translate(-50%, -50%) scale(0.47);
-            transform-origin: center center;
-        }
-
-        &__logo-1 {
-            .bgFull('wall/logo-1.png');
-        }
-    
-        &__logo-2 {
-            .bgFull('wall/logo-2.png');
-        }
+  .wall {
+    &__info {
+      transform: translate(-50%, -50%) scale(0.47);
+      transform-origin: center center;
     }
+
+    &__logo-1 {
+      .bgFull('wall/logo-1.png');
+    }
+
+    &__logo-2 {
+      .bgFull('wall/logo-2.png');
+    }
+  }
 }

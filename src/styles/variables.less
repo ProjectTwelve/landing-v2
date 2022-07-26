@@ -1,68 +1,66 @@
 .f-pal50() {
-    position: absolute;
-    left: 50%;
+  position: absolute;
+  left: 50%;
 }
 .f-hover-opa(@op: 0.8) {
-    transition: opacity 0.3s;
-    &:hover {
-        opacity: @op;
-    }
-    &.active {
-        opacity: 1;
-    }
+  transition: opacity 0.3s;
+  &:hover {
+    opacity: @op;
+  }
+  &.active {
+    opacity: 1;
+  }
 }
 .f-pseudo() {
-    position: absolute;
-    display: block;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
 }
 .f-align(@width, @height) {
-    .f-pal50;
-    top: 50%;
-    width: @width;
-    height: @height;
-    margin: (@height / -2) 0 0 (@width / -2);
+  .f-pal50;
+  top: 50%;
+  width: @width;
+  height: @height;
+  margin: (@height / -2) 0 0 (@width / -2);
 }
 .bg(@img) {
-    background-image: url('../assets/@{img}');
-    background-repeat: no-repeat;
+  background-image: url('../assets/@{img}');
+  background-repeat: no-repeat;
 }
 .bgFull(@img) {
-    .bg(@img);
-    width: image-width('../assets/@{img}');
-    height: image-height('../assets/@{img}');
+  .bg(@img);
+  width: image-width('../assets/@{img}');
+  height: image-height('../assets/@{img}');
 }
 .f-alignImg(@img) {
-    .bg(@img);
-    .f-align(image-width('../assets/@{img}'), image-height('../assets/@{img}'));
+  .bg(@img);
+  .f-align(image-width('../assets/@{img}'), image-height('../assets/@{img}'));
 }
 .bgFull2x(@img) {
-    .bg(@img);
-    width: (image-width('../assets/@{img}') / 2);
-    height: (image-height('../assets/@{img}') / 2);
-    background-size: 100%;
+  .bg(@img);
+  width: (image-width('../assets/@{img}') / 2);
+  height: (image-height('../assets/@{img}') / 2);
+  background-size: 100%;
 }
 .f-alignImg2x(@img) {
-    .bg(@img);
-    background-size: 100%;
-    .f-align((image-width('../assets/@{img}') / 2), (image-height('../assets/@{img}') / 2));
+  .bg(@img);
+  background-size: 100%;
+  .f-align((image-width('../assets/@{img}') / 2), (image-height('../assets/@{img}') / 2));
 }
 
-.animate-item(@i, @count, @time, @transform: translate3d(0, 1.4rem, 0), @during: 0.6s)
-    when(@i <= @count) {
-    > .animate-block:nth-child(@{i}) {
-        transition: all @during cubic-bezier(0, 0, 0.04, 1.01) @time *
-            sin(90deg * @i / @count);
-        opacity: 0;
-        transform: @transform;
-    }
-    .animate-item(@i + 1, @count, @time, @transform, @during);
+.animate-item(@i, @count, @time, @transform: translate3d(0, 1.4rem, 0), @during: 0.6s) when(@i <= @count) {
+  > .animate-block:nth-child(@{i}) {
+    transition: all @during cubic-bezier(0, 0, 0.04, 1.01) @time * sin(90deg * @i / @count);
+    opacity: 0;
+    transform: @transform;
+  }
+  .animate-item(@i + 1, @count, @time, @transform, @during);
 }
 .f-font-tt {
-    font-family: TTLakes, Arial, Helvetica, Verdana, sans-serif;
+  font-family: TTLakes, Arial, Helvetica, Verdana, sans-serif;
 }
 
 @designWidth: 1920;

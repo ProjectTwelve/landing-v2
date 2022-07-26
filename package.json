@@ -32,7 +32,23 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "eject": "react-scripts eject",
-    "upload": "node scripts/upload.js"
+    "upload": "node scripts/upload.js",
+    "lint": "eslint 'src/**/*.{js,jsx,tsx,ts}'",
+    "lint:fix": "eslint 'src/**/*.{js,jsx,tsx,ts}' --fix --quiet",
+    "prettier": "prettier --write '**/*.{less,css,md,json}'"
+  },
+  "gitHooks": {
+    "pre-commit": "tsc --noEmit && lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "npm run lint:fix",
+      "git add ."
+    ],
+    "*.{less,css,md,json}": [
+      "npm run prettier",
+      "git add ."
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -61,6 +77,8 @@
     "dat.gui": "^0.7.9",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
     "react-app-rewired": "^2.2.1",
     "react-scripts": "5.0.0",
     "typescript": "^4.6.3"
