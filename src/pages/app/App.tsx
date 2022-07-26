@@ -33,10 +33,35 @@ export const App = () => {
         if (isLoading) {
             loadingEE.on('progress', handleProgress);
         }
+
+
+
         return () => {
             loadingEE.off('progress', handleProgress);
         };
     }, [isLoading, current]);
+
+    useEffect(() => {
+        handleMobileOverflow();
+        window.onresize = function () {
+            handleMobileOverflow();
+        };
+        return () => {
+            window.onresize = null;
+
+        }
+    }, [])
+
+    const handleMobileOverflow = () => {
+        const commonWidth = 736;
+        if (window.innerWidth < 736) {
+            const gapPX = commonWidth - window.innerWidth;
+            const dom = document.getElementById('link-tree-dropdown');
+            if (dom) {
+                dom.style.left = `-${gapPX}px`;
+            }
+        }
+    }
 
     const contextValue = useMemo(
         () => ({
@@ -45,6 +70,8 @@ export const App = () => {
         }),
         [current, setCurrent]
     );
+
+
 
     return (
         <AppContext.Provider value={contextValue}>
