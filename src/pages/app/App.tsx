@@ -54,8 +54,12 @@ export const App = () => {
 
     const handleMobileOverflow = () => {
         const commonWidth = 736;
-        if (window.innerWidth < 736) {
-            const gapPX = commonWidth - window.innerWidth;
+        const safeTop = getComputedStyle(document.documentElement).getPropertyValue("--sat").replace(/px/g, '');
+        const safeLeft = getComputedStyle(document.documentElement).getPropertyValue("--sal").replace(/px/g, '');
+        const safeHeight = Math.max(Number(safeLeft), Number(safeTop));
+        const width = window.innerWidth - safeHeight;
+        if (width < 736) {
+            const gapPX = commonWidth - width;
             const dom = document.getElementById('link-tree-dropdown');
             if (dom) {
                 dom.style.left = `-${gapPX}px`;
