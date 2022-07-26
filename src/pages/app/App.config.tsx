@@ -117,7 +117,7 @@ export const CONTENT_PAGES = [
         NavText: (
             <div className='nav-dropdown-wrap'>
                 Link Tree
-                <div className='nav-dropdown nav-dropdown--tree' id='link-tree-dropdown'>
+                <div className='nav-dropdown nav-dropdown--tree'>
                     <a
                         href='https://airdrop.p12.games'
                         target='_blank'
