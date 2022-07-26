@@ -45,7 +45,7 @@ export const Wall: React.FC = () => {
     });
     return (
         <div className='wall'>
-            {/* <ButterflyGL page={PageType.Wall} /> */}
+            <ButterflyGL page={PageType.Wall} />
             <div className='wall__info'>
                 <div className='wall__title-1'>Investors &amp; Partners</div>
                 <div className='wall__dot-1'></div>
