@@ -60,7 +60,7 @@ export const Wall: React.FC = () => {
                         target='_blank'
                         rel='noreferrer'
                     >
-                        Auditor Reports
+                        Audit Reports
                     </a>
                 </div>
             </div>

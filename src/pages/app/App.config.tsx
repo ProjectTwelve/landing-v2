@@ -148,7 +148,7 @@ export const CONTENT_PAGES = [
                         className='nav-dropdown__item'
                         rel='noreferrer'
                     >
-                        Auditor Reports
+                        Audit Reports
                     </a>
                     <a
                         href='mailto:hi@p12.dev'
