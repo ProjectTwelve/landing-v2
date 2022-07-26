@@ -7,6 +7,25 @@ import { GAevent } from '../../utils';
 import './Wall.less';
 
 export const Wall: React.FC = () => {
+
+    useEffect(() => {
+        const tl = gsap.timeline();
+        tl.fromTo(
+            '.page-wrap-wall',
+            {
+                display: 'block',
+                opacity: 1,
+            },
+            {
+                duration: 0.5,
+                display: 'none',
+                opacity: 0,
+            }
+        );
+        return () => {
+            tl.then();
+        }
+    }, [])
     usePageVisible(PageType.Wall, () => {
         return {
             onVisible: () => {
