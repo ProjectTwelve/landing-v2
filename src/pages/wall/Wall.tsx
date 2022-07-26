@@ -10,7 +10,7 @@ export const Wall: React.FC = () => {
     usePageVisible(PageType.Wall, () => {
         return {
             onVisible: () => {
-                GAevent('webview','Partners-webview');
+                GAevent('webview', 'Partners-webview');
                 const tl = gsap.timeline();
                 tl.fromTo(
                     '.page-wrap-wall',
@@ -45,7 +45,7 @@ export const Wall: React.FC = () => {
     });
     return (
         <div className='wall'>
-            <ButterflyGL page={PageType.Wall} />
+            {/* <ButterflyGL page={PageType.Wall} /> */}
             <div className='wall__info'>
                 <div className='wall__title-1'>Investors &amp; Partners</div>
                 <div className='wall__dot-1'></div>
@@ -53,6 +53,16 @@ export const Wall: React.FC = () => {
                 <div className='wall__title-2'>Security Auditors</div>
                 <div className='wall__dot-2'></div>
                 <div className='wall__logo-2'></div>
+
+                <div className='wall__auditor_btn'>
+                    <a
+                        href='https://github.com/ProjectTwelve/contracts/tree/main/audits'
+                        target='_blank'
+                        rel='noreferrer'
+                    >
+                        Auditor Reports
+                    </a>
+                </div>
             </div>
         </div>
     );
