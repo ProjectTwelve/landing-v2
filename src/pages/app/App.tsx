@@ -33,6 +33,7 @@ export const App = () => {
         if (isLoading) {
             loadingEE.on('progress', handleProgress);
         }
+
         return () => {
             loadingEE.off('progress', handleProgress);
         };

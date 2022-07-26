@@ -121,7 +121,7 @@ export const CONTENT_PAGES = [
                     <a
                         href='https://airdrop.p12.games'
                         target='_blank'
-                        className='nav-dropdown__item nav-dropdown__item'
+                        className='nav-dropdown__item'
                         rel='noreferrer'
                     >
                         Airdrop
@@ -129,7 +129,7 @@ export const CONTENT_PAGES = [
                     <a
                         href='https://galaxy.eco/P12/'
                         target='_blank'
-                        className='nav-dropdown__item nav-dropdown__item'
+                        className='nav-dropdown__item'
                         rel='noreferrer'
                     >
                         Badge
@@ -137,15 +137,23 @@ export const CONTENT_PAGES = [
                     <a
                         href='https://p12.dev/whitepaper'
                         target='_blank'
-                        className='nav-dropdown__item nav-dropdown__item'
+                        className='nav-dropdown__item'
                         rel='noreferrer'
                     >
                         Whitepaper
                     </a>
                     <a
+                        href='https://github.com/ProjectTwelve/contracts/tree/main/audits'
+                        target='_blank'
+                        className='nav-dropdown__item'
+                        rel='noreferrer'
+                    >
+                        Audit Reports
+                    </a>
+                    <a
                         href='mailto:hi@p12.dev'
                         target='_blank'
-                        className='nav-dropdown__item nav-dropdown__item'
+                        className='nav-dropdown__item'
                         rel='noreferrer'
                     >
                         Say Hi

@@ -1,10 +1,10 @@
 {
-    "extends": ["react-app"],
-    "rules": {
-        "indent": ["error", 4, { "SwitchCase": 1 }],
-        "@typescript-eslint/no-unused-vars": "off",
-        "react-hooks/exhaustive-deps": "off",
-        "jsx-a11y/anchor-has-content": "off",
-        "react/jsx-no-target-blank": "off"
-    }
+  "extends": ["react-app"],
+  "rules": {
+    "indent": ["error", 4, { "SwitchCase": 1 }],
+    "@typescript-eslint/no-unused-vars": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "jsx-a11y/anchor-has-content": "off",
+    "react/jsx-no-target-blank": "off"
+  }
 }
