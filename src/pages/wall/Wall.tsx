@@ -69,9 +69,9 @@ export const Wall: React.FC = () => {
                 <div className='wall__title-1'>Investors &amp; Partners</div>
                 <div className='wall__dot-1'></div>
                 <div className='wall__logo-1'></div>
-                <div className='wall__title-2'>Security Auditors</div>
+                {/* <div className='wall__title-2'>Security Auditors</div>
                 <div className='wall__dot-2'></div>
-                <div className='wall__logo-2'></div>
+                <div className='wall__logo-2'></div> */}
 
                 {/* <div className='wall__auditor_btn'>
                     <a
