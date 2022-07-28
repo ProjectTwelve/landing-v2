@@ -73,7 +73,7 @@ export const Wall: React.FC = () => {
                 <div className='wall__dot-2'></div>
                 <div className='wall__logo-2'></div>
 
-                <div className='wall__auditor_btn'>
+                {/* <div className='wall__auditor_btn'>
                     <a
                         href='https://github.com/ProjectTwelve/contracts/tree/main/audits'
                         target='_blank'
@@ -81,7 +81,7 @@ export const Wall: React.FC = () => {
                     >
                         Audit Reports
                     </a>
-                </div>
+                </div> */}
             </div>
         </div>
     );
