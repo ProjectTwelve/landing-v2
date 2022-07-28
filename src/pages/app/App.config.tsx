@@ -142,14 +142,14 @@ export const CONTENT_PAGES = [
                     >
                         Whitepaper
                     </a>
-                    <a
+                    {/* <a
                         href='https://github.com/ProjectTwelve/contracts/tree/main/audits'
                         target='_blank'
                         className='nav-dropdown__item'
                         rel='noreferrer'
                     >
                         Audit Reports
-                    </a>
+                    </a> */}
                     <a
                         href='mailto:hi@p12.dev'
                         target='_blank'
