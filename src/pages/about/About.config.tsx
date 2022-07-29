@@ -1,137 +1,144 @@
 export const LOCATION_INFO = [
     {
-        type: 'presence',
-        name: 'Shanghai',
+        type: "presence",
+        name: "Shanghai",
         x: 1612,
         y: 737,
-        namePosition: 'right',
+        namePosition: "right",
     },
     {
-        type: 'presence',
-        name: 'Hangzhou',
+        type: "presence",
+        name: "Hangzhou",
         x: 1591,
         y: 754,
-        namePosition: 'left',
+        namePosition: "left",
     },
     {
-        type: 'headquarter',
-        name: 'Singapore',
+        type: "headquarter",
+        name: "Singapore",
         x: 1563,
         y: 905,
-        namePosition: 'right',
+        namePosition: "right",
     },
     {
-        type: 'presence',
-        name: 'Berkeley,CA',
+        type: "presence",
+        name: "Berkeley,CA",
         x: 267,
         y: 651,
-        namePosition: 'left',
+        namePosition: "left",
     },
     {
-        type: 'presence',
-        name: 'Los Angeles,CA',
+        type: "presence",
+        name: "Chicago,IL",
+        x: 450,
+        y: 610,
+        namePosition: "right",
+    },
+    {
+        type: "presence",
+        name: "Los Angeles,CA",
         x: 295,
         y: 714,
-        namePosition: 'left',
+        namePosition: "left",
     },
     {
-        type: 'presence',
-        name: 'Chapel Hill,NC',
+        type: "presence",
+        name: "Chapel Hill,NC",
         x: 505,
         y: 703,
-        namePosition: 'right',
+        namePosition: "right",
     },
     {
-        type: 'presence',
-        name: 'Kuala Lumpur',
+        type: "presence",
+        name: "Kuala Lumpur",
         x: 1489,
         y: 865,
-        namePosition: 'left',
+        namePosition: "left",
     },
     {
-        type: 'presence',
-        name: 'Tokyo',
+        type: "presence",
+        name: "Tokyo",
         x: 1706,
         y: 672,
-        namePosition: 'right',
+        namePosition: "right",
     },
     {
-        type: 'presence',
-        name: 'Krakow',
+        type: "presence",
+        name: "Krakow",
         x: 1063,
         y: 595,
-        namePosition: 'right',
+        namePosition: "right",
     },
     {
-        type: 'presence',
-        name: 'Seoul',
+        type: "presence",
+        name: "Seoul",
         x: 1625,
         y: 699,
-        namePosition: 'left',
+        namePosition: "left",
     },
     {
-        type: 'origin',
-        img: require('../../assets/about/origin-poland.png'),
-        name: 'Poland',
+        type: "origin",
+        img: require("../../assets/about/origin-poland.png"),
+        name: "Poland",
         x: 1063,
         y: 559,
-        namePosition: 'none',
+        namePosition: "none",
     },
     {
-        type: 'origin',
-        img: require('../../assets/about/origin-rwanda.png'),
-        name: 'Rwanda',
+        type: "origin",
+        img: require("../../assets/about/origin-rwanda.png"),
+        name: "Rwanda",
         x: 1099,
         y: 904,
-        namePosition: 'none',
+        namePosition: "none",
     },
     {
-        type: 'origin',
-        img: require('../../assets/about/origin-china.png'),
-        name: 'China',
+        type: "origin",
+        img: require("../../assets/about/origin-china.png"),
+        name: "China",
         x: 1500,
         y: 694,
-        namePosition: 'none',
+        namePosition: "none",
     },
     {
-        type: 'origin',
-        img: require('../../assets/about/origin-korea.png'),
-        name: 'Korea',
+        type: "origin",
+        img: require("../../assets/about/origin-korea.png"),
+        name: "Korea",
         x: 1640,
         y: 699,
-        namePosition: 'none',
+        namePosition: "none",
     },
     {
-        type: 'origin',
-        img: require('../../assets/about/origin-japan.png'),
-        name: 'Japan',
+        type: "origin",
+        img: require("../../assets/about/origin-japan.png"),
+        name: "Japan",
         x: 1714,
         y: 624,
-        namePosition: 'none',
+        namePosition: "none",
     },
     {
-        type: 'origin',
-        img: require('../../assets/about/origin-penang.png'),
-        name: 'Kuala Lumpar',
+        type: "origin",
+        img: require("../../assets/about/origin-penang.png"),
+        name: "Kuala Lumpar",
         x: 1510,
         y: 855,
-        namePosition: 'none',
+        namePosition: "none",
     },
     {
-        type: 'origin',
-        img: require('../../assets/about/origin-singapore.png'),
-        name: 'Singapore',
+        type: "origin",
+        img: require("../../assets/about/origin-singapore.png"),
+        name: "Singapore",
         x: 1526,
         y: 897,
-        namePosition: 'none',
+        namePosition: "none",
     },
     {
-        type: 'origin',
-        img: require('../../assets/about/origin-usa.png'),
-        name: 'USA',
+        type: "origin",
+        img: require("../../assets/about/origin-usa.png"),
+        name: "USA",
         x: 388,
         y: 681,
-        namePosition: 'none',
+        namePosition: "none",
     },
 ];
 
@@ -139,13 +146,17 @@ export interface PartnerInfo {
     img: string;
     name: any;
     desc: any;
-    links: any
+    links: any;
 }
 
 export const ABOUT_PARTNERS: PartnerInfo[] = [
     {
-        img: require('../../assets/about/partner-members/1.png'),
-        name: <>Boyang <span className='sep'>|</span> Founder</>,
+        img: require("../../assets/about/partner-members/1.png"),
+        name: (
+            <>
+                Boyang <span className="sep">|</span> Founder
+            </>
+        ),
         desc: (
             <>
                 Two times TI Crimson Witness;
@@ -154,29 +165,24 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
             </>
         ),
         links: {
-            linkedin: 'https://www.linkedin.com/in/wangboyang/',
+            linkedin: "https://www.linkedin.com/in/wangboyang/",
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/14.png'),
-        name: 'Lin',
-        desc: (
-            <>
-                Dota2 meme player,
-                'sword-exist-must-get' studio core member
-            </>
-        ),
+        img: require("../../assets/about/partner-members/14.png"),
+        name: "Lin",
+        desc: <>Dota2 meme player, 'sword-exist-must-get' studio core member</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: 'https://github.com/linchengzzz'
+            github: "https://github.com/linchengzzz",
         },
     },
     {
-        img: require('../../assets/about/partner-members/10.png'),
-        name: 'Dongbo',
+        img: require("../../assets/about/partner-members/10.png"),
+        name: "Dongbo",
         desc: (
             <>
                 Game addict for 2 decades;
@@ -187,12 +193,12 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/12.png'),
-        name: 'Noy',
+        img: require("../../assets/about/partner-members/12.png"),
+        name: "Noy",
         desc: (
             <>
                 Folk dancer,
@@ -203,12 +209,12 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: 'https://github.com/Jerrywang959'
+            github: "https://github.com/Jerrywang959",
         },
     },
     {
-        img: require('../../assets/about/partner-members/11.png'),
-        name: 'snow of tirisfal',
+        img: require("../../assets/about/partner-members/11.png"),
+        name: "snow of tirisfal",
         desc: (
             <>
                 otaku,
@@ -219,40 +225,37 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/18.png'),
-        name: 'Dodo',
+        img: require("../../assets/about/partner-members/18.png"),
+        name: "Dodo",
         desc: (
             <>
-                ISFJ: Until I run out of excess organs, why shouldn't I do everything I can to help them?
+                ISFJ: Until I run out of excess organs, why shouldn't I do
+                everything I can to help them?
             </>
         ),
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/HH.png'),
-        name: 'HH',
-        desc: (
-            <>
-                Econ Research in P12; former quant developer, banker
-            </>
-        ),
+        img: require("../../assets/about/partner-members/HH.png"),
+        name: "HH",
+        desc: <>Econ Research in P12; former quant developer, banker</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/9.png'),
-        name: 'River',
+        img: require("../../assets/about/partner-members/9.png"),
+        name: "River",
         desc: (
             <>
                 Favorite game: WOW;
@@ -263,12 +266,12 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: 'https://github.com/zh19910202'
+            github: "https://github.com/zh19910202",
         },
     },
     {
-        img: require('../../assets/about/partner-members/5.png'),
-        name: 'Garden',
+        img: require("../../assets/about/partner-members/5.png"),
+        name: "Garden",
         desc: (
             <>
                 RPG lover, Mixed-race baby,
@@ -279,26 +282,22 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/Akira.png'),
-        name: 'Akira',
-        desc: (
-            <>
-                ACGholic; Start from here, start from now
-            </>
-        ),
+        img: require("../../assets/about/partner-members/Akira.png"),
+        name: "Akira",
+        desc: <>ACGholic; Start from here, start from now</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/19.png'),
-        name: 'Ramping',
+        img: require("../../assets/about/partner-members/19.png"),
+        name: "Ramping",
         desc: (
             <>
                 Psychologically Revacholian;
@@ -309,12 +308,12 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/16.png'),
-        name: 'Grace.J',
+        img: require("../../assets/about/partner-members/16.png"),
+        name: "Grace.J",
         desc: (
             <>
                 metaphysics designer;
@@ -325,54 +324,52 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/15.png'),
-        name: 'Garfield',
+        img: require("../../assets/about/partner-members/15.png"),
+        name: "Garfield",
+        desc: <>To live is to recognize life</>,
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require("../../assets/about/partner-members/Sangwa Chosen.png"),
+        name: "Sangwa Chosen",
         desc: (
             <>
-                To live is to recognize life
+                You know you were chosen once you were called 'CHOSEN'. So, why
+                run away from it?
             </>
         ),
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/Sangwa Chosen.png'),
-        name: 'Sangwa Chosen',
+        img: require("../../assets/about/partner-members/7.png"),
+        name: "Yerim Choi",
         desc: (
             <>
-                You know you were chosen once you were called 'CHOSEN'. So, why run away from it?
+                Crazy Arcade was the last game I played, but believe me I love
+                games
             </>
         ),
         links: {
-            linkedin: null,
+            linkedin: "https://www.linkedin.com/in/yerim-choi-52ba02200/",
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/7.png'),
-        name: 'Yerim Choi',
-        desc: (
-            <>
-                Crazy Arcade was the last game I played, but believe me I love games
-            </>
-        ),
-        links: {
-            linkedin: 'https://www.linkedin.com/in/yerim-choi-52ba02200/',
-            twitter: null,
-            github: null
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/13.png'),
-        name: 'Anthony Lau',
+        img: require("../../assets/about/partner-members/13.png"),
+        name: "Anthony Lau",
         desc: (
             <>
                 Astrophysics enthusiast;
@@ -383,12 +380,12 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/3.png'),
-        name: 'Amber Drolma',
+        img: require("../../assets/about/partner-members/3.png"),
+        name: "Amber Drolma",
         desc: (
             <>
                 Capoeirista CBLA Clan;
@@ -397,28 +394,24 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
             </>
         ),
         links: {
-            linkedin: 'https://www.linkedin.com/in/kelsangdrolma/',
+            linkedin: "https://www.linkedin.com/in/kelsangdrolma/",
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/23.png'),
-        name: 'Ruby',
-        desc: (
-            <>
-                Enjoy cooking in Zelda...
-            </>
-        ),
+        img: require("../../assets/about/partner-members/23.png"),
+        name: "Ruby",
+        desc: <>Enjoy cooking in Zelda...</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/4.png'),
-        name: 'RK',
+        img: require("../../assets/about/partner-members/4.png"),
+        name: "RK",
         desc: (
             <>
                 DOTA2 4000+hours;
@@ -429,152 +422,112 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/Momo.png'),
-        name: 'Momo',
-        desc: (
-            <>
-                My dream is to travel around the world
-            </>
-        ),
+        img: require("../../assets/about/partner-members/Momo.png"),
+        name: "Momo",
+        desc: <>My dream is to travel around the world</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/Vin.png'),
-        name: 'Vin',
-        desc: (
-            <>
-                Firmly believe that a good story is the soul of the game
-            </>
-        ),
+        img: require("../../assets/about/partner-members/Vin.png"),
+        name: "Vin",
+        desc: <>Firmly believe that a good story is the soul of the game</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/21.png'),
-        name: 'JJ Wilde',
-        desc: (
-            <>
-                My favorite yoga position is shavansana
-            </>
-        ),
+        img: require("../../assets/about/partner-members/21.png"),
+        name: "JJ Wilde",
+        desc: <>My favorite yoga position is shavansana</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/22.png'),
-        name: 'Zelda Princess',
-        desc: (
-            <>
-                Has the same aesthetic as Shigeru Miyamoto
-            </>
-        ),
+        img: require("../../assets/about/partner-members/22.png"),
+        name: "Zelda Princess",
+        desc: <>Has the same aesthetic as Shigeru Miyamoto</>,
         links: {
-            linkedin: 'https://www.linkedin.com/in/zanhui-yang-26490b84/',
+            linkedin: "https://www.linkedin.com/in/zanhui-yang-26490b84/",
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/William.png'),
-        name: 'William',
-        desc: (
-            <>
-                Veteran fans of the Warring States period in Japan.
-            </>
-        ),
+        img: require("../../assets/about/partner-members/William.png"),
+        name: "William",
+        desc: <>Veteran fans of the Warring States period in Japan.</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/wanng.png'),
-        name: 'wanng',
-        desc: (
-            <>
-                MMO Maniac; A random guy from the space
-            </>
-        ),
+        img: require("../../assets/about/partner-members/wanng.png"),
+        name: "wanng",
+        desc: <>MMO Maniac; A random guy from the space</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/Hanna.png'),
-        name: 'Hanna',
-        desc: (
-            <>
-                Game visual Designer; Cat slave
-            </>
-        ),
+        img: require("../../assets/about/partner-members/Hanna.png"),
+        name: "Hanna",
+        desc: <>Game visual Designer; Cat slave</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/Charline.png'),
-        name: 'Charline',
-        desc: (
-            <>
-                Love music and music games
-            </>
-        ),
+        img: require("../../assets/about/partner-members/Charline.png"),
+        name: "Charline",
+        desc: <>Love music and music games</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/Green.C.png'),
-        name: 'Green.C',
-        desc: (
-            <>
-                Front-End  Engineer; Philosophy enthusiast;
-            </>
-        ),
+        img: require("../../assets/about/partner-members/Green.C.png"),
+        name: "Green.C",
+        desc: <>Front-End Engineer; Philosophy enthusiast;</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: 'https://github.com/ShallowGreen'
+            github: "https://github.com/ShallowGreen",
         },
     },
     {
-        img: require('../../assets/about/partner-members/Sixian.png'),
-        name: 'Sixian',
-        desc: (
-            <>
-                Love Coding, ACG and Genshin! May enthusiasm last forever
-            </>
-        ),
+        img: require("../../assets/about/partner-members/Sixian.png"),
+        name: "Sixian",
+        desc: <>Love Coding, ACG and Genshin! May enthusiasm last forever</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: 'https://github.com/yusixian'
+            github: "https://github.com/yusixian",
         },
     },
     {
-        img: require('../../assets/about/partner-members/2.png'),
-        name: 'Maciej Burno',
+        img: require("../../assets/about/partner-members/2.png"),
+        name: "Maciej Burno",
         desc: (
             <>
                 Game Veteran. First game:
@@ -583,14 +536,14 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
             </>
         ),
         links: {
-            linkedin: 'https://www.linkedin.com/in/maciejburno/',
+            linkedin: "https://www.linkedin.com/in/maciejburno/",
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/6.png'),
-        name: 'Blue Dragon',
+        img: require("../../assets/about/partner-members/6.png"),
+        name: "Blue Dragon",
         desc: (
             <>
                 Volcano lover;
@@ -601,40 +554,37 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/8.png'),
-        name: 'Chasey',
-        desc: (
-            <>
-                Pray return to The Walking Sands
-            </>
-        ),
+        img: require("../../assets/about/partner-members/8.png"),
+        name: "Chasey",
+        desc: <>Pray return to The Walking Sands</>,
         links: {
-            linkedin: 'https://www.linkedin.com/in/yoko-y-94a99115b/',
+            linkedin: "https://www.linkedin.com/in/yoko-y-94a99115b/",
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/20.png'),
-        name: 'KK',
+        img: require("../../assets/about/partner-members/20.png"),
+        name: "KK",
         desc: (
             <>
-                A fanatic antique collector with a dreamlike collection of Victorian parasols.
+                A fanatic antique collector with a dreamlike collection of
+                Victorian parasols.
             </>
         ),
         links: {
             linkedin: null,
-            twitter: 'https://twitter.com/ZeXinKang1',
-            github: null
+            twitter: "https://twitter.com/ZeXinKang1",
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/17.png'),
-        name: 'Robin',
+        img: require("../../assets/about/partner-members/17.png"),
+        name: "Robin",
         desc: (
             <>
                 Encoder and decoder
@@ -645,21 +595,29 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/25.png'),
-        name: '0xSteven',
-        desc: (
-            <>
-                Robot Dancer 🤖️💃 decreasing entropy.
-            </>
-        ),
+        img: require("../../assets/about/partner-members/25.png"),
+        name: "0xSteven",
+        desc: <>Robot Dancer 🤖️💃 decreasing entropy.</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
+        },
+    },
+    {
+        img: require("../../assets/about/partner-members/Adam.png"),
+        name: "Adam Achebe",
+        desc: (
+            <>Soon to be on Mars, still building here and there on Earth 🚀</>
+        ),
+        links: {
+            linkedin: "https://www.linkedin.com/in/adam-achebe/",
+            twitter: "https://twitter.com/adam_achebe",
+            github: "https://github.com/mister36",
         },
     },
 ];
