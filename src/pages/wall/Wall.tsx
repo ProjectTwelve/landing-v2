@@ -4,6 +4,7 @@ import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
 import { GAevent } from '../../utils';
+import { FEATURED_ON_DATA } from './Wall.config';
 import './Wall.less';
 
 export const Wall: React.FC = () => {
@@ -69,9 +70,16 @@ export const Wall: React.FC = () => {
                 <div className='wall__title-1'>Investors &amp; Partners</div>
                 <div className='wall__dot-1'></div>
                 <div className='wall__logo-1'></div>
-                <div className='wall__title-2'>Media</div>
+                <div className='wall__title-2'>Featured on</div>
                 <div className='wall__dot-2'></div>
-                <div className='wall__logo-2'></div>
+                {/* <div className='wall__logo-2'></div> */}
+                <div  className='wall__featured-on'>
+                    {FEATURED_ON_DATA.map((item, index) => {
+                        return <div key={item.name} className={`wall__featured-on-${index + 1} wall__featured-on-item`} onClick={() => {
+                            window.open(item.url)
+                        }}></div>
+                    })}
+                </div>
 
                 {/* <div className='wall__auditor_btn'>
                     <a
