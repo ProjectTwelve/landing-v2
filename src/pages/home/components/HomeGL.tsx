@@ -123,7 +123,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         const loader = new GLTFLoader();
         loader.setDRACOLoader( dracoLoader );
         loader.load(
-            getPublicAssetPath('files/home/qiu_4__Anim.gltf'),
+            getPublicAssetPath('files/home/qiu_6_.gltf'),
             function (gltf) {
                 console.log('gltf', gltf);
                 const model = gltf.scene;
