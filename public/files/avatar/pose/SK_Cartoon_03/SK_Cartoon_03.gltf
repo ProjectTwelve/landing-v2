@@ -8,13 +8,57 @@
 	"accessors": [
 		{
 			"bufferView": 0,
-			"count": 85743,
+			"count": 44406,
 			"type": "SCALAR",
 			"componentType": 5123
 		},
 		{
 			"bufferView": 1,
-			"count": 22506,
+			"count": 11316,
+			"type": "VEC3",
+			"componentType": 5126,
+			"min": [ -0.636639595,
+				0.000279532716,
+				-0.366485357
+			],
+			"max": [ 0.50956136,
+				1.69678676,
+				0.46161896
+			]
+		},
+		{
+			"bufferView": 2,
+			"count": 11316,
+			"type": "VEC3",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 3,
+			"count": 11316,
+			"type": "VEC4",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 4,
+			"count": 11316,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 5,
+			"count": 11316,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 6,
+			"count": 41121,
+			"type": "SCALAR",
+			"componentType": 5123
+		},
+		{
+			"bufferView": 7,
+			"count": 11030,
 			"type": "VEC3",
 			"componentType": 5126,
 			"min": [ -0.638452291,
@@ -27,130 +71,106 @@
 			]
 		},
 		{
-			"bufferView": 2,
-			"count": 22506,
-			"type": "VEC3",
-			"componentType": 5126
-		},
-		{
-			"bufferView": 3,
-			"count": 22506,
-			"type": "VEC4",
-			"componentType": 5126
-		},
-		{
-			"bufferView": 4,
-			"count": 22506,
-			"type": "VEC2",
-			"componentType": 5126
-		},
-		{
-			"bufferView": 5,
-			"count": 22506,
-			"type": "VEC2",
-			"componentType": 5126
-		},
-		{
-			"bufferView": 6,
-			"count": 0,
-			"type": "VEC3",
-			"componentType": 5126
-		},
-		{
-			"bufferView": 7,
-			"count": 0,
-			"type": "VEC3",
-			"componentType": 5126
-		},
-		{
 			"bufferView": 8,
-			"count": 0,
-			"type": "VEC4",
+			"count": 11030,
+			"type": "VEC3",
 			"componentType": 5126
 		},
 		{
 			"bufferView": 9,
-			"count": 0,
-			"type": "VEC2",
+			"count": 11030,
+			"type": "VEC4",
 			"componentType": 5126
 		},
 		{
 			"bufferView": 10,
-			"count": 0,
+			"count": 11030,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 11,
+			"count": 11030,
 			"type": "VEC2",
 			"componentType": 5126
 		}
 	],
 	"buffers": [
 		{
-			"uri": "SK_Cartoon_03.bin",
-			"byteLength": 1431824
+			"uri": "SK_Cartoon_Female_003_Pose.bin",
+			"byteLength": 1422432
 		}
 	],
 	"bufferViews": [
 		{
 			"buffer": 0,
-			"byteLength": 171486,
+			"byteLength": 88812,
 			"target": 34963
 		},
 		{
 			"buffer": 0,
-			"byteLength": 270072,
-			"byteOffset": 171488,
+			"byteLength": 135792,
+			"byteOffset": 88812,
 			"target": 34962
 		},
 		{
 			"buffer": 0,
-			"byteLength": 270072,
-			"byteOffset": 441560,
+			"byteLength": 135792,
+			"byteOffset": 224604,
 			"target": 34962
 		},
 		{
 			"buffer": 0,
-			"byteLength": 360096,
-			"byteOffset": 711632,
+			"byteLength": 181056,
+			"byteOffset": 360396,
 			"target": 34962
 		},
 		{
 			"buffer": 0,
-			"byteLength": 180048,
-			"byteOffset": 1071728,
+			"byteLength": 90528,
+			"byteOffset": 541452,
 			"target": 34962
 		},
 		{
 			"buffer": 0,
-			"byteLength": 180048,
-			"byteOffset": 1251776,
+			"byteLength": 90528,
+			"byteOffset": 631980,
 			"target": 34962
 		},
 		{
 			"buffer": 0,
-			"byteLength": 0,
-			"byteOffset": 1431824,
+			"byteLength": 82242,
+			"byteOffset": 722508,
+			"target": 34963
+		},
+		{
+			"buffer": 0,
+			"byteLength": 132360,
+			"byteOffset": 804752,
 			"target": 34962
 		},
 		{
 			"buffer": 0,
-			"byteLength": 0,
-			"byteOffset": 1431824,
+			"byteLength": 132360,
+			"byteOffset": 937112,
 			"target": 34962
 		},
 		{
 			"buffer": 0,
-			"byteLength": 0,
-			"byteOffset": 1431824,
+			"byteLength": 176480,
+			"byteOffset": 1069472,
 			"target": 34962
 		},
 		{
 			"buffer": 0,
-			"byteLength": 0,
-			"byteOffset": 1431824,
+			"byteLength": 88240,
+			"byteOffset": 1245952,
 			"target": 34962
 		},
 		{
 			"buffer": 0,
-			"byteLength": 0,
-			"byteOffset": 1431824,
+			"byteLength": 88240,
+			"byteOffset": 1334192,
 			"target": 34962
 		}
 	],
@@ -215,12 +235,13 @@
 				{
 					"attributes":
 					{
-						"POSITION": 6,
-						"NORMAL": 7,
-						"TANGENT": 8,
-						"TEXCOORD_0": 9,
-						"TEXCOORD_1": 10
+						"POSITION": 7,
+						"NORMAL": 8,
+						"TANGENT": 9,
+						"TEXCOORD_0": 10,
+						"TEXCOORD_1": 11
 					},
+					"indices": 6,
 					"material": 1
 				}
 			]
@@ -228,7 +249,6 @@
 	],
 	"nodes": [
 		{
-			"name": "SK_Cartoon_Female_003_Pose_56_StaticMeshComponent0",
 			"mesh": 0
 		}
 	],
@@ -241,7 +261,6 @@
 	],
 	"scenes": [
 		{
-			"name": "Untitled_1",
 			"nodes": [ 0 ]
 		}
 	],

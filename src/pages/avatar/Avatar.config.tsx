@@ -9,12 +9,12 @@ export enum AvatarType {
     SK_Lowpoly_Male_002 = 'SK_Lowpoly_Male_002',
     SK_Lowpoly_Male_028 = 'SK_Lowpoly_Male_028',
     SK_Lowpoly_Male_040 = 'SK_Lowpoly_Male_040',
-    // SK_Cartoon_03 = 'SK_Cartoon_03',
+    SK_Cartoon_03 = 'SK_Cartoon_03',
     SK_Cartoon_06 = 'SK_Cartoon_06',
     SK_Cartoon_09 = 'SK_Cartoon_09',
     SK_Cartoon_14 = 'SK_Cartoon_14',
     SK_Cartoon_18 = 'SK_Cartoon_18',
-    // SK_Cartoon_19 = 'SK_Cartoon_19',
+    SK_Cartoon_19 = 'SK_Cartoon_19',
     SK_Cartoon_20 = 'SK_Cartoon_20',
     SK_Cartoon_31 = 'SK_Cartoon_31',
     SK_Cartoon_32 = 'SK_Cartoon_32',
@@ -41,8 +41,7 @@ export const AVATAR_GL_KEYS_FIRST_THREE = AvatarTypeArray.slice(0, 3);
 export const AVATAR_GL_KEYS_REST = AvatarTypeArray.slice(3, AvatarTypeArray.length);
 // 随机打乱的数组，打开注释即可使用
 export const AVATAR_GL_KEYS_SHUFFLE_REST = shuffle(AVATAR_GL_KEYS_REST);
-// export const AVATAR_GL_KEYS = AVATAR_GL_KEYS_FIRST_THREE.concat(AVATAR_GL_KEYS_SHUFFLE_REST);
-export const AVATAR_GL_KEYS = AvatarTypeArray
+export const AVATAR_GL_KEYS = AVATAR_GL_KEYS_FIRST_THREE.concat(AVATAR_GL_KEYS_SHUFFLE_REST);
 
 export const AVATAR_GL_INFO_MAP = {
     [AvatarType.Dokv]: {
@@ -225,24 +224,24 @@ export const AVATAR_GL_INFO_MAP = {
         },
         clearRender: true,
     },
-    // [AvatarType.SK_Cartoon_03]: {
-    //     name: AvatarType.SK_Cartoon_03,
-    //     GLTFURL: 'files/avatar/pose/SK_Cartoon_03/SK_Cartoon_03.gltf',
-    //     LFBXURL: 'files/avatar/pose/SK_Cartoon_03/SK_Cartoon_03_L.fbx',
-    //     HFBXURL: 'files/avatar/pose/SK_Cartoon_03/SK_Cartoon_03_H.fbx',
-    //     extraNode: null,
-    //     HDensity: 30,
-    //     LDensity: 30,
-    //     TDensity: 20,
-    //     scale: 0.03,
-    //     gltfScale: 3,
-    //     position: {
-    //         x: 0.06,
-    //         y: -2.5,
-    //         z: -0.2,
-    //     },
-    //     clearRender: true,
-    // },
+    [AvatarType.SK_Cartoon_03]: {
+        name: AvatarType.SK_Cartoon_03,
+        GLTFURL: 'files/avatar/pose/SK_Cartoon_03/SK_Cartoon_03.gltf',
+        LFBXURL: 'files/avatar/pose/SK_Cartoon_03/SK_Cartoon_03_L.fbx',
+        HFBXURL: 'files/avatar/pose/SK_Cartoon_03/SK_Cartoon_03_H.fbx',
+        extraNode: null,
+        HDensity: 50,
+        LDensity: 50,
+        TDensity: 50,
+        scale: 0.03,
+        gltfScale: 3,
+        position: {
+            x: 0.4,
+            y: -2.7,
+            z: -0.2,
+        },
+        clearRender: true,
+    },
     [AvatarType.SK_Cartoon_06]: {
         name: AvatarType.SK_Cartoon_06,
         GLTFURL: 'files/avatar/pose/SK_Cartoon_06/SK_Cartoon_06.gltf',
@@ -315,24 +314,24 @@ export const AVATAR_GL_INFO_MAP = {
         },
         clearRender: true,
     },
-    // [AvatarType.SK_Cartoon_19]: {
-    //     name: AvatarType.SK_Cartoon_19,
-    //     GLTFURL: 'files/avatar/pose/SK_Cartoon_19/SK_Cartoon_19.gltf',
-    //     LFBXURL: 'files/avatar/pose/SK_Cartoon_19/SK_Cartoon_19_L.fbx',
-    //     HFBXURL: 'files/avatar/pose/SK_Cartoon_19/SK_Cartoon_19_H.fbx',
-    //     extraNode: null,
-    //     HDensity: 50,
-    //     LDensity: 50,
-    //     TDensity: 40,
-    //     scale: 0.03,
-    //     gltfScale: 3,
-    //     position: {
-    //         x: 0.06,
-    //         y: -2.5,
-    //         z: -0.2,
-    //     },
-    //     clearRender: true,
-    // },
+    [AvatarType.SK_Cartoon_19]: {
+        name: AvatarType.SK_Cartoon_19,
+        GLTFURL: 'files/avatar/pose/SK_Cartoon_19/SK_Cartoon_19.gltf',
+        LFBXURL: 'files/avatar/pose/SK_Cartoon_19/SK_Cartoon_19_L.fbx',
+        HFBXURL: 'files/avatar/pose/SK_Cartoon_19/SK_Cartoon_19_H.fbx',
+        extraNode: null,
+        HDensity: 50,
+        LDensity: 50,
+        TDensity: 40,
+        scale: 0.027,
+        gltfScale: 2.7,
+        position: {
+            x: 0.06,
+            y: -2.5,
+            z: -0.2,
+        },
+        clearRender: true,
+    },
     [AvatarType.SK_Cartoon_20]: {
         name: AvatarType.SK_Cartoon_20,
         GLTFURL: 'files/avatar/pose/SK_Cartoon_20/SK_Cartoon_20.gltf',
@@ -522,8 +521,8 @@ export const AVATAR_GL_INFO_MAP = {
         HDensity: 80,
         LDensity: 30,
         TDensity: 50,
-        scale: 0.03,
-        gltfScale: 3,
+        scale: 0.027,
+        gltfScale: 2.7,
         position: {
             x: 0.06,
             y: -2.9,
@@ -540,8 +539,8 @@ export const AVATAR_GL_INFO_MAP = {
         HDensity: 80,
         LDensity: 30,
         TDensity: 50,
-        scale: 0.03,
-        gltfScale: 3,
+        scale: 0.027,
+        gltfScale: 2.7,
         position: {
             x: 0.06,
             y: -2.2,
