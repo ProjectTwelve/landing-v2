@@ -59,7 +59,7 @@
 	],
 	"buffers": [
 		{
-			"uri": "042.bin",
+			"uri": "SK_Lowpoly_42.bin",
 			"byteLength": 391732
 		}
 	],
@@ -152,11 +152,7 @@
 	],
 	"nodes": [
 		{
-			"name": "SK_Lowpoly_Male_042_pose_16_StaticMeshComponent0",
-			"translation": [ -1.79999995,
-				0.199999988,
-				-3.29999995
-			],
+			"name": "SK_Lowpoly_Male_042_pose_93_StaticMeshComponent0",
 			"mesh": 0
 		}
 	],

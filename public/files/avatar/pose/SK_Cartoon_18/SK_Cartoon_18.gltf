@@ -145,7 +145,7 @@
 	],
 	"buffers": [
 		{
-			"uri": "018.bin",
+			"uri": "SK_Cartoon_18.bin",
 			"byteLength": 2620228
 		}
 	],
@@ -272,15 +272,6 @@
 	],
 	"images": [
 		{
-			"uri": "WorldGridMaterial_BaseColor.png"
-		},
-		{
-			"uri": "WorldGridMaterial_MetallicRoughness.png"
-		},
-		{
-			"uri": "WorldGridMaterial_Normal.png"
-		},
-		{
 			"uri": "SK_Cartoon_Female_018.png"
 		}
 	],
@@ -304,21 +295,20 @@
 			}
 		},
 		{
-			"name": "WorldGridMaterial",
+			"name": "NewMaterial",
 			"pbrMetallicRoughness":
 			{
-				"baseColorTexture":
-				{
-					"index": 1
-				},
-				"metallicRoughnessTexture":
-				{
-					"index": 2
-				}
+				"baseColorFactor": [ 0,
+					0,
+					0,
+					1
+				]
 			},
-			"normalTexture":
+			"extensions":
 			{
-				"index": 3
+				"KHR_materials_unlit":
+				{
+				}
 			}
 		}
 	],
@@ -363,30 +353,11 @@
 	],
 	"nodes": [
 		{
-			"name": "SK_Cartoon_Female_018_Pose_19_StaticMeshComponent0",
-			"translation": [ -4.4000001,
-				0.199999988,
-				-3.29999995
-			],
+			"name": "SK_Cartoon_Female_018_Pose_26_StaticMeshComponent0",
 			"mesh": 0
 		}
 	],
 	"samplers": [
-		{
-			"name": "WorldGridMaterial_BaseColor",
-			"minFilter": 9987,
-			"magFilter": 9729
-		},
-		{
-			"name": "WorldGridMaterial_MetallicRoughness",
-			"minFilter": 9987,
-			"magFilter": 9729
-		},
-		{
-			"name": "WorldGridMaterial_Normal",
-			"minFilter": 9987,
-			"magFilter": 9729
-		},
 		{
 			"name": "SK_Cartoon_Female_018",
 			"minFilter": 9987,
@@ -402,23 +373,8 @@
 	"textures": [
 		{
 			"name": "SK_Cartoon_Female_018",
-			"sampler": 3,
-			"source": 3
-		},
-		{
-			"name": "WorldGridMaterial_BaseColor",
 			"sampler": 0,
 			"source": 0
-		},
-		{
-			"name": "WorldGridMaterial_MetallicRoughness",
-			"sampler": 1,
-			"source": 1
-		},
-		{
-			"name": "WorldGridMaterial_Normal",
-			"sampler": 2,
-			"source": 2
 		}
 	],
 	"extensionsUsed": [

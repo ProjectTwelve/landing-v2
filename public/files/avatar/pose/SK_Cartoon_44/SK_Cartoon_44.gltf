@@ -145,7 +145,7 @@
 	],
 	"buffers": [
 		{
-			"uri": "044.bin",
+			"uri": "SK_Cartoon_44.bin",
 			"byteLength": 2478128
 		}
 	],
@@ -353,11 +353,7 @@
 	],
 	"nodes": [
 		{
-			"name": "SK_Cartoon_Female_044_pose_9_StaticMeshComponent0",
-			"translation": [ -3.5999999,
-				0.199999988,
-				-4.29999971
-			],
+			"name": "SK_Cartoon_Female_044_pose_44_StaticMeshComponent0",
 			"mesh": 0
 		}
 	],

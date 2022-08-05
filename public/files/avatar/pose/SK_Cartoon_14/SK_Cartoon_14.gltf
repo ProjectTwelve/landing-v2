@@ -97,7 +97,7 @@
 	],
 	"buffers": [
 		{
-			"uri": "014.bin",
+			"uri": "SK_Cartoon_14.bin",
 			"byteLength": 3588292
 		}
 	],
@@ -181,7 +181,7 @@
 	],
 	"materials": [
 		{
-			"name": "MI_Cartoon_Female_14",
+			"name": "MI_Cartoon_Female_014",
 			"pbrMetallicRoughness":
 			{
 				"baseColorTexture":
@@ -249,11 +249,7 @@
 	],
 	"nodes": [
 		{
-			"name": "SK_Cartoon_Female_014_pose_15_StaticMeshComponent0",
-			"translation": [ -4.19999981,
-				0.199999988,
-				-3.5999999
-			],
+			"name": "SK_Cartoon_Female_014_pose_9_StaticMeshComponent0",
 			"mesh": 0
 		}
 	],
