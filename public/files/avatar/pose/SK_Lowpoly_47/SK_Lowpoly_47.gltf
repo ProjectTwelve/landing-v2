@@ -1,0 +1,202 @@
+{
+	"asset":
+	{
+		"version": "2.0",
+		"generator": "Unreal Engine 4.27.0 glTF Exporter 1.0.6"
+	},
+	"scene": 0,
+	"accessors": [
+		{
+			"bufferView": 0,
+			"count": 8466,
+			"type": "SCALAR",
+			"componentType": 5123
+		},
+		{
+			"bufferView": 1,
+			"count": 6284,
+			"type": "VEC3",
+			"componentType": 5126,
+			"min": [ -0.533445179,
+				-0.0041113249,
+				-0.460683882
+			],
+			"max": [ 0.514602602,
+				1.58446801,
+				0.284080982
+			]
+		},
+		{
+			"bufferView": 2,
+			"count": 6284,
+			"type": "VEC3",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 3,
+			"count": 6284,
+			"type": "VEC4",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 4,
+			"count": 6284,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 5,
+			"count": 6284,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 6,
+			"count": 6284,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 7,
+			"count": 6284,
+			"type": "VEC2",
+			"componentType": 5126
+		}
+	],
+	"buffers": [
+		{
+			"uri": "SK_Lowpoly_47.bin",
+			"byteLength": 469380
+		}
+	],
+	"bufferViews": [
+		{
+			"buffer": 0,
+			"byteLength": 16932,
+			"target": 34963
+		},
+		{
+			"buffer": 0,
+			"byteLength": 75408,
+			"byteOffset": 16932,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 75408,
+			"byteOffset": 92340,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 100544,
+			"byteOffset": 167748,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 50272,
+			"byteOffset": 268292,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 50272,
+			"byteOffset": 318564,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 50272,
+			"byteOffset": 368836,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 50272,
+			"byteOffset": 419108,
+			"target": 34962
+		}
+	],
+	"images": [
+		{
+			"uri": "MI_Lowpoly_Male_47_BaseColor.png"
+		},
+		{
+			"uri": "MI_Lowpoly_Male_47_MetallicRoughness.png"
+		}
+	],
+	"materials": [
+		{
+			"name": "MI_Lowpoly_Male_47",
+			"pbrMetallicRoughness":
+			{
+				"baseColorTexture":
+				{
+					"index": 0
+				},
+				"metallicRoughnessTexture":
+				{
+					"index": 1
+				}
+			}
+		}
+	],
+	"meshes": [
+		{
+			"name": "SK_Lowpoly_Male_047_pose",
+			"primitives": [
+				{
+					"attributes":
+					{
+						"POSITION": 1,
+						"NORMAL": 2,
+						"TANGENT": 3,
+						"TEXCOORD_0": 4,
+						"TEXCOORD_1": 5,
+						"TEXCOORD_2": 6,
+						"TEXCOORD_3": 7
+					},
+					"indices": 0,
+					"material": 0
+				}
+			]
+		}
+	],
+	"nodes": [
+		{
+			"name": "SK_Lowpoly_Male_047_pose_2_StaticMeshComponent0",
+			"mesh": 0
+		}
+	],
+	"samplers": [
+		{
+			"name": "MI_Lowpoly_Male_47_BaseColor",
+			"minFilter": 9987,
+			"magFilter": 9729
+		},
+		{
+			"name": "MI_Lowpoly_Male_47_MetallicRoughness",
+			"minFilter": 9987,
+			"magFilter": 9729
+		}
+	],
+	"scenes": [
+		{
+			"name": "Untitled_1",
+			"nodes": [ 0 ]
+		}
+	],
+	"textures": [
+		{
+			"name": "MI_Lowpoly_Male_47_BaseColor",
+			"sampler": 0,
+			"source": 0
+		},
+		{
+			"name": "MI_Lowpoly_Male_47_MetallicRoughness",
+			"sampler": 1,
+			"source": 1
+		}
+	]
+}
