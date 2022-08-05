@@ -33,6 +33,7 @@ type AVATARGLMAP = {
     [avatar in AvatarTypeStrings]: AvatarGLModel | null;
 }
 
+// @ts-ignore
 export const AVATAR_GL_MAP: AVATARGLMAP = {
     [AvatarType.Dokv]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Dokv]),
     [AvatarType.Cartoon]: null,
@@ -43,6 +44,31 @@ export const AVATAR_GL_MAP: AVATARGLMAP = {
     [AvatarType.SK_Lowpoly_Male_002]: null,
     [AvatarType.SK_Lowpoly_Male_028]: null,
     [AvatarType.SK_Lowpoly_Male_040]: null,
+    [AvatarType.SK_Cartoon_03]: null,
+    [AvatarType.SK_Cartoon_06]: null,
+    [AvatarType.SK_Cartoon_09]: null,
+    [AvatarType.SK_Cartoon_14]: null,
+    [AvatarType.SK_Cartoon_18]: null,
+    [AvatarType.SK_Cartoon_19]: null,
+    [AvatarType.SK_Cartoon_20]: null,
+    [AvatarType.SK_Cartoon_31]: null,
+    [AvatarType.SK_Cartoon_32]: null,
+    [AvatarType.SK_Cartoon_41]: null,
+    [AvatarType.SK_Cartoon_44]: null,
+    [AvatarType.SK_Cartoon_47]: null,
+    [AvatarType.SK_Cartoon_52]: null,
+    [AvatarType.SK_Lowpoly_06]: null,
+    [AvatarType.SK_Lowpoly_08]: null,
+    [AvatarType.SK_Lowpoly_11]: null,
+    [AvatarType.SK_Lowpoly_16]: null,
+    [AvatarType.SK_Lowpoly_25]: null,
+    [AvatarType.SK_Lowpoly_31]: null,
+    [AvatarType.SK_Lowpoly_38]: null,
+    [AvatarType.SK_Lowpoly_42]: null,
+    [AvatarType.SK_Lowpoly_44]: null,
+    [AvatarType.SK_Lowpoly_46]: null,
+    [AvatarType.SK_Lowpoly_47]: null,
+    [AvatarType.SK_Lowpoly_58]: null,
 };
 
 export const AVATAR_GL_CYCLE = new AvatarCycle();
