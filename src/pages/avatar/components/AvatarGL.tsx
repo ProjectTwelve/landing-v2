@@ -121,7 +121,7 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                                 AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
                                 AVATAR_GL_MAP[element]?.load();
                             }
-                            if ((previousActivate === nextType && element === type) || AVATAR_GL_MAP[element] === null) {
+                            if ((previousActivate === nextType && element === type) || AVATAR_GL_MAP[type] === null) {
                                 AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
                                 AVATAR_GL_MAP[element]?.load();
                             }
