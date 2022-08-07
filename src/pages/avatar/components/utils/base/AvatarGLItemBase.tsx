@@ -80,7 +80,7 @@ export class AvatarGLItemBase extends EventEmitter {
     public light: boolean = false;
 
 
-    constructor() {
+    constructor(props) {
         super();
         this.m.transparent = true;
         this.m.opacity = 0.8;
@@ -109,7 +109,7 @@ export class AvatarGLItemBase extends EventEmitter {
         this.controls = controls;
 
         this.rendererWrap.appendChild(this.renderer.domElement);
-        this.rendererWrap.className = 'avatar-gl-renderer-wrap';
+        this.rendererWrap.className = `avatar-gl-renderer-wrap ${props.name}`;
 
         this.container.appendChild(this.rendererWrap);
         this.container.className =
@@ -158,7 +158,7 @@ export class AvatarGLItemBase extends EventEmitter {
                 opacity: 0,
             },
             {
-                duration: 0.4,
+                duration: 0.6,
                 x: 0,
                 y: 0,
                 opacity: 1,
@@ -171,7 +171,7 @@ export class AvatarGLItemBase extends EventEmitter {
         this.container.style.zIndex = '1';
 
         gsap.to(this.container, {
-            duration: 0.4,
+            duration: 0.6,
             display: 'none',
             opacity: 0,
             x: 0,
@@ -181,6 +181,8 @@ export class AvatarGLItemBase extends EventEmitter {
                 if (clearRender) {
                     this.renderer.forceContextLoss();
                     this.renderer = null as any;
+                    this.container.remove();
+                    this.rendererWrap.remove();
                 }
             },
         });

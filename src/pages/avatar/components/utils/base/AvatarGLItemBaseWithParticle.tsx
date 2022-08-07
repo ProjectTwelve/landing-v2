@@ -18,9 +18,9 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
     // 序列帧和 glb 模型位置对应，所需的 offset 图片张数
     public particleImgOffset = 0;
 
-    public canvasWrap = document.createElement('div');
-    public canvas = document.createElement('canvas');
-    public context = this.canvas.getContext('2d');
+    // public canvasWrap = document.createElement('div');
+    // public canvas = document.createElement('canvas');
+    // public context = this.canvas.getContext('2d');
     private renderedImageIndex = -1;
     protected imageDataArray: HTMLImageElement[] = [];
     private btnWrap = document.createElement('div');
@@ -39,10 +39,10 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
 
     public easingEffect = TWEEN.Easing.Quadratic.InOut;
 
-    constructor() {
-        super();
-        this.canvas.style.pointerEvents = 'none';
-        this.canvasWrap.className = 'avatar-gl-canvas-wrap';
+    constructor(props) {
+        super(props);
+        // this.canvas.style.pointerEvents = 'none';
+        // this.canvasWrap.className = 'avatar-gl-canvas-wrap';
         // this.canvasWrap.appendChild(this.canvas);
         // this.container.appendChild(this.canvasWrap);
 
@@ -78,8 +78,8 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         this.rendererWrap.style.height = '100%';
         this.rendererWrap.style.opacity = '1';
         // this.rendererWrap.style.height = '0%';
-        this.canvasWrap.style.height = '100%';
-        this.canvasWrap.style.opacity = '0';
+        // this.canvasWrap.style.height = '100%';
+        // this.canvasWrap.style.opacity = '0';
     }
     enter(currentPage: PageType = PageType.Loading, isLoading = true) {
         super.enter();
@@ -153,31 +153,31 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
         }
         const index = this.getParticleIndex();
         // console.log(index);
-        if (this.renderedImageIndex !== index && this.context) {
-            this.renderedImageIndex = index;
-            this.context.drawImage(this.imageDataArray[index], 0, 0);
-            // const imageData = this.context.getImageData(
-            //     0,
-            //     0,
-            //     this.canvas.width,
-            //     this.canvas.height
-            // );
-            // const data = imageData.data;
-            // for (let i = 0; i < data.length; i += 4) {
-            //     // 提出黑边
-            //     if (data[i] + data[i + 1] + data[i + 2] < 2) {
-            //         data[i + 3] = 0;
-            //     }
-            // }
-            // this.context.putImageData(imageData, 0, 0);
-        }
+        // if (this.renderedImageIndex !== index && this.context) {
+        // this.renderedImageIndex = index;
+        // this.context.drawImage(this.imageDataArray[index], 0, 0);
+        // const imageData = this.context.getImageData(
+        //     0,
+        //     0,
+        //     this.canvas.width,
+        //     this.canvas.height
+        // );
+        // const data = imageData.data;
+        // for (let i = 0; i < data.length; i += 4) {
+        //     // 提出黑边
+        //     if (data[i] + data[i + 1] + data[i + 2] < 2) {
+        //         data[i + 3] = 0;
+        //     }
+        // }
+        // this.context.putImageData(imageData, 0, 0);
+        // }
     }
     protected resize() {
         super.resize();
-        this.canvas.style.width = 'auto';
-        this.canvas.style.height = `${this.container.clientHeight}px`;
-        this.canvas.width = this.particleCanvasWidth;
-        this.canvas.height = this.particleCanvasHeight;
+        // this.canvas.style.width = 'auto';
+        // this.canvas.style.height = `${this.container.clientHeight}px`;
+        // this.canvas.width = this.particleCanvasWidth;
+        // this.canvas.height = this.particleCanvasHeight;
     }
 
     toggleParticle(showType: number = -1, forceChange: boolean, resetChanged: boolean = false) {

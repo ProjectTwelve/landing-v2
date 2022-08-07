@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { gsap } from 'gsap';
-import { first, includes, indexOf } from 'lodash-es';
+import { cloneDeep, first, includes, indexOf } from 'lodash-es';
 import React, {
     forwardRef,
     useEffect,
@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import { PageType } from '../../app/App.config';
 import { loadingEE, usePageVisible } from '../../app/App.utils';
-import { AvatarType, AVATAR_GL_INFO_MAP, AVATAR_GL_KEYS_SHUFFLE_REST, AVATAR_GL_KEYS } from '../Avatar.config';
+import { AvatarType, AVATAR_GL_INFO_MAP, AVATAR_GL_KEYS } from '../Avatar.config';
 import './AvatarGL.less';
 import { AvatarCycle } from './AvatarCycle';
 import { ButterflyGL } from '../../../components/butterfly-gl/ButterflyGL';
@@ -86,7 +86,6 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
     const activatedRef = useRef<AvatarType | null>(null);
     const mouseRef = useRef<HTMLDivElement>(null);
     const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
-
     useImperativeHandle(
         ref,
         () => ({
@@ -104,11 +103,12 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                 // 由于手机端只能显示三个WebGL render，所以需要维持只存在三个实例
                 if (activatedRef.current === nextType) {
                     activatedRef.current &&
-                        AVATAR_GL_MAP[nextType]!.leave(false);
+                        AVATAR_GL_MAP[nextType]!.leave(true);
                 } else {
                     activatedRef.current &&
                         AVATAR_GL_MAP[activatedRef.current]!.leave(true);
                 }
+                let previousActivate = cloneDeep(activatedRef.current);
 
                 activatedRef.current = type;
 
@@ -117,11 +117,14 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                     for (let i = 0; i < AVATAR_GL_KEYS.length; i++) {
                         const element = AVATAR_GL_KEYS[i];
                         if (element === type || element === nextType) {
-                            if (AVATAR_GL_MAP[element] === null) {
+                            if(element === nextType){
                                 AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
                                 AVATAR_GL_MAP[element]?.load();
                             }
-
+                            if ((previousActivate === nextType && element === type) || AVATAR_GL_MAP[element] === null) {
+                                AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
+                                AVATAR_GL_MAP[element]?.load();
+                            }
                         } else {
                             AVATAR_GL_MAP[element] = null;
                         }
