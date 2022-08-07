@@ -126,7 +126,9 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                                 AVATAR_GL_MAP[element]?.load();
                             }
                         } else {
-                            AVATAR_GL_MAP[element] = null;
+                            setTimeout(()=> {
+                                AVATAR_GL_MAP[element] = null;
+                            }, 500)
                         }
                     }
                     const container = containerRef.current;

@@ -158,7 +158,7 @@ export class AvatarGLItemBase extends EventEmitter {
                 opacity: 0,
             },
             {
-                duration: 0.6,
+                duration: 0.4,
                 x: 0,
                 y: 0,
                 opacity: 1,
@@ -169,21 +169,18 @@ export class AvatarGLItemBase extends EventEmitter {
     }
     leave(clearRender) {
         this.container.style.zIndex = '1';
-
         gsap.to(this.container, {
-            duration: 0.6,
+            duration: 0.4,
             display: 'none',
             opacity: 0,
             x: 0,
             y: 0,
             onComplete: () => {
                 cancelAnimationFrame(this.frameId);
-                if (clearRender) {
-                    this.renderer.forceContextLoss();
-                    this.renderer = null as any;
-                    this.container.remove();
-                    this.rendererWrap.remove();
-                }
+                this.renderer.forceContextLoss();
+                this.renderer = null as any;
+                this.container.remove();
+                this.rendererWrap.remove();
             },
         });
     }
