@@ -20,7 +20,7 @@ export class AvatarGLItemBase extends EventEmitter {
 
     public container = document.createElement('div');
     public rendererWrap = document.createElement('div');
-    public renderer = new THREE.WebGLRenderer({ alpha: true });
+    public renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     public readonly scene = new THREE.Scene();
     public camera: THREE.PerspectiveCamera;
     public controls: OrbitControls;
