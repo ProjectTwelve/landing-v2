@@ -119,13 +119,12 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                     for (let i = 0; i < AVATAR_GL_KEYS.length; i++) {
                         const element = AVATAR_GL_KEYS[i];
                         if (element === type || element === nextType) {
-                            
                             if(element === nextType){
                                 console.log('nextType', nextType);
                                 AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
-                                
-                                await AVATAR_GL_MAP[element]?.load();
-                                
+                                setTimeout(() => {
+                                    AVATAR_GL_MAP[element]?.load();
+                                }, 3000)
                             }
                             if ((previousActivate === nextType && element === type) || AVATAR_GL_MAP[type] === null) {
                                 console.log('previousActivate', previousActivate);
