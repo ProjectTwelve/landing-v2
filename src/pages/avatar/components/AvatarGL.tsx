@@ -89,7 +89,7 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
     useImperativeHandle(
         ref,
         () => ({
-            switchTo: (type: AvatarType | null, currentPage) => {
+            switchTo: async (type: AvatarType | null, currentPage) => {
 
                 const currentIndex = indexOf(AVATAR_GL_KEYS, type);
                 const length = AVATAR_GL_KEYS.length;
@@ -98,7 +98,9 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                     nextType = AvatarType.Dokv;
                 } else {
                     nextType = AVATAR_GL_KEYS[currentIndex + 1];
+                   
                 }
+                
 
                 // 由于手机端只能显示三个WebGL render，所以需要维持只存在三个实例
                 if (activatedRef.current === nextType) {
@@ -117,26 +119,35 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                     for (let i = 0; i < AVATAR_GL_KEYS.length; i++) {
                         const element = AVATAR_GL_KEYS[i];
                         if (element === type || element === nextType) {
+                            
                             if(element === nextType){
+                                console.log('nextType', nextType);
                                 AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
-                                AVATAR_GL_MAP[element]?.load();
+                                
+                                await AVATAR_GL_MAP[element]?.load();
+                                
                             }
                             if ((previousActivate === nextType && element === type) || AVATAR_GL_MAP[type] === null) {
+                                console.log('previousActivate', previousActivate);
+                                console.log('type', type);
+                                console.log('AVATAR_GL_MAP[type]', AVATAR_GL_MAP[type]);
                                 AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
                                 AVATAR_GL_MAP[element]?.load();
                             }
                         } else {
-                            setTimeout(()=> {
-                                AVATAR_GL_MAP[element] = null;
-                            }, 500)
+                            AVATAR_GL_MAP[element] = null;
                         }
                     }
                     const container = containerRef.current;
                     if (!container) {
                         return;
                     }
-                    AVATAR_GL_MAP[type]!.mount(container);
+                    activatedRef.current && AVATAR_GL_MAP[activatedRef.current]!.mount(container);
+                    
+                   
+                    
                 }
+                console.log('[ AVATAR_GL_MAP ] >', AVATAR_GL_MAP)
                 let isLoading = true;
                 if (type) {
                     isLoading = includes(AVATAR_GL_MAP[type]?.loadingStatus, false);
