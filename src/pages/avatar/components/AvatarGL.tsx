@@ -33,7 +33,6 @@ type AVATARGLMAP = {
     [avatar in AvatarTypeStrings]: AvatarGLModel | null;
 }
 
-// @ts-ignore
 export const AVATAR_GL_MAP: AVATARGLMAP = {
     [AvatarType.Dokv]: new AvatarGLModel(AVATAR_GL_INFO_MAP[AvatarType.Dokv]),
     [AvatarType.Cartoon]: null,
@@ -51,12 +50,16 @@ export const AVATAR_GL_MAP: AVATARGLMAP = {
     [AvatarType.SK_Cartoon_18]: null,
     [AvatarType.SK_Cartoon_19]: null,
     [AvatarType.SK_Cartoon_20]: null,
+    [AvatarType.SK_Cartoon_27]: null,
     [AvatarType.SK_Cartoon_31]: null,
     [AvatarType.SK_Cartoon_32]: null,
     [AvatarType.SK_Cartoon_41]: null,
     [AvatarType.SK_Cartoon_44]: null,
     [AvatarType.SK_Cartoon_47]: null,
     [AvatarType.SK_Cartoon_52]: null,
+    [AvatarType.SK_Cartoon_57]: null,
+    [AvatarType.SK_Cartoon_60]: null,
+    [AvatarType.SK_Cartoon_61]: null,
     // [AvatarType.SK_Lowpoly_06]: null,
     // [AvatarType.SK_Lowpoly_08]: null,
     // [AvatarType.SK_Lowpoly_11]: null,
