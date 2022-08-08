@@ -100,8 +100,6 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                     nextType = AVATAR_GL_KEYS[currentIndex + 1];
                    
                 }
-                
-
                 // 由于手机端只能显示三个WebGL render，所以需要维持只存在三个实例
                 if (activatedRef.current === nextType) {
                     activatedRef.current &&
@@ -120,16 +118,12 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                         const element = AVATAR_GL_KEYS[i];
                         if (element === type || element === nextType) {
                             if(element === nextType){
-                                console.log('nextType', nextType);
                                 AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
                                 setTimeout(() => {
                                     AVATAR_GL_MAP[element]?.load();
                                 }, 3000)
                             }
                             if ((previousActivate === nextType && element === type) || AVATAR_GL_MAP[type] === null) {
-                                console.log('previousActivate', previousActivate);
-                                console.log('type', type);
-                                console.log('AVATAR_GL_MAP[type]', AVATAR_GL_MAP[type]);
                                 AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
                                 AVATAR_GL_MAP[element]?.load();
                             }
@@ -146,7 +140,6 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                    
                     
                 }
-                console.log('[ AVATAR_GL_MAP ] >', AVATAR_GL_MAP)
                 let isLoading = true;
                 if (type) {
                     isLoading = includes(AVATAR_GL_MAP[type]?.loadingStatus, false);
