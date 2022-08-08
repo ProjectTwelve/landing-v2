@@ -34,7 +34,7 @@ export class AvatarGLModel extends AvatarGLItemBaseWithParticle {
 
 
     constructor(props) {
-        super();
+        super(props);
         const { extraNode, GLTFURL, HFBXURL, LFBXURL, name, HDensity, LDensity, TDensity, scale, position, gltfScale, clearRender } = props;
         this.extraNode = extraNode;
         this.GLTFURL = GLTFURL;

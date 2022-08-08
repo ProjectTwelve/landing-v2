@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { gsap } from 'gsap';
-import { first, includes, indexOf } from 'lodash-es';
+import { cloneDeep, first, includes, indexOf } from 'lodash-es';
 import React, {
     forwardRef,
     useEffect,
@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import { PageType } from '../../app/App.config';
 import { loadingEE, usePageVisible } from '../../app/App.utils';
-import { AvatarType, AVATAR_GL_INFO_MAP, AVATAR_GL_KEYS_SHUFFLE_REST, AVATAR_GL_KEYS } from '../Avatar.config';
+import { AvatarType, AVATAR_GL_INFO_MAP, AVATAR_GL_KEYS } from '../Avatar.config';
 import './AvatarGL.less';
 import { AvatarCycle } from './AvatarCycle';
 import { ButterflyGL } from '../../../components/butterfly-gl/ButterflyGL';
@@ -43,6 +43,35 @@ export const AVATAR_GL_MAP: AVATARGLMAP = {
     [AvatarType.SK_Lowpoly_Male_002]: null,
     [AvatarType.SK_Lowpoly_Male_028]: null,
     [AvatarType.SK_Lowpoly_Male_040]: null,
+    [AvatarType.SK_Cartoon_03]: null,
+    [AvatarType.SK_Cartoon_06]: null,
+    [AvatarType.SK_Cartoon_09]: null,
+    [AvatarType.SK_Cartoon_14]: null,
+    [AvatarType.SK_Cartoon_18]: null,
+    [AvatarType.SK_Cartoon_19]: null,
+    [AvatarType.SK_Cartoon_20]: null,
+    [AvatarType.SK_Cartoon_27]: null,
+    [AvatarType.SK_Cartoon_31]: null,
+    [AvatarType.SK_Cartoon_32]: null,
+    [AvatarType.SK_Cartoon_41]: null,
+    [AvatarType.SK_Cartoon_44]: null,
+    [AvatarType.SK_Cartoon_47]: null,
+    [AvatarType.SK_Cartoon_52]: null,
+    [AvatarType.SK_Cartoon_57]: null,
+    [AvatarType.SK_Cartoon_60]: null,
+    [AvatarType.SK_Cartoon_61]: null,
+    // [AvatarType.SK_Lowpoly_06]: null,
+    // [AvatarType.SK_Lowpoly_08]: null,
+    // [AvatarType.SK_Lowpoly_11]: null,
+    [AvatarType.SK_Lowpoly_16]: null,
+    [AvatarType.SK_Lowpoly_25]: null,
+    [AvatarType.SK_Lowpoly_31]: null,
+    // [AvatarType.SK_Lowpoly_38]: null,
+    [AvatarType.SK_Lowpoly_42]: null,
+    [AvatarType.SK_Lowpoly_44]: null,
+    [AvatarType.SK_Lowpoly_46]: null,
+    [AvatarType.SK_Lowpoly_47]: null,
+    [AvatarType.SK_Lowpoly_58]: null,
 };
 
 export const AVATAR_GL_CYCLE = new AvatarCycle();
@@ -60,11 +89,10 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
     const activatedRef = useRef<AvatarType | null>(null);
     const mouseRef = useRef<HTMLDivElement>(null);
     const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
-
     useImperativeHandle(
         ref,
         () => ({
-            switchTo: (type: AvatarType | null, currentPage) => {
+            switchTo: async (type: AvatarType | null, currentPage) => {
 
                 const currentIndex = indexOf(AVATAR_GL_KEYS, type);
                 const length = AVATAR_GL_KEYS.length;
@@ -73,16 +101,17 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                     nextType = AvatarType.Dokv;
                 } else {
                     nextType = AVATAR_GL_KEYS[currentIndex + 1];
+                   
                 }
-
                 // 由于手机端只能显示三个WebGL render，所以需要维持只存在三个实例
                 if (activatedRef.current === nextType) {
                     activatedRef.current &&
-                        AVATAR_GL_MAP[nextType]!.leave(false);
+                        AVATAR_GL_MAP[nextType]!.leave(true);
                 } else {
                     activatedRef.current &&
                         AVATAR_GL_MAP[activatedRef.current]!.leave(true);
                 }
+                let previousActivate = cloneDeep(activatedRef.current);
 
                 activatedRef.current = type;
 
@@ -91,11 +120,16 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                     for (let i = 0; i < AVATAR_GL_KEYS.length; i++) {
                         const element = AVATAR_GL_KEYS[i];
                         if (element === type || element === nextType) {
-                            if (AVATAR_GL_MAP[element] === null) {
+                            if(element === nextType){
+                                AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
+                                setTimeout(() => {
+                                    AVATAR_GL_MAP[element]?.load();
+                                }, 3000)
+                            }
+                            if ((previousActivate === nextType && element === type) || AVATAR_GL_MAP[type] === null) {
                                 AVATAR_GL_MAP[element] = new AvatarGLModel(AVATAR_GL_INFO_MAP[element]);
                                 AVATAR_GL_MAP[element]?.load();
                             }
-
                         } else {
                             AVATAR_GL_MAP[element] = null;
                         }
@@ -104,7 +138,10 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                     if (!container) {
                         return;
                     }
-                    AVATAR_GL_MAP[type]!.mount(container);
+                    activatedRef.current && AVATAR_GL_MAP[activatedRef.current]!.mount(container);
+                    
+                   
+                    
                 }
                 let isLoading = true;
                 if (type) {

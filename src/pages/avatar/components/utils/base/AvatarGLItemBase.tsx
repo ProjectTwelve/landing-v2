@@ -20,7 +20,7 @@ export class AvatarGLItemBase extends EventEmitter {
 
     public container = document.createElement('div');
     public rendererWrap = document.createElement('div');
-    public renderer = new THREE.WebGLRenderer({ alpha: true });
+    public renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     public readonly scene = new THREE.Scene();
     public camera: THREE.PerspectiveCamera;
     public controls: OrbitControls;
@@ -80,7 +80,7 @@ export class AvatarGLItemBase extends EventEmitter {
     public light: boolean = false;
 
 
-    constructor() {
+    constructor(props) {
         super();
         this.m.transparent = true;
         this.m.opacity = 0.8;
@@ -109,7 +109,7 @@ export class AvatarGLItemBase extends EventEmitter {
         this.controls = controls;
 
         this.rendererWrap.appendChild(this.renderer.domElement);
-        this.rendererWrap.className = 'avatar-gl-renderer-wrap';
+        this.rendererWrap.className = `avatar-gl-renderer-wrap ${props.name}`;
 
         this.container.appendChild(this.rendererWrap);
         this.container.className =
@@ -169,7 +169,6 @@ export class AvatarGLItemBase extends EventEmitter {
     }
     leave(clearRender) {
         this.container.style.zIndex = '1';
-
         gsap.to(this.container, {
             duration: 0.4,
             display: 'none',
@@ -178,10 +177,10 @@ export class AvatarGLItemBase extends EventEmitter {
             y: 0,
             onComplete: () => {
                 cancelAnimationFrame(this.frameId);
-                if (clearRender) {
-                    this.renderer.forceContextLoss();
-                    this.renderer = null as any;
-                }
+                this.renderer.forceContextLoss();
+                this.renderer = null as any;
+                this.container.remove();
+                this.rendererWrap.remove();
             },
         });
     }
