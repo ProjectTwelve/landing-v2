@@ -93,7 +93,8 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
         ref,
         () => ({
             switchTo: async (type: AvatarType | null, currentPage) => {
-
+                console.log('[ type ] >', type)
+                console.log('[ currentPage ] >', currentPage)
                 const currentIndex = indexOf(AVATAR_GL_KEYS, type);
                 const length = AVATAR_GL_KEYS.length;
                 let nextType = AvatarType.Dokv;
@@ -107,9 +108,13 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                 if (activatedRef.current === nextType) {
                     activatedRef.current &&
                         AVATAR_GL_MAP[nextType]!.leave(true);
+                    AVATAR_GL_MAP[nextType] = null;
                 } else {
                     activatedRef.current &&
                         AVATAR_GL_MAP[activatedRef.current]!.leave(true);
+                    if(activatedRef.current){
+                        AVATAR_GL_MAP[activatedRef.current] = null;
+                    }
                 }
                 let previousActivate = cloneDeep(activatedRef.current);
 
@@ -159,13 +164,13 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
 
             },
             acitveTo: (page: PageType) => {
-                activatedRef.current && AVATAR_GL_MAP[activatedRef.current]!.active(page);
+                activatedRef.current && AVATAR_GL_MAP[activatedRef.current]?.active(page);
             },
             stopTimeout: () => {
-                activatedRef.current && AVATAR_GL_MAP[activatedRef.current]!.stopTimeout();
+                activatedRef.current && AVATAR_GL_MAP[activatedRef.current]?.stopTimeout();
             },
             restartTimout: () => {
-                activatedRef.current && AVATAR_GL_MAP[activatedRef.current]!.restartTimout();
+                activatedRef.current && AVATAR_GL_MAP[activatedRef.current]?.restartTimout();
             }
         }),
 
