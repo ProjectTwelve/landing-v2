@@ -227,7 +227,7 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         name: 'Dodo',
         desc: (
             <>
-                ISFJ: Until I run out of excess organs, why shouldn't I do everything I can to help them?
+                For small creatures such as we the vastness is bearable only through love.
             </>
         ),
         links: {
