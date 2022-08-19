@@ -261,9 +261,9 @@ export const AVATAR_GL_INFO_MAP = {
         scale: 0.032,
         gltfScale: 3.2,
         position: {
-            x: 0.06,
+            x: 0.12,
             y: -2.7,
-            z: -0.2,
+            z: 0,
         },
         clearRender: true,
     },
@@ -370,7 +370,7 @@ export const AVATAR_GL_INFO_MAP = {
         gltfScale: 3,
         position: {
             x: 0.06,
-            y: -2.9,
+            y: -2.5,
             z: -0.2,
         },
         clearRender: true,
@@ -406,7 +406,7 @@ export const AVATAR_GL_INFO_MAP = {
         gltfScale: 3.2,
         position: {
             x: 0.3,
-            y: -2.5,
+            y: -3.1,
             z: -0.2,
         },
         clearRender: true,
@@ -604,7 +604,7 @@ export const AVATAR_GL_INFO_MAP = {
         gltfScale: 2.7,
         position: {
             x: 0.06,
-            y: -2.9,
+            y: -2.2,
             z: -0.2,
         },
         clearRender: true,
