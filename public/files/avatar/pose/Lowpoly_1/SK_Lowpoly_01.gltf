@@ -1,0 +1,189 @@
+{
+	"asset":
+	{
+		"version": "2.0",
+		"generator": "Unreal Engine 4.27.0 glTF Exporter 1.0.6"
+	},
+	"scene": 0,
+	"accessors": [
+		{
+			"bufferView": 0,
+			"count": 8928,
+			"type": "SCALAR",
+			"componentType": 5123
+		},
+		{
+			"bufferView": 1,
+			"count": 7249,
+			"type": "VEC3",
+			"componentType": 5126,
+			"min": [ -0.624024093,
+				-0.00195800117,
+				-0.466722488
+			],
+			"max": [ 0.517604649,
+				1.59177399,
+				0.274079978
+			]
+		},
+		{
+			"bufferView": 2,
+			"count": 7249,
+			"type": "VEC3",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 3,
+			"count": 7249,
+			"type": "VEC4",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 4,
+			"count": 7249,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 5,
+			"count": 7249,
+			"type": "VEC2",
+			"componentType": 5126
+		},
+		{
+			"bufferView": 6,
+			"count": 7249,
+			"type": "VEC2",
+			"componentType": 5126
+		}
+	],
+	"buffers": [
+		{
+			"uri": "SK_Lowpoly_01.bin",
+			"byteLength": 481792
+		}
+	],
+	"bufferViews": [
+		{
+			"buffer": 0,
+			"byteLength": 17856,
+			"target": 34963
+		},
+		{
+			"buffer": 0,
+			"byteLength": 86988,
+			"byteOffset": 17856,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 86988,
+			"byteOffset": 104844,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 115984,
+			"byteOffset": 191832,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 57992,
+			"byteOffset": 307816,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 57992,
+			"byteOffset": 365808,
+			"target": 34962
+		},
+		{
+			"buffer": 0,
+			"byteLength": 57992,
+			"byteOffset": 423800,
+			"target": 34962
+		}
+	],
+	"images": [
+		{
+			"uri": "MI_Lowpoly_Male_001_BaseColor.png"
+		},
+		{
+			"uri": "MI_Lowpoly_Male_001_MetallicRoughness.png"
+		}
+	],
+	"materials": [
+		{
+			"name": "MI_Lowpoly_Male_001",
+			"pbrMetallicRoughness":
+			{
+				"baseColorTexture":
+				{
+					"index": 0
+				},
+				"metallicRoughnessTexture":
+				{
+					"index": 1
+				}
+			}
+		}
+	],
+	"meshes": [
+		{
+			"name": "SM_MERGED_SK_Lowpoly_Male_001_pose_SK_Lowpoly_Male_Weapons_001_B_41",
+			"primitives": [
+				{
+					"attributes":
+					{
+						"POSITION": 1,
+						"NORMAL": 2,
+						"TANGENT": 3,
+						"TEXCOORD_0": 4,
+						"TEXCOORD_1": 5,
+						"TEXCOORD_2": 6
+					},
+					"indices": 0,
+					"material": 0
+				}
+			]
+		}
+	],
+	"nodes": [
+		{
+			"name": "SM_MERGED_SK_Lowpoly_Male_001_pose_SK_Lowpoly_Male_Weapons_001_B_2_StaticMeshComponent0",
+			"mesh": 0
+		}
+	],
+	"samplers": [
+		{
+			"name": "MI_Lowpoly_Male_001_BaseColor",
+			"minFilter": 9987,
+			"magFilter": 9729
+		},
+		{
+			"name": "MI_Lowpoly_Male_001_MetallicRoughness",
+			"minFilter": 9987,
+			"magFilter": 9729
+		}
+	],
+	"scenes": [
+		{
+			"name": "Untitled_1",
+			"nodes": [ 0 ]
+		}
+	],
+	"textures": [
+		{
+			"name": "MI_Lowpoly_Male_001_BaseColor",
+			"sampler": 0,
+			"source": 0
+		},
+		{
+			"name": "MI_Lowpoly_Male_001_MetallicRoughness",
+			"sampler": 1,
+			"source": 1
+		}
+	]
+}

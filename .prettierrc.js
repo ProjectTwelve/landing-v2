@@ -3,7 +3,7 @@ module.exports = {
   // max 128 characters per line
   printWidth: 128,
   // use 2 spaces for indentation
-  tabWidth: 2,
+  tabWidth: 4,
   // use spaces instead of indentations
   useTabs: false,
   // semicolon at the end of the line
