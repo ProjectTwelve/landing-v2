@@ -266,7 +266,7 @@ export class AvatarGLItemBaseWithParticle extends AvatarGLItemBase {
                 this.trianglesGroup.visible = true;
                 // 灯光处理
                 this.scene.remove(this.ambientLight)
-                this.ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+                this.ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
                 this.scene.add(this.ambientLight);
                 this.effectComposer.removePass(this.unrealBloomPass);
                 this.unrealBloomPass.strength = 2.4;
