@@ -6,7 +6,7 @@ import { Poster } from '../poster/Poster';
 import { About } from '../about/About';
 import { Loading } from '../loading/Loading';
 import { Wall } from '../wall/Wall';
-import { GAevent } from '../../utils';
+import { Social } from '../social/Social';
 
 export enum PageType {
     Loading = 'loading',
@@ -16,6 +16,7 @@ export enum PageType {
     Poster = 'poster',
     About = 'about',
     Wall = 'wall',
+    Social = 'social',
 }
 
 export const PageBadges = [
@@ -25,6 +26,7 @@ export const PageBadges = [
     PageType.Poster,
     PageType.About,
     PageType.Wall,
+    PageType.Social,
 ];
 
 export const CONTENT_PAGES = [
@@ -71,75 +73,24 @@ export const CONTENT_PAGES = [
         dropdown: false,
     },
     {
-        type: null,
-        NavText: (
-            <div className='nav-dropdown-wrap'>
-                Social
-                <div className='nav-dropdown nav-dropdown--community'>
-                    <a
-                        href='https://twitter.com/_p12_'
-                        target='_blank'
-                        className='nav-dropdown__item nav-dropdown__item--twitter'
-                        rel='noreferrer'
-                        onClick = {() => GAevent('event', 'Soc-twi')}
-                    >
-                        <i></i>
-                        Twitter
-                    </a>
-                    <a
-                        href='https://discord.com/invite/EMrbsZPbxs'
-                        target='_blank'
-                        className='nav-dropdown__item nav-dropdown__item--discord'
-                        rel='noreferrer'
-                        onClick = {() => GAevent('event','Soc-discord')}
-                    >
-                        <i></i>
-                        Discord
-                    </a>
-                    <a
-                        href='https://mirror.xyz/p12.eth'
-                        target='_blank'
-                        className='nav-dropdown__item nav-dropdown__item--mirror'
-                        rel='noreferrer'
-                        onClick = {() => GAevent('event','Soc-tele')}
-                    >
-                        <i></i>
-                        Mirror
-                    </a>
-                </div>
-            </div>
-        ),
-        Content: null,
-        dropdown: true,
+        type: PageType.Social,
+        NavText: <>Social</>,
+        Content: <Social />,
+        dropdown: false,
     },
     {
         type: null,
         NavText: (
-            <div className='nav-dropdown-wrap'>
+            <div className="nav-dropdown-wrap">
                 Link Tree
-                <div className='nav-dropdown nav-dropdown--tree'>
-                    <a
-                        href='https://airdrop.p12.games'
-                        target='_blank'
-                        className='nav-dropdown__item'
-                        rel='noreferrer'
-                    >
+                <div className="nav-dropdown nav-dropdown--tree">
+                    <a href="https://airdrop.p12.games" target="_blank" className="nav-dropdown__item" rel="noreferrer">
                         Airdrop
                     </a>
-                    <a
-                        href='https://galaxy.eco/P12/'
-                        target='_blank'
-                        className='nav-dropdown__item'
-                        rel='noreferrer'
-                    >
+                    <a href="https://galaxy.eco/P12/" target="_blank" className="nav-dropdown__item" rel="noreferrer">
                         Badge
                     </a>
-                    <a
-                        href='https://p12.dev/whitepaper'
-                        target='_blank'
-                        className='nav-dropdown__item'
-                        rel='noreferrer'
-                    >
+                    <a href="https://p12.dev/whitepaper" target="_blank" className="nav-dropdown__item" rel="noreferrer">
                         Whitepaper
                     </a>
                     {/* <a
@@ -150,12 +101,7 @@ export const CONTENT_PAGES = [
                     >
                         Audit Reports
                     </a> */}
-                    <a
-                        href='mailto:hi@p12.dev'
-                        target='_blank'
-                        className='nav-dropdown__item'
-                        rel='noreferrer'
-                    >
+                    <a href="mailto:hi@p12.dev" target="_blank" className="nav-dropdown__item" rel="noreferrer">
                         Say Hi
                     </a>
                 </div>

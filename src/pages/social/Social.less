@@ -1,0 +1,38 @@
+@import '../../styles/variables.less';
+
+.social {
+  width: 100vw;
+  height: 100%;
+  overflow: hidden;
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &__wrapper {
+    width: 80%;
+    max-width:  50rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  &__title {
+    .f-font-tt;
+    color: #fff;
+    font-size: 28px;
+    line-height: 36px;
+    opacity: 0.8;
+  }
+  &__title-sub {
+    font-size: 18px;
+    color: #A5A6AB;
+  }
+  &__item-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 2.5rem;
+  }
+}

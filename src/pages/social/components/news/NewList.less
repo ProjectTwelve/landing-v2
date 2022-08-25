@@ -1,0 +1,95 @@
+@import '../../../../styles/variables.less';
+
+.social-news {
+    display: flex;
+    gap: 1.875rem;
+    margin: 0 -60px;
+    &-list {
+        width: 100%;
+        display: flex;
+        gap: 1.25rem;
+        overflow-x: scroll;
+        flex-grow: 1;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+    .social-next {
+        cursor: pointer;
+        align-self: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.1875rem;
+        height: 1.875rem;
+        background-color: rgba(255, 255, 255, 0.2);
+        .social-next-icon {
+            display: block;
+            height: 0.625rem;
+            width: 100%;
+            .bg('social/arrow-next.svg');
+            background-position: 50% 50%;
+        }
+        border: 1px solid #959799;
+        border-radius: 50%;
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+    }
+    .social-pre {
+        .social-next();
+        transform: rotate(180deg);
+    }
+}
+.social-new {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    min-width: 18rem;
+    // max-width: 25rem;
+    height: 100%;
+    &__cover {
+        width: 100%;
+        background: rgba(146, 139, 139, 0.2);
+        backdrop-filter: blur(15px);
+        text-align: center;
+        overflow: hidden;
+        img {
+            max-height: 11rem;
+            object-fit: cover;
+        }
+    }
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1.25rem 2.5rem;
+        background: rgba(41, 41, 41, 0.2);
+        backdrop-filter: blur(15px);
+        &-title {
+            color: white;
+            font-size: 1.125rem;
+            line-height: 1.25rem;
+        }
+        &-subtitle {
+            font-size: 0.875rem;
+            line-height: 1rem;
+            color: #a5a6ab;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px #d9d9d933 solid;
+        }
+        &-desc {
+            font-size: 0.875rem;
+            max-height: 3rem;
+            line-height: 1rem;
+            color: #a5a6ab;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+    }
+}
