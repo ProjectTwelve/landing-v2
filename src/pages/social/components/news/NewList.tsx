@@ -1,15 +1,16 @@
-import { NewInfo } from '../../../../api/news/news.type';
+import { NewInfoType } from '../../../../api/news/news.type';
 import { useFetchNewList, useNewDateFormat } from '../../../../hooks/news';
 import './NewList.less';
 
 type NewListItemProps = {
-    data: NewInfo;
+    onClick: (newInfo: NewInfoType) => void;
+    data: NewInfoType;
 };
-const NewListItem = ({ data }: NewListItemProps) => {
+const NewListItem = ({ data, onClick }: NewListItemProps) => {
     const { title, imageUrl1, createTime, text } = data;
     const newDate = useNewDateFormat(createTime);
     return (
-        <div className="social-new">
+        <div className="social-new" onClick={() => onClick(data)}>
             <div className="social-new__cover">
                 <img src={imageUrl1} alt="cover" />
             </div>
@@ -21,7 +22,10 @@ const NewListItem = ({ data }: NewListItemProps) => {
         </div>
     );
 };
-export const NewList = () => {
+type NewListProps = {
+    onItemClick: (newInfo: NewInfoType) => void;
+};
+export const NewList = ({ onItemClick }: NewListProps) => {
     const { data: newList, isLoading } = useFetchNewList();
     return (
         <>
@@ -44,10 +48,11 @@ export const NewList = () => {
                 {isLoading && <div>Loading...</div>}
                 {
                     <div className="social-news-list">
-                        {newList?.length ? newList.map((item) => <NewListItem data={item} key={item.newsCode} />) : null}
+                        {newList?.length
+                            ? newList.map((item) => <NewListItem onClick={onItemClick} data={item} key={item.newsCode} />)
+                            : null}
                     </div>
                 }
-
                 <div
                     className="social-next"
                     onClick={() => {

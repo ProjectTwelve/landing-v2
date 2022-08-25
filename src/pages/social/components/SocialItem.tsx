@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import './SocialItem.less';
+
 type CollabSocialsProps = {
     href?: string; // url
     icon: string | JSX.Element;

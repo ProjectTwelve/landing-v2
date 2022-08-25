@@ -1,5 +1,5 @@
 export type NewsStatus = 'NEW' | 'PUBLISH' | 'OFFLINE';
-export type NewInfo = {
+export type NewInfoType = {
     id: number;
     status: NewsStatus;
     text: string;

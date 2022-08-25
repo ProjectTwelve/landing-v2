@@ -22,16 +22,3 @@ export type Res<T> = {
  */
 export const post = <T>(url: string, data?: Record<string, any>) =>
     instance.post<Res<T>>(url, data).then((res) => res.data.data);
-
-/**
- * get 请求
- * @param {string} url - 请求短url
- * @param {Record<string, any>} params 请求数据
- * @returns {Promise<T>} 返回 T 类型数据
- */
-export const get = <T>(url: string, params?: Record<string, any>) =>
-    instance
-        .get<Res<T>>(url, {
-            params,
-        })
-        .then((res) => res.data.data);
