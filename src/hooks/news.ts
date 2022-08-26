@@ -9,8 +9,9 @@ export const useFetchNewList = () => {
     });
 };
 
-export const useNewDateFormat = (unixTime: number) => {
+export const useNewDateFormat = (unixTime?: number) => {
     return useMemo(() => {
+        if (!unixTime) return null;
         return dayjs(unixTime).format('MMM DD, YYYY');
     }, [unixTime]);
 };

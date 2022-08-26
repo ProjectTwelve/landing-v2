@@ -1,7 +1,9 @@
 export type NewsStatus = 'NEW' | 'PUBLISH' | 'OFFLINE';
+export type NewsType = 'Collab' | 'Announcement' | 'Game';
 export type NewInfoType = {
     id: number;
     status: NewsStatus;
+    type: NewsType;
     text: string;
     newsCode: string;
     title: string;

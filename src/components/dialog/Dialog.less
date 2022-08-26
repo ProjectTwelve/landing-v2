@@ -1,0 +1,88 @@
+@import '../../styles/variables.less';
+
+.dialog {
+    min-width: 18rem;
+    z-index: 300;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: scale(0);
+    transform-origin: center;
+    transition: none;
+    width: 60%;
+    &__close {
+        cursor: pointer;
+        height: 1rem;
+        width: 1rem;
+        .bg('social/close.svg');
+        background-position: 50% 50%;
+        position: absolute;
+        top: 1.125rem;
+        right: 1.5rem;
+        z-index: 300;
+    }
+    &__cover {
+        background: rgba(196, 196, 196, 0.1);
+        backdrop-filter: blur(15px);
+        max-height: 11.75rem;
+        text-align: center;
+        img {
+            max-width: 100%;
+            max-height: 10rem;
+            object-fit: cover;
+        }
+    }
+    &__container {
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem 3.75rem;
+        gap: .75rem;
+        background: rgba(15, 15, 15, 0.9);
+        backdrop-filter: blur(15px);
+        max-height: 50vh;
+        overflow: auto;
+    }
+    &__title {
+        color: white;
+        font-size: 18px;
+        line-height: 20px;
+    }
+    &__subtitle {
+        color: #A5A6AB;
+        font-size: 14px;
+        line-height: 16px;
+    }
+    &__content {
+        color: #A5A6AB;
+        font-size: 14px;
+        line-height: 16px;
+        a {
+            color: #768DFF;
+            &:hover {
+                color: #6780fc;
+            }
+        }
+        p {
+            margin-bottom: .75rem;
+        }
+    }
+}
+.mask {
+    width: 100vw;
+    height: 100vh;
+    background: rgba(146, 139, 139, 0.02);
+    opacity: 0.9;
+    backdrop-filter: blur(15px);
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+}
+.dialog.show {
+    transition: .3s;
+    transform: scale(1) translate(-50%, -50%);
+}
+.mask.show {
+    display: block;
+}

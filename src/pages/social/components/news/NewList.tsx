@@ -1,4 +1,5 @@
 import { NewInfoType } from '../../../../api/news/news.type';
+import { P12_NEW_TYPE_LABEL } from '../../../../constants';
 import { useFetchNewList, useNewDateFormat } from '../../../../hooks/news';
 import './NewList.less';
 
@@ -6,18 +7,30 @@ type NewListItemProps = {
     onClick: (newInfo: NewInfoType) => void;
     data: NewInfoType;
 };
+export const NewLabel = ({ type }) => {
+    return (
+        <div className="social-new__cover-label">
+            <div className="social-new__cover-label-text" style={{ color: P12_NEW_TYPE_LABEL[type] }}>
+                {type}
+            </div>
+        </div>
+    );
+};
 const NewListItem = ({ data, onClick }: NewListItemProps) => {
-    const { title, imageUrl1, createTime, text } = data;
+    const { title, imageUrl1, createTime, text, type } = data;
     const newDate = useNewDateFormat(createTime);
     return (
         <div className="social-new" onClick={() => onClick(data)}>
             <div className="social-new__cover">
+                <NewLabel type={type} />
                 <img src={imageUrl1} alt="cover" />
             </div>
             <div className="social-new__content">
                 <div className="social-new__content-title">{title}</div>
                 <div className="social-new__content-subtitle">{newDate}</div>
-                <div className="social-new__content-desc">{text}</div>
+                <div className="social-new__content-desc">
+                    <div dangerouslySetInnerHTML={{ __html: text }}></div>
+                </div>
             </div>
         </div>
     );
@@ -37,7 +50,7 @@ export const NewList = ({ onItemClick }: NewListProps) => {
                         if (!list) return;
                         console.log('list scrollLeft', list.scrollLeft);
                         list.scroll({
-                            left: list.scrollLeft - 300,
+                            left: list.scrollLeft - 400,
                             behavior: 'smooth',
                         });
                         console.log('list scrollLeft', list.scrollLeft);
@@ -60,7 +73,7 @@ export const NewList = ({ onItemClick }: NewListProps) => {
                         if (!list) return;
                         console.log('list scrollLeft', list.scrollLeft);
                         list.scroll({
-                            left: list.scrollLeft + 300,
+                            left: list.scrollLeft + 400,
                             behavior: 'smooth',
                         });
                         console.log('list scrollLeft', list.scrollLeft);

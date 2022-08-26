@@ -7,7 +7,7 @@ import './Social.less';
 import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 import { SocialItem } from './components/SocialItem';
 import { NewList } from './components/news/NewList';
-import { NewInfo } from './components/news/NewInfo';
+import NewInfoDialog from './components/news/NewInfoDialog';
 import { NewInfoType } from '../../api/news/news.type';
 export const Social: React.FC = () => {
     const [newModalOpen, setOpen] = useState(false);
@@ -20,6 +20,11 @@ export const Social: React.FC = () => {
         },
         [newModalOpen, setOpen, setNewInfo],
     );
+
+    const closeNewInfoModal = useCallback(() => {
+        setNewInfo(null);
+        setOpen(false);
+    }, [newModalOpen, setOpen, setNewInfo]);
 
     usePageVisible(PageType.Social, () => {
         return {
@@ -88,7 +93,7 @@ export const Social: React.FC = () => {
                 </div>
                 <div className="social__title-sub">NEWS</div>
                 <div className="social__title">Wonderful occurs</div>
-                {newModalOpen && newInfo && <NewInfo newInfo={newInfo} />}
+                <NewInfoDialog newInfo={newInfo} open={newModalOpen} onClose={closeNewInfoModal} />
                 <NewList onItemClick={openNewInfoModal} />
             </div>
         </div>
