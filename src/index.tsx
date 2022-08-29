@@ -4,7 +4,19 @@ import './styles/reset.less';
 import './styles/index.less';
 import './utils';
 import { addResizeHandle, IS_MOBILE, resizeBodyRotation } from './utils';
+import * as Sentry from '@sentry/react';
+import { BrowserTracing } from '@sentry/tracing';
 import { App } from './pages/app/App';
+import { SENTRY_DSN, SENTRY_TRACES_SAMPLE_RATE } from './constants';
+
+Sentry.init({
+    dsn: SENTRY_DSN,
+    integrations: [new BrowserTracing()],
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: SENTRY_TRACES_SAMPLE_RATE,
+});
 
 // 初始化的相关逻辑
 if (IS_MOBILE) {
