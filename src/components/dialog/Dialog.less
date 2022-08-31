@@ -2,6 +2,7 @@
 
 .dialog {
     min-width: 18rem;
+    max-height: 80vh;
     z-index: 300;
     position: fixed;
     top: 50%;
@@ -12,67 +13,80 @@
     width: 60%;
     &__close {
         cursor: pointer;
-        height: 1rem;
-        width: 1rem;
-        .bg('social/close.svg');
+        .bgFull('social/close.svg');
+        height: 37px;
+        width: 37px;
+        background-size: 100% 100%;
         background-position: 50% 50%;
         position: absolute;
-        top: 1.125rem;
-        right: 1.5rem;
+        top: 0;
+        right: 0;
         z-index: 300;
-    }
-    &__cover {
-        background: rgba(196, 196, 196, 0.1);
-        backdrop-filter: blur(15px);
-        max-height: 11.75rem;
-        text-align: center;
-        img {
-            max-width: 100%;
-            max-height: 10rem;
-            object-fit: cover;
-        }
     }
     &__container {
         display: flex;
         flex-direction: column;
-        padding: 1.5rem 3.75rem;
-        gap: .75rem;
-        background: rgba(15, 15, 15, 0.9);
-        backdrop-filter: blur(15px);
-        max-height: 50vh;
+        padding: 16px 0;
+        gap: 0.75rem;
         overflow: auto;
+        border-top: 1px solid #ffffff33;
+        margin-top: 20px;
+        .dialog__header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            &-left {
+                img {
+                    width: 3.75rem;
+                    height: 3.75rem;
+                    border-radius: 50%;
+                    border: 2px solid rgba(255, 255, 255, 0.15);
+                }
+            }
+            &-right {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
     }
     &__title {
         color: white;
-        font-size: 18px;
-        line-height: 20px;
+        font-family: 'PingFang SC';
+        font-weight: 600;
+        font-size: 28px;
+        line-height: 28px;
     }
     &__subtitle {
-        color: #A5A6AB;
-        font-size: 14px;
-        line-height: 16px;
+        font-family: 'DIN-Regular';
+        font-weight: 5;
+        font-size: 20px;
+        line-height: 20px;
+        color: #a5a6ab;
     }
     &__content {
-        color: #A5A6AB;
-        font-size: 14px;
-        line-height: 16px;
+        font-family: 'PingFang SC';
+        font-size: 20px;
+        line-height: 28px;
+        color: #ffffff;
+        height: 70vh;
+        overflow: scroll;
+        .hiddenScrollBar();
         a {
-            color: #768DFF;
+            color: #ffffff;
             &:hover {
-                color: #6780fc;
+                color: #768dff;
             }
         }
         p {
-            margin-bottom: .75rem;
+            margin-bottom: 0.75rem;
         }
     }
 }
 .mask {
     width: 100vw;
     height: 100vh;
-    background: rgba(146, 139, 139, 0.02);
-    opacity: 0.9;
-    backdrop-filter: blur(15px);
+    background: rgba(0, 0, 0, 0.8);
     display: none;
     position: fixed;
     top: 0;
@@ -80,7 +94,7 @@
     z-index: 200;
 }
 .dialog.show {
-    transition: .3s;
+    transition: 0.2s;
     transform: scale(1) translate(-50%, -50%);
 }
 .mask.show {

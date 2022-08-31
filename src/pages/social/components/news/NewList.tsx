@@ -9,10 +9,15 @@ type NewListItemProps = {
 };
 export const NewLabel = ({ type }) => {
     return (
-        <div className="social-new__cover-label">
-            <div className="social-new__cover-label-text" style={{ color: P12_NEW_TYPE_LABEL[type] }}>
-                {type}
-            </div>
+        <div
+            className="social-new__label"
+            style={{
+                color: P12_NEW_TYPE_LABEL[type],
+                backgroundColor: `${P12_NEW_TYPE_LABEL[type]}33`,
+                borderColor: P12_NEW_TYPE_LABEL[type],
+            }}
+        >
+            {type}
         </div>
     );
 };
@@ -22,15 +27,15 @@ const NewListItem = ({ data, onClick }: NewListItemProps) => {
     return (
         <div className="social-new" onClick={() => onClick(data)}>
             <div className="social-new__cover">
-                <NewLabel type={type} />
                 <img src={imageUrl1} alt="cover" />
             </div>
             <div className="social-new__content">
+                <NewLabel type={type} />
                 <div className="social-new__content-title">{title}</div>
-                <div className="social-new__content-subtitle">{newDate}</div>
                 <div className="social-new__content-desc">
                     <div dangerouslySetInnerHTML={{ __html: text }}></div>
                 </div>
+                <div className="social-new__content-subtitle">{newDate}</div>
             </div>
         </div>
     );
@@ -43,43 +48,11 @@ export const NewList = ({ onItemClick }: NewListProps) => {
     return (
         <>
             <div className="social-news">
-                <div
-                    className="social-pre"
-                    onClick={() => {
-                        const list = document?.querySelector('.social-news-list');
-                        if (!list) return;
-                        console.log('list scrollLeft', list.scrollLeft);
-                        list.scroll({
-                            left: list.scrollLeft - 400,
-                            behavior: 'smooth',
-                        });
-                        console.log('list scrollLeft', list.scrollLeft);
-                    }}
-                >
-                    <i className="social-next-icon"></i>
-                </div>
                 {isLoading && <div>Loading...</div>}
-                {
-                    <div className="social-news-list">
-                        {newList?.length
-                            ? newList.map((item) => <NewListItem onClick={onItemClick} data={item} key={item.newsCode} />)
-                            : null}
-                    </div>
-                }
-                <div
-                    className="social-next"
-                    onClick={() => {
-                        const list = document?.querySelector('.social-news-list');
-                        if (!list) return;
-                        console.log('list scrollLeft', list.scrollLeft);
-                        list.scroll({
-                            left: list.scrollLeft + 400,
-                            behavior: 'smooth',
-                        });
-                        console.log('list scrollLeft', list.scrollLeft);
-                    }}
-                >
-                    <i className="social-next-icon"></i>
+                <div className="social-news-list">
+                    {newList?.length
+                        ? newList.map((item) => <NewListItem onClick={onItemClick} data={item} key={item.newsCode} />)
+                        : null}
                 </div>
             </div>
         </>

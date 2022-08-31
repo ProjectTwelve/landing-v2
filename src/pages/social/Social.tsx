@@ -64,37 +64,47 @@ export const Social: React.FC = () => {
 
     return (
         <div className="social">
-            {/* <ButterflyGL page={PageType.Social} /> */}
-            <div className="social__wrapper">
-                <div className="social__title-sub">P12 COMMUNITY</div>
-                <div className="social__title">For gamers and developers</div>
+            <ButterflyGL page={PageType.Social} />
+            <div
+                className="social__wrapper"
+                onWheel={(e) => {
+                    console.log('social onWheel');
+                    e.stopPropagation();
+                    e.nativeEvent.stopImmediatePropagation();
+                }}
+            >
+                <div className="social__title community"></div>
+                <div className="social__title-sub">For gamers and developers</div>
                 <div className="social__item-container">
                     <SocialItem
+                        className="discord"
                         onClick={() => GAevent('event', 'Soc-discord')}
                         href="https://discord.com/invite/EMrbsZPbxs"
-                        icon={require('../../assets/app/icon-twitter@2x.png')}
+                        icon={require('../../assets/social/discord.png')}
                         title="Discord"
                         desc="Ask questions and engage."
                     />
                     <SocialItem
+                        className="twitter"
                         onClick={() => GAevent('event', 'Soc-twi')}
                         href="https://twitter.com/_p12_"
-                        icon={require('../../assets/app/icon-discord@2x.png')}
+                        icon={require('../../assets/social/twitter.png')}
                         title="Twitter"
                         desc="Follow the latest news."
                     />
                     <SocialItem
+                        className="mirror"
                         onClick={() => GAevent('event', 'Soc-tele')}
                         href="https://mirror.xyz/p12.eth"
-                        icon={require('../../assets/app/icon-mirror@2x.png')}
+                        icon={require('../../assets/social/mirror.png')}
                         title="Mirror"
                         desc="Balabbbaala."
                     />
                 </div>
-                <div className="social__title-sub">NEWS</div>
-                <div className="social__title">Wonderful occurs</div>
-                <NewInfoDialog newInfo={newInfo} open={newModalOpen} onClose={closeNewInfoModal} />
+                <div className="social__title news"></div>
+                <div className="social__title-sub">Wonderful occurs</div>
                 <NewList onItemClick={openNewInfoModal} />
+                <NewInfoDialog newInfo={newInfo} open={newModalOpen} onClose={closeNewInfoModal} />
             </div>
         </div>
     );

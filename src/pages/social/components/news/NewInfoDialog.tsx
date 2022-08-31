@@ -3,7 +3,6 @@ import Dialog from '../../../../components/dialog/Dialog';
 import { P12_AUTHOR_AVATOR } from '../../../../constants';
 import { useNewDateFormat } from '../../../../hooks/news';
 import './NewInfoDialog.less';
-import { NewLabel } from './NewList';
 
 type NewInfoDialogProps = {
     newInfo: NewInfoType | null;
@@ -17,15 +16,10 @@ const NewInfoDialog = ({ newInfo, open, onClose }: NewInfoDialogProps) => {
             open={open}
             onClose={onClose}
             className="new-dialog"
-            cover={newInfo?.imageUrl1}
-            coverLabel={<NewLabel type={newInfo?.type} />}
+            extraHeader={<div className="new-dialog__title"></div>}
+            author={<img src={P12_AUTHOR_AVATOR[newInfo?.author || 'dongbo']} alt={newInfo?.author} />}
             title={newInfo?.title}
-            subtitle={
-                <div className="new-dialog__subtitle">
-                    <img src={P12_AUTHOR_AVATOR[newInfo?.author || 'dongbo']} alt={newInfo?.author} />
-                    {newDate}
-                </div>
-            }
+            subtitle={newDate}
             content={newInfo?.text && <div dangerouslySetInnerHTML={{ __html: newInfo?.text }}></div>}
         ></Dialog>
     );

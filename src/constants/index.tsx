@@ -5,7 +5,7 @@ export const P12_AUTHOR_AVATOR = {
 };
 
 export enum P12_NEW_TYPE_LABEL {
-    Collab = '#590102',
-    Announcement = '#185901',
-    Game = '#F11C82',
+    Collab = '#43BBFF',
+    Announcement = '#1EDB8C',
+    Game = '#C859FF',
 }
