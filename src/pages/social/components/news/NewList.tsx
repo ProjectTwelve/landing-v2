@@ -46,15 +46,43 @@ type NewListProps = {
 export const NewList = ({ onItemClick }: NewListProps) => {
     const { data: newList, isLoading } = useFetchNewList();
     return (
-        <>
-            <div className="social-news">
-                {isLoading && <div>Loading...</div>}
-                <div className="social-news-list">
-                    {newList?.length
-                        ? newList.map((item) => <NewListItem onClick={onItemClick} data={item} key={item.newsCode} />)
-                        : null}
-                </div>
+        <div className="social-news">
+            <div
+                className="social-pre"
+                onClick={() => {
+                    const list = document?.querySelector('.social-news-list');
+                    if (!list) return;
+                    console.log('list scrollLeft', list.scrollLeft);
+                    list.scroll({
+                        left: list.scrollLeft - 402,
+                        behavior: 'smooth',
+                    });
+                    console.log('list scrollLeft', list.scrollLeft);
+                }}
+            >
+                <i className="social-next-icon"></i>
             </div>
-        </>
+            {isLoading && <div>Loading...</div>}
+            <div className="social-news-list">
+                {newList?.length
+                    ? newList.map((item) => <NewListItem onClick={onItemClick} data={item} key={item.newsCode} />)
+                    : null}
+            </div>
+            <div
+                className="social-next"
+                onClick={() => {
+                    const list = document?.querySelector('.social-news-list');
+                    if (!list) return;
+                    console.log('list scrollLeft', list.scrollLeft);
+                    list.scroll({
+                        left: list.scrollLeft + 402,
+                        behavior: 'smooth',
+                    });
+                    console.log('list scrollLeft', list.scrollLeft);
+                }}
+            >
+                <i className="social-next-icon"></i>
+            </div>
+        </div>
     );
 };
