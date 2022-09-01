@@ -74,7 +74,7 @@ export const Social: React.FC = () => {
                 }}
             >
                 <div className="social__title community"></div>
-                <div className="social__title-sub">For gamers and developers</div>
+                <div className="social__title-sub">Empowering metaworlds</div>
                 <div className="social__item-container">
                     <SocialItem
                         className="discord"
@@ -82,7 +82,7 @@ export const Social: React.FC = () => {
                         href="https://discord.com/invite/EMrbsZPbxs"
                         icon={require('../../assets/social/discord.png')}
                         title="Discord"
-                        desc="Ask questions and engage."
+                        desc="Engage and participate in the community."
                     />
                     <SocialItem
                         className="twitter"
@@ -90,7 +90,7 @@ export const Social: React.FC = () => {
                         href="https://twitter.com/_p12_"
                         icon={require('../../assets/social/twitter.png')}
                         title="Twitter"
-                        desc="Follow the latest news."
+                        desc="Stay tuned for newest event."
                     />
                     <SocialItem
                         className="mirror"
@@ -98,11 +98,11 @@ export const Social: React.FC = () => {
                         href="https://mirror.xyz/p12.eth"
                         icon={require('../../assets/social/mirror.png')}
                         title="Mirror"
-                        desc="Balabbbaala."
+                        desc="Release notes and major updates."
                     />
                 </div>
                 <div className="social__title news"></div>
-                <div className="social__title-sub">Wonderful occurs</div>
+                <div className="social__title-sub">Find out what’s happening in P12 Space</div>
                 <NewList onItemClick={openNewInfoModal} />
                 <NewInfoDialog newInfo={newInfo} open={newModalOpen} onClose={closeNewInfoModal} />
             </div>
