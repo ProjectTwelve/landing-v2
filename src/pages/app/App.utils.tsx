@@ -15,6 +15,7 @@ import { isFunction, mapValues, mean, pick } from 'lodash-es';
 interface AppContextValue {
     visiblePage: PageType;
     setVisiblePage: (t: PageType) => void;
+    setLockScroll: (t: boolean) => void;
 }
 export const AppContext = createContext<AppContextValue | null>(null);
 

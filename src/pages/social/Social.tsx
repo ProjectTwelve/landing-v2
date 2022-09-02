@@ -9,9 +9,13 @@ import { SocialItem } from './components/SocialItem';
 import { NewList } from './components/news/NewList';
 import NewInfoDialog from './components/news/NewInfoDialog';
 import { NewInfoType } from '../../api/news/news.type';
+import { usePageLockScroll } from '../../hooks/usePageLockScroll';
+
 export const Social: React.FC = () => {
     const [newModalOpen, setOpen] = useState(false);
     const [newInfo, setNewInfo] = useState<NewInfoType | null>(null);
+
+    usePageLockScroll(newModalOpen); // 弹窗时阻止滚动
 
     const openNewInfoModal = useCallback(
         (newInfo: NewInfoType) => {

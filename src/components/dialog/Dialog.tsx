@@ -18,7 +18,12 @@ type DialogProps = {
 const Dialog = ({ open, onClose, extraHeader, author, title, subtitle, content, className, children }: DialogProps) => {
     return createPortal(
         <div>
-            <div className={classNames('dialog', { show: open }, className)}>
+            <div className={classNames('dialog', { show: open }, className) } onWheel={
+                (e) => {
+                    e.stopPropagation();
+                    e.nativeEvent.stopImmediatePropagation();
+                }
+            }>
                 <div className="dialog__close" onClick={onClose}></div>
                 {extraHeader}
                 {!children && (
