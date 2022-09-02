@@ -68,9 +68,11 @@ export const Social: React.FC = () => {
             <div
                 className="social__wrapper"
                 onWheel={(e) => {
-                    console.log('social onWheel');
-                    e.stopPropagation();
-                    e.nativeEvent.stopImmediatePropagation();
+                    const social = e.currentTarget;
+                    if (social?.scrollTop !== 0) {
+                        e.stopPropagation();
+                        e.nativeEvent.stopImmediatePropagation();
+                    }
                 }}
             >
                 <div className="social__title community"></div>

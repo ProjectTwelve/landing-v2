@@ -52,12 +52,10 @@ export const NewList = ({ onItemClick }: NewListProps) => {
                 onClick={() => {
                     const list = document?.querySelector('.social-news-list');
                     if (!list) return;
-                    console.log('list scrollLeft', list.scrollLeft);
                     list.scroll({
                         left: list.scrollLeft - 402,
                         behavior: 'smooth',
                     });
-                    console.log('list scrollLeft', list.scrollLeft);
                 }}
             >
                 <i className="social-next-icon"></i>
@@ -73,12 +71,10 @@ export const NewList = ({ onItemClick }: NewListProps) => {
                 onClick={() => {
                     const list = document?.querySelector('.social-news-list');
                     if (!list) return;
-                    console.log('list scrollLeft', list.scrollLeft);
                     list.scroll({
                         left: list.scrollLeft + 402,
                         behavior: 'smooth',
                     });
-                    console.log('list scrollLeft', list.scrollLeft);
                 }}
             >
                 <i className="social-next-icon"></i>
