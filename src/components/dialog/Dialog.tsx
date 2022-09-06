@@ -18,12 +18,13 @@ type DialogProps = {
 const Dialog = ({ open, onClose, extraHeader, author, title, subtitle, content, className, children }: DialogProps) => {
     return createPortal(
         <div>
-            <div className={classNames('dialog', { show: open }, className) } onWheel={
-                (e) => {
+            <div
+                className={classNames('dialog', { show: open }, className)}
+                onWheel={(e) => {
                     e.stopPropagation();
                     e.nativeEvent.stopImmediatePropagation();
-                }
-            }>
+                }}
+            >
                 <div className="dialog__close" onClick={onClose}></div>
                 {extraHeader}
                 {!children && (
@@ -31,7 +32,6 @@ const Dialog = ({ open, onClose, extraHeader, author, title, subtitle, content, 
                         className="dialog__container"
                         onWheel={(e) => {
                             const targetDom: Element = e.target as Element;
-                            e.preventDefault();
                             targetDom.scrollTop = targetDom.scrollTop + e.deltaY;
                         }}
                     >
