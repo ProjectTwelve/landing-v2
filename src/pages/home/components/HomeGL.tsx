@@ -403,7 +403,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
 
     return (
         <div className='home-gl' ref={containerRef}>
-            <div className='home-extra'>
+            <div data-nosnippet={true} className='home-extra'>
                 {HOME_GL_ACTIVE_DATA.map((data, index) => {
                     return (
                         <div
