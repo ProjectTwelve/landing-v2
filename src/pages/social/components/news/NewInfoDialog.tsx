@@ -20,7 +20,9 @@ const NewInfoDialog = ({ newInfo, open, onClose }: NewInfoDialogProps) => {
             author={<img src={P12_AUTHOR_AVATOR[newInfo?.author || 'dongbo']} alt={newInfo?.author} />}
             title={newInfo?.title}
             subtitle={newDate}
-            content={newInfo?.text && <div dangerouslySetInnerHTML={{ __html: newInfo?.text }}></div>}
+            content={
+                newInfo?.text && <div className="new-dialog__reset" dangerouslySetInnerHTML={{ __html: newInfo?.text }}></div>
+            }
         ></Dialog>
     );
 };

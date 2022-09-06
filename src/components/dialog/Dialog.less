@@ -15,8 +15,8 @@
     &__close {
         cursor: pointer;
         .bgFull('social/close.svg');
-        height: 37px;
-        width: 37px;
+        height: 26px;
+        width: 26px;
         background-size: 100% 100%;
         background-position: 50% 50%;
         position: absolute;
@@ -27,19 +27,19 @@
     &__container {
         display: flex;
         flex-direction: column;
-        padding: 16px 0;
-        gap: 0.75rem;
+        padding: 12px 0;
+        gap: 1.25rem;
         overflow: auto;
         border-top: 1px solid #ffffff33;
-        margin-top: 20px;
+        margin-top: 16px;
         .dialog__header {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             &-left {
                 img {
-                    width: 3.75rem;
-                    height: 3.75rem;
+                    width: 2.625rem;
+                    height: 2.625rem;
                     border-radius: 50%;
                     border: 2px solid rgba(255, 255, 255, 0.15);
                 }
@@ -54,14 +54,14 @@
     &__title {
         color: white;
         font-weight: 600;
-        font-size: 28px;
-        line-height: 28px;
+        font-size: 18px;
+        line-height: 20px;
     }
     &__subtitle {
         font-family: 'DIN-Regular';
         font-weight: 5;
-        font-size: 20px;
-        line-height: 20px;
+        font-size: 14px;
+        line-height: 18px;
         color: #a5a6ab;
     }
     &__content {
@@ -71,15 +71,6 @@
         height: 70vh;
         overflow: scroll;
         .hiddenScrollBar();
-        a {
-            color: #ffffff;
-            &:hover {
-                color: #768dff;
-            }
-        }
-        p {
-            margin-bottom: 0.75rem;
-        }
     }
 }
 .mask {
