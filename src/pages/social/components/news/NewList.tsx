@@ -30,8 +30,10 @@ const NewListItem = ({ data, onClick }: NewListItemProps) => {
                 <img src={imageUrl1} alt="cover" />
             </div>
             <div className="social-new__content">
-                <NewLabel type={type} />
-                <div className="social-new__content-title">{title}</div>
+                <div className="social-new__content-header">
+                    <div className="social-new__content-header__title">{title}</div>
+                    <NewLabel type={type} />
+                </div>
                 <div className="social-new__content-desc">
                     <div dangerouslySetInnerHTML={{ __html: text }}></div>
                 </div>
