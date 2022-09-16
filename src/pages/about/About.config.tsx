@@ -135,17 +135,43 @@ export const LOCATION_INFO = [
     },
 ];
 
+export enum SocialType {
+    Email = 'email',
+    Phone = 'phone',
+    Location = 'location',
+}
+export type ContactInfoType = {
+    name: string;
+    desc: string;
+    socials: {
+        [socialtype in SocialType]: string;
+    };
+};
+export const CONTACT_INFO: ContactInfoType = {
+    name: 'Issac',
+    desc: 'point of contact',
+    socials: {
+        [SocialType.Email]: 'wanng@p12.dev',
+        [SocialType.Phone]: '+1(702)9023147',
+        [SocialType.Location]: 'Chino Hills, California',
+    },
+};
+
 export interface PartnerInfo {
     img: string;
     name: any;
     desc: any;
-    links: any
+    links: any;
 }
 
 export const ABOUT_PARTNERS: PartnerInfo[] = [
     {
         img: require('../../assets/about/partner-members/1.png'),
-        name: <>Boyang <span className='sep'>|</span> Founder</>,
+        name: (
+            <>
+                Boyang <span className="sep">|</span> Founder
+            </>
+        ),
         desc: (
             <>
                 Two times TI Crimson Witness;
@@ -156,22 +182,17 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: 'https://www.linkedin.com/in/wangboyang/',
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/14.png'),
         name: 'Lin',
-        desc: (
-            <>
-                Dota2 meme player,
-                'sword-exist-must-get' studio core member
-            </>
-        ),
+        desc: <>Dota2 meme player, 'sword-exist-must-get' studio core member</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: 'https://github.com/linchengzzz'
+            github: 'https://github.com/linchengzzz',
         },
     },
     {
@@ -187,7 +208,7 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
@@ -203,7 +224,7 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: 'https://github.com/Jerrywang959'
+            github: 'https://github.com/Jerrywang959',
         },
     },
     {
@@ -219,35 +240,27 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/18.png'),
         name: 'Dodo',
-        desc: (
-            <>
-                For small creatures such as we the vastness is bearable only through love.
-            </>
-        ),
+        desc: <>For small creatures such as we the vastness is bearable only through love.</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/HH.png'),
         name: 'HH',
-        desc: (
-            <>
-                Econ Research in P12; former quant developer, banker
-            </>
-        ),
+        desc: <>Econ Research in P12; former quant developer, banker</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
@@ -263,7 +276,7 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: 'https://github.com/zh19910202'
+            github: 'https://github.com/zh19910202',
         },
     },
     {
@@ -279,21 +292,17 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/Akira.png'),
         name: 'Akira',
-        desc: (
-            <>
-                ACGholic; Start from here, start from now
-            </>
-        ),
+        desc: <>ACGholic; Start from here, start from now</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
@@ -309,7 +318,7 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
@@ -325,49 +334,37 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/15.png'),
         name: 'Garfield',
-        desc: (
-            <>
-                To live is to recognize life
-            </>
-        ),
+        desc: <>To live is to recognize life</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/Sangwa Chosen.png'),
         name: 'Sangwa Chosen',
-        desc: (
-            <>
-                You know you were chosen once you were called 'CHOSEN'. So, why run away from it?
-            </>
-        ),
+        desc: <>You know you were chosen once you were called 'CHOSEN'. So, why run away from it?</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/7.png'),
         name: 'Yerim Choi',
-        desc: (
-            <>
-                Crazy Arcade was the last game I played, but believe me I love games
-            </>
-        ),
+        desc: <>Crazy Arcade was the last game I played, but believe me I love games</>,
         links: {
             linkedin: 'https://www.linkedin.com/in/yerim-choi-52ba02200/',
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
@@ -383,7 +380,7 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
@@ -399,21 +396,17 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: 'https://www.linkedin.com/in/kelsangdrolma/',
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/23.png'),
         name: 'Ruby',
-        desc: (
-            <>
-                Enjoy cooking in Zelda...
-            </>
-        ),
+        desc: <>Enjoy cooking in Zelda...</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
@@ -429,147 +422,107 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/Momo.png'),
         name: 'Momo',
-        desc: (
-            <>
-                My dream is to travel around the world
-            </>
-        ),
+        desc: <>My dream is to travel around the world</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/Vin.png'),
         name: 'Vin',
-        desc: (
-            <>
-                Firmly believe that a good story is the soul of the game
-            </>
-        ),
+        desc: <>Firmly believe that a good story is the soul of the game</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/21.png'),
         name: 'JJ Wilde',
-        desc: (
-            <>
-                My favorite yoga position is shavansana
-            </>
-        ),
+        desc: <>My favorite yoga position is shavansana</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/22.png'),
         name: 'Zelda Princess',
-        desc: (
-            <>
-                Has the same aesthetic as Shigeru Miyamoto
-            </>
-        ),
+        desc: <>Has the same aesthetic as Shigeru Miyamoto</>,
         links: {
             linkedin: 'https://www.linkedin.com/in/zanhui-yang-26490b84/',
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/William.png'),
         name: 'William',
-        desc: (
-            <>
-                Veteran fans of the Warring States period in Japan.
-            </>
-        ),
+        desc: <>Veteran fans of the Warring States period in Japan.</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/wanng.png'),
         name: 'wanng',
-        desc: (
-            <>
-                MMO Maniac; A random guy from the space
-            </>
-        ),
+        desc: <>MMO Maniac; A random guy from the space</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/Hanna.png'),
         name: 'Hanna',
-        desc: (
-            <>
-                Game visual Designer; Cat slave
-            </>
-        ),
+        desc: <>Game visual Designer; Cat slave</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/Charline.png'),
         name: 'Charline',
-        desc: (
-            <>
-                Love music and music games
-            </>
-        ),
+        desc: <>Love music and music games</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/Green.C.png'),
         name: 'Green.C',
-        desc: (
-            <>
-                Front-End  Engineer; Philosophy enthusiast;
-            </>
-        ),
+        desc: <>Front-End Engineer; Philosophy enthusiast;</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: 'https://github.com/ShallowGreen'
+            github: 'https://github.com/ShallowGreen',
         },
     },
     {
         img: require('../../assets/about/partner-members/Sixian.png'),
         name: 'Sixian',
-        desc: (
-            <>
-                Love Coding, ACG and Genshin! May enthusiasm last forever
-            </>
-        ),
+        desc: <>Love Coding, ACG and Genshin! May enthusiasm last forever</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: 'https://github.com/yusixian'
+            github: 'https://github.com/yusixian',
         },
     },
     {
@@ -585,7 +538,7 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: 'https://www.linkedin.com/in/maciejburno/',
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
@@ -601,35 +554,27 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/8.png'),
         name: 'Chasey',
-        desc: (
-            <>
-                Pray return to The Walking Sands
-            </>
-        ),
+        desc: <>Pray return to The Walking Sands</>,
         links: {
             linkedin: 'https://www.linkedin.com/in/yoko-y-94a99115b/',
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/20.png'),
         name: 'KK',
-        desc: (
-            <>
-                A fanatic antique collector with a dreamlike collection of Victorian parasols.
-            </>
-        ),
+        desc: <>A fanatic antique collector with a dreamlike collection of Victorian parasols.</>,
         links: {
             linkedin: null,
             twitter: 'https://twitter.com/ZeXinKang1',
-            github: null
+            github: null,
         },
     },
     {
@@ -645,21 +590,17 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
     {
         img: require('../../assets/about/partner-members/25.png'),
         name: '0xSteven',
-        desc: (
-            <>
-                Robot Dancer 🤖️💃 decreasing entropy.
-            </>
-        ),
+        desc: <>Robot Dancer 🤖️💃 decreasing entropy.</>,
         links: {
             linkedin: null,
             twitter: null,
-            github: null
+            github: null,
         },
     },
 ];

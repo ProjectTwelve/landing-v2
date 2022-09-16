@@ -14,6 +14,7 @@ const pageTypes = CONTENT_PAGES.filter(
 export const App = () => {
     const [current, setCurrent] = useState(PageType.Loading);
     // const [current, setCurrent] = useState(PageType.Wall);
+    const [lockScroll, setLockScroll] = useState(false);
     const isLoading = current === PageType.Loading;
     const [musicPlaying, setMusicPlaying] = useState(true);
     const nextPageType = getNextPageType();
@@ -43,8 +44,9 @@ export const App = () => {
         () => ({
             visiblePage: current,
             setVisiblePage: setCurrent,
+            setLockScroll
         }),
-        [current, setCurrent]
+        [current, setCurrent, setLockScroll]
     );
 
     return (
@@ -173,7 +175,8 @@ export const App = () => {
             isLoading ||
             window.appVisibleAnimating ||
             window.appHideAnimating ||
-            !e
+            !e ||
+            lockScroll
         ) {
             return;
         }

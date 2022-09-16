@@ -48,7 +48,21 @@ const defaultProperties = {
         'scatterDividerPowInv': 0.0001,
         'pulseDuration': 999,
         'pulseIntervalRatio': 0.5,
-    }
+    },
+    'social': {
+        'blendRatio': 0.8,
+        'rgbOffset': 0.012,
+        'bloomAmount': 1.8,
+        'bloomRadius': 1.6,
+        'baseColorHex': 0x0,
+        'color1Hex': 0xe2f7ff,
+        'color2Hex': 0x00fc76,
+        'particleMouseForce': 0.005,
+        'scatterDivider': 12,
+        'scatterDividerPowInv': 0.08,
+        'pulseDuration': 48,
+        'pulseIntervalRatio': 0.5,
+    },
     // ver 1
     //"blendRatio":0.4,"rgbOffset":0.024,"bloomAmount":0.4,"bloomRadius":1.6,"baseColorHex":2236962,"color1Hex":1612924,"color2Hex":64630,"particleMouseForce":0.02,"scatterDivider":6,"scatterDividerPowInv":0.08,"pulseDuration":96,"pulseIntervalRatio":0.125,
     

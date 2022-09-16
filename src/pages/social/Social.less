@@ -1,0 +1,61 @@
+@import '../../styles/variables.less';
+
+.social {
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    color: white;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    &__wrapper {
+        position: absolute;
+        padding: 0 90px;
+        left: 50%;
+        top: 70px;
+        padding-top: 9vmin;
+        bottom: 7vmin;
+        transform: translate(-50%, 0);
+        width: 80%;
+        max-width: 74.5rem;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        gap: 12px;
+        z-index: 1;
+        overflow: scroll;
+        .hiddenScrollBar();
+    }
+    &__title {
+        height: 224px;
+        width: 44px;
+        &::before {
+            display: block;
+            content: '';
+            height: 224px;
+            width: 44px;
+            color: white;
+        }
+        &.community {
+            .bgFull('social/community-title.svg');
+        }
+        &.news {
+            .bgFull('social/news-title.svg');
+        }
+    }
+    &__title-sub {
+        color: #ffffffcc;
+        font-size: 22px;
+        line-height: 28px;
+    }
+    &__item-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
+        margin-top: 0.75rem;
+        margin-bottom: 3rem;
+    }
+    .butterfly-canvas-social {
+        opacity: 0.6;
+    }
+}
