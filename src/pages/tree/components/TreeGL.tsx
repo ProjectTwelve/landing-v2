@@ -86,14 +86,14 @@ export const TreeGL = (props) => {
             }
         };
 
-        container.addEventListener('mousedown', start);
-        container.addEventListener('mouseup', end);
-        container.addEventListener('mousemove', move);
+        container.addEventListener('pointerdown', start);
+        container.addEventListener('pointerup', end);
+        container.addEventListener('pointermove', move);
 
         return () => {
-            container.removeEventListener('mousedown', start);
-            container.removeEventListener('mouseup', end);
-            container.removeEventListener('mousemove', move);
+            container.removeEventListener('pointerdown', start);
+            container.removeEventListener('pointerup', end);
+            container.removeEventListener('pointermove', move);
             cancelAnimationFrame(id);
         };
     });

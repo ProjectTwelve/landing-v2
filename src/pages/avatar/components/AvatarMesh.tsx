@@ -278,12 +278,12 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
                     ambientLight.intensity = lerp(ambientLight.intensity, 0.2, 0.2);
                     directionalLight.intensity = lerp(directionalLight.intensity, 1.3, 0.2);
                 } else {
-                    matr.color.r = lerp(matr.color.r, 0, 0.2);
-                    matr.color.g = lerp(matr.color.g, 0, 0.2);
-                    matr.color.b = lerp(matr.color.b, 0, 0.2);
+                    matr.color.r = lerp(matr.color.r, 0, 0.4);
+                    matr.color.g = lerp(matr.color.g, 0, 0.4);
+                    matr.color.b = lerp(matr.color.b, 0, 0.4);
 
-                    ambientLight.intensity = lerp(ambientLight.intensity, 0, 0.2);
-                    directionalLight.intensity = lerp(directionalLight.intensity, 0, 0.2);
+                    ambientLight.intensity = lerp(ambientLight.intensity, 0, 0.4);
+                    directionalLight.intensity = lerp(directionalLight.intensity, 0, 0.4);
                 }
             }
         });
