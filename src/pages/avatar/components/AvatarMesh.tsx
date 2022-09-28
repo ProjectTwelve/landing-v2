@@ -36,6 +36,7 @@ const modelLoaded = {} as { [key: number]: boolean };
 
 export default function AvatarMesh(props: { container: MutableRefObject<HTMLElement>; avatar: AvatarType; playing: boolean }) {
     const [mode, setMode] = useState<'mesh' | 'point' | 'triangle'>('mesh');
+    const [loading, setLoading] = useState(false);
 
     // /* @DEBUG */
     // window['setMode'] = setMode;
@@ -200,6 +201,7 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
     const gltfLoader = useMemo(() => new GLTFLoader(), []);
 
     function load(url: string, index: AvatarType) {
+        setLoading(true);
         gltfLoader.loadAsync(url).then(
             (gltf) => {
                 // console.log(gltf.scene.position);
@@ -227,6 +229,8 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
 
                 pointGroup.add(createPointsFromModel(gltf.scene));
                 triangleGroup.add(createTrianglesFromModel(gltf.scene));
+
+                setLoading(false);
             },
             (error) => {
                 console.error(error);
@@ -404,6 +408,7 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
         <Fragment>
             <div ref={blackMask} className={styles.blackMask}></div>
             <canvas ref={canvas} className={styles.canvas}></canvas>
+            <div className={`${styles.loadingMask} ${loading ? styles.loading : ''}`}></div>
         </Fragment>
     );
 }
