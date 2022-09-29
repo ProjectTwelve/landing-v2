@@ -134,7 +134,14 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
             <div className={styles.wrapper} ref={wrapper}>
                 <div className={styles.bgWrapper}>
                     {/* <ButterflyGL page="avatar" /> */}
-                    <video ref={video} className={styles.vid} src="/files/vid/avatar-bg-720p.mp4" loop muted></video>
+                    <video
+                        ref={video}
+                        className={styles.vid}
+                        src="/files/vid/avatar-bg-720p.mp4"
+                        loop
+                        muted
+                        playsInline
+                    ></video>
                     <div className={styles.vidMask}></div>
                 </div>
                 <div className={styles.frontWrapper}>

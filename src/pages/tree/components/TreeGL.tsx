@@ -118,7 +118,16 @@ export const TreeGL = (props) => {
 
     return (
         <div className="tree-gl" ref={containerRef}>
-            <video ref={vidRef} className="tree-gl-canvas" src="/files/vid/tree-1k.mp4" id="vid" muted loop autoPlay></video>
+            <video
+                ref={vidRef}
+                className="tree-gl-canvas"
+                src="/files/vid/tree-1k.mp4"
+                id="vid"
+                muted
+                loop
+                // autoPlay
+                playsInline
+            ></video>
             {/* <canvas className='tree-gl-canvas' ref={canvasRef} /> */}
         </div>
     );
