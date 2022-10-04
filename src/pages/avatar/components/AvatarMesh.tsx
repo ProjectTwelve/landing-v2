@@ -102,7 +102,8 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
     }, [props.avatar]);
 
     useEffect(() => {
-        let moved = false; /* diff drag from click */
+        /* diff drag from click */
+        let moved = false;
         const start = () => {
             moved = false;
         };
@@ -112,9 +113,7 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
         const end = () => {
             if (!moved) {
                 setMode((old) => {
-                    if (old === 'mesh') return 'point';
-                    if (old === 'point') return 'triangle';
-                    if (old === 'triangle') return 'mesh';
+                    if (old === 'mesh') return Math.random() + Math.random() > 1 ? 'point' : 'triangle';
 
                     return 'mesh';
                 });
@@ -173,7 +172,6 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
         effectComposer.addPass(unrealBloomPass);
         // effectComposer.addPass(bloomPass);
         // unrealBloomPass.strength = 0.5;
-        // unrealBloomPass.strength = 2.7;
         // unrealBloomPass.radius = 1;
         // unrealBloomPass.threshold = 0.5;
         effectComposer.renderToScreen = true;
@@ -227,8 +225,15 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
                     modelIndex: index,
                 };
 
-                pointGroup.add(createPointsFromModel(gltf.scene));
-                triangleGroup.add(createTrianglesFromModel(gltf.scene));
+                const points = createPointsFromModel(gltf.scene);
+                const triangles = createTrianglesFromModel(gltf.scene);
+
+                pointGroup.add(points);
+                triangleGroup.add(triangles);
+
+                autoDispose(points);
+                autoDispose(triangles);
+                autoDispose(gltf.scene);
 
                 setLoading(false);
             },
@@ -359,6 +364,7 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
                         showMeshTick(true);
                         showTriangleTick(false);
                         bloomTick(false);
+                        renderer.setRenderTarget(null);
                         renderer.render(scene, camera);
                         break;
                     }
@@ -422,4 +428,25 @@ function isPoints(o: Object3D): o is Points {
 
 function lerp(v0: number, v1: number, t: number) {
     return v0 * (1 - t) + v1 * t;
+}
+
+function autoDispose(g: Group) {
+    g.traverse((o: Object3D) => {
+        if (isMesh(o)) {
+            const geom = o.geometry;
+
+            if (geom.index) {
+                geom.index.onUploadCallback = () => (geom.index!.array = null as any);
+            }
+
+            const attrs = Object.values(geom.attributes);
+            attrs.forEach((a: any) => {
+                if (a.isBufferAttribute) {
+                    a.onUploadCallback = () => {
+                        a.array = null as any;
+                    };
+                }
+            });
+        }
+    });
 }

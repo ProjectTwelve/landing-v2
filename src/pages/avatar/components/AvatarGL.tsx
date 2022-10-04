@@ -14,7 +14,7 @@ import AvatarCircle from './AvatarCircle';
 export interface AvatarGLRef {
     switchTo: (index: AvatarType, currentPage?: PageType) => void;
     stopTimeout: () => void;
-    restartTimout: () => void;
+    restartTimeout: () => void;
 }
 export interface AvatarGLProps {
     allLoaded: () => void;
@@ -31,7 +31,7 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
         () => ({
             switchTo: async (index: AvatarType, currentPage) => {},
             stopTimeout: () => {},
-            restartTimout: () => {},
+            restartTimeout: () => {},
         }),
         [],
     );
@@ -108,11 +108,11 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
     usePageVisible(PageType.Avatar, () => {
         return {
             onVisible: () => {
-                console.log('tree, visible');
+                // console.log('tree, visible');
                 video.current.play();
             },
             onHide: () => {
-                console.log('tree, hide');
+                // console.log('tree, hide');
                 video.current.pause();
             },
         };

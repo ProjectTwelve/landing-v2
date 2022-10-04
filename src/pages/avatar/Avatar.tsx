@@ -4,7 +4,7 @@ import './Avatar.less';
 import { AvatarType, AVATAR_GL_KEYS } from './Avatar.config';
 import { playClickAudio, GAevent } from '../../utils';
 import classnames from 'classnames';
-import { usePageVisible } from '../app/App.utils';
+import { loadingEE, usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
 import gsap from 'gsap';
 
@@ -22,7 +22,7 @@ export const Avatar = (props) => {
         };
         const handleTouchUp = () => {
             clearInterval(timeId);
-            avatarGLRef.current?.restartTimout();
+            avatarGLRef.current?.restartTimeout();
             timeId = window.setInterval(() => {
                 handleNext();
             }, 8000);

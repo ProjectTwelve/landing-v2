@@ -93,7 +93,9 @@
 }
 
 .canvasCircle {
-    width: 100%;
+    /* width: 100%; */
+    width: 120%;
+    left: -10%;
     height: 100%;
     position: absolute;
     pointer-events: none;

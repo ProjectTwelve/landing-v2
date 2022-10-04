@@ -1,20 +1,19 @@
-import { AdditiveBlending, BufferAttribute, BufferGeometry, Points, ShaderMaterial } from 'three';
+import { AdditiveBlending, BufferAttribute, BufferGeometry, Points, ShaderMaterial, Vector3 } from 'three';
 
-const RADIUS = 1;
-const COUNT = 200;
+const RADIUS = 0.1;
+const COUNT = 20;
 
-export function createCircle(): Points {
+const _vec3 = new Vector3();
+
+export function createCollisionParticles(): Points {
     const points = new Points();
 
     // build attributes
     const posArr = [] as number[];
     const randomArr = [] as number[];
     for (let i = 0; i < COUNT; i++) {
-        const theta = (i / COUNT) * Math.PI * 2;
-        // 极坐标转直角坐标
-        const x = RADIUS * Math.cos(theta);
-        const y = RADIUS * Math.sin(theta);
-        posArr.push(x, y, 0);
+        _vec3.set(Math.random(), Math.random(), Math.random()).subScalar(0.5).normalize().multiplyScalar(RADIUS);
+        posArr.push(..._vec3.toArray());
 
         const random = Math.random() * 0.8 + 0.2;
         randomArr.push(random);
@@ -34,8 +33,11 @@ export function createCircle(): Points {
     matr.depthWrite = false;
     matr.blending = AdditiveBlending;
 
+    matr.uniforms.life = { value: 0 };
+
     matr.vertexShader = /* glsl */ `
-		// uniform float time;
+		uniform float life;
+
 		attribute float random;
 
 		varying float vRandom;
@@ -52,8 +54,12 @@ export function createCircle(): Points {
 
 			vOpacity = vRandom;
 
+            vOpacity *= 1.0 - life;
+
 			float factor = smoothstep(1.4, -0.3, mvCenter.z - mvPosition.z);
 			vOpacity *= factor;
+
+            vOpacity = clamp(vOpacity, 0.0, 1.0);
 
 			gl_PointSize *= factor;
 		}
@@ -71,11 +77,39 @@ export function createCircle(): Points {
 
 			gl_FragColor.a = vOpacity;
 			gl_FragColor.a *= smoothstep(0.5, 0.4, length(gl_PointCoord - 0.5));
+
+            gl_FragColor.a = clamp(gl_FragColor.a, 0.0, 1.0);
+
+            if (gl_FragColor.a < 0.1) {
+                discard;
+            }
 		}
 	`;
 
     points.material = matr;
     points.geometry = geom;
+
+    points.scale.set(0, 0, 0);
+
+    const lifespan = 2000;
+    const birth = performance.now();
+
+    let id;
+    const tick = () => {
+        const life = (performance.now() - birth) / lifespan;
+
+        if (life < 1) {
+            id = requestAnimationFrame(tick);
+            const scale = Math.sqrt(life);
+            matr.uniforms.life.value = life;
+            points.scale.set(scale, scale, scale);
+        } else {
+            points.removeFromParent();
+            matr.dispose();
+            geom.dispose();
+        }
+    };
+    id = requestAnimationFrame(tick);
 
     return points;
 }

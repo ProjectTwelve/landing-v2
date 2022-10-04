@@ -207,12 +207,22 @@ function forEachTriangles(
 }
 
 export class PointMatr extends ShaderMaterial {
-    uniforms = { opacity: { value: 0 } };
+    constructor() {
+        super();
+
+        setInterval(() => {
+            this.uniforms.size.value =
+                ((Math.min(window.innerWidth, window.innerHeight) * window.devicePixelRatio) / 2048) * 1.2;
+        }, 1000);
+    }
+
+    uniforms = { opacity: { value: 0 }, size: { value: 1 } };
     transparent = true;
 
     depthWrite = false;
 
     vertexShader = /* glsl */ `
+        uniform float size;
 
         float rand(vec2 co){
             return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
@@ -223,7 +233,7 @@ export class PointMatr extends ShaderMaterial {
             vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
             gl_Position = projectionMatrix * mvPosition;
             // gl_PointSize = (r * 9.0 + 5.0)  / -mvPosition.z;
-            gl_PointSize = (r * r * 5.0 + 1.0) * 0.5 * ${window.devicePixelRatio.toFixed(1)};
+            gl_PointSize = (r * r * 5.0 + 1.0) * 0.5 * size * ${window.devicePixelRatio.toFixed(1)};
         }
     `;
     fragmentShader = /* glsl */ `

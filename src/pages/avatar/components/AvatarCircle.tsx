@@ -1,18 +1,32 @@
 import { MutableRefObject, useEffect, useMemo, useRef, useState } from 'react';
 import styles from './avatar.module.css';
 
-import { Scene, PerspectiveCamera, WebGLRenderer, sRGBEncoding, Group, Mesh, Vector3 } from 'three';
+import {
+    Scene,
+    PerspectiveCamera,
+    WebGLRenderer,
+    sRGBEncoding,
+    Group,
+    Mesh,
+    Vector3,
+    Raycaster,
+    Vector2,
+    BoxBufferGeometry,
+    MeshBasicMaterial,
+    Color,
+} from 'three';
 
 import { createCircle } from './utils/createCircle';
 import { useTick } from './hooks/useTick';
 import { useSize } from './hooks/useSize';
+import { createCollisionParticles } from './utils/createCollisionParticles';
 
 export default function AvatarCircle(props: { container: MutableRefObject<HTMLElement>; playing: boolean }) {
     const canvas = useRef<HTMLCanvasElement>(null!);
 
     const scene = useMemo(() => new Scene(), []);
     const camera = useMemo(() => {
-        const cam = new PerspectiveCamera(40, 1, 0.1, 10);
+        const cam = new PerspectiveCamera(40, 1.2, 1, 10);
         cam.position.set(0, 0, 8).multiplyScalar(0.35);
         cam.lookAt(new Vector3());
         return cam;
@@ -73,10 +87,63 @@ export default function AvatarCircle(props: { container: MutableRefObject<HTMLEl
         [props.playing],
     );
 
-    const [width, height] = useSize(props.container);
+    // const [width, height] = useSize(props.container);
+    const [width, height] = useSize(canvas);
 
     useEffect(() => {
         rendererRef.current!.setSize(width * 1, height * 1, false);
+    }, [width, height]);
+
+    useEffect(() => {
+        const raycaster = new Raycaster();
+        raycaster.params!.Points!.threshold = 0.04;
+        const pointer = new Vector2();
+
+        let lastTimeIntersect = 0;
+        let lastTimeCheck = 0;
+
+        const mouseMove = (event: MouseEvent) => {
+            const curr = performance.now();
+
+            if (curr - lastTimeCheck > 100) {
+                console.log('检测');
+
+                lastTimeCheck = curr;
+
+                var rect = canvas.current.getBoundingClientRect();
+                var x = event.clientX - rect.left; //x position within the element.
+                var y = event.clientY - rect.top; //y position within the element.
+
+                pointer.x = (x / width) * 2 - 1;
+                pointer.y = -(y / height) * 2 + 1;
+
+                // console.log(pointer);
+                raycaster.setFromCamera(pointer, camera);
+                const intersects = raycaster.intersectObjects(pointsGroup.children);
+                if (intersects.length) {
+                    const intersect = intersects[Math.floor(intersects.length / 2)];
+                    console.log(intersect);
+
+                    console.log(intersects.length);
+
+                    if (curr - lastTimeIntersect > 1000) {
+                        const particles = createCollisionParticles();
+                        particles.position.copy(intersect.point);
+                        scene.add(particles);
+
+                        lastTimeIntersect = curr;
+                    }
+                }
+            }
+        };
+
+        props.container.current.addEventListener('mousemove', mouseMove);
+
+        rendererRef.current!.setSize(width * 1, height * 1, false);
+
+        return () => {
+            props.container.current.removeEventListener('mousemove', mouseMove);
+        };
     }, [width, height]);
 
     //
