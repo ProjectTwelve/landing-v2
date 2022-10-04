@@ -8,113 +8,98 @@ export const TreeGL = (props) => {
     const containerRef = useRef<HTMLDivElement>(null!);
     const vidRef = useRef<HTMLVideoElement>(null!);
 
+    const [playing, setPlaying] = useState(false);
+
     useEffect(() => {
+        /**
+         * mouse controlling vid
+         */
         let controlling = false;
 
-        // console.log('controlling', controlling);
-
-        let target = 0;
-
         const vid = vidRef.current;
-        // if (controlling) {
-        //     vid.pause();
-        // } else {
-        //     vid.play();
-        // }
 
+        /**
+         * raf id
+         */
         let id = 0;
 
+        /**
+         * vid full duration
+         */
         const d = vid.duration;
-        // console.log(d);
+
+        /**
+         * target time.
+         * add scalar so that it wont be negative
+         */
+        let target = d * 100000;
+
+        /**
+         * currentTime.
+         * add scalar so that it wont be negative
+         */
+        let currentTime = d * 100000;
 
         const tick = () => {
-            // console.log(controlling);
-            if (controlling) {
-                // if (vid.seeking) {
-                //     console.log('seeking');
-                //     id = requestAnimationFrame(tick);
-                //     return;
-                // }
-                // if (!vid.seekable) {
-                //     console.log('!seekable');
-                //     id = requestAnimationFrame(tick);
-                //     return;
-                // }
-
-                // console.log('target', target);
-
-                if (!vid.seeking && vid.seekable) {
-                    vid.currentTime = target;
-                }
-            }
             id = requestAnimationFrame(tick);
+
+            if (!playing) return;
+
+            // auto rotation
+            if (!controlling) target += 0.03;
+
+            if (!vid.seeking && vid.seekable) {
+                currentTime = lerp(currentTime, target, 0.1);
+
+                vid.currentTime = Math.round((currentTime % d) * 30) / 30;
+            }
         };
         id = requestAnimationFrame(tick);
 
         const container = containerRef.current;
 
-        let moving = false;
         let initX = 0;
         let initTarget = 0;
 
         const start = (e: MouseEvent) => {
-            moving = true;
-            target = vid.currentTime;
-            initX = e.clientX;
-            initTarget = target + d * 100;
-            vid.pause();
-
-            // console.log('init target', target);
-
             controlling = true;
+            target = currentTime;
+            initTarget = target;
+            initX = e.clientX;
         };
         const end = () => {
-            moving = false;
             controlling = false;
-            setTimeout(() => {
-                if (!controlling && vid.paused) {
-                    vid.play();
-                }
-            }, 500);
         };
         const move = (e: MouseEvent) => {
-            if (moving) {
+            if (controlling) {
                 target = initTarget + (e.clientX - initX) * 0.02;
-                target = target % d;
-
-                target = Math.round(target * 30) / 30;
             }
         };
 
-        container.addEventListener('pointerdown', start);
-        container.addEventListener('pointerup', end);
-        container.addEventListener('pointermove', move);
+        container.addEventListener('mousedown', start);
+        container.addEventListener('mouseup', end);
+        container.addEventListener('mousemove', move);
 
         return () => {
-            container.removeEventListener('pointerdown', start);
-            container.removeEventListener('pointerup', end);
-            container.removeEventListener('pointermove', move);
+            container.removeEventListener('mousedown', start);
+            container.removeEventListener('mouseup', end);
+            container.removeEventListener('mousemove', move);
             cancelAnimationFrame(id);
         };
-    });
+    }, [playing]);
 
     usePageVisible(PageType.Tree, () => {
         return {
             onVisible: () => {
                 // console.log('tree, visible');
-                vidRef.current.play();
+                setPlaying(true);
             },
             onHide: () => {
                 // console.log('tree, hide');
-                vidRef.current.pause();
+                setPlaying(false);
             },
         };
     });
-
-    useEffect(() => {
-        const vid = vidRef.current;
-        // vid.playbackRate = 0.5;
-    }, []);
 
     return (
         <div className="tree-gl" ref={containerRef}>
@@ -132,3 +117,7 @@ export const TreeGL = (props) => {
         </div>
     );
 };
+
+function lerp(v0: number, v1: number, t: number) {
+    return v0 * (1 - t) + v1 * t;
+}
