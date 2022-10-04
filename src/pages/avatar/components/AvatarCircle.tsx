@@ -106,7 +106,7 @@ export default function AvatarCircle(props: { container: MutableRefObject<HTMLEl
             const curr = performance.now();
 
             if (curr - lastTimeCheck > 100) {
-                console.log('检测');
+                // console.log('检测');
 
                 lastTimeCheck = curr;
 
@@ -122,9 +122,9 @@ export default function AvatarCircle(props: { container: MutableRefObject<HTMLEl
                 const intersects = raycaster.intersectObjects(pointsGroup.children);
                 if (intersects.length) {
                     const intersect = intersects[Math.floor(intersects.length / 2)];
-                    console.log(intersect);
+                    // console.log(intersect);
 
-                    console.log(intersects.length);
+                    // console.log(intersects.length);
 
                     if (curr - lastTimeIntersect > 1000) {
                         const particles = createCollisionParticles();
