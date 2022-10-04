@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { IS_MOBILE } from '../../../utils';
 import { PageType } from '../../app/App.config';
 import { usePageVisible } from '../../app/App.utils';
 import './TreeGL.less';
@@ -26,7 +27,7 @@ export const TreeGL = (props) => {
         /**
          * vid full duration
          */
-        const d = vid.duration;
+        const d = 24;
 
         /**
          * target time.
@@ -41,18 +42,22 @@ export const TreeGL = (props) => {
         let currentTime = d * 100000;
 
         const tick = () => {
-            id = requestAnimationFrame(tick);
+            // console.log('playing', playing);
 
             if (!playing) return;
 
             // auto rotation
             if (!controlling) target += 0.03;
 
-            if (!vid.seeking && vid.seekable) {
+            if (!vid.seeking) {
                 currentTime = lerp(currentTime, target, 0.1);
 
                 vid.currentTime = Math.round((currentTime % d) * 30) / 30;
+            } else {
+                console.log('seeking', vid.seeking);
             }
+
+            id = requestAnimationFrame(tick);
         };
         id = requestAnimationFrame(tick);
 
@@ -61,29 +66,47 @@ export const TreeGL = (props) => {
         let initX = 0;
         let initTarget = 0;
 
-        const start = (e: MouseEvent) => {
+        const start = (e: MouseEvent | TouchEvent) => {
             controlling = true;
             target = currentTime;
             initTarget = target;
-            initX = e.clientX;
+
+            const clientX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
+
+            initX = clientX;
         };
         const end = () => {
             controlling = false;
         };
-        const move = (e: MouseEvent) => {
+        const move = (e: MouseEvent | TouchEvent) => {
+            const clientX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
+
             if (controlling) {
-                target = initTarget + (e.clientX - initX) * 0.02;
+                target = initTarget + (clientX - initX) * 0.02;
             }
         };
 
-        container.addEventListener('mousedown', start);
-        container.addEventListener('mouseup', end);
-        container.addEventListener('mousemove', move);
+        if (IS_MOBILE) {
+            container.addEventListener('touchstart', start);
+            container.addEventListener('touchend', end);
+            container.addEventListener('touchmove', move);
+        } else {
+            container.addEventListener('mousedown', start);
+            container.addEventListener('mouseup', end);
+            container.addEventListener('mousemove', move);
+        }
 
         return () => {
-            container.removeEventListener('mousedown', start);
-            container.removeEventListener('mouseup', end);
-            container.removeEventListener('mousemove', move);
+            if (IS_MOBILE) {
+                container.removeEventListener('touchstart', start);
+                container.removeEventListener('touchend', end);
+                container.removeEventListener('touchmove', move);
+            } else {
+                container.removeEventListener('mousedown', start);
+                container.removeEventListener('mouseup', end);
+                container.removeEventListener('mousemove', move);
+            }
+
             cancelAnimationFrame(id);
         };
     }, [playing]);
@@ -110,7 +133,7 @@ export const TreeGL = (props) => {
                 id="vid"
                 muted
                 loop
-                // autoPlay
+                autoPlay
                 playsInline
             ></video>
             {/* <canvas className='tree-gl-canvas' ref={canvasRef} /> */}
