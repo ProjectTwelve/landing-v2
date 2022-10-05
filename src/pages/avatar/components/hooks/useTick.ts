@@ -23,7 +23,7 @@ type FrameCallback = (timestamp: number, interval: number) => void;
 
 const callbacks = new Set<FrameCallback>();
 
-let lastFrame = performance.now();
+let lastFrame;
 
 const tick = (timestamp: number) => {
     const interval = timestamp - lastFrame;
@@ -47,7 +47,7 @@ const tick = (timestamp: number) => {
 };
 
 // start
-requestAnimationFrame(tick);
+lastFrame = requestAnimationFrame(tick);
 
 export function useTick(callback: FrameCallback, dep: any[] = []) {
     useEffect(() => {
