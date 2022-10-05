@@ -31,11 +31,10 @@ export function createTrianglesFromModel(model: Group): Group {
             const newPos = [] as number[];
             const newColor = [] as number[];
             forEachTriangles(o.geometry, (p0, p1, p2, n, i) => {
-                const areaX2 = p1.clone().sub(p0).multiply(p2.clone().sub(p0)).length();
+                const areaX2 = _v1.copy(p1).sub(p0).multiply(_v2.copy(p2).sub(p0)).length();
                 const stonerCnt = Math.ceil(areaX2 / 0.0001);
 
-                // const normal = p1.clone().sub(p0).cross(p2.clone().sub(p0)).normalize().multiplyScalar(0.001);
-                const normal = n.clone().normalize().multiplyScalar(0.001);
+                const normal = _v0.copy(n).normalize().multiplyScalar(0.001);
 
                 for (let i = 0; i < stonerCnt; i++) {
                     // drop rate
@@ -51,34 +50,32 @@ export function createTrianglesFromModel(model: Group): Group {
                         rB = 1 - rB;
                     }
                     const a = 1 - rA - rB;
-                    const newPoint = p0
-                        .clone()
+                    const newPoint = _v2
+                        .copy(p0)
                         .multiplyScalar(a)
-                        .add(p1.clone().multiplyScalar(rA))
-                        .add(p2.clone().multiplyScalar(rB))
+                        .add(_v3.copy(p1).multiplyScalar(rA))
+                        .add(_v3.copy(p2).multiplyScalar(rB))
                         .add(normal);
 
-                    const newP0 = newPoint
-                        .clone()
-                        .add(new Vector3(ran(), ran(), ran()).subScalar(0.5).normalize().multiplyScalar(0.01));
-                    const newP1 = newPoint
-                        .clone()
-                        .add(new Vector3(ran(), ran(), ran()).subScalar(0.5).normalize().multiplyScalar(0.01));
-                    const newP2 = newPoint
-                        .clone()
-                        .add(new Vector3(ran(), ran(), ran()).subScalar(0.5).normalize().multiplyScalar(0.01));
+                    const random0 = _v3.set(ran(), ran(), ran()).subScalar(0.5).normalize().multiplyScalar(0.01);
+                    const random1 = _v4.set(ran(), ran(), ran()).subScalar(0.5).normalize().multiplyScalar(0.01);
+                    const random2 = _v5.set(ran(), ran(), ran()).subScalar(0.5).normalize().multiplyScalar(0.01);
 
-                    newPos.push(...newP0.toArray(), ...newP1.toArray(), ...newP2.toArray());
+                    const newP0 = _v6.copy(newPoint).add(random0);
+                    const newP1 = _v7.copy(newPoint).add(random1);
+                    const newP2 = _v8.copy(newPoint).add(random2);
+
+                    // newPos.push(...newP0.toArray(), ...newP1.toArray(), ...newP2.toArray());
+                    newPos.push(newP0.x, newP0.y, newP0.z, newP1.x, newP1.y, newP1.z, newP2.x, newP2.y, newP2.z);
 
                     // colors
-                    const color = newPoint
-                        .clone()
-                        .multiplyScalar(0.3)
-                        .add(new Vector3(0.2, 0.17, 0.95))
-                        .multiplyScalar(2)
-                        .normalize();
+                    const color = _v9.copy(newPoint).multiplyScalar(0.3);
+                    color.x += 0.2;
+                    color.y += 0.17;
+                    color.z += 0.95;
+                    color.normalize();
 
-                    newColor.push(...color.toArray(), ...color.toArray(), ...color.toArray());
+                    newColor.push(color.x, color.y, color.z, color.x, color.y, color.z, color.x, color.y, color.z);
                 }
             });
 
@@ -91,15 +88,7 @@ export function createTrianglesFromModel(model: Group): Group {
 
             o.geometry = newGeom;
 
-            o.material = new MeshBasicMaterial({
-                color: '#ffffff',
-                opacity: 0,
-                // specular: 0xffffff,
-                // shininess: 250,
-                side: DoubleSide,
-                vertexColors: true,
-                transparent: true,
-            });
+            o.material = triangleMaterial;
         }
     });
 
@@ -115,8 +104,8 @@ export function createPointsFromModel(model: Group): Group {
     const clone = model.clone(true);
     clone.traverseVisible((o) => {
         if (isMesh(o)) {
-            (o as any)['isMesh'] = false;
-            (o as any)['isPoints'] = true;
+            (o as any).isMesh = false;
+            (o as any).isPoints = true;
 
             const oldMatr = o.material as Material;
             if (oldMatr.name === 'NewMaterial') {
@@ -130,11 +119,10 @@ export function createPointsFromModel(model: Group): Group {
 
             const newPos = [] as number[];
             forEachTriangles(o.geometry, (p0, p1, p2, n, i) => {
-                const areaX2 = p1.clone().sub(p0).multiply(p2.clone().sub(p0)).length();
+                const areaX2 = _v1.copy(p1).sub(p0).multiply(_v2.copy(p2).sub(p0)).length();
                 const stonerCnt = Math.ceil(areaX2 / 0.0001);
 
-                // const normal = p1.clone().sub(p0).cross(p2.clone().sub(p0)).normalize().multiplyScalar(0.005);
-                const normal = n.clone().normalize().multiplyScalar(0.01);
+                const normal = _v0.copy(n).normalize().multiplyScalar(0.01);
 
                 for (let i = 0; i < stonerCnt; i++) {
                     // drop rate
@@ -150,14 +138,14 @@ export function createPointsFromModel(model: Group): Group {
                         rB = 1 - rB;
                     }
                     const a = 1 - rA - rB;
-                    const newPoint = p0
-                        .clone()
+                    const newPoint = _v2
+                        .copy(p0)
                         .multiplyScalar(a)
-                        .add(p1.clone().multiplyScalar(rA))
-                        .add(p2.clone().multiplyScalar(rB))
+                        .add(_v3.copy(p1).multiplyScalar(rA))
+                        .add(_v3.copy(p2).multiplyScalar(rB))
                         .add(normal);
 
-                    newPos.push(...newPoint.toArray());
+                    newPos.push(newPoint.x, newPoint.y, newPoint.z);
                 }
             });
 
@@ -168,7 +156,7 @@ export function createPointsFromModel(model: Group): Group {
 
             o.geometry = newGeom;
 
-            o.material = new PointMatr();
+            o.material = pointMaterial;
         }
     });
 
@@ -196,11 +184,11 @@ function forEachTriangles(
         const idx1 = index[i * 3 + 1];
         const idx2 = index[i * 3 + 2];
 
-        const p0 = new Vector3(position[idx0 * 3 + 0], position[idx0 * 3 + 1], position[idx0 * 3 + 2]);
-        const p1 = new Vector3(position[idx1 * 3 + 0], position[idx1 * 3 + 1], position[idx1 * 3 + 2]);
-        const p2 = new Vector3(position[idx2 * 3 + 0], position[idx2 * 3 + 1], position[idx2 * 3 + 2]);
+        const p0 = _p0.set(position[idx0 * 3 + 0], position[idx0 * 3 + 1], position[idx0 * 3 + 2]);
+        const p1 = _p1.set(position[idx1 * 3 + 0], position[idx1 * 3 + 1], position[idx1 * 3 + 2]);
+        const p2 = _p2.set(position[idx2 * 3 + 0], position[idx2 * 3 + 1], position[idx2 * 3 + 2]);
 
-        const n = new Vector3(normal[idx0 * 3 + 0], normal[idx0 * 3 + 1], normal[idx0 * 3 + 2]);
+        const n = _n.set(normal[idx0 * 3 + 0], normal[idx0 * 3 + 1], normal[idx0 * 3 + 2]);
 
         f(p0, p1, p2, n, i);
     }
@@ -261,3 +249,31 @@ export class PointMatr extends ShaderMaterial {
         }
     `;
 }
+
+const _v0 = new Vector3();
+const _v1 = new Vector3();
+const _v2 = new Vector3();
+const _v3 = new Vector3();
+const _v4 = new Vector3();
+const _v5 = new Vector3();
+const _v6 = new Vector3();
+const _v7 = new Vector3();
+const _v8 = new Vector3();
+const _v9 = new Vector3();
+
+const _p0 = new Vector3();
+const _p1 = new Vector3();
+const _p2 = new Vector3();
+const _n = new Vector3();
+
+const triangleMaterial = new MeshBasicMaterial({
+    color: '#ffffff',
+    opacity: 0,
+    // specular: 0xffffff,
+    // shininess: 250,
+    side: DoubleSide,
+    vertexColors: true,
+    transparent: true,
+});
+
+const pointMaterial = new PointMatr();
