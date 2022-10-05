@@ -2,7 +2,7 @@ import React from 'react';
 import { Home } from '../home/Home';
 import { Avatar } from '../avatar/Avatar';
 import { Tree } from '../tree/Tree';
-import { Poster } from '../poster/Poster';
+// import { Poster } from '../poster/Poster';
 import { About } from '../about/About';
 import { Loading } from '../loading/Loading';
 import { Wall } from '../wall/Wall';
@@ -45,7 +45,7 @@ export const CONTENT_PAGES = [
     {
         type: PageType.Poster,
         NavText: <>The&nbsp;Editor</>,
-        Content: <Poster />,
+        Content: <div>Poster</div>, // <Poster />,
         dropdown: false,
     },
     {
