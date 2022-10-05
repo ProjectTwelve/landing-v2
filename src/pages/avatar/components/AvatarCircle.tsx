@@ -18,7 +18,6 @@ import {
 
 import { createCircle } from './utils/createCircle';
 import { useTick } from './hooks/useTick';
-import { useSize } from './hooks/useSize';
 import { createCollisionParticles } from './utils/createCollisionParticles';
 
 export default function AvatarCircle(props: { container: MutableRefObject<HTMLElement>; playing: boolean }) {
@@ -87,14 +86,10 @@ export default function AvatarCircle(props: { container: MutableRefObject<HTMLEl
         [props.playing],
     );
 
-    // const [width, height] = useSize(props.container);
-    const [width, height] = useSize(canvas);
-
     useEffect(() => {
-        rendererRef.current!.setSize(width * 1, height * 1, false);
-    }, [width, height]);
+        const width = canvas.current.clientWidth;
+        const height = canvas.current.clientHeight;
 
-    useEffect(() => {
         const raycaster = new Raycaster();
         raycaster.params!.Points!.threshold = 0.04;
         const pointer = new Vector2();
@@ -114,8 +109,8 @@ export default function AvatarCircle(props: { container: MutableRefObject<HTMLEl
                 var x = event.clientX - rect.left; //x position within the element.
                 var y = event.clientY - rect.top; //y position within the element.
 
-                pointer.x = (x / width) * 2 - 1;
-                pointer.y = -(y / height) * 2 + 1;
+                pointer.x = (x / rect.width) * 2 - 1;
+                pointer.y = -(y / rect.height) * 2 + 1;
 
                 // console.log(pointer);
                 raycaster.setFromCamera(pointer, camera);
@@ -144,7 +139,7 @@ export default function AvatarCircle(props: { container: MutableRefObject<HTMLEl
         return () => {
             props.container.current.removeEventListener('mousemove', mouseMove);
         };
-    }, [width, height]);
+    }, []);
 
     //
 

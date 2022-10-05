@@ -20,7 +20,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import { useTick, FPSCap } from './hooks/useTick';
-import { useSize } from './hooks/useSize';
 import { createPointsFromModel, createTrianglesFromModel, PointMatr } from './utils/createFromModel';
 
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
@@ -150,12 +149,6 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
 
         renderPassRef.current = new RenderPass(scene, camera);
 
-        // const target = new WebGLRenderTarget(512, 512, {
-        //     format: RGBAFormat,
-        //     encoding: sRGBEncoding,
-        // });
-        // target.samples = 8;
-        // effectComposerRef.current = new EffectComposer(renderer, target);
         effectComposerRef.current = new EffectComposer(renderer);
 
         unrealBloomPassRef.current = new UnrealBloomPass(new Vector2(1024, 1024), 2.4, 0.8, 0.1);
@@ -166,14 +159,9 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
         const unrealBloomPass = unrealBloomPassRef.current;
         const bloomPass = bloomPassRef.current;
 
-        // effectComposer.setSize(window.innerWidth, window.innerHeight);
         effectComposer.setPixelRatio(1);
         effectComposer.addPass(renderPass);
         effectComposer.addPass(unrealBloomPass);
-        // effectComposer.addPass(bloomPass);
-        // unrealBloomPass.strength = 0.5;
-        // unrealBloomPass.radius = 1;
-        // unrealBloomPass.threshold = 0.5;
         effectComposer.renderToScreen = true;
 
         controlsRef.current = new OrbitControls(camera, canvas.current);
@@ -397,20 +385,35 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
         [props.playing, mode, props.avatar],
     );
 
-    const [width, height] = useSize(props.container);
-
     useEffect(() => {
-        if (width === 0 || height === 0) {
-            return;
+        let width = props.container.current.clientWidth;
+        let height = props.container.current.clientHeight;
+
+        console.log('initial res: ' + width + 'x' + height);
+
+        const id = setInterval(() => {
+            const newWidth = props.container.current.clientWidth;
+            const newHeight = props.container.current.clientHeight;
+
+            if (newWidth === 0 || newHeight === 0) return;
+
+            if (newWidth !== width || newHeight !== height) {
+                console.log('new res: ' + newWidth + 'x' + newHeight);
+
+                width = newWidth;
+                height = newHeight;
+                // rendererRef.current!.setSize(newWidth * window.devicePixelRatio, newHeight * window.devicePixelRatio, false);
+                // effectComposerRef.current!.setSize(newWidth * window.devicePixelRatio, newHeight * window.devicePixelRatio);
         }
+        }, 1000);
+
+        if (width === 0 || height === 0) return;
 
         rendererRef.current!.setSize(width * window.devicePixelRatio, height * window.devicePixelRatio, false);
-        // rendererRef.current!.setSize(width * 1, height * 1, false);
         effectComposerRef.current!.setSize(width * window.devicePixelRatio, height * window.devicePixelRatio);
-        // effectComposerRef.current!.setSize(width * 1, height * 1);
-        // unrealBloomPassRef.current!.setSize(width * 1, height * 1);
-        // bloomPassRef.current!.setSize(width * 0.5, height * 0.5);
-    }, [width, height]);
+
+        return () => clearInterval(id);
+    }, []);
 
     //
 
