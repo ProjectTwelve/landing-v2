@@ -1,4 +1,5 @@
 import { AdditiveBlending, BufferAttribute, BufferGeometry, Points, ShaderMaterial } from 'three';
+import { autoDispose } from './autoDispose';
 
 const RADIUS = 1;
 const COUNT = 300;
@@ -76,6 +77,8 @@ export function createCircle(): Points {
 
     points.material = matr;
     points.geometry = geom;
+
+    autoDispose(points);
 
     return points;
 }

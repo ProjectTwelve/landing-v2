@@ -28,6 +28,7 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 import { BloomPass } from 'three/examples/jsm/postprocessing/BloomPass.js';
 
 import { AVATAR_GL_INFO_MAP, AvatarType } from '../Avatar.config';
+import { autoDispose } from './utils/autoDispose';
 
 // import * as P from './process'
 
@@ -404,7 +405,7 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
                 height = newHeight;
                 // rendererRef.current!.setSize(newWidth * window.devicePixelRatio, newHeight * window.devicePixelRatio, false);
                 // effectComposerRef.current!.setSize(newWidth * window.devicePixelRatio, newHeight * window.devicePixelRatio);
-        }
+            }
         }, 1000);
 
         if (width === 0 || height === 0) return;
@@ -435,25 +436,4 @@ function isPoints(o: Object3D): o is Points {
 
 function lerp(v0: number, v1: number, t: number) {
     return v0 * (1 - t) + v1 * t;
-}
-
-function autoDispose(g: Group) {
-    g.traverse((o: Object3D) => {
-        if (isMesh(o)) {
-            const geom = o.geometry;
-
-            if (geom.index) {
-                geom.index.onUploadCallback = () => (geom.index!.array = null as any);
-            }
-
-            const attrs = Object.values(geom.attributes);
-            attrs.forEach((a: any) => {
-                if (a.isBufferAttribute) {
-                    a.onUploadCallback = () => {
-                        a.array = null as any;
-                    };
-                }
-            });
-        }
-    });
 }
