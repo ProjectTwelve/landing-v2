@@ -220,13 +220,13 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
                     const points = createPointsFromModel(gltf.scene);
                     pointGroup.add(points);
                     autoDispose(points);
-                });
 
-                setTimeout(() => {
-                    const triangles = createTrianglesFromModel(gltf.scene);
-                    triangleGroup.add(triangles);
-                    autoDispose(triangles);
-                });
+                    setTimeout(() => {
+                        const triangles = createTrianglesFromModel(gltf.scene);
+                        triangleGroup.add(triangles);
+                        autoDispose(triangles);
+                    }, 100);
+                }, 100);
 
                 setLoading(false);
             },
