@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState, lazy } from 'react';
+import React, { useLayoutEffect, useRef, useState, lazy, useEffect } from 'react';
 // import { AVATAR_GL_MAP } from './components/AvatarGL';
 import './Avatar.less';
 import { AvatarType, AVATAR_GL_KEYS } from './Avatar.config';
@@ -16,6 +16,8 @@ export const Avatar = (props) => {
     const avatarGLRef = useRef<AvatarGLRef>(null);
     const [currentAvatar, setCurrentAvatar] = useState(AvatarType.Dokv);
     let timeId: number;
+
+    const [ready, serReady] = useState(false);
 
     usePageVisible(PageType.Avatar, () => {
         const handleTouchDown = () => {
@@ -97,13 +99,20 @@ export const Avatar = (props) => {
         }, 8000);
     };
 
+    useEffect(() => {
+        loadingEE.on('loaded', () => {
+            serReady(true);
+        });
+    }, []);
+
     // useLayoutEffect(() => {
     //     // avatarGLRef.current?.switchTo(currentAvatar, currentPage);
     // }, [currentAvatar]);
 
     return (
         <div className="avatar">
-            <AvatarGL ref={avatarGLRef} allLoaded={allLoaded} avatar={currentAvatar} />
+            {ready ? <AvatarGL ref={avatarGLRef} allLoaded={allLoaded} avatar={currentAvatar} /> : null}
+
             {/* <AGL /> */}
             <div className="avatar__info">
                 <div className="avatar__slogan"></div>

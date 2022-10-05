@@ -55,7 +55,7 @@ export const TreeGL = (props) => {
 
                 vid.currentTime = Math.round((currentTime % d) * 30) / 30;
             } else {
-                console.log('seeking', vid.seeking);
+                // console.log('seeking', vid.seeking);
             }
         };
         id = requestAnimationFrame(tick);
@@ -145,3 +145,5 @@ export const TreeGL = (props) => {
 function lerp(v0: number, v1: number, t: number) {
     return v0 * (1 - t) + v1 * t;
 }
+
+export default TreeGL;
