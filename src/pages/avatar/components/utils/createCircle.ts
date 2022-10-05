@@ -1,7 +1,7 @@
 import { AdditiveBlending, BufferAttribute, BufferGeometry, Points, ShaderMaterial } from 'three';
 
 const RADIUS = 1;
-const COUNT = 200;
+const COUNT = 300;
 
 export function createCircle(): Points {
     const points = new Points();
@@ -48,7 +48,7 @@ export function createCircle(): Points {
 			vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
 			vec4 mvCenter = modelViewMatrix * vec4( 0.0, 0.0, 0.0, 1.0 );
 			gl_Position = projectionMatrix * mvPosition;
-			gl_PointSize = 20.0  / -mvPosition.z;
+			gl_PointSize = 10.0  / -mvPosition.z;
 
 			vOpacity = vRandom;
 

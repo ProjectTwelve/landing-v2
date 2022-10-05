@@ -1,7 +1,7 @@
 import { AdditiveBlending, BufferAttribute, BufferGeometry, Points, ShaderMaterial, Vector3 } from 'three';
 
-const RADIUS = 0.1;
-const COUNT = 20;
+const RADIUS = 0.4;
+const COUNT = 30;
 
 const _vec3 = new Vector3();
 
@@ -50,11 +50,11 @@ export function createCollisionParticles(): Points {
 			vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
 			vec4 mvCenter = modelViewMatrix * vec4( 0.0, 0.0, 0.0, 1.0 );
 			gl_Position = projectionMatrix * mvPosition;
-			gl_PointSize = 20.0  / -mvPosition.z;
+			gl_PointSize = 9.0  / -mvPosition.z;
 
 			vOpacity = vRandom;
 
-            vOpacity *= 1.0 - life;
+            vOpacity *= smoothstep(0.0, 0.7, 1.0 - life) * 0.5;
 
 			float factor = smoothstep(1.4, -0.3, mvCenter.z - mvPosition.z);
 			vOpacity *= factor;
@@ -100,7 +100,9 @@ export function createCollisionParticles(): Points {
 
         if (life < 1) {
             id = requestAnimationFrame(tick);
-            const scale = Math.sqrt(life);
+            // const scale = Math.sqrt(life);
+            // const scale = life * life;
+            const scale = life;
             matr.uniforms.life.value = life;
             points.scale.set(scale, scale, scale);
         } else {

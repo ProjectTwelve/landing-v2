@@ -99,7 +99,7 @@ export default function AvatarCircle(props: { container: MutableRefObject<HTMLEl
         raycaster.params!.Points!.threshold = 0.04;
         const pointer = new Vector2();
 
-        let lastTimeIntersect = 0;
+        // let lastTimeIntersect = 0;
         let lastTimeCheck = 0;
 
         const mouseMove = (event: MouseEvent) => {
@@ -126,13 +126,13 @@ export default function AvatarCircle(props: { container: MutableRefObject<HTMLEl
 
                     // console.log(intersects.length);
 
-                    if (curr - lastTimeIntersect > 1000) {
-                        const particles = createCollisionParticles();
-                        particles.position.copy(intersect.point);
-                        scene.add(particles);
+                    // if (curr - lastTimeIntersect > 1000) {
+                    const particles = createCollisionParticles();
+                    particles.position.copy(intersect.point);
+                    scene.add(particles);
 
-                        lastTimeIntersect = curr;
-                    }
+                    //     lastTimeIntersect = curr;
+                    // }
                 }
             }
         };
