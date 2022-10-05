@@ -185,3 +185,5 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
         </div>
     );
 });
+
+export default AvatarGL;

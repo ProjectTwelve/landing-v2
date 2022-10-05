@@ -1,8 +1,8 @@
 import { useEffect, useState, MutableRefObject } from 'react';
 
 export function useSize(elem: MutableRefObject<HTMLElement>) {
-    const [width, setWidth] = useState(512);
-    const [height, setHeight] = useState(512);
+    const [width, setWidth] = useState(0);
+    const [height, setHeight] = useState(0);
 
     useEffect(() => {
         console.log('observe effect');
@@ -18,7 +18,9 @@ export function useSize(elem: MutableRefObject<HTMLElement>) {
             }
         });
 
-        obs.observe(elem.current);
+        setTimeout(() => {
+            obs.observe(elem.current);
+        }, 100);
         return () => {
             obs.disconnect();
             console.log('observe effect cleanup');

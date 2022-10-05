@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState, lazy } from 'react';
 // import { AVATAR_GL_MAP } from './components/AvatarGL';
 import './Avatar.less';
 import { AvatarType, AVATAR_GL_KEYS } from './Avatar.config';
@@ -8,7 +8,9 @@ import { loadingEE, usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
 import gsap from 'gsap';
 
-import { AvatarGL, AvatarGLRef } from './components/AvatarGL';
+import type { AvatarGLRef } from './components/AvatarGL';
+// import { AvatarGL } from './components/AvatarGL';
+const AvatarGL = lazy(() => import('./components/AvatarGL'));
 
 export const Avatar = (props) => {
     const avatarGLRef = useRef<AvatarGLRef>(null);
