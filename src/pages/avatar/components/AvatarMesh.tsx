@@ -4,6 +4,7 @@ import styles from './avatar.module.css';
 import {
     Scene,
     PerspectiveCamera,
+    WebGL1Renderer,
     WebGLRenderer,
     sRGBEncoding,
     Group,
@@ -29,6 +30,7 @@ import { BloomPass } from 'three/examples/jsm/postprocessing/BloomPass.js';
 
 import { AVATAR_GL_INFO_MAP, AvatarType } from '../Avatar.config';
 import { autoDispose } from './utils/autoDispose';
+import { IS_MOBILE } from '../../../utils';
 
 // import * as P from './process'
 
@@ -133,13 +135,25 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
 
     // three.js initial
     useEffect(() => {
+        const context = canvas.current.getContext('webgl2', {
+            alpha: true,
+            depth: true,
+            stencil: false,
+            antialias: !IS_MOBILE,
+            xrCompatible: false,
+            // antialias: window.devicePixelRatio > 1 ? false : true,
+        }) as WebGLRenderingContext;
+
+        if (!context) throw new Error('Can not create webgl context');
+
         rendererRef.current = new WebGLRenderer({
             canvas: canvas.current,
+            context,
             precision: 'lowp',
-            alpha: true,
+            // alpha: true,
             // antialias: window.devicePixelRatio > 1 ? false : true, // 视网膜屏不需要抗锯齿
-            antialias: true,
-            stencil: false,
+            // antialias: true,
+            // stencil: false,
         });
         rendererRef.current.outputEncoding = sRGBEncoding;
         const renderer = rendererRef.current;

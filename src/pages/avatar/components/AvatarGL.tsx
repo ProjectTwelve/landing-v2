@@ -101,10 +101,6 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
         };
     }, []);
 
-    useEffect(() => {
-        video.current.playbackRate = 2;
-    }, []);
-
     usePageVisible(PageType.Avatar, () => {
         return {
             onVisible: () => {
@@ -141,6 +137,7 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                         loop
                         muted
                         playsInline
+                        preload="none"
                     ></video>
                     <div className={styles.vidMask}></div>
                 </div>

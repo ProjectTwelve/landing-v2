@@ -12,7 +12,9 @@ export const Tree: React.FC = () => {
 
     useEffect(() => {
         loadingEE.on('loaded', () => {
-            serReady(true);
+            setTimeout(() => {
+                serReady(true);
+            }, 1500);
         });
     }, []);
 

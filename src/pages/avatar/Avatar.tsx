@@ -101,7 +101,9 @@ export const Avatar = (props) => {
 
     useEffect(() => {
         loadingEE.on('loaded', () => {
-            serReady(true);
+            setTimeout(() => {
+                serReady(true);
+            }, 1000);
         });
     }, []);
 
