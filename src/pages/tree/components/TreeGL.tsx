@@ -42,6 +42,7 @@ export const TreeGL = (props) => {
         let currentTime = d * 100000;
 
         const tick = () => {
+            id = requestAnimationFrame(tick);
             // console.log('playing', playing);
 
             if (!playing) return;
@@ -56,8 +57,6 @@ export const TreeGL = (props) => {
             } else {
                 console.log('seeking', vid.seeking);
             }
-
-            id = requestAnimationFrame(tick);
         };
         id = requestAnimationFrame(tick);
 
@@ -114,6 +113,8 @@ export const TreeGL = (props) => {
     usePageVisible(PageType.Tree, () => {
         return {
             onVisible: () => {
+                vidRef.current.play();
+                vidRef.current.pause();
                 // console.log('tree, visible');
                 setPlaying(true);
             },
@@ -133,7 +134,7 @@ export const TreeGL = (props) => {
                 id="vid"
                 muted
                 loop
-                autoPlay
+                // autoPlay
                 playsInline
             ></video>
             {/* <canvas className='tree-gl-canvas' ref={canvasRef} /> */}
