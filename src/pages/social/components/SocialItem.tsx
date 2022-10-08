@@ -12,14 +12,18 @@ type CollabSocialsProps = {
 
 export function SocialItem({ href, title, desc, icon, className, onClick }: CollabSocialsProps) {
     return (
-        <a href={href} target="_blank">
-            <div onClick={onClick} className={classNames('social-item', className)}>
-                {typeof icon === 'string' ? <img src={icon} className="social-item__icon" alt={title || 'icon'}></img> : icon}{' '}
-                <div className="social-item__content">
-                    {title && <div className="social-item__content-title">{title}</div>}
-                    {desc && <div className="social-item__content-desc">{desc}</div>}
-                </div>
+        <div
+            onClick={() => {
+                onClick?.();
+                window.open(href, '_blank');
+            }}
+            className={classNames('social-item', className)}
+        >
+            {typeof icon === 'string' ? <img src={icon} className="social-item__icon" alt={title || 'icon'}></img> : icon}{' '}
+            <div className="social-item__content">
+                {title && <div className="social-item__content-title">{title}</div>}
+                {desc && <div className="social-item__content-desc">{desc}</div>}
             </div>
-        </a>
+        </div>
     );
 }

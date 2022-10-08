@@ -79,7 +79,7 @@ export const Social: React.FC = () => {
                     }
                 }}
             >
-                <div className="social__title community"></div>
+                <div className="social__title">COMMUNITY</div>
                 <div className="social__title-sub">Empowering metaworlds</div>
                 <div className="social__item-container">
                     <SocialItem
@@ -107,7 +107,7 @@ export const Social: React.FC = () => {
                         desc="Release notes and major updates."
                     />
                 </div>
-                <div className="social__title news"></div>
+                <div className="social__title">NEWS</div>
                 <div className="social__title-sub">Save you a little time in this rapid changing space</div>
                 <NewList onItemClick={openNewInfoModal} />
                 <NewInfoDialog newInfo={newInfo} open={newModalOpen} onClose={closeNewInfoModal} />
