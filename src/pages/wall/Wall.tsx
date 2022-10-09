@@ -4,11 +4,10 @@ import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
 import { GAevent } from '../../utils';
-import { FEATURED_ON_DATA } from './Wall.config';
+import { FEATURED_ON_DATA, PARTNERS_DATA } from './Wall.config';
 import './Wall.less';
 
 export const Wall: React.FC = () => {
-
     useEffect(() => {
         const tl = gsap.timeline();
         tl.fromTo(
@@ -21,12 +20,12 @@ export const Wall: React.FC = () => {
                 duration: 0.5,
                 display: 'none',
                 opacity: 0,
-            }
+            },
         );
         return () => {
             tl.then();
-        }
-    }, [])
+        };
+    }, []);
     usePageVisible(PageType.Wall, () => {
         return {
             onVisible: () => {
@@ -41,7 +40,7 @@ export const Wall: React.FC = () => {
                         duration: 0.5,
                         display: 'block',
                         opacity: 1,
-                    }
+                    },
                 );
                 return tl.then();
             },
@@ -57,27 +56,48 @@ export const Wall: React.FC = () => {
                         duration: 0.5,
                         display: 'none',
                         opacity: 0,
-                    }
+                    },
                 );
                 return tl.then();
             },
         };
     });
     return (
-        <div className='wall'>
+        <div className="wall">
             <ButterflyGL page={PageType.Wall} />
-            <div className='wall__info'>
-                <div className='wall__title-1'>Investors &amp; Partners</div>
-                <div className='wall__dot-1'></div>
-                <div className='wall__logo-1'></div>
-                <div className='wall__title-2'>Featured on</div>
-                <div className='wall__dot-2'></div>
-                {/* <div className='wall__logo-2'></div> */}
-                <div  className='wall__featured-on'>
+            <div className="wall__info">
+                <div className="wall__title-1">Investors &amp; Partners</div>
+                <div className="wall__dot-1"></div>
+                <div className="wall-partners">
+                    {PARTNERS_DATA.map((arr) => (
+                        <div className="wall-partners__row">
+                            {arr.map(({ name, href, logo, style }) => (
+                                <img
+                                    style={style}
+                                    src={logo}
+                                    key={name}
+                                    alt={name}
+                                    onClick={() => {
+                                        window.open(href, '_blank');
+                                    }}
+                                />
+                            ))}
+                        </div>
+                    ))}
+                </div>
+                <div className="wall__title-2">Featured on</div>
+                <div className="wall__dot-2"></div>
+                <div className="wall__featured-on">
                     {FEATURED_ON_DATA.map((item, index) => {
-                        return <div key={item.name} className={`wall__featured-on-${index + 1} wall__featured-on-item`} onClick={() => {
-                            window.open(item.url)
-                        }}></div>
+                        return (
+                            <div
+                                key={item.name}
+                                className={`wall__featured-on-${index + 1} wall__featured-on-item`}
+                                onClick={() => {
+                                    window.open(item.href, '_blank');
+                                }}
+                            ></div>
+                        );
                     })}
                 </div>
 
