@@ -37,15 +37,26 @@
         opacity: 0.8;
     }
 
-    &__logo-1 {
-        .bgFull2x('wall/logo-1@2x.png');
-        margin-bottom: 80px;
-        height: 136px;
-    }
-
-    &__logo-2 {
-        .bgFull2x('wall/logo-2@2x.png');
-        margin-bottom: 80px;
+    &-partners {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        margin-bottom: 6.25rem;
+        &__row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 1.625rem;
+            max-height: fit-content;
+            gap: 1.5rem;
+            img {
+                height: 100%;
+                cursor: pointer;
+                object-fit: contain;
+                pointer-events: auto;
+            }
+        }
     }
 
     &__featured-on {
@@ -57,25 +68,25 @@
             cursor: pointer;
         }
         &-1 {
-            .bgFull2x('wall/yahoo_finance@2x.png');
+            .bgFull2x('wall/featured/yahoo_finance@2x.png');
         }
         &-2 {
-            .bgFull2x('wall/market_watch@2x.png');
+            .bgFull2x('wall/featured/market_watch@2x.png');
         }
         &-3 {
-            .bgFull2x('wall/finanzen_net@2x.png');
+            .bgFull2x('wall/featured/finanzen_net@2x.png');
         }
         &-4 {
-            .bgFull2x('wall/seeking_alpha@2x.png');
+            .bgFull2x('wall/featured/seeking_alpha@2x.png');
         }
         &-5 {
-            .bgFull2x('wall/benzinga@2x.png');
+            .bgFull2x('wall/featured/benzinga@2x.png');
         }
         &-6 {
-            .bgFull2x('wall/morning_star@2x.png');
+            .bgFull2x('wall/featured/morning_star@2x.png');
         }
         &-7 {
-            .bgFull2x('wall/just_games@2x.png');
+            .bgFull2x('wall/featured/just_games@2x.png');
         }
     }
 
@@ -108,14 +119,6 @@
         &__info {
             transform: translate(-50%, -50%) scale(0.47);
             transform-origin: center center;
-        }
-
-        &__logo-1 {
-            .bgFull('wall/logo-1.png');
-        }
-
-        &__logo-2 {
-            .bgFull('wall/logo-2.png');
         }
     }
 }
