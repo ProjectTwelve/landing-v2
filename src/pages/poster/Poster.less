@@ -1,199 +1,198 @@
 @import '../../styles/variables.less';
-// @import '~swiper/swiper.less';
 
 .poster {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-  &__bg {
-    position: absolute;
-    overflow: hidden;
-  }
-  &__img-wrap {
-    .f-pseudo();
-    transform: translate3d(0, 0, 0);
-    will-change: transform;
-  }
-  &__img {
-    .f-pseudo();
-  }
-
-  &__info {
-    position: absolute;
-    z-index: 10;
-    top: 50%;
-    margin-top: -200px;
-    right: (60 / @designWidth * 100%);
-    text-align: left;
-    user-select: none;
-
-    &-wrap {
-      .f-pseudo();
-    }
-  }
-  &__slogan {
-    .bgFull2x('poster/slogan@2x.png');
-    margin-left: -6px;
-  }
-  &__sub-title {
-    font-size: 34px;
-    line-height: 34px;
-    margin-top: 22px;
-    margin-bottom: 17px;
-  }
-  &__small-text-1 {
-    margin-bottom: 6px;
-    color: rgba(255, 255, 255, 0.9);
-  }
-  &__small-text-2 {
-    color: rgba(255, 255, 255, 0.9);
-  }
-
-  &__features {
-    display: flex;
-    align-items: flex-start;
-    padding-top: 51px;
+    width: 100%;
+    height: 100%;
     position: relative;
-
-    &-title {
-      font-size: 20px;
-      height: 20px;
-      color: #fff;
-      padding-right: 16px;
+    overflow: hidden;
+    &__bg {
+        position: absolute;
+        overflow: hidden;
+    }
+    &__img-wrap {
+        .f-pseudo();
+        transform: translate3d(0, 0, 0);
+        will-change: transform;
+    }
+    &__img {
+        .f-pseudo();
     }
 
-    &-item {
-      &-title {
-        .f-font-tt;
-        color: #000;
-        font-size: 16px;
-        line-height: 22px;
-        background: #fff;
-        border-radius: 4px;
-        display: inline-block;
-        padding: 0 8px;
-        position: relative;
-        margin-left: 26px;
-        margin-bottom: 19px;
+    &__info {
+        position: absolute;
+        z-index: 10;
+        top: 50%;
+        margin-top: -200px;
+        right: (60 / @designWidth * 100%);
+        text-align: left;
+        user-select: none;
 
-        &::before {
-          content: '';
-          position: absolute;
-          width: 1px;
-          height: 100%;
-          transform: scale(1, 0.7);
-          left: -22px;
-          background: #fff;
-          opacity: 0.7;
+        &-wrap {
+            .f-pseudo();
         }
-      }
-      &-desc {
-        color: #fff;
-        font-size: 16px;
-        line-height: 18px;
+    }
+    &__slogan {
+        .bgFull2x('poster/slogan@2x.png');
+        margin-left: -6px;
+    }
+    &__sub-title {
+        font-size: 34px;
+        line-height: 34px;
+        margin-top: 22px;
+        margin-bottom: 17px;
+    }
+    &__small-text-1 {
         margin-bottom: 6px;
-        margin-left: 26px;
+        color: rgba(255, 255, 255, 0.9);
+    }
+    &__small-text-2 {
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    &__features {
+        display: flex;
+        align-items: flex-start;
+        padding-top: 51px;
         position: relative;
 
-        &::before {
-          content: '';
-          position: absolute;
-          width: 1px;
-          height: 100%;
-          transform: scale(1, 0.9);
-          left: -22px;
-          background: #fff;
-          opacity: 0.15;
+        &-title {
+            font-size: 20px;
+            height: 20px;
+            color: #fff;
+            padding-right: 16px;
         }
-      }
+
+        &-item {
+            &-title {
+                .f-font-tt;
+                color: #000;
+                font-size: 16px;
+                line-height: 22px;
+                background: #fff;
+                border-radius: 4px;
+                display: inline-block;
+                padding: 0 8px;
+                position: relative;
+                margin-left: 26px;
+                margin-bottom: 19px;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    width: 1px;
+                    height: 100%;
+                    transform: scale(1, 0.7);
+                    left: -22px;
+                    background: #fff;
+                    opacity: 0.7;
+                }
+            }
+            &-desc {
+                color: #fff;
+                font-size: 16px;
+                line-height: 18px;
+                margin-bottom: 6px;
+                margin-left: 26px;
+                position: relative;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    width: 1px;
+                    height: 100%;
+                    transform: scale(1, 0.9);
+                    left: -22px;
+                    background: #fff;
+                    opacity: 0.15;
+                }
+            }
+        }
     }
-  }
 }
 
 .poster-features-swiper-container {
-  position: relative;
-  overflow: hidden;
-  width: 500px;
-  height: 400px;
+    position: relative;
+    overflow: hidden;
+    width: 500px;
+    height: 400px;
 
-  .swiper-slide {
-    width: 100%;
-    height: 100%;
-  }
+    .swiper-slide {
+        width: 100%;
+        height: 100%;
+    }
 }
 
 .poster-logos-swiper-container {
-  position: absolute;
-  right: 5.6%;
-  bottom: 40.45%;
-  width: 7.36416%;
-  height: 2.96296%;
-  overflow: hidden;
+    position: absolute;
+    right: 5.6%;
+    bottom: 40.45%;
+    width: 7.36416%;
+    height: 2.96296%;
+    overflow: hidden;
 
-  .swiper-slide {
-    width: 100%;
-    height: 100%;
-    background-size: contain;
-    background-position: center;
-    &--1 {
-      .bg('poster/logo-1@2x.png');
+    .swiper-slide {
+        width: 100%;
+        height: 100%;
+        background-size: contain;
+        background-position: center;
+        &--1 {
+            .bg('poster/logo-1@2x.png');
+        }
+        &--2 {
+            .bg('poster/logo-2@2x.png');
+        }
+        &--3 {
+            .bg('poster/logo-3@2x.png');
+        }
+        &--4 {
+            .bg('poster/logo-4@2x.png');
+        }
+        &--5 {
+            .bg('poster/logo-5@2x.png');
+        }
+        &--6 {
+            .bg('poster/logo-6@2x.png');
+        }
+        &--7 {
+            .bg('poster/logo-7@2x.png');
+        }
+        &--8 {
+            .bg('poster/logo-8@2x.png');
+        }
+        &--9 {
+            .bg('poster/logo-9@2x.png');
+        }
+        &--10 {
+            .bg('poster/logo-10@2x.png');
+        }
     }
-    &--2 {
-      .bg('poster/logo-2@2x.png');
-    }
-    &--3 {
-      .bg('poster/logo-3@2x.png');
-    }
-    &--4 {
-      .bg('poster/logo-4@2x.png');
-    }
-    &--5 {
-      .bg('poster/logo-5@2x.png');
-    }
-    &--6 {
-      .bg('poster/logo-6@2x.png');
-    }
-    &--7 {
-      .bg('poster/logo-7@2x.png');
-    }
-    &--8 {
-      .bg('poster/logo-8@2x.png');
-    }
-    &--9 {
-      .bg('poster/logo-9@2x.png');
-    }
-    &--10 {
-      .bg('poster/logo-10@2x.png');
-    }
-  }
 }
 
 .body-mobile {
-  .poster {
-    &__info {
-      transform: translate(0, -6%) scale(0.6);
-      transform-origin: right center;
-      padding-right: env(safe-area-inset-right);
-      padding-right: constant(safe-area-inset-right);
+    .poster {
+        &__info {
+            transform: translate(0, -6%) scale(0.6);
+            transform-origin: right center;
+            padding-right: env(safe-area-inset-right);
+            padding-right: constant(safe-area-inset-right);
+        }
     }
-  }
 }
 
 /**  小屏幕适配 */
 @media only screen and (max-height: 680px) {
-  .poster {
-    &__info {
-      margin-top: -150px;
+    .poster {
+        &__info {
+            margin-top: -150px;
+        }
+        &__small-text-1 {
+            display: none;
+        }
+        &__small-text-2 {
+            display: none;
+        }
+        &__features {
+            padding-top: 20px;
+        }
     }
-    &__small-text-1 {
-      display: none;
-    }
-    &__small-text-2 {
-      display: none;
-    }
-    &__features {
-      padding-top: 20px;
-    }
-  }
 }
