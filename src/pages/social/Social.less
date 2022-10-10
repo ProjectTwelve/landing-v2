@@ -12,7 +12,7 @@
         padding: 0 90px;
         left: 50%;
         top: 70px;
-        padding-top: 9vmin;
+        padding-top: 8vmin;
         bottom: 7vmin;
         transform: translate(-50%, 0);
         width: 80%;
@@ -21,6 +21,7 @@
         flex-direction: column;
         z-index: 1;
         pointer-events: none;
+        transition: all 0.5s ease-in-out;
     }
     &__community {
         display: flex;
@@ -79,8 +80,8 @@
 @media screen and (max-height: 540px) {
     .social {
         &__wrapper {
-            width: 100%;
-            transform: translate(-50%, -34%) scale(0.5);
+            width: 125%;
+            transform: translate(-50%, -30%) scale(0.5);
             transform-origin: center center;
         }
         &__title {
