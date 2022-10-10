@@ -73,8 +73,8 @@ export const Wall: React.FC = () => {
                 <div className="wall__title-1">Investors &amp; Partners</div>
                 <div className="wall__dot-1"></div>
                 <div className="wall-partners">
-                    {PARTNERS_DATA.map((arr) => (
-                        <div className="wall-partners__row">
+                    {PARTNERS_DATA.map((arr, idx) => (
+                        <div className="wall-partners__row" key={idx}>
                             {arr.map(({ name, href, logo, style }) => (
                                 <img
                                     style={style}
