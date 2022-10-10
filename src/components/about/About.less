@@ -5,7 +5,6 @@
     height: 100%;
     position: relative;
     overflow: hidden;
-    background: #000;
     &::after {
         content: '';
         position: absolute;
@@ -15,53 +14,7 @@
         top: 0;
         height: 200px;
         pointer-events: none;
-        background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
     }
-
-    &__info {
-        .f-align(2018px, 1306px);
-        .bg('about/info@2x.png');
-        background-size: contain;
-
-        // info位置
-        transform: translate(10px, -150px);
-
-        &-item {
-            position: absolute;
-        }
-        &-name {
-            position: absolute;
-            font-size: 16px;
-            line-height: 18px;
-            color: #fff;
-            top: 50%;
-            transform: translate(0, -50%);
-            white-space: nowrap;
-            opacity: 0.8;
-            &--left {
-                right: 16px;
-                &.about__info-name--headquarter {
-                    right: 22px;
-                }
-                &.about__info-name--origin {
-                    right: 35px;
-                }
-            }
-            &--right {
-                left: 16px;
-                &.about__info-name--headquarter {
-                    left: 22px;
-                }
-                &.about__info-name--origin {
-                    left: 35px;
-                }
-            }
-            &--none {
-                display: none;
-            }
-        }
-    }
-
     &__helper {
         position: absolute;
         left: (56 / @designWidth * 100%);
@@ -363,18 +316,16 @@
         &::after {
             height: 70px;
         }
-        &__info {
-            .bg('about/info@0.5x.png');
-            transform: translate(1%, -5%) scale(0.42);
-            transform-origin: center center;
-        }
         &__helper {
-            transform: scale(0.7);
-            transform-origin: 70% 70%;
-            margin-bottom: -26px;
+            &-item {
+                transform: scale(0.7);
+                transform-origin: left;
+                margin-bottom: -2.25rem;
+            }
         }
         &__partner {
-            transform: scale(0.6);
+            bottom: 0;
+            transform: scale(0.5);
         }
     }
 }
@@ -384,7 +335,7 @@
     .body-pc {
         .about {
             &__info {
-                transform: scale(0.85);
+                transform: scale(0.6);
                 transform-origin: center 20%;
             }
         }

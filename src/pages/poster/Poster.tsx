@@ -7,6 +7,7 @@ import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/effect-fade';
 import { GAevent, IS_MOBILE, requestOrientationPermission } from '../../utils';
+import { About } from '../../components/about/About';
 import { PageType } from '../app/App.config';
 import { loadingEE, LoadingSourceType, usePageVisible } from '../app/App.utils';
 import { POSTER_FEATURES } from './Poster.config';
@@ -201,6 +202,7 @@ export const Poster: React.FC = () => {
                     </div>
                 </div>
             </div>
+            <About />
         </div>
     );
 
