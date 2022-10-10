@@ -28,9 +28,8 @@
         flex-direction: column;
         &-container {
             width: 100%;
-            display: grid;
-            grid-template-columns: repeat(6, minmax(0, 1fr));
-            gap: 20px;
+            display: flex;
+            gap: 0.75rem;
             margin-bottom: 4.75rem;
             align-items: stretch;
         }
@@ -60,10 +59,10 @@
         opacity: 0.6;
     }
 }
-@media screen and (min-height: 540px) and (max-height: 768px) {
+@media screen and (min-height: 540px) and (max-height: 820px) {
     .social {
         &__wrapper {
-            width: 100%;
+            width: 105%;
             transform: translate(-50%, -10%) scale(0.8);
             transform-origin: center center;
         }
@@ -80,7 +79,7 @@
 @media screen and (max-height: 540px) {
     .social {
         &__wrapper {
-            width: 125%;
+            width: 140%;
             transform: translate(-50%, -30%) scale(0.5);
             transform-origin: center center;
         }

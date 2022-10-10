@@ -80,7 +80,7 @@ export const Social: React.FC = () => {
                 }}
             >
                 <div className="social__community">
-                    <div className="social__title">COMMUNITY</div>
+                    <div className="social__title">{'community & links'}</div>
                     <div className="social__community-container">
                         <SocialItem
                             className="discord"
@@ -124,7 +124,7 @@ export const Social: React.FC = () => {
                     </div>
                 </div>
                 <div className="social__news">
-                    <div className="social__title">NEWS</div>
+                    <div className="social__title">latest</div>
                     <NewList onItemClick={openNewInfoModal} />
                     <NewInfoDialog newInfo={newInfo} open={newModalOpen} onClose={closeNewInfoModal} />
                 </div>
