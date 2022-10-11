@@ -103,15 +103,7 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
     useEffect(() => {
         setMode('mesh');
 
-        timeout && clearTimeout(timeout);
-        timeout = setTimeout(() => {
-            const newMode = Math.random() + Math.random() > 1 ? 'point' : 'triangle';
-            setMode(newMode);
-        }, 4000)
-        // controlsRef.current?.reset();
-        return () => {
-            timeout && clearTimeout(timeout);
-        }
+        
     }, [props.avatar]);
 
     useEffect(() => {
@@ -255,6 +247,11 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
                 }, 100);
 
                 setLoading(false);
+                timeout && clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    const newMode = Math.random() + Math.random() > 1 ? 'point' : 'triangle';
+                    setMode(newMode);
+                }, 4000)
             },
             (error) => {
                 console.error(error);
@@ -274,6 +271,9 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
         }
 
         controlsRef.current!.reset();
+        return () => {
+            timeout && clearTimeout(timeout);
+        }
     }, [props.avatar]);
 
     const showPointsTick = (visible = true) => {
