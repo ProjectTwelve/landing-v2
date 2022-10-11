@@ -268,6 +268,12 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
 
             const url = AVATAR_GL_INFO_MAP[props.avatar].GLTFURL;
             load(url, props.avatar);
+        }else {
+            timeout && clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                const newMode = Math.random() + Math.random() > 1 ? 'point' : 'triangle';
+                setMode(newMode);
+            }, 4000)
         }
 
         controlsRef.current!.reset();
