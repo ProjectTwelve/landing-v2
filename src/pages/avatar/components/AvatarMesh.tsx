@@ -31,6 +31,7 @@ import { BloomPass } from 'three/examples/jsm/postprocessing/BloomPass.js';
 import { AVATAR_GL_INFO_MAP, AvatarType } from '../Avatar.config';
 import { autoDispose } from './utils/autoDispose';
 import { IS_MOBILE } from '../../../utils';
+import { Timeout } from 'ahooks/lib/useRequest/src/types';
 
 // import * as P from './process'
 
@@ -98,9 +99,19 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
         return directionalLight;
     }, []);
 
+    let timeout: Timeout | null = null;
     useEffect(() => {
         setMode('mesh');
+
+        timeout && clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            const newMode = Math.random() + Math.random() > 1 ? 'point' : 'triangle';
+            setMode(newMode);
+        }, 4000)
         // controlsRef.current?.reset();
+        return () => {
+            timeout && clearTimeout(timeout);
+        }
     }, [props.avatar]);
 
     useEffect(() => {
@@ -114,6 +125,7 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
         };
         const end = () => {
             if (!moved) {
+                timeout && clearTimeout(timeout);
                 setMode((old) => {
                     if (old === 'mesh') return Math.random() + Math.random() > 1 ? 'point' : 'triangle';
 
@@ -271,7 +283,7 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
                 if (visible) {
                     matr.uniforms.opacity.value = lerp(matr.uniforms.opacity.value, 1, 0.1);
                 } else {
-                    matr.uniforms.opacity.value = lerp(matr.uniforms.opacity.value, 0, 0.2);
+                    matr.uniforms.opacity.value = lerp(matr.uniforms.opacity.value, 0, 1);
                     // matr.opacity = matr.opacity * 0.8;
                 }
             }
@@ -308,7 +320,7 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
                 if (visible) {
                     matr.opacity = lerp(matr.opacity, 1, 0.1);
                 } else {
-                    matr.opacity = lerp(matr.opacity, 0, 0.2);
+                    matr.opacity = lerp(matr.opacity, 0, 1);
                 }
             }
         });
