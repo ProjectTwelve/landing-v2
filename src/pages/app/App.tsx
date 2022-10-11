@@ -28,7 +28,7 @@ export const App = () => {
             if (progress >= 1) {
                 setTimeout(() => {
                     setCurrent(PageType.Home);
-                }, 700);
+                }, 2000);
             }
         };
         if (isLoading) {
