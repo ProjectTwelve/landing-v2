@@ -1,5 +1,6 @@
 @import '../../styles/variables.less';
 
+/* prettier-ignore */
 .avatar {
   width: 100%;
   height: 100%;
@@ -52,6 +53,7 @@
   }
 
   &__info {
+    pointer-events: none;
     position: absolute;
     z-index: 10;
     top: 50%;
@@ -76,6 +78,7 @@
   }
 
   &__btn {
+    pointer-events: all;
     .bgFull2x('avatar/arrow-1@2x.png');
     cursor: pointer;
 
@@ -99,22 +102,22 @@
 }
 
 .body-mobile {
-  .avatar {
-    &::after {
-      height: 70px;
+    .avatar {
+        &::after {
+            height: 70px;
+        }
+        &__nav {
+            padding-right: env(safe-area-inset-right);
+            padding-right: constant(safe-area-inset-right);
+        }
+        &__info {
+            padding-left: env(safe-area-inset-left);
+            padding-left: constant(safe-area-inset-left);
+            transform: translate(0, -50%) scale(0.6);
+            transform-origin: left center;
+        }
+        &__small-text-1 {
+            margin-bottom: 18px;
+        }
     }
-    &__nav {
-      padding-right: env(safe-area-inset-right);
-      padding-right: constant(safe-area-inset-right);
-    }
-    &__info {
-      padding-left: env(safe-area-inset-left);
-      padding-left: constant(safe-area-inset-left);
-      transform: translate(0, -50%) scale(0.6);
-      transform-origin: left center;
-    }
-    &__small-text-1 {
-      margin-bottom: 18px;
-    }
-  }
 }

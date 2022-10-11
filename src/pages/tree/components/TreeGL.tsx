@@ -1,121 +1,149 @@
 /* eslint-disable */
-import React, { useContext, useEffect, useRef } from 'react';
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { getPublicAssetPath, IS_MOBILE } from '../../../utils';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { IS_MOBILE } from '../../../utils';
 import { PageType } from '../../app/App.config';
-import {
-    AppContext,
-    loadingEE,
-    LoadingSourceType,
-    usePageVisible,
-} from '../../app/App.utils';
+import { usePageVisible } from '../../app/App.utils';
 import './TreeGL.less';
 
 export const TreeGL = (props) => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null!);
+    const vidRef = useRef<HTMLVideoElement>(null!);
+
+    const [playing, setPlaying] = useState(false);
+
+    useEffect(() => {
+        /**
+         * mouse controlling vid
+         */
+        let controlling = false;
+
+        const vid = vidRef.current;
+
+        /**
+         * raf id
+         */
+        let id = 0;
+
+        /**
+         * vid full duration
+         */
+        const d = 24;
+
+        /**
+         * target time.
+         * add scalar so that it wont be negative
+         */
+        let target = d * 100000;
+
+        /**
+         * currentTime.
+         * add scalar so that it wont be negative
+         */
+        let currentTime = d * 100000;
+
+        const tick = () => {
+            id = requestAnimationFrame(tick);
+            // console.log('playing', playing);
+
+            if (!playing) return;
+
+            // auto rotation
+            if (!controlling) target += 0.03;
+
+            if (!vid.seeking) {
+                currentTime = lerp(currentTime, target, 0.1);
+
+                vid.currentTime = Math.round((currentTime % d) * 30) / 30;
+            } else {
+                // console.log('seeking', vid.seeking);
+            }
+        };
+        id = requestAnimationFrame(tick);
+
+        const container = containerRef.current;
+
+        let initX = 0;
+        let initTarget = 0;
+
+        const start = (e: MouseEvent | TouchEvent) => {
+            controlling = true;
+            target = currentTime;
+            initTarget = target;
+
+            const clientX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
+
+            initX = clientX;
+        };
+        const end = () => {
+            controlling = false;
+        };
+        const move = (e: MouseEvent | TouchEvent) => {
+            const clientX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
+
+            if (controlling) {
+                target = initTarget + (clientX - initX) * 0.02;
+            }
+        };
+
+        if (IS_MOBILE) {
+            container.addEventListener('touchstart', start);
+            container.addEventListener('touchend', end);
+            container.addEventListener('touchmove', move);
+        } else {
+            container.addEventListener('mousedown', start);
+            container.addEventListener('mouseup', end);
+            container.addEventListener('mousemove', move);
+        }
+
+        return () => {
+            if (IS_MOBILE) {
+                container.removeEventListener('touchstart', start);
+                container.removeEventListener('touchend', end);
+                container.removeEventListener('touchmove', move);
+            } else {
+                container.removeEventListener('mousedown', start);
+                container.removeEventListener('mouseup', end);
+                container.removeEventListener('mousemove', move);
+            }
+
+            cancelAnimationFrame(id);
+        };
+    }, [playing]);
 
     usePageVisible(PageType.Tree, () => {
-        const canvas = canvasRef.current;
-        const container = containerRef.current;
-        if (!canvas || !container) {
-            return;
-        }
-        let frameId: number;
-        let renderedImageIndex = -1;
-        let imageDataArray: HTMLImageElement[] = [];
-        let loaded = false;
-        let loading = false;
-
-        const context = canvas.getContext('2d');
-        canvas.width = IS_MOBILE ? 284 : 960;
-        canvas.height = IS_MOBILE ? 320 : 1080;
-
-        const camera = new THREE.PerspectiveCamera(40, 1, 1, 100);
-        camera.position.set(5, 2, 8);
-        camera.lookAt(0, 0, 0);
-        const controls = new OrbitControls(camera, container);
-        controls.update();
-        controls.enablePan = false;
-        controls.enableDamping = true;
-        controls.enableZoom = false;
-        controls.minPolarAngle = Math.PI * 0.5;
-        controls.maxPolarAngle = Math.PI * 0.5;
-        controls.autoRotate = true;
-        controls.autoRotateSpeed = 1.5;
-
-        function load() {
-            if (loaded || loading) {
-                return;
-            }
-            loading = true;
-            container?.classList.add('app-container-loading');
-            container?.classList.add('loading');
-            const imageUrls = new Array(480).fill(0).map((_, i) => {
-                return getPublicAssetPath(
-                    `files/tree/tree-model${IS_MOBILE ? '-mobile' : ''}/${
-                        i + 1 + 1000
-                    }.jpg`
-                );
-            });
-            const imageLoader = new THREE.ImageLoader();
-            Promise.all(imageUrls.map((url) => imageLoader.load(url)))
-                .then((data) => {
-                    imageDataArray = data;
-                    render();
-                    loaded = true;
-                    loadingEE.emit(
-                        `progress.${LoadingSourceType.TREE_MODEL}`,
-                        1
-                    );
-                })
-                .finally(() => {
-                    loading = false;
-                    container?.classList.remove('loading');
-                });
-        }
-        function render() {
-            if (loading || !loaded) {
-                return;
-            }
-            controls.update();
-            const index = Math.floor(
-                (((controls.getAzimuthalAngle() / Math.PI + 1) / 2) *
-                    imageDataArray.length +
-                    imageDataArray.length +
-                    0) %
-                    imageDataArray.length
-            );
-            // console.log(index);
-            if (renderedImageIndex !== index && context) {
-                renderedImageIndex = index;
-                context.drawImage(imageDataArray[index], 0, 0);
-            }
-        }
-        function animate() {
-            frameId = requestAnimationFrame(animate);
-            render();
-        }
-
-        /** 首页loading结束后，再开始loading */
-        loadingEE.on('loaded', () => setTimeout(load, 200));
-
         return {
             onVisible: () => {
-                load();
-                animate();
+                vidRef.current.play();
+                vidRef.current.pause();
+                // console.log('tree, visible');
+                setPlaying(true);
             },
             onHide: () => {
-                cancelAnimationFrame(frameId);
+                // console.log('tree, hide');
+                setPlaying(false);
             },
-            onDestroy: () => {},
         };
     });
 
     return (
-        <div className='tree-gl' ref={containerRef}>
-            <canvas className='tree-gl-canvas' ref={canvasRef} />
+        <div className="tree-gl" ref={containerRef}>
+            <video
+                ref={vidRef}
+                className="tree-gl-canvas"
+                src="/files/vid/tree-1k.mp4"
+                id="vid"
+                muted
+                loop
+                // autoPlay
+                playsInline
+            ></video>
+            {/* <canvas className='tree-gl-canvas' ref={canvasRef} /> */}
         </div>
     );
 };
+
+function lerp(v0: number, v1: number, t: number) {
+    return v0 * (1 - t) + v1 * t;
+}
+
+export default TreeGL;
