@@ -42,8 +42,8 @@ export const Poster: React.FC = () => {
                     visibility: 'visible',
                 });
                 handleResize();
+                parallax?.enable();
                 orientPermissionEE.on('orient.granted', () => {
-                    parallax?.enable();
                     parallax?.updateLayers();
                 });
                 requestOrientationPermission();
