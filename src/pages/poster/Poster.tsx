@@ -150,7 +150,7 @@ export const Poster: React.FC = () => {
                         onLoad={() => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_4}`, 1)}
                     />
                     <div className="poster-logos-swiper-container swiper-container">
-                        <div className="swiper-wrapper ">
+                        <div className="swiper-wrapper">
                             <div className="swiper-slide swiper-slide--1"></div>
                             <div className="swiper-slide swiper-slide--2"></div>
                             <div className="swiper-slide swiper-slide--3"></div>
@@ -161,6 +161,11 @@ export const Poster: React.FC = () => {
                             <div className="swiper-slide swiper-slide--8"></div>
                             <div className="swiper-slide swiper-slide--9"></div>
                             <div className="swiper-slide swiper-slide--10"></div>
+                            <div className="swiper-slide swiper-slide--11"></div>
+                            <div className="swiper-slide swiper-slide--12"></div>
+                            <div className="swiper-slide swiper-slide--13"></div>
+                            <div className="swiper-slide swiper-slide--14"></div>
+                            <div className="swiper-slide swiper-slide--15"></div>
                         </div>
                         <div className="swiper-pagination"></div>
                     </div>
