@@ -1,9 +1,11 @@
 @import '../../../styles/variables.less';
 
 .social-item {
+    flex-grow: 1;
     padding: 20px;
     display: flex;
-    gap: 20px;
+    align-items: center;
+    gap: 0.875rem;
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(3px);
     border-radius: 12px;
@@ -11,36 +13,47 @@
     overflow: hidden;
     background-size: 105% 105%;
     background-position: 50% 50%;
+    cursor: pointer;
     transition: 0.1s linear;
+    pointer-events: auto;
     &:hover {
         transform: translate(0, -5px);
     }
-    &.discord {
+    &.discord:hover {
         .bg('social/discord-mask.png');
     }
-    &.twitter {
+    &.twitter:hover {
         .bg('social/twitter-mask.png');
     }
-    &.mirror {
+    &.mirror:hover {
         .bg('social/mirror-mask.png');
     }
+    &.airdrop:hover {
+        .bg('social/airdrop-mask.png');
+    }
+    &.badge:hover {
+        .bg('social/badge-mask.png');
+    }
+    &.whitepaper:hover {
+        .bg('social/whitepaper-mask.png');
+    }
+
     &__icon {
         height: 36px;
+        img {
+            height: 100%;
+        }
     }
     &__content {
         display: flex;
-        align-items: center;
+        flex-wrap: wrap;
         gap: 12px;
         &-title {
-            font-weight: 600;
-            font-size: 18px;
-            line-height: 18px;
-            color: #ffffff;
-        }
-        &-desc {
             text-align: center;
-            color: #ffffff99;
-            margin-top: 2px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #ffffff;
+            text-transform: capitalize;
         }
     }
 }

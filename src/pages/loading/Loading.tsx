@@ -13,10 +13,10 @@ export const Loading: React.FC = () => {
     let tween: gsap.core.Tween;
 
     usePageVisible(PageType.Loading, () => {
-        const handleProgress = (progress) => {
+        const handleProgress = (progress, dur = 0.6) => {
             tween?.kill();
             tween = gsap.to(loadingProgressObj, {
-                duration: 0.6,
+                duration: dur,
                 num: progress * 100,
                 onUpdate: function () {
                     progressTextRef.current!.innerHTML = `${Math.floor(
@@ -28,8 +28,9 @@ export const Loading: React.FC = () => {
 
         return {
             onVisible: () => {
-                GAevent('webview','loadin-webview');
-                loadingEE.on('progress', handleProgress);
+                GAevent('webview', 'loadin-webview');
+                handleProgress(0.6, 5);
+                loadingEE.on('loaded', () => handleProgress(1, 2));
                 gsap.set('.page-wrap-loading', {
                     display: 'block',
                     opacity: 1,
@@ -43,7 +44,6 @@ export const Loading: React.FC = () => {
                     ease: 'power1.inOut',
                 });
                 loadingEE.off('progress', handleProgress);
-                handleProgress(1);
             },
             onDestroy: () => {},
         };

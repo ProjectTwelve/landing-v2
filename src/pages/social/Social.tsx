@@ -1,18 +1,20 @@
+import gsap from 'gsap';
 import { useCallback, useState } from 'react';
+import { NewInfoType } from '../../api/news/news.type';
+import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
+import { usePageLockScroll } from '../../hooks/usePageLockScroll';
 import { GAevent } from '../../utils';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
-import gsap from 'gsap';
-import './Social.less';
-import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
-import { SocialItem } from './components/SocialItem';
-import { NewList } from './components/news/NewList';
 import NewInfoDialog from './components/news/NewInfoDialog';
-import { NewInfoType } from '../../api/news/news.type';
-import { usePageLockScroll } from '../../hooks/usePageLockScroll';
+import { NewList } from './components/news/NewList';
+import { SocialItem } from './components/SocialItem';
+import './Social.less';
 
 export const Social: React.FC = () => {
     const [newModalOpen, setOpen] = useState(false);
+    const [isVisible, setVisible] = useState(false);
+
     const [newInfo, setNewInfo] = useState<NewInfoType | null>(null);
 
     usePageLockScroll(newModalOpen); // 弹窗时阻止滚动
@@ -34,6 +36,7 @@ export const Social: React.FC = () => {
         return {
             onVisible: () => {
                 const tl = gsap.timeline();
+                setVisible(true);
                 tl.fromTo(
                     '.page-wrap-social',
                     {
@@ -48,6 +51,7 @@ export const Social: React.FC = () => {
                 return tl.then();
             },
             onHide: () => {
+                setVisible(false);
                 const tl = gsap.timeline();
                 tl.fromTo(
                     '.page-wrap-social',
@@ -67,7 +71,7 @@ export const Social: React.FC = () => {
     });
 
     return (
-        <div className="social">
+        <div className={`social${isVisible ? null : ' hidden'}`}>
             <ButterflyGL page={PageType.Social} />
             <div
                 className="social__wrapper"
@@ -79,38 +83,55 @@ export const Social: React.FC = () => {
                     }
                 }}
             >
-                <div className="social__title community"></div>
-                <div className="social__title-sub">Empowering metaworlds</div>
-                <div className="social__item-container">
-                    <SocialItem
-                        className="discord"
-                        onClick={() => GAevent('event', 'Soc-discord')}
-                        href="https://discord.com/invite/EMrbsZPbxs"
-                        icon={require('../../assets/social/discord.png')}
-                        title="Discord"
-                        desc="Engage in the community."
-                    />
-                    <SocialItem
-                        className="twitter"
-                        onClick={() => GAevent('event', 'Soc-twi')}
-                        href="https://twitter.com/_p12_"
-                        icon={require('../../assets/social/twitter.png')}
-                        title="Twitter"
-                        desc="Stay tuned for newest events."
-                    />
-                    <SocialItem
-                        className="mirror"
-                        onClick={() => GAevent('event', 'Soc-tele')}
-                        href="https://mirror.xyz/p12.eth"
-                        icon={require('../../assets/social/mirror.png')}
-                        title="Mirror"
-                        desc="Release notes and major updates."
-                    />
+                <div className="social__community">
+                    <div className="social__title">{'community & links'}</div>
+                    <div className="social__community-container">
+                        <SocialItem
+                            className="discord"
+                            onClick={() => GAevent('event', 'Soc-discord')}
+                            href="https://discord.com/invite/EMrbsZPbxs"
+                            icon={require('../../assets/social/discord.png')}
+                            title="Discord"
+                        />
+                        <SocialItem
+                            className="twitter"
+                            onClick={() => GAevent('event', 'Soc-twi')}
+                            href="https://twitter.com/_p12_"
+                            icon={require('../../assets/social/twitter.png')}
+                            title="Twitter"
+                        />
+                        <SocialItem
+                            className="mirror"
+                            onClick={() => GAevent('event', 'Soc-tele')}
+                            href="https://mirror.xyz/p12.eth"
+                            icon={require('../../assets/social/mirror.png')}
+                            title="Mirror"
+                        />
+                        <SocialItem
+                            className="airdrop"
+                            href="https://airdrop.p12.games"
+                            icon={require('../../assets/social/airdrop.png')}
+                            title="Airdrop"
+                        />
+                        <SocialItem
+                            className="badge"
+                            href="https://galaxy.eco/P12/"
+                            icon={require('../../assets/social/badge.png')}
+                            title="Badge"
+                        />
+                        <SocialItem
+                            className="whitepaper"
+                            href="https://p12.dev/whitepaper"
+                            icon={<img src={require('../../assets/social/github.png')} alt="whitepaper" />}
+                            title="Whitepaper"
+                        />
+                    </div>
                 </div>
-                <div className="social__title news"></div>
-                <div className="social__title-sub">Save you a little time in this rapid changing space</div>
-                <NewList onItemClick={openNewInfoModal} />
-                <NewInfoDialog newInfo={newInfo} open={newModalOpen} onClose={closeNewInfoModal} />
+                <div className="social__news">
+                    <div className="social__title">latest</div>
+                    <NewList onItemClick={openNewInfoModal} />
+                    <NewInfoDialog newInfo={newInfo} open={newModalOpen} onClose={closeNewInfoModal} />
+                </div>
             </div>
         </div>
     );

@@ -8,6 +8,8 @@ import { FEATURED_ON_DATA, PARTNERS_DATA } from './Wall.config';
 import './Wall.less';
 
 export const Wall: React.FC = () => {
+    const [isVisible, setVisible] = useState(false);
+
     useEffect(() => {
         const tl = gsap.timeline();
         tl.fromTo(
@@ -29,6 +31,7 @@ export const Wall: React.FC = () => {
     usePageVisible(PageType.Wall, () => {
         return {
             onVisible: () => {
+                setVisible(true);
                 GAevent('webview', 'Partners-webview');
                 const tl = gsap.timeline();
                 tl.fromTo(
@@ -45,6 +48,7 @@ export const Wall: React.FC = () => {
                 return tl.then();
             },
             onHide: () => {
+                setVisible(false);
                 const tl = gsap.timeline();
                 tl.fromTo(
                     '.page-wrap-wall',
@@ -63,14 +67,14 @@ export const Wall: React.FC = () => {
         };
     });
     return (
-        <div className="wall">
+        <div className={`wall ${isVisible ? null : ' hidden'}`}>
             <ButterflyGL page={PageType.Wall} />
             <div className="wall__info">
                 <div className="wall__title-1">Investors &amp; Partners</div>
                 <div className="wall__dot-1"></div>
                 <div className="wall-partners">
-                    {PARTNERS_DATA.map((arr) => (
-                        <div className="wall-partners__row">
+                    {PARTNERS_DATA.map((arr, idx) => (
+                        <div className="wall-partners__row" key={idx}>
                             {arr.map(({ name, href, logo, style }) => (
                                 <img
                                     style={style}
