@@ -41,7 +41,6 @@ export const Poster: React.FC = () => {
                 gsap.set('.page-wrap-poster', {
                     visibility: 'visible',
                 });
-
                 handleResize();
                 orientPermissionEE.on('orient.granted', () => {
                     parallax?.enable();
