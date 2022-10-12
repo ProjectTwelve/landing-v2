@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { NewInfoType } from '../../api/news/news.type';
 import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 import { usePageLockScroll } from '../../hooks/usePageLockScroll';
-import { GAevent } from '../../utils';
+import { GAevent, requestOrientationPermission } from '../../utils';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
 import NewInfoDialog from './components/news/NewInfoDialog';
@@ -35,6 +35,7 @@ export const Social: React.FC = () => {
     usePageVisible(PageType.Social, () => {
         return {
             onVisible: () => {
+                requestOrientationPermission();
                 const tl = gsap.timeline();
                 setVisible(true);
                 tl.fromTo(
