@@ -3,7 +3,6 @@ import { Home } from '../home/Home';
 import { Avatar } from '../avatar/Avatar';
 import { Tree } from '../tree/Tree';
 import { Poster } from '../poster/Poster';
-import { About } from '../../components/about/About';
 import { Loading } from '../loading/Loading';
 import { Wall } from '../wall/Wall';
 import { Social } from '../social/Social';
@@ -49,21 +48,21 @@ export const CONTENT_PAGES = [
         dropdown: false,
     },
     {
-        type: PageType.Poster,
-        NavText: <>The&nbsp;Editor</>,
-        Content: <Poster />,
-        dropdown: false,
-    },
-    {
         type: PageType.Avatar,
-        NavText: <>The&nbsp;Infra</>,
+        NavText: <>Infra</>,
         Content: <Avatar />,
         dropdown: false,
     },
     {
         type: PageType.Tree,
-        NavText: <>The&nbsp;Econs</>,
+        NavText: <>Econs</>,
         Content: <Tree />,
+        dropdown: false,
+    },
+    {
+        type: PageType.Poster,
+        NavText: <>Editor</>,
+        Content: <Poster />,
         dropdown: false,
     },
     {
