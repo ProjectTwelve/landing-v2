@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
-import { GAevent } from '../../utils';
+import { GAevent, requestOrientationPermission } from '../../utils';
 import { FEATURED_ON_DATA, PARTNERS_DATA } from './Wall.config';
 import './Wall.less';
 
@@ -33,6 +33,7 @@ export const Wall: React.FC = () => {
             onVisible: () => {
                 setVisible(true);
                 GAevent('webview', 'Partners-webview');
+                requestOrientationPermission();
                 const tl = gsap.timeline();
                 tl.fromTo(
                     '.page-wrap-wall',
