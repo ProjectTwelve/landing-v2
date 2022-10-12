@@ -9,7 +9,7 @@ import 'swiper/css/effect-fade';
 import { GAevent, IS_MOBILE, requestOrientationPermission } from '../../utils';
 import { About } from '../../components/about/About';
 import { PageType } from '../app/App.config';
-import { loadingEE, LoadingSourceType, usePageVisible } from '../app/App.utils';
+import { loadingEE, LoadingSourceType, orientPermissionEE, usePageVisible } from '../app/App.utils';
 import { POSTER_FEATURES } from './Poster.config';
 import './Poster.less';
 Swiper.use([Autoplay, EffectFade]);
@@ -43,10 +43,10 @@ export const Poster: React.FC = () => {
                 });
 
                 handleResize();
-
-                requestOrientationPermission().then(() => {
+                orientPermissionEE.on('orient.granted', () => {
                     parallax?.enable();
                 });
+                requestOrientationPermission();
                 logosSwiper = new Swiper('.poster-logos-swiper-container', {
                     autoplay: true,
                     loop: true,
@@ -79,6 +79,7 @@ export const Poster: React.FC = () => {
                 return tl.then();
             },
             onHide: () => {
+                orientPermissionEE.off('orient.granted');
                 parallax?.disable();
                 const tl = gsap.timeline();
                 tl.fromTo(

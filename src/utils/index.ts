@@ -2,14 +2,14 @@ import gsap from 'gsap';
 import { Howl } from 'howler';
 import { throttle } from 'lodash-es';
 import ReactGA from 'react-ga4';
+import { orientPermissionEE } from '../pages/app/App.utils';
 
 /** hack raf */
 const vendors = ['ms', 'moz', 'webkit', 'o'];
 for (let x = 0; x < vendors.length && !window.requestAnimationFrame; x++) {
     window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
     window.cancelAnimationFrame =
-        window[vendors[x] + 'CancelAnimationFrame'] ||
-        window[vendors[x] + 'CancelRequestAnimationFrame'];
+        window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
 }
 // const oldRAF = window.requestAnimationFrame;
 // window.requestAnimationFrame = (fun) => {
@@ -38,32 +38,24 @@ export function playClickAudio() {
     clickSound.play();
 }
 
-export const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-);
+export const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
 // 移动端请求陀螺仪权限
 let hasRequested = false;
 export function requestOrientationPermission() {
     return new Promise<void>((resolve) => {
-        if (
-            !hasRequested &&
-            window.DeviceOrientationEvent &&
-            (window.DeviceOrientationEvent as any).requestPermission
-        ) {
-            (window.DeviceOrientationEvent as any)
-                .requestPermission()
-                .then((r) => {
-                    hasRequested = true;
-                    // 在这里调用陀螺仪事件
-                    // 某些设备，授权后，刷新页面才能生效
-                    console.log('DeviceOrientationEvent.requestPermission', r);
-                    resolve();
-                });
+        if (!hasRequested && window.DeviceOrientationEvent && (window.DeviceOrientationEvent as any).requestPermission) {
+            (window.DeviceOrientationEvent as any).requestPermission().then((r) => {
+                hasRequested = true;
+                // 在这里调用陀螺仪事件
+                // 某些设备，授权后，刷新页面才能生效
+                console.log('DeviceOrientationEvent.requestPermission', r);
+                resolve();
+            });
         } else {
             resolve();
         }
-    });
+    }).then(() => orientPermissionEE.emit('orient.granted'));
 }
 
 export const resizeBodyRotation = throttle(() => {
@@ -78,9 +70,7 @@ export const resizeBodyRotation = throttle(() => {
 
 export function addResizeHandle(fn: Function) {
     window.addEventListener('resize', () => fn());
-    window.addEventListener('orientationchange', () =>
-        setTimeout(() => fn(), 100)
-    );
+    window.addEventListener('orientationchange', () => setTimeout(() => fn(), 100));
     fn();
     setTimeout(() => {
         fn();
