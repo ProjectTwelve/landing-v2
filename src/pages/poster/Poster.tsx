@@ -42,8 +42,9 @@ export const Poster: React.FC = () => {
                     visibility: 'visible',
                 });
                 handleResize();
-                requestOrientationPermission();
-                parallax?.enable();
+                requestOrientationPermission().then(() => {
+                    parallax?.enable();
+                });
                 logosSwiper = new Swiper('.poster-logos-swiper-container', {
                     autoplay: true,
                     loop: true,
