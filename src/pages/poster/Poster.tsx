@@ -38,13 +38,12 @@ export const Poster: React.FC = () => {
         return {
             onVisible: () => {
                 GAevent('webview', 'Editor-webview');
+                parallax?.enable();
                 gsap.set('.page-wrap-poster', {
                     visibility: 'visible',
                 });
                 handleResize();
-                requestOrientationPermission().then(() => {
-                    parallax?.enable();
-                });
+                requestOrientationPermission();
                 logosSwiper = new Swiper('.poster-logos-swiper-container', {
                     autoplay: true,
                     loop: true,
