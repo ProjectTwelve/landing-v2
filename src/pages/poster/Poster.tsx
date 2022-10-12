@@ -44,6 +44,7 @@ export const Poster: React.FC = () => {
                 handleResize();
                 orientPermissionEE.on('orient.granted', () => {
                     parallax?.enable();
+                    parallax?.updateLayers();
                 });
                 requestOrientationPermission();
                 logosSwiper = new Swiper('.poster-logos-swiper-container', {
