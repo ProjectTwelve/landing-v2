@@ -13,6 +13,7 @@ import type { AvatarGLRef } from './components/AvatarGL';
 const AvatarGL = lazy(() => import('./components/AvatarGL'));
 
 export const Avatar = (props) => {
+    const { currentPage } = props;
     const avatarGLRef = useRef<AvatarGLRef>(null);
     const [currentAvatar, setCurrentAvatar] = useState(AvatarType.Dokv);
     let timeId: number;
@@ -113,7 +114,7 @@ export const Avatar = (props) => {
 
     return (
         <div className="avatar">
-            {ready ? <AvatarGL ref={avatarGLRef} allLoaded={allLoaded} avatar={currentAvatar} /> : null}
+            {ready ? <AvatarGL ref={avatarGLRef} allLoaded={allLoaded} avatar={currentAvatar} currentPage={currentPage}/> : null}
 
             {/* <AGL /> */}
             <div className="avatar__info">

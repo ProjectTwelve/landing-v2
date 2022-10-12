@@ -32,12 +32,14 @@ import { AVATAR_GL_INFO_MAP, AvatarType } from '../Avatar.config';
 import { autoDispose } from './utils/autoDispose';
 import { IS_MOBILE } from '../../../utils';
 import { Timeout } from 'ahooks/lib/useRequest/src/types';
+import { PageType } from '../../app/App.config';
 
 // import * as P from './process'
 
 const modelLoaded = {} as { [key: number]: boolean };
 
-export default function AvatarMesh(props: { container: MutableRefObject<HTMLElement>; avatar: AvatarType; playing: boolean }) {
+export default function AvatarMesh(props: { container: MutableRefObject<HTMLElement>; avatar: AvatarType; playing: boolean, currentPage: PageType }) {
+    const { currentPage } = props;
     const [mode, setMode] = useState<'mesh' | 'point' | 'triangle'>('mesh');
     const [loading, setLoading] = useState(false);
 
@@ -247,11 +249,14 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
                 }, 100);
 
                 setLoading(false);
-                timeout && clearTimeout(timeout);
-                timeout = setTimeout(() => {
-                    const newMode = Math.random() + Math.random() > 1 ? 'point' : 'triangle';
-                    setMode(newMode);
-                }, 4000)
+                if(currentPage === PageType.Avatar){
+                    timeout && clearTimeout(timeout);
+                    timeout = setTimeout(() => {
+                        const newMode = Math.random() + Math.random() > 1 ? 'point' : 'triangle';
+                        setMode(newMode);
+                    }, 4000);
+                }
+                
             },
             (error) => {
                 console.error(error);
@@ -269,11 +274,14 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
             const url = AVATAR_GL_INFO_MAP[props.avatar].GLTFURL;
             load(url, props.avatar);
         }else {
-            timeout && clearTimeout(timeout);
-            timeout = setTimeout(() => {
-                const newMode = Math.random() + Math.random() > 1 ? 'point' : 'triangle';
-                setMode(newMode);
-            }, 4000)
+            if(currentPage === PageType.Avatar){
+                timeout && clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    const newMode = Math.random() + Math.random() > 1 ? 'point' : 'triangle';
+                    setMode(newMode);
+                }, 4000)
+            }
+           
         }
 
         controlsRef.current!.reset();
@@ -281,6 +289,16 @@ export default function AvatarMesh(props: { container: MutableRefObject<HTMLElem
             timeout && clearTimeout(timeout);
         }
     }, [props.avatar]);
+
+    useEffect(() => {
+        if(currentPage === PageType.Avatar && mode === "mesh"){
+            timeout && clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                const newMode = Math.random() + Math.random() > 1 ? 'point' : 'triangle';
+                setMode(newMode);
+            }, 4000)
+        }
+    }, [currentPage])
 
     const showPointsTick = (visible = true) => {
         pointGroup.traverseVisible((o) => {

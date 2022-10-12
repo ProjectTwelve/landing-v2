@@ -19,9 +19,11 @@ export interface AvatarGLRef {
 export interface AvatarGLProps {
     allLoaded: () => void;
     avatar: AvatarType;
+    currentPage: PageType;
 }
 
 export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
+    const { currentPage } = props;
     const [playing, setPlaying] = useState(false);
 
     const containerRef = useRef<HTMLDivElement>(null);
@@ -145,7 +147,7 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                     <div className={styles.centerWrapper}>
                         <div ref={centerBox} className={styles.centerBox}>
                             <div ref={glWrapper} className={styles.glWrapper}>
-                                <AvatarMesh container={glWrapper} avatar={props.avatar} playing={playing} />
+                                <AvatarMesh container={glWrapper} avatar={props.avatar} playing={playing} currentPage={currentPage}/>
                                 <AvatarCircle container={glWrapper} playing={playing} />
                             </div>
                         </div>
