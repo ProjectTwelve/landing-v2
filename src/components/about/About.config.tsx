@@ -466,4 +466,34 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
             github: null,
         },
     },
+    {
+        img: require('../../assets/about/partner-members/Lotus.png'),
+        name: 'Lotus',
+        desc: <>Cold blooded terminator</>,
+        links: {
+            linkedin: null,
+            twitter: 'https://twitter.com/SandiegoLotu',
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/26.png'),
+        name: 'Jane Liu',
+        desc: <>An Explorer</>,
+        links: {
+            linkedin: 'https://www.linkedin.com/in/',
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/Larkloss.png'),
+        name: 'Larkloss',
+        desc: <>Not Employment Embattled Team Operator</>,
+        links: {
+            linkedin: null,
+            twitter: 'https://twitter.com/HMS_Strider',
+            github: null,
+        },
+    },
 ];
