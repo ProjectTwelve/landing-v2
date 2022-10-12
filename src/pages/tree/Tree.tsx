@@ -1,12 +1,23 @@
 import gsap from 'gsap';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { lazy, useEffect, useRef, useState } from 'react';
 import { playClickAudio, GAevent } from '../../utils';
 import { PageType } from '../app/App.config';
-import { usePageVisible } from '../app/App.utils';
-import { TreeGL } from './components/TreeGL';
+import { loadingEE, usePageVisible } from '../app/App.utils';
 import './Tree.less';
 
+const TreeGL = lazy(() => import('./components/TreeGL'))
+
 export const Tree: React.FC = () => {
+    const [ready, serReady] = useState(false);
+
+    useEffect(() => {
+        loadingEE.on('loaded', () => {
+            setTimeout(() => {
+                serReady(true);
+            }, 1500);
+        });
+    }, []);
+
     usePageVisible(PageType.Tree, () => {
         return {
             onVisible: () => {
@@ -47,7 +58,7 @@ export const Tree: React.FC = () => {
     return (
         <div className='tree'>
             {/* <div className='tree__content'></div> */}
-            <TreeGL />
+            {ready ? <TreeGL /> : null}
             <div className='tree__info'>
                 <div className='tree__slogan'></div>
                 <div className='app-small-title app-small-title--with-block tree__small-title'>
