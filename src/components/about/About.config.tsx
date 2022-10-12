@@ -159,32 +159,6 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         },
     },
     {
-        img: require('../../assets/about/partner-members/Akira.png'),
-        name: 'Akira',
-        desc: <>ACGholic; Start from here, start from now</>,
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null,
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/19.png'),
-        name: 'Ramping',
-        desc: (
-            <>
-                Psychologically Revacholian;
-                <br />
-                TRUE Godardiste
-            </>
-        ),
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null,
-        },
-    },
-    {
         img: require('../../assets/about/partner-members/16.png'),
         name: 'Grace.J',
         desc: (
@@ -216,16 +190,6 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         desc: <>You know you were chosen once you were called 'CHOSEN'. So, why run away from it?</>,
         links: {
             linkedin: null,
-            twitter: null,
-            github: null,
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/7.png'),
-        name: 'Yerim Choi',
-        desc: <>Crazy Arcade was the last game I played, but believe me I love games</>,
-        links: {
-            linkedin: 'https://www.linkedin.com/in/yerim-choi-52ba02200/',
             twitter: null,
             github: null,
         },
@@ -263,16 +227,6 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         },
     },
     {
-        img: require('../../assets/about/partner-members/23.png'),
-        name: 'Ruby',
-        desc: <>Enjoy cooking in Zelda...</>,
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null,
-        },
-    },
-    {
         img: require('../../assets/about/partner-members/4.png'),
         name: 'RK',
         desc: (
@@ -282,26 +236,6 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
                 WoW FD race member
             </>
         ),
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null,
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/Momo.png'),
-        name: 'Momo',
-        desc: <>My dream is to travel around the world</>,
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null,
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/Vin.png'),
-        name: 'Vin',
-        desc: <>Firmly believe that a good story is the soul of the game</>,
         links: {
             linkedin: null,
             twitter: null,
@@ -324,16 +258,6 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         desc: <>Has the same aesthetic as Shigeru Miyamoto</>,
         links: {
             linkedin: 'https://www.linkedin.com/in/zanhui-yang-26490b84/',
-            twitter: null,
-            github: null,
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/William.png'),
-        name: 'William',
-        desc: <>Veteran fans of the Warring States period in Japan.</>,
-        links: {
-            linkedin: null,
             twitter: null,
             github: null,
         },
@@ -386,6 +310,36 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
             linkedin: null,
             twitter: null,
             github: 'https://github.com/yusixian',
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/Lotus.png'),
+        name: 'Lotus',
+        desc: <>Cold blooded terminator</>,
+        links: {
+            linkedin: null,
+            twitter: 'https://twitter.com/SandiegoLotu',
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/26.png'),
+        name: 'Jane Liu',
+        desc: <>An Explorer</>,
+        links: {
+            linkedin: 'https://www.linkedin.com/in/',
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/Larkloss.png'),
+        name: 'Larkloss',
+        desc: <>Not Employment Embattled Team Operator</>,
+        links: {
+            linkedin: null,
+            twitter: 'https://twitter.com/HMS_Strider',
+            github: null,
         },
     },
     {
@@ -467,32 +421,78 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         },
     },
     {
-        img: require('../../assets/about/partner-members/Lotus.png'),
-        name: 'Lotus',
-        desc: <>Cold blooded terminator</>,
+        img: require('../../assets/about/partner-members/Akira.png'),
+        name: 'Akira',
+        desc: <>ACGholic; Start from here, start from now</>,
         links: {
             linkedin: null,
-            twitter: 'https://twitter.com/SandiegoLotu',
-            github: null,
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/26.png'),
-        name: 'Jane Liu',
-        desc: <>An Explorer</>,
-        links: {
-            linkedin: 'https://www.linkedin.com/in/',
             twitter: null,
             github: null,
         },
     },
     {
-        img: require('../../assets/about/partner-members/Larkloss.png'),
-        name: 'Larkloss',
-        desc: <>Not Employment Embattled Team Operator</>,
+        img: require('../../assets/about/partner-members/19.png'),
+        name: 'Ramping',
+        desc: (
+            <>
+                Psychologically Revacholian;
+                <br />
+                TRUE Godardiste
+            </>
+        ),
         links: {
             linkedin: null,
-            twitter: 'https://twitter.com/HMS_Strider',
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/7.png'),
+        name: 'Yerim Choi',
+        desc: <>Crazy Arcade was the last game I played, but believe me I love games</>,
+        links: {
+            linkedin: 'https://www.linkedin.com/in/yerim-choi-52ba02200/',
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/23.png'),
+        name: 'Ruby',
+        desc: <>Enjoy cooking in Zelda...</>,
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/Momo.png'),
+        name: 'Momo',
+        desc: <>My dream is to travel around the world</>,
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/Vin.png'),
+        name: 'Vin',
+        desc: <>Firmly believe that a good story is the soul of the game</>,
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/William.png'),
+        name: 'William',
+        desc: <>Veteran fans of the Warring States period in Japan.</>,
+        links: {
+            linkedin: null,
+            twitter: null,
             github: null,
         },
     },
