@@ -41,8 +41,9 @@ export const Poster: React.FC = () => {
                 gsap.set('.page-wrap-poster', {
                     visibility: 'visible',
                 });
-                handleResize();
+                // handleResize();
                 requestOrientationPermission().then(() => {
+                    handleResize();
                     parallax?.enable();
                 });
                 logosSwiper = new Swiper('.poster-logos-swiper-container', {
