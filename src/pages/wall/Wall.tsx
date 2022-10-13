@@ -33,7 +33,7 @@ export const Wall: React.FC = () => {
             onVisible: () => {
                 setVisible(true);
                 GAevent('webview', 'Partners-webview');
-                requestOrientationPermission();
+                // requestOrientationPermission();
                 const tl = gsap.timeline();
                 tl.fromTo(
                     '.page-wrap-wall',
