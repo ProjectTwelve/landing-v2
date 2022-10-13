@@ -25,6 +25,15 @@
         background: rgba(0, 0, 0, 0.3);
         backdrop-filter: blur(3px);
         border-radius: 12px;
+        // mobile increased touchable area
+        &::before {
+            content: '';
+            display: block;
+            height: 400%;
+            width: 200%;
+            position: absolute;
+            pointer-events: auto;
+        }
         .social-next-icon {
             display: block;
             width: 15.74px;
