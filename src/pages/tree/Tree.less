@@ -1,131 +1,132 @@
 @import '../../styles/variables.less';
 
 .tree {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-  background: #000;
-
-  &::after {
-    content: '';
-    position: absolute;
-    z-index: 10;
-    left: 0;
     width: 100%;
-    top: 0;
-    height: 150px;
-    pointer-events: none;
-    background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-  }
-
-  &__info {
-    position: absolute;
-    z-index: 10;
-    top: 50%;
-    transform: translate(0, -50%);
-    left: (60 / @designWidth * 100%);
-    user-select: none;
-    pointer-events: none;
-  }
-  &__slogan {
-    .bgFull2x('tree/slogan@2x.png');
-    margin-left: -6px;
-  }
-  &__small-title {
-    margin-top: 24px;
-    margin-bottom: 10px;
-  }
-  &__small-text-1 {
-    line-height: 22px;
-    margin-bottom: 20px;
-    color: rgba(255, 255, 255, 0.95);
-  }
-  &__details {
+    height: 100%;
     position: relative;
-    .f-font-tt;
-    padding-left: 24px;
-
-    &::before {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 6px;
-      left: 0;
-      width: 1px;
-      height: 13px;
-      background: #00d628;
-      opacity: 0.7;
-    }
+    overflow: hidden;
+    background: #000;
 
     &::after {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 23px;
-      left: 0;
-      width: 1px;
-      background: #fff;
-      opacity: 0.3;
-      bottom: 8px;
+        content: '';
+        position: absolute;
+        z-index: 10;
+        left: 0;
+        width: 100%;
+        top: 0;
+        height: 150px;
+        pointer-events: none;
+        background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
     }
-  }
-  &__detail {
-    font-size: 14px;
-    line-height: 20px;
-    color: #fff;
-    padding: 3px 0;
-    opacity: 0.9;
-  }
 
-  &__extra {
-    position: absolute;
-    z-index: 10;
-    top: 50%;
-    transform: translate(0, -50%);
-    right: (60 / @designWidth * 100%);
-    user-select: none;
-    .f-font-tt;
-    color: #fff;
+    &__info {
+        position: absolute;
+        z-index: 10;
+        top: 50%;
+        transform: translate(0, -50%);
+        left: (60 / @designWidth * 100%);
+        user-select: none;
+        pointer-events: none;
+    }
+    &__slogan {
+        .bgFull2x('tree/slogan@2x.png');
+        margin-left: -6px;
+    }
+    &__small-title {
+        margin-top: 24px;
+        margin-bottom: 10px;
+    }
+    &__small-text-1 {
+        line-height: 22px;
+        margin-bottom: 20px;
+        color: rgba(255, 255, 255, 0.95);
+    }
+    &__details {
+        position: relative;
+        .f-font-tt;
+        padding-left: 24px;
 
-    &-info {
-      font-size: 14px;
-      line-height: 20px;
-      opacity: 0.5;
+        &::before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 6px;
+            left: 0;
+            width: 1px;
+            height: 13px;
+            background: #00d628;
+            opacity: 0.7;
+        }
+
+        &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 23px;
+            left: 0;
+            width: 1px;
+            background: #fff;
+            opacity: 0.3;
+            bottom: 8px;
+        }
     }
-    &-link {
-      display: block;
-      .bgFull2x('tree/btn-download@2x.png');
-      opacity: 1;
-      transition: opacity 0.3s;
-      margin: 13px 0 20px;
-      &:hover {
-        opacity: 0.8;
-      }
+    &__detail {
+        font-size: 14px;
+        line-height: 20px;
+        color: #fff;
+        padding: 3px 0;
+        opacity: 0.9;
     }
-  }
+
+    &__extra {
+        position: absolute;
+        z-index: 10;
+        top: 50%;
+        transform: translate(0, -50%);
+        right: (60 / @designWidth * 100%);
+        user-select: none;
+        .f-font-tt;
+        color: #fff;
+
+        &-info {
+            font-size: 14px;
+            line-height: 20px;
+            opacity: 0.5;
+        }
+        &-link {
+            display: block;
+            .bgFull2x('tree/btn-download@2x.png');
+            opacity: 1;
+            transition: opacity 0.3s;
+            margin: 13px 0 20px;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
 }
 
 .body-mobile {
-  .tree {
-    &::after {
-      height: 70px;
+    .tree {
+        &::after {
+            height: 70px;
+        }
+        &__info {
+            padding-left: env(safe-area-inset-left);
+            padding-left: constant(safe-area-inset-left);
+            transform: translate(0, -50%) scale(0.5);
+            transform-origin: left center;
+        }
+        // &__small-text-1 {
+        //   display: none;
+        // }
+        &__details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+        &__extra {
+            transform: translate(0, -50%) scale(0.8);
+            transform-origin: right center;
+        }
     }
-    &__info {
-      padding-left: env(safe-area-inset-left);
-      padding-left: constant(safe-area-inset-left);
-      transform: translate(0, -50%) scale(0.5);
-      transform-origin: left center;
-    }
-    &__small-text-1 {
-      display: none;
-    }
-    &__details {
-      display: none;
-    }
-    &__extra {
-      transform: translate(0, -50%) scale(0.8);
-      transform-origin: right center;
-    }
-  }
 }

@@ -25,6 +25,12 @@
         background: rgba(0, 0, 0, 0.3);
         backdrop-filter: blur(3px);
         border-radius: 12px;
+        &::before {
+            content: '';
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
         .social-next-icon {
             display: block;
             width: 15.74px;

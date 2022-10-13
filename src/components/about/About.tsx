@@ -8,7 +8,7 @@ export const About: React.FC = () => {
     const [currentPartner, setCurrentPartner] = useState(0);
     const [currentAbouts, setCurrentAbouts] = useState<PartnerInfo[]>(ABOUT_PARTNERS);
     const showingAbouts = useMemo(
-        () => (currentAbouts.length > 3 ? currentAbouts.slice(0, 3) : currentAbouts),
+        () => (currentAbouts.length > 5 ? currentAbouts.slice(0, 5) : currentAbouts),
         [currentAbouts],
     );
 

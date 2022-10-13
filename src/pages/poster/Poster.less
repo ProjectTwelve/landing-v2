@@ -215,6 +215,16 @@
         }
         &__features {
             padding-top: 20px;
+            &-title {
+                visibility: hidden;
+            }
+            &-item {
+                &-title {
+                    &::before {
+                        background: transparent;
+                    }
+                }
+            }
         }
     }
 }
