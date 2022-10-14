@@ -35,7 +35,6 @@ export const Social: React.FC = () => {
     usePageVisible(PageType.Social, () => {
         return {
             onVisible: () => {
-                requestOrientationPermission();
                 const tl = gsap.timeline();
                 setVisible(true);
                 tl.fromTo(
