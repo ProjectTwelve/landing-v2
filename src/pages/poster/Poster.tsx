@@ -1,7 +1,7 @@
 import { useSize } from 'ahooks';
 import gsap from 'gsap';
 import Parallax from 'parallax-js';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Swiper, { Autoplay, EffectFade } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/autoplay';
@@ -18,6 +18,11 @@ export const Poster: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const bgRef = useRef<HTMLDivElement>(null);
     const containerSize = useSize(containerRef);
+    const [refresh, setRefresh] = useState(false);
+
+    useEffect(() => {
+        refresh && setTimeout(() => setRefresh(false));
+    }, [refresh]);
 
     usePageVisible(PageType.Poster, () => {
         if (!bgRef.current) {
@@ -41,10 +46,10 @@ export const Poster: React.FC = () => {
                 gsap.set('.page-wrap-poster', {
                     visibility: 'visible',
                 });
-                // handleResize();
+                handleResize();
                 requestOrientationPermission().then(() => {
-                    handleResize();
                     parallax?.enable();
+                    setRefresh(true);
                 });
                 logosSwiper = new Swiper('.poster-logos-swiper-container', {
                     autoplay: true,
