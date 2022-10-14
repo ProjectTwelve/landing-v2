@@ -18,11 +18,6 @@ export const Poster: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const bgRef = useRef<HTMLDivElement>(null);
     const containerSize = useSize(containerRef);
-    const [refresh, setRefresh] = useState(false);
-
-    useEffect(() => {
-        refresh && setTimeout(() => setRefresh(false));
-    }, [refresh]);
 
     usePageVisible(PageType.Poster, () => {
         if (!bgRef.current) {
@@ -49,7 +44,6 @@ export const Poster: React.FC = () => {
                 handleResize();
                 requestOrientationPermission().then(() => {
                     parallax?.enable();
-                    setRefresh(true);
                 });
                 logosSwiper = new Swiper('.poster-logos-swiper-container', {
                     autoplay: true,
