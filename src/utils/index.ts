@@ -2,7 +2,6 @@ import gsap from 'gsap';
 import { Howl } from 'howler';
 import { throttle } from 'lodash-es';
 import ReactGA from 'react-ga4';
-import { orientPermissionEE } from '../pages/app/App.utils';
 
 /** hack raf */
 const vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -55,7 +54,7 @@ export function requestOrientationPermission() {
         } else {
             resolve();
         }
-    }).then(() => orientPermissionEE.emit('orient.granted'));
+    });
 }
 
 export const resizeBodyRotation = throttle(() => {
