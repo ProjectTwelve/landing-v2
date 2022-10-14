@@ -1,9 +1,9 @@
 import gsap from 'gsap';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
-import { GAevent, requestOrientationPermission } from '../../utils';
+import { GAevent } from '../../utils';
 import { FEATURED_ON_DATA, PARTNERS_DATA } from './Wall.config';
 import './Wall.less';
 
