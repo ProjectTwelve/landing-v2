@@ -1,478 +1,480 @@
 @import '../../styles/variables.less';
 
 .app {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-
-  .content {
-    position: relative;
     width: 100%;
     height: 100%;
+    position: relative;
     overflow: hidden;
-    z-index: 2;
 
-    .page-wrap {
-      .f-pseudo;
-      z-index: 3;
-      pointer-events: none;
-      // display: none;
-      opacity: 0;
-      overflow: hidden;
-
-      // 后台默默渲染，性能优化用
-      &.back-render {
-        opacity: 1;
-        z-index: 0;
-      }
-
-      // 出现层在下面出来
-      &.active {
+    .content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
         z-index: 2;
-        pointer-events: auto;
-      }
+
+        .page-wrap {
+            .f-pseudo;
+            z-index: 3;
+            pointer-events: none;
+            // display: none;
+            opacity: 0;
+            overflow: hidden;
+
+            // 后台默默渲染，性能优化用
+            &.back-render {
+                opacity: 1;
+                z-index: 0;
+            }
+
+            // 出现层在下面出来
+            &.active {
+                z-index: 2;
+                pointer-events: auto;
+            }
+        }
     }
-  }
 
-  .logo {
-    position: absolute;
-    .bgFull2x('app/logo@2x.png');
-    left: (62 / @designWidth * 100%);
-    top: (54 / @designHeight * 100%);
-    z-index: 99;
-    .f-hover-opa;
-    cursor: pointer;
-  }
-
-  .nav {
-    position: absolute;
-    @leftPercent: (140 / @designWidth * 100%);
-    left: calc(@leftPercent + 54px);
-    top: (54 / @designHeight * 100%);
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    z-index: 99;
-
-    &__item {
-      color: #fff;
-      font-size: 14px;
-      line-height: 26px;
-      opacity: 0.8;
-      cursor: pointer;
-      margin-right: 36px;
-      position: relative;
-      .f-font-tt;
-
-      // 用于扩大可触摸范围
-      &::before {
-        content: '';
-        .f-pseudo;
-        transform: scale(1.3, 2);
-      }
-
-      &::after {
-        content: '';
+    .logo {
         position: absolute;
-        left: 0;
-        bottom: 0;
-        display: block;
-        width: 0;
-        height: 1px;
-        transition: width 0.3s;
-        background-color: #fff;
-      }
+        .bgFull2x('app/logo@2x.png');
+        left: (62 / @designWidth * 100%);
+        top: (54 / @designHeight * 100%);
+        z-index: 99;
+        .f-hover-opa;
+        cursor: pointer;
+    }
 
-      &--dropdown {
-        &::after {
-          display: none;
+    .nav {
+        position: absolute;
+        @leftPercent: (140 / @designWidth * 100%);
+        left: calc(@leftPercent + 54px);
+        top: (54 / @designHeight * 100%);
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        z-index: 99;
+
+        &__item {
+            color: #fff;
+            font-size: 14px;
+            line-height: 26px;
+            opacity: 0.8;
+            cursor: pointer;
+            margin-right: 36px;
+            position: relative;
+            .f-font-tt;
+
+            // 用于扩大可触摸范围
+            &::before {
+                content: '';
+                .f-pseudo;
+                transform: scale(1.3, 2);
+            }
+
+            &::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                display: block;
+                width: 0;
+                height: 1px;
+                transition: width 0.3s;
+                background-color: #fff;
+            }
+
+            &--dropdown {
+                &::after {
+                    display: none;
+                }
+            }
+
+            &:hover,
+            &.active {
+                &::after {
+                    width: 100%;
+                }
+            }
         }
-      }
+    }
 
-      &:hover,
-      &.active {
-        &::after {
-          width: 100%;
+    .badge-wrap {
+        position: absolute;
+        .bgFull2x('app/badge-circle@2x.png');
+        background: none;
+        bottom: (44 / @designHeight * 100%);
+        left: (60 / @designWidth * 100%);
+        z-index: 99;
+
+        .badge-circle {
+            .f-alignImg2x('app/badge-circle@2x.png');
+            animation: badgecircle 16s infinite linear;
+            animation-play-state: paused;
         }
-      }
-    }
-  }
-
-  .badge-wrap {
-    position: absolute;
-    .bgFull2x('app/badge-circle@2x.png');
-    background: none;
-    bottom: (44 / @designHeight * 100%);
-    left: (60 / @designWidth * 100%);
-    z-index: 99;
-
-    .badge-circle {
-      .f-alignImg2x('app/badge-circle@2x.png');
-      animation: badgecircle 16s infinite linear;
-      animation-play-state: paused;
-    }
-    &:hover {
-      .badge-circle {
-        animation-play-state: running;
-      }
-    }
-    .badge-icon {
-      .f-alignImg2x('app/badge-h1@2x.png');
-      transition: opacity 0.3s;
-      &--1 {
-        .bg('app/badge-h1@2x.png');
-      }
-      &--2 {
-        .bg('app/badge-h2@2x.png');
-      }
-      &--3 {
-        .bg('app/badge-h3@2x.png');
-      }
-      &--4 {
-        .bg('app/badge-h4@2x.png');
-      }
-      &--5 {
-        .bg('app/badge-h5@2x.png');
-      }
-    }
-  }
-
-  .coming-btn {
-    position: absolute;
-    .bgFull2x('app/corners@2x.png');
-    top: (45 / @designHeight * 100%);
-    right: (40 / @designWidth * 100%);
-    z-index: 99;
-    .f-hover-opa;
-    transform: scale(0.9);
-
-    &__item {
-      .bgFull2x('app/coming-info@2x.png');
-      margin: 20px auto;
-    }
-
-    @keyframes pulse {
-      50% {
-        transform: scale(0.95);
-      }
-    }
-
-    &.pulse {
-      animation: pulse 1s ease infinite;
-    }
-  }
-
-  .footer {
-    position: absolute;
-    bottom: (40 / @designHeight * 100%);
-    right: (60 / @designWidth * 100%);
-    z-index: 99;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-
-    &__info {
-      .bgFull('app/footer-info.png');
-      transform: scale(0.87);
-    }
-
-    &__audio {
-      margin-left: 35px;
-      display: flex;
-      cursor: pointer;
-      .f-hover-opa;
-      position: relative;
-
-      // 用于扩大可触摸范围
-      &::before {
-        content: '';
-        .f-pseudo;
-        transform: scale(1.8, 1.8);
-      }
-
-      &-item {
-        display: block;
-        width: 11px;
-        height: 29px;
-        background: #00cce6;
-        transform: scale(1, 0.2);
-        transform-origin: center bottom;
-        opacity: 0.8;
-        margin-right: 3px;
-        &:last-child {
-          margin-right: 0;
+        &:hover {
+            .badge-circle {
+                animation-play-state: running;
+            }
         }
-      }
-
-      &.active .footer__audio-item {
-        animation: musicplay 0.6s infinite alternate;
-        &:nth-child(1) {
-          animation-delay: 0s;
+        .badge-icon {
+            .f-alignImg2x('app/badge-h1@2x.png');
+            transition: opacity 0.3s;
+            &--1 {
+                .bg('app/badge-h1@2x.png');
+            }
+            &--2 {
+                .bg('app/badge-h2@2x.png');
+            }
+            &--3 {
+                .bg('app/badge-h3@2x.png');
+            }
+            &--4 {
+                .bg('app/badge-h4@2x.png');
+            }
+            &--5 {
+                .bg('app/badge-h5@2x.png');
+            }
         }
-        &:nth-child(2) {
-          animation-delay: -0.2s;
-        }
-        &:nth-child(3) {
-          animation-delay: -0.3s;
-        }
-      }
     }
-  }
 
-  &__mouse-tips {
-    .f-alignImg2x('app/mouse-tips-pc@2x.png');
-    transform-origin: bottom center;
-    transform: scale(0.4);
-    top: auto;
-    margin-top: 0;
-    z-index: 20;
-    bottom: 30px;
-    animation: mouseupdownpc 0.5s infinite alternate;
-    cursor: pointer;
-  }
+    .coming-btn {
+        position: absolute;
+        .bgFull2x('app/corners@2x.png');
+        background-size: 100% 100%;
+        width: 8rem;
+        top: (45 / @designHeight * 100%);
+        right: (40 / @designWidth * 100%);
+        z-index: 99;
+        .f-hover-opa;
+        transform: scale(0.9);
+
+        &__item {
+            .bgFull2x('app/coming-info@2x.png');
+            margin: 20px auto;
+        }
+
+        @keyframes pulse {
+            50% {
+                transform: scale(0.95);
+            }
+        }
+
+        &.pulse {
+            animation: pulse 1s ease infinite;
+        }
+    }
+
+    .footer {
+        position: absolute;
+        bottom: (40 / @designHeight * 100%);
+        right: (60 / @designWidth * 100%);
+        z-index: 99;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        &__info {
+            .bgFull('app/footer-info.png');
+            transform: scale(0.87);
+        }
+
+        &__audio {
+            margin-left: 35px;
+            display: flex;
+            cursor: pointer;
+            .f-hover-opa;
+            position: relative;
+
+            // 用于扩大可触摸范围
+            &::before {
+                content: '';
+                .f-pseudo;
+                transform: scale(1.8, 1.8);
+            }
+
+            &-item {
+                display: block;
+                width: 11px;
+                height: 29px;
+                background: #00cce6;
+                transform: scale(1, 0.2);
+                transform-origin: center bottom;
+                opacity: 0.8;
+                margin-right: 3px;
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+
+            &.active .footer__audio-item {
+                animation: musicplay 0.6s infinite alternate;
+                &:nth-child(1) {
+                    animation-delay: 0s;
+                }
+                &:nth-child(2) {
+                    animation-delay: -0.2s;
+                }
+                &:nth-child(3) {
+                    animation-delay: -0.3s;
+                }
+            }
+        }
+    }
+
+    &__mouse-tips {
+        .f-alignImg2x('app/mouse-tips-pc@2x.png');
+        transform-origin: bottom center;
+        transform: scale(0.4);
+        top: auto;
+        margin-top: 0;
+        z-index: 20;
+        bottom: 30px;
+        animation: mouseupdownpc 0.5s infinite alternate;
+        cursor: pointer;
+    }
 }
 
 @keyframes mouseupdownpc {
-  0% {
-    transform: scale(0.4) translateY(10px);
-  }
+    0% {
+        transform: scale(0.4) translateY(10px);
+    }
 
-  100% {
-    transform: scale(0.4) translateY(-10px);
-  }
+    100% {
+        transform: scale(0.4) translateY(-10px);
+    }
 }
 
 @keyframes mouseupdownmobile {
-  0% {
-    transform: scale(0.3) translateY(10px);
-  }
+    0% {
+        transform: scale(0.3) translateY(10px);
+    }
 
-  100% {
-    transform: scale(0.3) translateY(-10px);
-  }
+    100% {
+        transform: scale(0.3) translateY(-10px);
+    }
 }
 
 .nav-dropdown {
-  position: absolute;
-  left: 0;
-  margin-top: 6px;
-  margin-left: -20px;
-  top: 100%;
-  background: rgba(20, 20, 20, 0.75);
-  overflow: hidden;
-  box-sizing: border-box;
-  height: 0;
-  transition: height 0.3s;
+    position: absolute;
+    left: 0;
+    margin-top: 6px;
+    margin-left: -20px;
+    top: 100%;
+    background: rgba(20, 20, 20, 0.75);
+    overflow: hidden;
+    box-sizing: border-box;
+    height: 0;
+    transition: height 0.3s;
 
-  &__item {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    color: #fff;
-    font-size: 14px;
-    line-height: 42px;
-    padding: 0 20px 0 20px;
-
-    &:hover {
-      opacity: 0.8;
-    }
-
-    > i {
-      display: block;
-      margin-right: 10px;
-    }
-
-    &:first-child {
-      margin-top: 8px;
-    }
-
-    &--twitter > i {
-      .bgFull2x('app/icon-twitter@2x.png');
-    }
-    &--discord > i {
-      .bgFull2x('app/icon-discord@2x.png');
-    }
-    &--mirror > i {
-      .bgFull2x('app/icon-mirror@2x.png');
-    }
-  }
-
-  &-wrap {
-    position: relative;
-  }
-
-  &--tree {
-    width: 190px;
     &__item {
-      display: block;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        color: #fff;
+        font-size: 14px;
+        line-height: 42px;
+        padding: 0 20px 0 20px;
+
+        &:hover {
+            opacity: 0.8;
+        }
+
+        > i {
+            display: block;
+            margin-right: 10px;
+        }
+
+        &:first-child {
+            margin-top: 8px;
+        }
+
+        &--twitter > i {
+            .bgFull2x('app/icon-twitter@2x.png');
+        }
+        &--discord > i {
+            .bgFull2x('app/icon-discord@2x.png');
+        }
+        &--mirror > i {
+            .bgFull2x('app/icon-mirror@2x.png');
+        }
     }
-  }
-}
 
-.nav__item {
-  text-transform: uppercase;
-}
-
-.nav__item:hover {
-  .nav-dropdown {
-    &--community {
-      height: (42px * 3 + 8px * 2);
+    &-wrap {
+        position: relative;
     }
 
     &--tree {
-      height: (42px * 3 + 8px * 2);
+        width: 190px;
+        &__item {
+            display: block;
+        }
     }
-  }
+}
+
+.nav__item {
+    text-transform: uppercase;
+}
+
+.nav__item:hover {
+    .nav-dropdown {
+        &--community {
+            height: (42px * 3 + 8px * 2);
+        }
+
+        &--tree {
+            height: (42px * 3 + 8px * 2);
+        }
+    }
 }
 
 .nav-link-wrap {
-  text-decoration: none;
-  color: inherit;
-  position: relative;
-  z-index: 5;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    z-index: 5;
 }
 
 @keyframes musicplay {
-  100% {
-    transform: scale(1, 1);
-  }
+    100% {
+        transform: scale(1, 1);
+    }
 }
 
 @keyframes badgecircle {
-  100% {
-    transform: rotate(360deg);
-  }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .app-sub-title {
-  .f-font-tt;
-  font-size: 40px;
-  line-height: 40px;
-  color: #fff;
+    .f-font-tt;
+    font-size: 40px;
+    line-height: 40px;
+    color: #fff;
 
-  &__block {
-    display: inline-block;
-    height: 1em;
-    transform: scale(1, 0.75);
-    opacity: 0.5;
-    border-right: 3px solid #fff;
-    vertical-align: top;
-    margin: 0 20px;
-  }
+    &__block {
+        display: inline-block;
+        height: 1em;
+        transform: scale(1, 0.75);
+        opacity: 0.5;
+        border-right: 3px solid #fff;
+        vertical-align: top;
+        margin: 0 20px;
+    }
 }
 
 .app-small-title {
-  .f-font-tt;
-  font-size: 27px;
-  line-height: 27px;
-  color: #fff;
+    .f-font-tt;
+    font-size: 27px;
+    line-height: 27px;
+    color: #fff;
 
-  &.app-small-title--with-block {
-    &::after {
-      display: inline-block;
-      content: '';
-      width: 12px;
-      height: 2px;
-      background: #00d628;
-      opacity: 0.8;
-      margin-left: 10px;
+    &.app-small-title--with-block {
+        &::after {
+            display: inline-block;
+            content: '';
+            width: 12px;
+            height: 2px;
+            background: #00d628;
+            opacity: 0.8;
+            margin-left: 10px;
+        }
     }
-  }
 }
 .app-small-text {
-  .f-font-tt;
-  font-size: 16px;
-  line-height: 18px;
-  color: rgba(255, 255, 255, 0.6);
+    .f-font-tt;
+    font-size: 16px;
+    line-height: 18px;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .app-container-loading {
-  &::after {
-    content: 'Loading...';
-    .f-font-tt;
-    font-size: 20px;
-    color: #fff;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s;
-    z-index: 99;
-  }
+    &::after {
+        content: 'Loading...';
+        .f-font-tt;
+        font-size: 20px;
+        color: #fff;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: 99;
+    }
 
-  &.loading::after {
-    opacity: 1;
-  }
+    &.loading::after {
+        opacity: 1;
+    }
 }
 
 /** 竖屏和 loading，都隐藏其余内容 */
 .body-portrait .app,
 .app.app--loading {
-  > * {
-    display: none;
-    pointer-events: none;
-  }
+    > * {
+        display: none;
+        pointer-events: none;
+    }
 
-  > .content {
-    display: block;
-    pointer-events: auto;
-  }
+    > .content {
+        display: block;
+        pointer-events: auto;
+    }
 }
 
 .body-portrait {
-  /** 竖屏时强制loading */
-  .page-wrap-loading {
-    opacity: 1 !important;
-    display: block !important;
-  }
+    /** 竖屏时强制loading */
+    .page-wrap-loading {
+        opacity: 1 !important;
+        display: block !important;
+    }
 }
 
 .body-mobile {
-  .app {
-    .logo {
-      transform: scale(0.75);
-      transform-origin: left top;
-      // margin-left: env(safe-area-inset-left);
-      // margin-left: constant(safe-area-inset-left);
-    }
-    .nav {
-      transform: translate(-8px, 0);
-      // margin-left: env(safe-area-inset-left);
-      // margin-left: constant(safe-area-inset-left);
-      top: 4%;
-      &__item {
-        font-size: 12px;
-        line-height: 20px;
-        opacity: 0.85;
-        margin-right: 20px;
-      }
-    }
-    .badge-wrap {
-      transform: scale(0.7);
-      transform-origin: left bottom;
-    }
-    .footer {
-      transform: scale(0.65);
-      transform-origin: right bottom;
-      margin-bottom: 8px;
-      margin-right: 30px;
+    .app {
+        .logo {
+            transform: scale(0.75);
+            transform-origin: left top;
+            // margin-left: env(safe-area-inset-left);
+            // margin-left: constant(safe-area-inset-left);
+        }
+        .nav {
+            transform: translate(-8px, 0);
+            // margin-left: env(safe-area-inset-left);
+            // margin-left: constant(safe-area-inset-left);
+            top: 4%;
+            &__item {
+                font-size: 12px;
+                line-height: 20px;
+                opacity: 0.85;
+                margin-right: 20px;
+            }
+        }
+        .badge-wrap {
+            transform: scale(0.7);
+            transform-origin: left bottom;
+        }
+        .footer {
+            transform: scale(0.65);
+            transform-origin: right bottom;
+            margin-bottom: 8px;
+            margin-right: 30px;
+        }
+
+        &__mouse-tips {
+            .bg('app/mouse-tips-mobile@2x.png');
+            animation: mouseupdownmobile 0.5s infinite alternate;
+            bottom: 15px;
+            left: auto;
+            margin-left: 0;
+            right: -15px;
+        }
     }
 
-    &__mouse-tips {
-      .bg('app/mouse-tips-mobile@2x.png');
-      animation: mouseupdownmobile 0.5s infinite alternate;
-      bottom: 15px;
-      left: auto;
-      margin-left: 0;
-      right: -15px;
+    .coming-btn {
+        display: none;
     }
-  }
-
-  .coming-btn {
-    display: none;
-  }
 }
