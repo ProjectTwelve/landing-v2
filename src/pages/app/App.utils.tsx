@@ -116,5 +116,3 @@ LoadingSourceTypeArray.forEach((type) => {
         }
     });
 });
-
-export const orientPermissionEE = new EE();
