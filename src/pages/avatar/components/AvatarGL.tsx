@@ -5,7 +5,7 @@ import { PageType } from '../../app/App.config';
 import { loadingEE, usePageVisible } from '../../app/App.utils';
 import { AvatarType, AVATAR_GL_INFO_MAP, AVATAR_GL_KEYS } from '../Avatar.config';
 import './AvatarGL.less';
-import { IS_MOBILE } from '../../../utils';
+import { getPublicAssetPath, IS_MOBILE } from '../../../utils';
 // import AvatarGL from './AvatarGL';
 import styles from './avatar.module.css';
 import AvatarMesh from './AvatarMesh';
@@ -135,7 +135,7 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                     <video
                         ref={video}
                         className={styles.vid}
-                        src="/files/vid/avatar-bg-720p.mp4"
+                        src={getPublicAssetPath('files/vid/avatar-bg-720p.mp4')}
                         loop
                         muted
                         playsInline
@@ -147,7 +147,12 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                     <div className={styles.centerWrapper}>
                         <div ref={centerBox} className={styles.centerBox}>
                             <div ref={glWrapper} className={styles.glWrapper}>
-                                <AvatarMesh container={glWrapper} avatar={props.avatar} playing={playing} currentPage={currentPage}/>
+                                <AvatarMesh
+                                    container={glWrapper}
+                                    avatar={props.avatar}
+                                    playing={playing}
+                                    currentPage={currentPage}
+                                />
                                 <AvatarCircle container={glWrapper} playing={playing} />
                             </div>
                         </div>

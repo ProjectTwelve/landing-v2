@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { IS_MOBILE } from '../../../utils';
+import { getPublicAssetPath, IS_MOBILE } from '../../../utils';
 import { PageType } from '../../app/App.config';
 import { usePageVisible } from '../../app/App.utils';
 import './TreeGL.less';
@@ -130,7 +130,7 @@ export const TreeGL = (props) => {
             <video
                 ref={vidRef}
                 className="tree-gl-canvas"
-                src="/files/vid/tree-1k.mp4"
+                src={getPublicAssetPath('files/vid/tree-1k.mp4')}
                 id="vid"
                 muted
                 loop
