@@ -37,13 +37,13 @@ export const Loading: React.FC = () => {
                 });
             },
             onHide: () => {
+                loadingEE.off('loaded');
                 gsap.to('.page-wrap-loading', {
                     duration: 2.4,
                     display: 'none',
                     opacity: 0,
                     ease: 'power1.inOut',
                 });
-                loadingEE.off('progress', handleProgress);
             },
             onDestroy: () => {},
         };
