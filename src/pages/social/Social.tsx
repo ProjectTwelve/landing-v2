@@ -109,6 +109,12 @@ export const Social: React.FC = () => {
                             title="Mirror"
                         />
                         <SocialItem
+                            className="whitepaper"
+                            href="https://p12.dev/whitepaper"
+                            icon={<img src={require('../../assets/social/github.png')} alt="whitepaper" />}
+                            title="Whitepaper"
+                        />
+                        <SocialItem
                             className="airdrop"
                             href="https://airdrop.p12.games"
                             icon={require('../../assets/social/airdrop.png')}
@@ -119,12 +125,6 @@ export const Social: React.FC = () => {
                             href="https://galaxy.eco/P12/"
                             icon={require('../../assets/social/badge.png')}
                             title="Badge"
-                        />
-                        <SocialItem
-                            className="whitepaper"
-                            href="https://p12.dev/whitepaper"
-                            icon={<img src={require('../../assets/social/github.png')} alt="whitepaper" />}
-                            title="Whitepaper"
                         />
                     </div>
                 </div>
