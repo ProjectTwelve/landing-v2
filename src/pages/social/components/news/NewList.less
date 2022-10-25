@@ -25,14 +25,17 @@
         background: rgba(0, 0, 0, 0.4);
         // backdrop-filter: blur(3px);
         border-radius: 12px;
+        position: relative;
         // mobile increased touchable area
         &::before {
             content: '';
             display: block;
-            height: 400%;
             width: 200%;
             position: absolute;
             pointer-events: auto;
+            transform: scaleY(7);
+            top: 0;
+            bottom: 0;
         }
         .social-next-icon {
             display: block;
