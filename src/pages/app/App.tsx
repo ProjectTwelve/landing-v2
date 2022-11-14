@@ -127,7 +127,7 @@ export const App = () => {
                         ))}
                     </div>
                 )}
-                <div className={classnames(['coming-btn', pulseState])}>
+                <div className={classnames(['coming-btn', pulseState])} onClick={() => window.open('https://airdrop.p12.games', '_blank')}>
                     <a
                         href='https://airdrop.p12.games'
                         target='_blank'
