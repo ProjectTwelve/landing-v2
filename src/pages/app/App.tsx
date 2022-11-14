@@ -128,13 +128,7 @@ export const App = () => {
                     </div>
                 )}
                 <div className={classnames(['coming-btn', pulseState])} onClick={() => window.open('https://airdrop.p12.games', '_blank')}>
-                    <a
-                        href='https://airdrop.p12.games'
-                        target='_blank'
-                        rel='noreferrer'
-                    >
-                        <div className='coming-btn__item' onMouseEnter={() => setPulseState('')}></div>
-                    </a>
+                    <div className='coming-btn__item' onMouseEnter={() => setPulseState('')}></div>
                 </div>
                 <div className='footer'>
                     <div className='footer__info'></div>
