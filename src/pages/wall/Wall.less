@@ -90,19 +90,38 @@
         }
     }
 
-    &__auditor_btn {
-        .bgFull2x('app/corners@2x.png');
+    &__media_btn {
+        .bg('app/corners@2x.png');
+        background-size: 100% 100%;
+        width: fit-content;
+        height: fit-content;
         .f-hover-opa;
+        width: 100;
         transform: scale(0.9);
-        font-size: 22px;
-        line-height: 52px;
         text-align: center;
         pointer-events: auto;
+        background-color: #ffffff1a;
         a {
-            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+
             .f-font-tt;
             cursor: pointer;
+            color: #fff;
             opacity: 0.8;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            &::after {
+                content: '';
+                display: inline-block;
+                width: 10px;
+                height: 12px;
+                .bg('wall/download.svg');
+            }
         }
     }
 
