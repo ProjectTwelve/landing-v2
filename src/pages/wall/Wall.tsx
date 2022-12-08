@@ -106,15 +106,15 @@ export const Wall: React.FC = () => {
                     })}
                 </div>
 
-                {/* <div className='wall__auditor_btn'>
+                <div className="wall__media_btn">
                     <a
-                        href='https://github.com/ProjectTwelve/contracts/tree/main/audits'
-                        target='_blank'
-                        rel='noreferrer'
+                        href="https://drive.google.com/drive/folders/17NBZIRDajpkaaz2kiqIVaHmIm9wXmyE3"
+                        target="_blank"
+                        rel="noreferrer"
                     >
-                        Audit Reports
+                        media kit
                     </a>
-                </div> */}
+                </div>
             </div>
         </div>
     );
