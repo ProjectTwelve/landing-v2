@@ -20,13 +20,6 @@
             // display: none;
             opacity: 0;
             overflow: hidden;
-
-            // 后台默默渲染，性能优化用
-            &.back-render {
-                opacity: 1;
-                z-index: 0;
-            }
-
             // 出现层在下面出来
             &.active {
                 z-index: 2;
@@ -149,7 +142,7 @@
         z-index: 99;
         .f-hover-opa;
         transform: scale(0.9);
-				cursor: pointer;
+        cursor: pointer;
 
         &__item {
             .bgFull2x('app/coming-info@2x.png');

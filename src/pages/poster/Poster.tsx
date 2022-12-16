@@ -29,12 +29,6 @@ export const Poster: React.FC = () => {
         // swiper
         let logosSwiper: Swiper;
         let featuresSwiper: Swiper;
-
-        // 后台默默渲染，性能优化用
-        document.getElementsByClassName('page-wrap-poster')[0]?.classList.add('back-render');
-        setTimeout(() => {
-            document.getElementsByClassName('.page-wrap-poster')[0]?.classList.remove('back-render');
-        }, 1000);
         return {
             onVisible: () => {
                 GAevent('webview', 'Editor-webview');
