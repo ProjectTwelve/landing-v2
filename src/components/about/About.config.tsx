@@ -86,8 +86,8 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         ),
         links: {
             linkedin: null,
-            twitter: null,
-            github: 'https://github.com/Jerrywang959',
+            twitter: "https://twitter.com/Noy_eth",
+            github: 'https://github.com/noyyyy',
         },
     },
     {
