@@ -28,6 +28,15 @@ export const PageBadges = [
     PageType.Social,
 ];
 
+export const PageRoute = {
+    home: PageType.Home,
+    news: PageType.Social,
+    infra: PageType.Avatar,
+    econs: PageType.Tree,
+    editor: PageType.Poster,
+    partners: PageType.Wall,
+};
+
 export const CONTENT_PAGES = [
     {
         type: PageType.Loading,

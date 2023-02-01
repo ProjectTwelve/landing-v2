@@ -1,15 +1,13 @@
 import classnames from 'classnames';
 import React, { useEffect, useMemo, useState, cloneElement } from 'react';
 import { IS_MOBILE, playClickAudio } from '../../utils';
-import { CONTENT_PAGES, PageBadges, PageType } from './App.config';
+import { CONTENT_PAGES, PageBadges, PageRoute, PageType } from './App.config';
 import './App.less';
 import { AppContext, loadingEE } from './App.utils';
 import { initGA } from '../../utils';
 import { useLocalStorageState } from 'ahooks';
 
-const pageTypes = CONTENT_PAGES.filter(
-    (v) => v.Content && v.type !== PageType.Loading
-).map((v) => v.type);
+const pageTypes = CONTENT_PAGES.filter((v) => v.Content && v.type !== PageType.Loading).map((v) => v.type);
 
 export const App = () => {
     const [current, setCurrent] = useState(PageType.Loading);
@@ -40,35 +38,36 @@ export const App = () => {
         };
     }, [isLoading, current]);
 
+    // 链接跳转
+    useEffect(() => {
+        if (isLoading) return;
+        const path = window?.location?.pathname?.substring(1);
+        if (!path || !PageRoute?.[path]) return;
+        setCurrent(PageRoute[path]);
+    }, [isLoading, window.location, setCurrent]);
+
     const contextValue = useMemo(
         () => ({
             visiblePage: current,
             setVisiblePage: setCurrent,
-            setLockScroll
+            setLockScroll,
         }),
-        [current, setCurrent, setLockScroll]
+        [current, setCurrent, setLockScroll],
     );
 
     return (
         <AppContext.Provider value={contextValue}>
-            <div
-                className={classnames('app', { 'app--loading': isLoading })}
-                onWheel={handleWheel}
-            >
+            <div className={classnames('app', { 'app--loading': isLoading })} onWheel={handleWheel}>
                 {/* <AppBg /> */}
-                <div className='content'>
+                <div className="content">
                     {CONTENT_PAGES.map((p, i) => {
                         return (
                             p.Content &&
                             p.type && (
                                 <div
-                                    className={classnames(
-                                        'page-wrap',
-                                        `page-wrap-${p.type}`,
-                                        {
-                                            active: p.type === current,
-                                        }
-                                    )}
+                                    className={classnames('page-wrap', `page-wrap-${p.type}`, {
+                                        active: p.type === current,
+                                    })}
                                     key={`${p.type}-${i}`}
                                 >
                                     {p.type === PageType.Avatar ? cloneElement(p.Content, { currentPage: current }) : p.Content}
@@ -79,14 +78,14 @@ export const App = () => {
                 </div>
 
                 <div
-                    className='logo'
+                    className="logo"
                     onClick={() => {
                         // playClickAudio();
                         // setCurrent(PageType.Home);
                         window.location.reload();
                     }}
                 ></div>
-                <div className='nav'>
+                <div className="nav">
                     {CONTENT_PAGES.map((p, i) => {
                         return (
                             p.NavText && (
@@ -96,7 +95,7 @@ export const App = () => {
                                         'nav__item',
                                         p.type === current && 'active',
                                         !p.Content && 'nav__item--no-content',
-                                        p.dropdown && 'nav__item--dropdown'
+                                        p.dropdown && 'nav__item--dropdown',
                                     )}
                                     onClick={() => {
                                         playClickAudio();
@@ -110,8 +109,8 @@ export const App = () => {
                     })}
                 </div>
                 {PageBadges.includes(current) && (
-                    <div className='badge-wrap'>
-                        <div className='badge-circle'></div>
+                    <div className="badge-wrap">
+                        <div className="badge-circle"></div>
                         {PageBadges.map((v, i) => (
                             <div
                                 key={v}
@@ -119,19 +118,19 @@ export const App = () => {
                                     opacity: v === current ? 1 : 0,
                                     zIndex: v === current ? 2 : 1,
                                 }}
-                                className={classnames([
-                                    'badge-icon',
-                                    `badge-icon--${i + 1}`,
-                                ])}
+                                className={classnames(['badge-icon', `badge-icon--${i + 1}`])}
                             ></div>
                         ))}
                     </div>
                 )}
-                <div className={classnames(['coming-btn', pulseState])} onClick={() => window.open('https://airdrop.p12.games', '_blank')}>
-                    <div className='coming-btn__item' onMouseEnter={() => setPulseState('')}></div>
+                <div
+                    className={classnames(['coming-btn', pulseState])}
+                    onClick={() => window.open('https://airdrop.p12.games', '_blank')}
+                >
+                    <div className="coming-btn__item" onMouseEnter={() => setPulseState('')}></div>
                 </div>
-                <div className='footer'>
-                    <div className='footer__info'></div>
+                <div className="footer">
+                    <div className="footer__info"></div>
                     {/* <div
                         className={classnames(
                             'footer__audio',
@@ -147,31 +146,17 @@ export const App = () => {
                 </div>
                 {/* pc 端只在第一页展示 */}
                 {!IS_MOBILE && current === PageType.Home && (
-                    <div
-                        className='app__mouse-tips'
-                        onClick={() => nextPageType && setCurrent(nextPageType)}
-                    ></div>
+                    <div className="app__mouse-tips" onClick={() => nextPageType && setCurrent(nextPageType)}></div>
                 )}
                 {/* 手机端一直展示 */}
-                {IS_MOBILE && nextPageType && (
-                    <div
-                        className='app__mouse-tips'
-                        onClick={() => setCurrent(nextPageType)}
-                    ></div>
-                )}
+                {IS_MOBILE && nextPageType && <div className="app__mouse-tips" onClick={() => setCurrent(nextPageType)}></div>}
             </div>
         </AppContext.Provider>
     );
 
     function handleWheel(e: React.WheelEvent<HTMLDivElement>) {
         // 正在切换和 loading 时，阻止切换，防止滚轮导致界面乱飞
-        if (
-            isLoading ||
-            window.appVisibleAnimating ||
-            window.appHideAnimating ||
-            !e ||
-            lockScroll
-        ) {
+        if (isLoading || window.appVisibleAnimating || window.appHideAnimating || !e || lockScroll) {
             return;
         }
         if (Math.abs(e.deltaY) < 35) {
@@ -187,12 +172,7 @@ export const App = () => {
             }
         } else {
             const rootDom = document.getElementById('root');
-            if (
-                rootDom &&
-                Math.ceil(document.body.scrollTop) +
-                document.body.clientHeight >=
-                rootDom.clientHeight
-            ) {
+            if (rootDom && Math.ceil(document.body.scrollTop) + document.body.clientHeight >= rootDom.clientHeight) {
                 // 滚动到达底部了
                 newPage = getNextPageType();
             }
