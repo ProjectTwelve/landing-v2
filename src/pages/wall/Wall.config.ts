@@ -37,11 +37,6 @@ export const PARTNERS_DATA = [
     ],
     [
         {
-            name: 'bnbChain',
-            href: 'https://www.bnbchain.org/',
-            logo: require('../../assets/wall/partners/bnbChain.png'),
-        },
-        {
             name: 'galxe',
             href: 'https://galxe.com/',
             logo: require('../../assets/wall/partners/galxe.png'),
@@ -50,6 +45,19 @@ export const PARTNERS_DATA = [
             name: 'quest3',
             href: 'https://quest3.xyz/',
             logo: require('../../assets/wall/partners/quest3.png'),
+        },
+        {
+            name: 'deGame',
+            href: 'https://degame.com/',
+            logo: require('../../assets/wall/partners/degame.png'),
+            style: {
+                height: '1.875rem',
+            },
+        },
+        {
+            name: 'bnbChain',
+            href: 'https://www.bnbchain.org/',
+            logo: require('../../assets/wall/partners/bnbChain.png'),
         },
         {
             name: 'spaceID',
@@ -63,6 +71,11 @@ export const PARTNERS_DATA = [
         },
     ],
     [
+        {
+            name: 'xterio',
+            href: 'https://xter.io/',
+            logo: require('../../assets/wall/partners/xterio.png'),
+        },
         {
             name: 'archloot',
             href: 'https://www.archloot.com/',
