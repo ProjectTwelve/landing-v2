@@ -42,9 +42,9 @@ export const PARTNERS_DATA = [
             logo: require('../../assets/wall/partners/galxe.png'),
         },
         {
-            name: 'quest3',
-            href: 'https://quest3.xyz/',
-            logo: require('../../assets/wall/partners/quest3.png'),
+            name: 'questn',
+            href: 'https://questn.com/',
+            logo: require('../../assets/wall/partners/questn.png'),
         },
         {
             name: 'deGame',
