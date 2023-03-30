@@ -159,22 +159,6 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         },
     },
     {
-        img: require('../../assets/about/partner-members/16.png'),
-        name: 'Grace.J',
-        desc: (
-            <>
-                metaphysics designer;
-                <br />
-                caffiene addict
-            </>
-        ),
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null,
-        },
-    },
-    {
         img: require('../../assets/about/partner-members/15.png'),
         name: 'Garfield',
         desc: <>To live is to recognize life</>,
@@ -362,6 +346,7 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
             github: null,
         },
     },
+
     {
         img: require('../../assets/about/partner-members/2.png'),
         name: 'Maciej Burno',
@@ -458,6 +443,22 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
                 Psychologically Revacholian;
                 <br />
                 TRUE Godardiste
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/16.png'),
+        name: 'Grace.J',
+        desc: (
+            <>
+                metaphysics designer;
+                <br />
+                caffiene addict
             </>
         ),
         links: {
