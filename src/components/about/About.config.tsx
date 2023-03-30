@@ -86,7 +86,7 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         ),
         links: {
             linkedin: null,
-            twitter: "https://twitter.com/Noy_eth",
+            twitter: 'https://twitter.com/Noy_eth',
             github: 'https://github.com/noyyyy',
         },
     },
@@ -339,6 +339,26 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         links: {
             linkedin: null,
             twitter: 'https://twitter.com/HMS_Strider',
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/Nikko.png'),
+        name: 'Nikko',
+        desc: <>VTuber; Video Game Streamer; Lofi Lover</>,
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/Mavis.png'),
+        name: 'Mavis',
+        desc: <>Carpe diem.</>,
+        links: {
+            linkedin: null,
+            twitter: null,
             github: null,
         },
     },
