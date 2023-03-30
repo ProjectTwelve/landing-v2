@@ -86,7 +86,7 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         ),
         links: {
             linkedin: null,
-            twitter: "https://twitter.com/Noy_eth",
+            twitter: 'https://twitter.com/Noy_eth',
             github: 'https://github.com/noyyyy',
         },
     },
@@ -150,22 +150,6 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
                 RPG lover, Mixed-race baby,
                 <br />
                 Linguistics & football enthusiast
-            </>
-        ),
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null,
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/16.png'),
-        name: 'Grace.J',
-        desc: (
-            <>
-                metaphysics designer;
-                <br />
-                caffiene addict
             </>
         ),
         links: {
@@ -343,6 +327,27 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         },
     },
     {
+        img: require('../../assets/about/partner-members/Nikko.png'),
+        name: 'Nikko',
+        desc: <>VTuber; Video Game Streamer; Lofi Lover</>,
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/Mavis.png'),
+        name: 'Mavis',
+        desc: <>Carpe diem.</>,
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null,
+        },
+    },
+
+    {
         img: require('../../assets/about/partner-members/2.png'),
         name: 'Maciej Burno',
         desc: (
@@ -438,6 +443,22 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
                 Psychologically Revacholian;
                 <br />
                 TRUE Godardiste
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/16.png'),
+        name: 'Grace.J',
+        desc: (
+            <>
+                metaphysics designer;
+                <br />
+                caffiene addict
             </>
         ),
         links: {
