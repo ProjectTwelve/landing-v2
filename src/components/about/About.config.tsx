@@ -329,7 +329,7 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
     {
         img: require('../../assets/about/partner-members/Nikko.png'),
         name: 'Nikko',
-        desc: <>VTuber; Video Game Streamer; Lofi Lover</>,
+        desc: <>vtuber; video game streamer; lofi lover</>,
         links: {
             linkedin: null,
             twitter: null,
