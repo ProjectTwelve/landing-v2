@@ -42,6 +42,14 @@ export const PARTNERS_DATA = [
             logo: require('../../assets/wall/partners/galxe.png'),
         },
         {
+            name: 'degenReborn',
+            href: 'https://degenreborn.xyz/',
+            logo: require('../../assets/wall/partners/degenReborn.png'),
+            style: {
+                height: '2rem',
+            },
+        },
+        {
             name: 'questn',
             href: 'https://questn.com/',
             logo: require('../../assets/wall/partners/questn.png'),
