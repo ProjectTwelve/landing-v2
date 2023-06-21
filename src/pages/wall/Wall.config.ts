@@ -123,6 +123,14 @@ export const PARTNERS_DATA = [
                 height: '2.75rem',
             },
         },
+        {
+            name: 'bitKeep',
+            href: 'https://bitkeep.com/',
+            logo: require('../../assets/wall/partners/bitKeep.png'),
+            style: {
+                height: '2.75rem',
+            },
+        },
     ],
 ];
 
