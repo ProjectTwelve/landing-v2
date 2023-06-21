@@ -128,7 +128,7 @@ export const PARTNERS_DATA = [
             href: 'https://bitkeep.com/',
             logo: require('../../assets/wall/partners/bitKeep.png'),
             style: {
-                height: '2.75rem',
+                height: '2.25rem',
             },
         },
     ],
