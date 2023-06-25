@@ -136,6 +136,10 @@ export const PARTNERS_DATA = [
 
 export const FEATURED_ON_DATA = [
     {
+        name: 'Bloomberg',
+        href: 'https://www.bloomberg.com/',
+    },
+    {
         name: 'Yahoo! Finance',
         href: 'https://finance.yahoo.com/news/project-twelve-closes-8-million-124000354.html',
     },
