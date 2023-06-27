@@ -81,8 +81,8 @@ export const App = () => {
                     className="logo"
                     onClick={() => {
                         // playClickAudio();
-                        // setCurrent(PageType.Home);
-                        window.location.reload();
+                        setCurrent(PageType.Home);
+                        // window.location.reload();
                     }}
                 ></div>
                 <div className="nav">
