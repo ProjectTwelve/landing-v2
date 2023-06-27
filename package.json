@@ -19,6 +19,7 @@
     "custom-env": "^2.0.1",
     "customize-cra": "^1.0.0-alpha.0",
     "dayjs": "^1.11.5",
+    "eslint-config-prettier": "^8.8.0",
     "eventemitter3": "^4.0.7",
     "gsap": "^3.10.2",
     "howler": "^2.2.3",
@@ -32,6 +33,7 @@
     "react-intersection-observer": "^9.1.0",
     "resize-observer-polyfill": "^1.5.1",
     "s3-sync-client": "^3.0.2",
+    "screenfull": "^6.0.2",
     "swiper": "^8.1.4",
     "three": "^0.139.1"
   },
