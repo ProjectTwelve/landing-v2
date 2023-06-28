@@ -137,8 +137,7 @@ export const requestFullScreen = () => {
 };
 export const requestRotate = async () => {
     try {
-        const isFull = await requestFullScreen();
-        if (!isFull) return;
+        await requestFullScreen();
         // eslint-disable-next-line no-restricted-globals
         const oppositeOrientation = screen.orientation.type.startsWith('portrait') ? 'landscape' : 'portrait';
         // eslint-disable-next-line no-restricted-globals
