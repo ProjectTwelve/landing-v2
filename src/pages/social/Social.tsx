@@ -72,7 +72,7 @@ export const Social: React.FC = () => {
     });
 
     return (
-        <div className={`social${isVisible ? null : ' hidden'}`}>
+        <div className={`social ${isVisible ? undefined : ' hidden'}`}>
             <ButterflyGL page={PageType.Social} />
             <div
                 className="social__wrapper"
