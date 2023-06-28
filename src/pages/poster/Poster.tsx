@@ -44,7 +44,7 @@ export const Poster: React.FC = () => {
                     mousewheel: false,
                 });
                 featuresSwiper = new Swiper('.poster-features-swiper-container', {
-                    autoplay: true,
+                    autoplay: { delay: 5000 },
                     effect: 'fade',
                     fadeEffect: {
                         crossFade: true,
