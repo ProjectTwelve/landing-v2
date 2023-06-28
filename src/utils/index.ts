@@ -129,21 +129,28 @@ export const GAevent = (category: string, action: string, value = -1) => {
 
 export const requestFullScreen = () => {
     if (screenfull.isEnabled) {
-        screenfull.request();
+        return screenfull.request();
     } else {
         console.error('不允许全屏');
+        return Promise.resolve(null);
     }
 };
-export const requestRotate = () => {
-    // eslint-disable-next-line no-restricted-globals
-    const oppositeOrientation = screen.orientation.type.startsWith('portrait') ? 'landscape' : 'portrait';
-    // eslint-disable-next-line no-restricted-globals
-    screen.orientation
-        .lock(oppositeOrientation)
-        .then(() => {
-            console.log(`Locked to ${oppositeOrientation}\n`);
-        })
-        .catch((error) => {
-            console.log(`${error}\n`);
-        });
+export const requestRotate = async () => {
+    try {
+        const isFull = await requestFullScreen();
+        if (!isFull) return;
+        // eslint-disable-next-line no-restricted-globals
+        const oppositeOrientation = screen.orientation.type.startsWith('portrait') ? 'landscape' : 'portrait';
+        // eslint-disable-next-line no-restricted-globals
+        screen.orientation
+            .lock(oppositeOrientation)
+            .then(() => {
+                console.log(`Locked to ${oppositeOrientation}\n`);
+            })
+            .catch((error) => {
+                console.log(`${error}\n`);
+            });
+    } catch (e) {
+        console.error(e);
+    }
 };

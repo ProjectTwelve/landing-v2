@@ -52,7 +52,6 @@ export const Loading: React.FC = () => {
         <div className="loading">
             <LoadingGL />
             <div className="loading__button">
-                <div onClick={requestFullScreen}>Click To FullScreen</div>
                 <div onClick={requestRotate}>Click To Rotate</div>
             </div>
             <div className="loading__rotate">
