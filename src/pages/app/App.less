@@ -405,8 +405,7 @@
     }
 }
 
-/** 竖屏和 loading，都隐藏其余内容 */
-.body-portrait .app,
+/** loading 时，隐藏其余内容 */
 .app.app--loading {
     > * {
         display: none;
@@ -419,37 +418,40 @@
     }
 }
 
+/** 移动端适配 */
 .body-portrait {
-    /** 竖屏时强制loading */
-    .page-wrap-loading {
-        opacity: 1 !important;
-        display: block !important;
+    .nav {
+        display: none;
     }
-}
 
-.body-mobile {
     .app {
         .logo {
-            transform: scale(0.75);
-            transform-origin: left top;
-            // margin-left: env(safe-area-inset-left);
-            // margin-left: constant(safe-area-inset-left);
-        }
-        .nav {
-            transform: translate(-8px, 0);
-            // margin-left: env(safe-area-inset-left);
-            // margin-left: constant(safe-area-inset-left);
-            top: 4%;
-            &__item {
-                font-size: 12px;
-                line-height: 20px;
-                opacity: 0.85;
-                margin-right: 20px;
-            }
+            width: 4rem;
+            height: 1.875rem;
+            top: 1.375rem;
+            left: 2.5rem;
         }
         .badge-wrap {
-            transform: scale(0.7);
-            transform-origin: left bottom;
+            left: unset;
+            right: 36px;
+            top: 1rem;
+            width: 2.5625rem;
+            height: 2.5625rem;
+            .badge-circle {
+                width: 2.5625rem;
+                height: 2.5625rem;
+                animation-play-state: running;
+                left: 0;
+                top: 0;
+                margin: 0;
+            }
+            .badge-icon {
+                width: 1.875rem;
+                height: 1.875rem;
+                left: 0;
+                top: 0;
+                margin: 0.35rem 0 0 0.35rem;
+            }
         }
         .footer {
             transform: scale(0.65);
@@ -467,14 +469,7 @@
             right: -15px;
         }
     }
-
     .coming-btn {
-        width: 7rem;
-        height: 2.5rem;
-        top: 3.5%;
-        &__item {
-            width: 65px;
-            margin: 14px auto;
-        }
+        display: none;
     }
 }

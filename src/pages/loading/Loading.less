@@ -134,35 +134,3 @@
         }
     }
 }
-
-.body-portrait {
-    .loading {
-        &__rotate {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            width: 100%;
-            position: absolute;
-            left: 0;
-            color: #fff;
-            text-align: center;
-            .f-font-tt;
-            font-size: 14px;
-            line-height: 18px;
-            pointer-events: none;
-            bottom: 15%;
-
-            &::before {
-                content: '';
-                display: block;
-                .bg('loading/loading-rotate.png');
-                background-size: 100%;
-                width: 52px;
-                height: 55px;
-                margin-bottom: 10px;
-                margin-left: -14px;
-            }
-        }
-    }
-}
