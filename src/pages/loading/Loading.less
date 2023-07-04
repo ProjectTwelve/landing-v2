@@ -6,9 +6,6 @@
     position: relative;
     overflow: hidden;
     background: #000;
-    &__button {
-        display: none;
-    }
     &__progress {
         .f-align(100%, 100px);
         display: flex;
@@ -140,27 +137,6 @@
 
 .body-portrait {
     .loading {
-        &__button {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-            font-weight: bold;
-            font-size: 26px;
-            line-height: 30px;
-            color: #fff;
-            text-align: center;
-            .f-font-tt;
-            position: absolute;
-            bottom: 30px;
-            left: 30vw;
-            pointer-events: auto;
-            div {
-                cursor: pointer;
-                padding: 8px;
-                background-color: black;
-            }
-        }
         &__rotate {
             display: flex;
             justify-content: center;

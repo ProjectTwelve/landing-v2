@@ -1,8 +1,6 @@
-import gsap from 'gsap';
 import { Howl } from 'howler';
 import { throttle } from 'lodash-es';
 import ReactGA from 'react-ga4';
-import screenfull from 'screenfull';
 
 /** hack raf */
 const vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -124,32 +122,5 @@ export const GAevent = (category: string, action: string, value = -1) => {
 
     if (category === 'webview') {
         GAtiming.calcTiming(action);
-    }
-};
-
-export const requestFullScreen = () => {
-    if (screenfull.isEnabled) {
-        return screenfull.request();
-    } else {
-        console.error('不允许全屏');
-        return Promise.resolve(null);
-    }
-};
-export const requestRotate = async () => {
-    try {
-        await requestFullScreen();
-        // eslint-disable-next-line no-restricted-globals
-        const oppositeOrientation = screen.orientation.type.startsWith('portrait') ? 'landscape' : 'portrait';
-        // eslint-disable-next-line no-restricted-globals
-        screen.orientation
-            .lock(oppositeOrientation)
-            .then(() => {
-                console.log(`Locked to ${oppositeOrientation}\n`);
-            })
-            .catch((error) => {
-                console.log(`${error}\n`);
-            });
-    } catch (e) {
-        console.error(e);
     }
 };

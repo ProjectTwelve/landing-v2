@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { LoadingGL } from './components/LoadingGL';
-import { AppContext, loadingEE, usePageVisible } from '../app/App.utils';
-import './Loading.less';
-import { PageType } from '../app/App.config';
 import gsap from 'gsap';
-import { GAevent, requestFullScreen, requestRotate } from '../../utils';
-import screenfull from 'screenfull';
+import React, { useRef } from 'react';
+import { GAevent } from '../../utils';
+import { PageType } from '../app/App.config';
+import { loadingEE, usePageVisible } from '../app/App.utils';
+import './Loading.less';
+import { LoadingGL } from './components/LoadingGL';
 
 const loadingProgressObj = { num: 0 };
 
@@ -51,9 +50,6 @@ export const Loading: React.FC = () => {
     return (
         <div className="loading">
             <LoadingGL />
-            <div className="loading__button">
-                <div onClick={requestRotate}>Click To Rotate</div>
-            </div>
             <div className="loading__rotate">
                 Please rotate to horizontal
                 <br /> to experience P12 site
