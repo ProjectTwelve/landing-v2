@@ -39,9 +39,32 @@
     }
 }
 
-/** TODO: 暂时隐藏 */
+/** 移动端适配 */
 .body-portrait {
-    .home__info {
-        display: none;
+    .home {
+        &__info {
+            display: flex;
+            flex-direction: column;
+            top: 5rem;
+            left: 1.875rem;
+            right: 1.875rem;
+            transform: unset;
+        }
+        &__slogan {
+            .bg('home/slogan.png');
+            width: 100%;
+            height: 3.1875rem;
+            margin-left: 0;
+            margin-bottom: 0.625rem;
+        }
+        &__sub-title {
+            margin: 0;
+            margin-bottom: 0.5rem;
+        }
+        &__small-title,
+        &__small-text-1,
+        &__small-text-2 {
+            margin-bottom: 0.25rem;
+        }
     }
 }
