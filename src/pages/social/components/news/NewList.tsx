@@ -1,6 +1,7 @@
 import { NewInfoType } from '../../../../api/news/news.type';
 import { P12_NEW_TYPE_LABEL } from '../../../../constants';
 import { useFetchNewList, useNewDateFormat } from '../../../../hooks/news';
+import { IS_MOBILE } from '../../../../utils';
 import './NewList.less';
 
 type NewListItemProps = {
@@ -45,6 +46,7 @@ const NewListItem = ({ data, onClick }: NewListItemProps) => {
 type NewListProps = {
     onItemClick: (newInfo: NewInfoType) => void;
 };
+const scrollDist = IS_MOBILE ? 270 : 402;
 export const NewList = ({ onItemClick }: NewListProps) => {
     const { data: newList, isLoading } = useFetchNewList();
     return (
@@ -55,7 +57,7 @@ export const NewList = ({ onItemClick }: NewListProps) => {
                     const list = document?.querySelector('.social-news-list');
                     if (!list) return;
                     list.scroll({
-                        left: list.scrollLeft - 402,
+                        left: list.scrollLeft - scrollDist,
                         behavior: 'smooth',
                     });
                 }}
@@ -74,7 +76,7 @@ export const NewList = ({ onItemClick }: NewListProps) => {
                     const list = document?.querySelector('.social-news-list');
                     if (!list) return;
                     list.scroll({
-                        left: list.scrollLeft + 402,
+                        left: list.scrollLeft + scrollDist,
                         behavior: 'smooth',
                     });
                 }}
