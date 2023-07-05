@@ -218,3 +218,83 @@
         .f-pseudo();
     }
 }
+
+/** 移动端适配 */
+.body-portrait {
+    .avatar__info {
+        transform: none;
+        top: 5rem;
+        left: 1.875rem;
+        right: 1.875rem;
+    }
+    .avatar__slogan {
+        width: 11.5rem;
+        height: 2.5rem;
+        margin: 0;
+    }
+    .avatar__small-title {
+        margin: 0.625rem 0 0.5rem;
+    }
+    .avatar__btn {
+        position: relative;
+        height: 34px;
+        width: 17px;
+        .bg('avatar/arrow-left-mobile.png');
+        &::before {
+            content: '';
+            display: block;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            position: absolute;
+            pointer-events: auto;
+            transform: scaleY(7) scaleX(3);
+        }
+        &-wrap {
+            margin-top: 12rem;
+            justify-content: space-between;
+        }
+    }
+    .avatar-gl {
+        canvas {
+            transform: scale(1.5) translateY(1.5rem);
+        }
+    }
+    .avatar-extra {
+        height: auto;
+        transform: none;
+        left: 1.875rem;
+        top: 11.5rem;
+        right: auto;
+        &-subtitle {
+            font-size: 12px;
+            line-height: 16.2px;
+        }
+        &-text {
+            font-size: 12px;
+            line-height: 12px;
+        }
+        &-item {
+            transform: none;
+        }
+    }
+    .avatar__nav {
+        top: 13.5rem;
+    }
+    .avatar-mouse {
+        left: 50%;
+        top: 60%;
+        opacity: 0.8;
+        transform: scale(0.65);
+        &__dot {
+            opacity: 0;
+        }
+        &__arrow {
+            opacity: 1;
+        }
+        &__arrow-bg {
+            opacity: 1;
+        }
+    }
+}
