@@ -193,47 +193,80 @@
     }
 }
 
-.body-mobile {
+/** 移动端适配 */
+.body-portrait {
     .poster {
         &__info {
-            transform: translate(0, -15%) scale(0.5);
-            transform-origin: right center;
-            padding-right: env(safe-area-inset-right);
-            padding-right: constant(safe-area-inset-right);
-        }
-    }
-}
+            transform: none;
+            margin: 0;
+            top: 0;
+            left: 0;
+            right: 0;
 
-/**  小屏幕适配 */
-@media only screen and (max-height: 680px) {
-    .poster {
-        &__info {
-            margin-top: -128px;
-        }
-        &__small-text-1 {
-            display: none;
-        }
-        &__small-text-2 {
-            display: none;
+            &-wrap {
+                top: 0.8rem;
+                left: 0.3rem;
+                right: 0.3rem;
+                bottom: 0.3rem;
+                width: auto;
+                height: auto;
+            }
+            .poster__sub-title {
+                font-size: 0.14rem;
+                line-height: 0.14rem;
+                margin: 0.1rem 0;
+            }
+            .app-small-text {
+                display: none;
+            }
         }
         &__features {
-            justify-content: space-between;
-            padding-top: 20px;
+            padding: 0;
             &-title {
-                visibility: hidden;
+                font-size: 0.12rem;
+                line-height: 0.12rem;
+                font-weight: 600;
+                padding-right: 0.12rem;
+            }
+            &-swiper-container {
+                background-color: gray;
+                height: auto;
             }
             &-item {
+                display: flex;
+                flex-direction: column;
+                height: auto;
+                align-items: start;
                 &-title {
+                    margin-left: 0.12rem;
+                    margin-bottom: 0.07rem;
+                    padding: 0.03rem;
+                    font-size: 0.12rem;
+                    line-height: 0.1rem;
+                    font-weight: 600;
                     &::before {
-                        background: transparent;
+                        height: 0.1rem;
+                        transform: none;
+                        left: -0.12rem;
                     }
                 }
                 &-desc {
+                    margin-left: 0.12rem;
+                    font-size: 0.12rem;
+                    line-height: 0.12rem;
                     &::before {
-                        background: transparent;
+                        left: -0.12rem;
                     }
                 }
             }
+        }
+        &__slogan {
+            margin: 0;
+            height: 0.3563rem;
+            width: 1.9244rem;
+        }
+        &__bg {
+            display: none;
         }
     }
 }
