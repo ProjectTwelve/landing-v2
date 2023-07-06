@@ -138,11 +138,39 @@
     }
 }
 
-.body-mobile {
+/** 移动端适配 */
+.body-portrait {
     .wall {
         &__info {
-            transform: translate(-50%, -50%) scale(0.47);
-            transform-origin: center center;
+            transform: none;
+            top: 0.82rem;
+            bottom: 0.3rem;
+            left: 0.3rem;
+            right: 0.3rem;
+        }
+        &__title-1 {
+            font-size: 0.1458rem;
+            line-height: 0.1458rem;
+        }
+        &__dot-1 {
+            margin-top: 0.12rem;
+            margin-bottom: 0.24rem;
+        }
+        &-partners {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+            row-gap: 0.28rem;
+            column-gap: 0.2rem;
+            img {
+                height: 0.16rem;
+            }
+        }
+        &__featured-on,
+        &__title-2,
+        &__dot-2 {
+            display: none;
         }
     }
 }

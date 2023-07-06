@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
-import { GAevent, requestOrientationPermission } from '../../utils';
+import { GAevent, IS_MOBILE, requestOrientationPermission } from '../../utils';
 import { FEATURED_ON_DATA, PARTNERS_DATA } from './Wall.config';
 import './Wall.less';
 
@@ -74,21 +74,35 @@ export const Wall: React.FC = () => {
                 <div className="wall__title-1">Investors &amp; Partners</div>
                 <div className="wall__dot-1"></div>
                 <div className="wall-partners">
-                    {PARTNERS_DATA.map((arr, idx) => (
-                        <div className="wall-partners__row" key={idx}>
-                            {arr.map(({ name, href, logo, style }) => (
-                                <img
-                                    style={style}
-                                    src={logo}
-                                    key={name}
-                                    alt={name}
-                                    onClick={() => {
-                                        window.open(href, '_blank');
-                                    }}
-                                />
-                            ))}
-                        </div>
-                    ))}
+                    {IS_MOBILE
+                        ? PARTNERS_DATA.map((arr) =>
+                              arr.map(({ name, href, logo, style }) => (
+                                  <img
+                                      style={IS_MOBILE ? undefined : style}
+                                      src={logo}
+                                      key={name}
+                                      alt={name}
+                                      onClick={() => {
+                                          window.open(href, '_blank');
+                                      }}
+                                  />
+                              )),
+                          )
+                        : PARTNERS_DATA.map((arr, idx) => (
+                              <div className="wall-partners__row" key={idx}>
+                                  {arr.map(({ name, href, logo, style }) => (
+                                      <img
+                                          style={IS_MOBILE ? undefined : style}
+                                          src={logo}
+                                          key={name}
+                                          alt={name}
+                                          onClick={() => {
+                                              window.open(href, '_blank');
+                                          }}
+                                      />
+                                  ))}
+                              </div>
+                          ))}
                 </div>
                 <div className="wall__title-2">Featured on</div>
                 <div className="wall__dot-2"></div>
