@@ -106,31 +106,60 @@
     }
 }
 
-.body-mobile {
+/** 移动端适配 */
+.body-portrait {
     .tree {
         &::after {
-            height: 70px;
+            display: none;
         }
-        &__slogan {
-            width: 320px;
-            height: 72px;
+        &-gl {
+            transform: none;
         }
         &__info {
-            padding-left: env(safe-area-inset-left);
-            padding-left: constant(safe-area-inset-left);
-            transform: translate(0, -50%) scale(0.5);
-            transform-origin: left center;
+            transform: none;
+            top: auto;
+            bottom: 1.05rem;
+            left: 0.3rem;
+            right: 0.3rem;
         }
-        // &__small-text-1 {
-        //   display: none;
-        // }
+        &__small-title {
+            margin: 0.1rem 0 0.06rem;
+        }
+        &__slogan {
+            width: 1.67rem;
+            height: 0.3525rem;
+        }
+
         &__details {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            padding: 0.08rem 0;
+            display: flex;
+            gap: 0.06rem;
+            justify-content: space-between;
+            &::before,
+            &::after {
+                display: none;
+            }
+            border-bottom: 1px solid #ffffff66;
+        }
+        &__detail {
+            font-size: 0.12rem;
+            line-height: 0.14rem;
+            opacity: 1;
         }
         &__extra {
-            transform: translate(0, -50%) scale(0.8);
-            transform-origin: right center;
+            transform: none;
+            top: auto;
+            bottom: 0.35rem;
+            left: 0.3rem;
+            right: 0.3rem;
+            &-link {
+                margin: 0;
+                margin-top: 0.08rem;
+            }
+            &-info {
+                font-size: 0.12rem;
+                line-height: 0.14rem;
+            }
         }
     }
 }
