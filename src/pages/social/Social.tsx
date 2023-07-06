@@ -111,7 +111,7 @@ export const Social: React.FC = () => {
                         <SocialItem
                             className="whitepaper"
                             href="https://p12.dev/whitepaper"
-                            icon={<img src={require('../../assets/social/github.png')} alt="whitepaper" />}
+                            icon={require('../../assets/social/github.png')}
                             title="Whitepaper"
                         />
                         <SocialItem

@@ -1,11 +1,13 @@
+import { useLocalStorageState } from 'ahooks';
 import classnames from 'classnames';
-import React, { useEffect, useMemo, useState, cloneElement } from 'react';
-import { IS_MOBILE, playClickAudio } from '../../utils';
+import _ from 'lodash-es';
+import React, { cloneElement, useEffect, useMemo, useState } from 'react';
+import { useEvent } from 'react-use';
+import { IS_MOBILE, initGA, playClickAudio } from '../../utils';
 import { CONTENT_PAGES, PageBadges, PageRoute, PageType } from './App.config';
 import './App.less';
 import { AppContext, loadingEE } from './App.utils';
-import { initGA } from '../../utils';
-import { useLocalStorageState } from 'ahooks';
+import { MOBILE_BASE_SIZE, MOBILE_BASE_WIDTH } from '../../constants';
 
 const pageTypes = CONTENT_PAGES.filter((v) => v.Content && v.type !== PageType.Loading).map((v) => v.type);
 
@@ -17,6 +19,15 @@ export const App = () => {
     const [musicPlaying, setMusicPlaying] = useState(true);
     const nextPageType = getNextPageType();
     const [pulseState, setPulseState] = useLocalStorageState('hasPulse', { defaultValue: 'pulse' });
+
+    const initFontSize = () => {
+        if (IS_MOBILE) {
+            document.documentElement.style.fontSize = (window.innerWidth / MOBILE_BASE_WIDTH) * MOBILE_BASE_SIZE + 'px';
+        }
+    };
+
+    useEffect(() => initFontSize(), []);
+    useEvent('resize', _.throttle(initFontSize, 1000));
 
     useEffect(() => {
         initGA();

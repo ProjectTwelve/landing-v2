@@ -5,7 +5,7 @@ import { gsap } from 'gsap';
 import { AppContext, usePageVisible } from '../app/App.utils';
 import { PageType } from '../app/App.config';
 import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
-import { GAevent } from '../../utils';
+import { GAevent, IS_MOBILE } from '../../utils';
 
 export const Home: React.FC = () => {
     const homeGLRef = useRef<HomeGLRef>(null);
@@ -28,7 +28,7 @@ export const Home: React.FC = () => {
                     {
                         duration: 1,
                         opacity: 1,
-                    }
+                    },
                 );
                 homeGLRef.current?.group &&
                     tl.fromTo(
@@ -45,7 +45,7 @@ export const Home: React.FC = () => {
                             x: 1,
                             y: 1,
                             z: 1,
-                        }
+                        },
                     );
                 const initRotation = {
                     x: 1.96,
@@ -65,7 +65,7 @@ export const Home: React.FC = () => {
                             duration: 2,
                             delay: -1,
                             ease: 'power2.out',
-                        }
+                        },
                     );
                 tl.fromTo(
                     ['.home__info', '.home-gl .home-label-canvas'],
@@ -75,7 +75,7 @@ export const Home: React.FC = () => {
                     {
                         duration: 2,
                         opacity: 1,
-                    }
+                    },
                 );
                 return tl.then();
             },
@@ -91,7 +91,7 @@ export const Home: React.FC = () => {
                         duration: 0.8,
                         display: 'none',
                         opacity: 0,
-                    }
+                    },
                 );
                 return tl.then();
             },
@@ -100,26 +100,26 @@ export const Home: React.FC = () => {
     });
 
     return (
-        <div className='home'>
+        <div className="home">
             {/* <ButterflyGL page={PageType.Home} /> */}
             <HomeGL ref={homeGLRef} />
-            <div className='home__info'>
-                <div className='home__slogan'></div>
-                <div className='app-sub-title home__sub-title'>
-                    EDITOR<i className='app-sub-title__block'></i>INFRA
-                    <i className='app-sub-title__block'></i>ECONS
+            <div className="home__info">
+                <div className="home__slogan"></div>
+                <div className="app-sub-title home__sub-title">
+                    EDITOR<i className="app-sub-title__block"></i>INFRA
+                    <i className="app-sub-title__block"></i>ECONS
                 </div>
-                <div className='app-small-title app-small-title--with-block home__small-title'>
-                    Empowering Metaworlds
-                </div>
-                <div className='app-small-text home__small-text-1'>
+                <div className="app-small-title app-small-title--with-block home__small-title">Empowering Metaworlds</div>
+                <div className="app-small-text home__small-text-1">
                     Project Twelve, P12 in short, is a web3 gaming Infra
                     <br /> with sustainable economy
                 </div>
-                <div className='app-small-text home__small-text-2'>
-                    The scope of the project covers the Editor, the Infra,
-                    <br /> and the Econs
-                </div>
+                {IS_MOBILE ? null : (
+                    <div className="app-small-text home__small-text-2">
+                        The scope of the project covers the Editor, the Infra,
+                        <br /> and the Econs
+                    </div>
+                )}
             </div>
         </div>
     );

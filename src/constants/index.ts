@@ -12,3 +12,6 @@ export enum P12_NEW_TYPE_LABEL {
     Announcement = '#1EDB8C',
     Game = '#C859FF',
 }
+
+export const MOBILE_BASE_SIZE = 100; // 1rem = 100px(设计稿);
+export const MOBILE_BASE_WIDTH = 375; // 设计稿 iphone SE

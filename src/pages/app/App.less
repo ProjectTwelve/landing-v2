@@ -136,7 +136,7 @@
         position: absolute;
         .bgFull2x('app/corners@2x.png');
         background-size: 100% 100%;
-        width: 8rem;
+        width: 128px;
         top: (45 / @designHeight * 100%);
         right: (40 / @designWidth * 100%);
         z-index: 99;
@@ -426,32 +426,13 @@
 
     .app {
         .logo {
-            width: 4rem;
-            height: 1.875rem;
-            top: 1.875rem;
-            left: 1.875rem;
+            width: 0.4725rem;
+            height: 0.2175rem;
+            top: 0.3rem;
+            left: 0.3rem;
         }
         .badge-wrap {
-            left: unset;
-            right: 1.875rem;
-            top: 1.3rem;
-            width: 2.5625rem;
-            height: 2.5625rem;
-            .badge-circle {
-                width: 2.5625rem;
-                height: 2.5625rem;
-                animation-play-state: running;
-                left: 0;
-                top: 0;
-                margin: 0;
-            }
-            .badge-icon {
-                width: 1.875rem;
-                height: 1.875rem;
-                left: 0;
-                top: 0;
-                margin: 0.355rem 0 0 0.355rem;
-            }
+            display: none;
         }
         .footer {
             display: none;
@@ -460,27 +441,27 @@
         &__mouse-tips {
             .bg('app/mouse-tips-mobile@2x.png');
             animation: mouseupdownmobile 0.5s infinite alternate;
-            bottom: 15px;
+            bottom: 0.16rem;
             left: auto;
             margin-left: 0;
-            right: -15px;
+            right: -0.16rem;
         }
 
         &-sub-title {
-            font-size: 1.2656rem;
-            line-height: 1.2656rem;
+            font-size: 0.2rem;
+            line-height: 0.2025rem;
             &__block {
-                margin: 0 0.5rem;
+                margin: 0 0.08rem;
             }
         }
         &-small {
             &-title {
-                font-size: 0.875rem;
-                line-height: 0.875rem;
+                font-size: 0.14rem;
+                line-height: 0.15rem;
             }
             &-text {
-                font-size: 0.75rem;
-                line-height: 0.75rem;
+                font-size: 0.12rem;
+                line-height: 0.14rem;
                 margin: 0;
             }
         }

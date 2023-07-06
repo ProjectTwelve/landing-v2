@@ -88,7 +88,7 @@
 .body-portrait {
     .home-gl {
         width: 100%;
-        height: 40rem;
+        height: 6rem;
         top: auto;
         bottom: 0;
         canvas {
@@ -102,25 +102,29 @@
             flex-direction: column;
             justify-content: end;
             background: linear-gradient(180deg, rgba(38, 63, 75, 0) 0%, #538297 100%);
-            padding: 2.5rem 1.25rem;
-            min-height: 6.25rem;
-            height: 200px;
+            padding: 0.4rem 0.2rem;
+            min-height: 1rem;
+            height: 2rem;
             top: auto;
             left: 0;
             right: 0;
-            bottom: -11.5rem;
+            bottom: -1.84rem;
             &__title {
-                font-size: 1.125rem;
-                line-height: 1.2656rem;
+                font-size: 0.16rem;
+                line-height: 0.2025rem;
                 position: relative;
                 &::after {
                     display: block;
                     content: '';
-                    margin-top: 0.625rem;
-                    width: 1.25rem;
-                    height: 0.1875rem;
+                    margin-top: 0.1rem;
+                    width: 0.1rem;
+                    height: 0.01rem;
                     background-color: #ffffffcc;
                 }
+            }
+            &__desc {
+                font-size: 0.12rem;
+                line-height: 0.14rem;
             }
         }
     }
