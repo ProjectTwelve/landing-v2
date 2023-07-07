@@ -296,7 +296,23 @@
             display: none;
         }
         .footer {
-            display: none;
+            pointer-events: none;
+            position: fixed;
+            bottom: 0.25rem;
+            left: 0.3rem;
+            right: 0.3rem;
+            top: auto;
+            width: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &__info {
+                transform: none;
+                width: 100%;
+                .bg('app/mobile-footer.png');
+                background-size: contain;
+                object-fit: contain;
+            }
         }
 
         &__mouse-tips {

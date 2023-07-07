@@ -67,7 +67,7 @@ export const App = () => {
     );
 
     return (
-        <div className={classnames('app', { 'app--loading': isLoading })} onWheel={handleWheel}>
+        <div className={classnames('app', { 'app--loading': isLoading }, `page-${current}-active`)} onWheel={handleWheel}>
             {/* <AppBg /> */}
             <div className="content">
                 {CONTENT_PAGES.map((p, i) => {

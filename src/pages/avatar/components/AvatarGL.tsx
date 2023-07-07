@@ -153,7 +153,7 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                                     playing={playing}
                                     currentPage={currentPage}
                                 />
-                                <AvatarCircle container={glWrapper} playing={playing} />
+                                {IS_MOBILE ? null : <AvatarCircle container={glWrapper} playing={playing} />}
                             </div>
                         </div>
                     </div>

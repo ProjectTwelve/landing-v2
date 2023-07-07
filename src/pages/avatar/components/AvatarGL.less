@@ -258,7 +258,11 @@
     }
     .avatar-gl {
         canvas {
-            transform: scale(1.5) translateY(0.3rem);
+            position: fixed;
+            bottom: -0.3rem;
+            transform: translate(-0.6rem, 0);
+            width: calc(100% + 1.2rem);
+            height: auto;
         }
     }
     .avatar-extra {
@@ -295,6 +299,11 @@
         }
         &__arrow-bg {
             opacity: 1;
+        }
+    }
+    .app.page-avatar-active {
+        .footer {
+            bottom: 0.1rem;
         }
     }
 }

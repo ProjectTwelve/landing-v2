@@ -6,10 +6,10 @@ import { usePageLockScroll } from '../../hooks/usePageLockScroll';
 import { GAevent, requestOrientationPermission } from '../../utils';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
+import './Social.less';
+import { SocialItem } from './components/SocialItem';
 import NewInfoDialog from './components/news/NewInfoDialog';
 import { NewList } from './components/news/NewList';
-import { SocialItem } from './components/SocialItem';
-import './Social.less';
 
 export const Social: React.FC = () => {
     const [newModalOpen, setOpen] = useState(false);

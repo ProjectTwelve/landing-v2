@@ -1,9 +1,10 @@
 import gsap from 'gsap';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
+import { Socials } from '../../components/socials';
+import { GAevent, IS_MOBILE, requestOrientationPermission } from '../../utils';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
-import { GAevent, IS_MOBILE, requestOrientationPermission } from '../../utils';
 import { FEATURED_ON_DATA, PARTNERS_DATA } from './Wall.config';
 import './Wall.less';
 
@@ -129,6 +130,7 @@ export const Wall: React.FC = () => {
                         media kit
                     </a>
                 </div>
+                {IS_MOBILE && <Socials className="wall__social-links" />}
             </div>
         </div>
     );
