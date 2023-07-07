@@ -1,6 +1,6 @@
 /* eslint-disable */
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { getPublicAssetPath, IS_MOBILE } from '../../../utils';
+import { useEffect, useRef, useState } from 'react';
+import { IS_MOBILE, getPublicAssetPath } from '../../../utils';
 import { PageType } from '../../app/App.config';
 import { usePageVisible } from '../../app/App.utils';
 import './TreeGL.less';

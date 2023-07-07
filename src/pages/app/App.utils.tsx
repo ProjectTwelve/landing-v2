@@ -2,13 +2,8 @@ import React, { createContext, useContext, useEffect, useLayoutEffect, useRef } 
 import { PageType } from './App.config';
 import EE from 'eventemitter3';
 import { isFunction, mapValues, mean, pick } from 'lodash-es';
-
-interface AppContextValue {
-    visiblePage: PageType;
-    setVisiblePage: (t: PageType) => void;
-    setLockScroll: (t: boolean) => void;
-}
-export const AppContext = createContext<AppContextValue | null>(null);
+import { useAtomValue } from 'jotai';
+import { currentPageAtom } from '../../store/app/state';
 
 /** 界面的 callback 集合 */
 type VisibleHookCallBacks = {
@@ -23,7 +18,8 @@ window.appVisibleAnimating = 0;
 window.appHideAnimating = 0;
 /** 界面显示、退出、销毁相关逻辑 */
 export const usePageVisible = function (key: PageType, effectFun: () => VisibleHookCallBacks | undefined) {
-    const visible = useContext(AppContext)?.visiblePage === key;
+    const currentPage = useAtomValue(currentPageAtom);
+    const visible = currentPage === key;
     const callbacksRef = useRef<VisibleHookCallBacks | undefined>({});
     useLayoutEffect(() => {
         callbacksRef.current = effectFun();

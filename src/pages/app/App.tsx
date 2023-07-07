@@ -1,22 +1,22 @@
 import { useLocalStorageState } from 'ahooks';
 import classnames from 'classnames';
+import { useAtom, useAtomValue } from 'jotai';
 import _ from 'lodash-es';
 import React, { cloneElement, useEffect, useMemo, useState } from 'react';
 import { useEvent } from 'react-use';
+import { MOBILE_BASE_SIZE, MOBILE_BASE_WIDTH } from '../../constants';
+import { currentPageAtom, lockScrollAtom } from '../../store/app/state';
 import { IS_MOBILE, initGA, playClickAudio } from '../../utils';
 import { CONTENT_PAGES, PageBadges, PageRoute, PageType } from './App.config';
 import './App.less';
-import { AppContext, loadingEE } from './App.utils';
-import { MOBILE_BASE_SIZE, MOBILE_BASE_WIDTH } from '../../constants';
+import { loadingEE } from './App.utils';
 
 const pageTypes = CONTENT_PAGES.filter((v) => v.Content && v.type !== PageType.Loading).map((v) => v.type);
 
 export const App = () => {
-    const [current, setCurrent] = useState(PageType.Loading);
-    // const [current, setCurrent] = useState(PageType.Wall);
-    const [lockScroll, setLockScroll] = useState(false);
+    const [current, setCurrent] = useAtom(currentPageAtom);
+    const lockScroll = useAtomValue(lockScrollAtom);
     const isLoading = current === PageType.Loading;
-    const [musicPlaying, setMusicPlaying] = useState(true);
     const nextPageType = getNextPageType();
     const [pulseState, setPulseState] = useLocalStorageState('hasPulse', { defaultValue: 'pulse' });
 
@@ -61,108 +61,92 @@ export const App = () => {
         () => ({
             visiblePage: current,
             setVisiblePage: setCurrent,
-            setLockScroll,
         }),
-        [current, setCurrent, setLockScroll],
+        [current, setCurrent],
     );
 
     return (
-        <AppContext.Provider value={contextValue}>
-            <div className={classnames('app', { 'app--loading': isLoading })} onWheel={handleWheel}>
-                {/* <AppBg /> */}
-                <div className="content">
-                    {CONTENT_PAGES.map((p, i) => {
-                        return (
-                            p.Content &&
-                            p.type && (
-                                <div
-                                    className={classnames('page-wrap', `page-wrap-${p.type}`, {
-                                        active: p.type === current,
-                                    })}
-                                    key={`${p.type}-${i}`}
-                                >
-                                    {p.type === PageType.Avatar ? cloneElement(p.Content, { currentPage: current }) : p.Content}
-                                </div>
-                            )
-                        );
-                    })}
-                </div>
-
-                <div
-                    className="logo"
-                    onClick={() => {
-                        // playClickAudio();
-                        setCurrent(PageType.Home);
-                        // window.location.reload();
-                    }}
-                ></div>
-                <div className="nav">
-                    {CONTENT_PAGES.map((p, i) => {
-                        return (
-                            p.NavText && (
-                                <div
-                                    key={`${p.type}-${i}`}
-                                    className={classnames(
-                                        'nav__item',
-                                        p.type === current && 'active',
-                                        !p.Content && 'nav__item--no-content',
-                                        p.dropdown && 'nav__item--dropdown',
-                                    )}
-                                    onClick={() => {
-                                        playClickAudio();
-                                        p.type && setCurrent(p.type);
-                                    }}
-                                >
-                                    {p.NavText}
-                                </div>
-                            )
-                        );
-                    })}
-                </div>
-                {PageBadges.includes(current) && (
-                    <div className="badge-wrap">
-                        <div className="badge-circle"></div>
-                        {PageBadges.map((v, i) => (
+        <div className={classnames('app', { 'app--loading': isLoading })} onWheel={handleWheel}>
+            {/* <AppBg /> */}
+            <div className="content">
+                {CONTENT_PAGES.map((p, i) => {
+                    return (
+                        p.Content &&
+                        p.type && (
                             <div
-                                key={v}
-                                style={{
-                                    opacity: v === current ? 1 : 0,
-                                    zIndex: v === current ? 2 : 1,
-                                }}
-                                className={classnames(['badge-icon', `badge-icon--${i + 1}`])}
-                            ></div>
-                        ))}
-                    </div>
-                )}
-                <div
-                    className={classnames(['coming-btn', pulseState])}
-                    onClick={() => window.open('https://airdrop.p12.games', '_blank')}
-                >
-                    <div className="coming-btn__item" onMouseEnter={() => setPulseState('')}></div>
-                </div>
-                <div className="footer">
-                    <div className="footer__info"></div>
-                    {/* <div
-                        className={classnames(
-                            'footer__audio',
-                            'audio-btn',
-                            musicPlaying && 'active'
-                        )}
-                        onClick={() => setMusicPlaying(!musicPlaying)}
-                    >
-                        <i className='footer__audio-item'></i>
-                        <i className='footer__audio-item'></i>
-                        <i className='footer__audio-item'></i>
-                    </div> */}
-                </div>
-                {/* pc 端只在第一页展示 */}
-                {!IS_MOBILE && current === PageType.Home && (
-                    <div className="app__mouse-tips" onClick={() => nextPageType && setCurrent(nextPageType)}></div>
-                )}
-                {/* 手机端一直展示 */}
-                {IS_MOBILE && nextPageType && <div className="app__mouse-tips" onClick={() => setCurrent(nextPageType)}></div>}
+                                className={classnames('page-wrap', `page-wrap-${p.type}`, {
+                                    active: p.type === current,
+                                })}
+                                key={`${p.type}-${i}`}
+                            >
+                                {p.type === PageType.Avatar ? cloneElement(p.Content, { currentPage: current }) : p.Content}
+                            </div>
+                        )
+                    );
+                })}
             </div>
-        </AppContext.Provider>
+
+            <div
+                className="logo"
+                onClick={() => {
+                    setCurrent(PageType.Home);
+                    // window.location.reload();
+                }}
+            ></div>
+            <div className="nav">
+                {CONTENT_PAGES.map((p, i) => {
+                    return (
+                        p.NavText && (
+                            <div
+                                key={`${p.type}-${i}`}
+                                className={classnames(
+                                    'nav__item',
+                                    p.type === current && 'active',
+                                    !p.Content && 'nav__item--no-content',
+                                    p.dropdown && 'nav__item--dropdown',
+                                )}
+                                onClick={() => {
+                                    playClickAudio();
+                                    p.type && setCurrent(p.type);
+                                }}
+                            >
+                                {p.NavText}
+                            </div>
+                        )
+                    );
+                })}
+            </div>
+            {PageBadges.includes(current) && (
+                <div className="badge-wrap">
+                    <div className="badge-circle"></div>
+                    {PageBadges.map((v, i) => (
+                        <div
+                            key={v}
+                            style={{
+                                opacity: v === current ? 1 : 0,
+                                zIndex: v === current ? 2 : 1,
+                            }}
+                            className={classnames(['badge-icon', `badge-icon--${i + 1}`])}
+                        ></div>
+                    ))}
+                </div>
+            )}
+            <div
+                className={classnames(['coming-btn', pulseState])}
+                onClick={() => window.open('https://airdrop.p12.games', '_blank')}
+            >
+                <div className="coming-btn__item" onMouseEnter={() => setPulseState('')}></div>
+            </div>
+            <div className="footer">
+                <div className="footer__info"></div>
+            </div>
+            {/* pc 端只在第一页展示 */}
+            {!IS_MOBILE && current === PageType.Home && (
+                <div className="app__mouse-tips" onClick={() => nextPageType && setCurrent(nextPageType)}></div>
+            )}
+            {/* 手机端一直展示 */}
+            {IS_MOBILE && nextPageType && <div className="app__mouse-tips" onClick={() => setCurrent(nextPageType)}></div>}
+        </div>
     );
 
     function handleWheel(e: React.WheelEvent<HTMLDivElement>) {

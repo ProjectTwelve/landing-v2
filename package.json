@@ -23,6 +23,7 @@
         "eventemitter3": "^4.0.7",
         "gsap": "^3.10.2",
         "howler": "^2.2.3",
+        "jotai": "^2.2.2",
         "lil-gui": "^0.16.1",
         "lodash-es": "^4.17.21",
         "mime-types": "^2.1.35",

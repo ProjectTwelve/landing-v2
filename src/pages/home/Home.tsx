@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { HomeGL, HomeGLRef } from './components/HomeGL';
-import './Home.less';
 import { gsap } from 'gsap';
-import { AppContext, usePageVisible } from '../app/App.utils';
-import { PageType } from '../app/App.config';
-import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
+import React, { useRef } from 'react';
 import { GAevent, IS_MOBILE } from '../../utils';
+import { PageType } from '../app/App.config';
+import { usePageVisible } from '../app/App.utils';
+import './Home.less';
+import { HomeGL, HomeGLRef } from './components/HomeGL';
 
 export const Home: React.FC = () => {
     const homeGLRef = useRef<HomeGLRef>(null);

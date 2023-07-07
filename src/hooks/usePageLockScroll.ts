@@ -1,10 +1,10 @@
-import { useContext, useEffect, useLayoutEffect } from 'react';
-import { AppContext } from '../pages/app/App.utils';
+import { useSetAtom } from 'jotai';
+import { useEffect } from 'react';
+import { lockScrollAtom } from '../store/app/state';
 
 export const usePageLockScroll = (locked?: boolean) => {
-    const setAppLock = useContext(AppContext)?.setLockScroll;
+    const setAppLockScroll = useSetAtom(lockScrollAtom);
     useEffect(() => {
-        if (!setAppLock) return;
-        setAppLock(!!locked);
-    }, [setAppLock, locked]);
+        setAppLockScroll?.(!!locked);
+    }, [setAppLockScroll, locked]);
 };
