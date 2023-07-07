@@ -320,9 +320,18 @@
         }
         &__btn {
             background-position: 50% 50%;
-            border: 2px solid #fff;
+            border: 1px solid #ffffffcc;
             border-radius: 100%;
-            padding: 0.09rem 0.12rem;
+            height: 0.36rem;
+            width: 0.36rem;
+            backdrop-filter: blur(1px);
+            &--left {
+                .bg('social/arrow-next.svg');
+                transform: rotate(180deg);
+            }
+            &--right {
+                .bg('social/arrow-next.svg');
+            }
         }
         &__partner {
             width: auto;

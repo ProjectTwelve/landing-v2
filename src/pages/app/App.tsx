@@ -10,6 +10,7 @@ import { IS_MOBILE, initGA, playClickAudio } from '../../utils';
 import { CONTENT_PAGES, PageBadges, PageRoute, PageType } from './App.config';
 import './App.less';
 import { loadingEE } from './App.utils';
+import { Navigator } from './components/navigator';
 
 const pageTypes = CONTENT_PAGES.filter((v) => v.Content && v.type !== PageType.Loading).map((v) => v.type);
 
@@ -93,7 +94,8 @@ export const App = () => {
                     // window.location.reload();
                 }}
             ></div>
-            <div className="nav">
+            <Navigator />
+            {/* <div className="nav">
                 {CONTENT_PAGES.map((p, i) => {
                     return (
                         p.NavText && (
@@ -115,7 +117,7 @@ export const App = () => {
                         )
                     );
                 })}
-            </div>
+            </div> */}
             {PageBadges.includes(current) && (
                 <div className="badge-wrap">
                     <div className="badge-circle"></div>
