@@ -19,6 +19,7 @@ import {
 import { createCircle } from './utils/createCircle';
 import { useTick } from './hooks/useTick';
 import { createCollisionParticles } from './utils/createCollisionParticles';
+import classNames from 'classnames';
 
 export default function AvatarCircle(props: { container: MutableRefObject<HTMLElement>; playing: boolean }) {
     const canvas = useRef<HTMLCanvasElement>(null!);
@@ -143,5 +144,5 @@ export default function AvatarCircle(props: { container: MutableRefObject<HTMLEl
 
     //
 
-    return <canvas ref={canvas} className={styles.canvasCircle}></canvas>;
+    return <canvas ref={canvas} className={classNames(styles.canvasCircle, 'avatar-gl__canvasCircle')}></canvas>;
 }
