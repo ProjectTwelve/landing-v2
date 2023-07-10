@@ -3,7 +3,7 @@ import { autoDispose } from './autoDispose';
 import { IS_MOBILE } from '../../../../utils';
 
 const RADIUS = 1;
-const COUNT = 300;
+const COUNT = IS_MOBILE ? 120 : 300;
 export function createCircle(): Points {
     const points = new Points();
 
