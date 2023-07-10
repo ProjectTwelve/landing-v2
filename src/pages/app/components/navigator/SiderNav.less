@@ -1,0 +1,48 @@
+@import '../../../../styles/variables.less';
+
+/** 移动端适配 */
+.body-portrait {
+    .sider-nav {
+        position: fixed;
+        top: 50%;
+        left: 0.25rem;
+        bottom: 0;
+        height: 1.1rem;
+        transform: translate(0, -50%);
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.02rem;
+        &__item {
+            width: 0.06rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.02rem;
+            span {
+                display: block;
+                background-color: #d9d9d9;
+                width: 0.06rem;
+                height: 0.06rem;
+                border-radius: 100%;
+                opacity: 0.5;
+            }
+            i {
+                display: block;
+                background-color: #d9d9d9;
+                width: 0.01rem;
+                height: 0.01rem;
+                border-radius: 100%;
+                opacity: 0.5;
+            }
+            &.active {
+                span,
+                i {
+                    opacity: 1;
+                    background-color: #fff;
+                }
+            }
+        }
+    }
+}

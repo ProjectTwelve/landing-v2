@@ -11,6 +11,7 @@ import { CONTENT_PAGES, PageBadges, PageRoute, PageType } from './App.config';
 import './App.less';
 import { loadingEE } from './App.utils';
 import { Navigator } from './components/navigator';
+import { SiderNav } from './components/navigator/SiderNav';
 
 const pageTypes = CONTENT_PAGES.filter((v) => v.Content && v.type !== PageType.Loading).map((v) => v.type);
 
@@ -95,6 +96,7 @@ export const App = () => {
                 }}
             ></div>
             <Navigator />
+            {IS_MOBILE && <SiderNav />}
             {/* <div className="nav">
                 {CONTENT_PAGES.map((p, i) => {
                     return (
