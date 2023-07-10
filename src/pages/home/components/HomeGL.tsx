@@ -67,7 +67,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
 
         const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 1, 100);
         camera.position.set(0, 0, IS_MOBILE ? 5 : 3.33);
-        camera.lookAt(0, 0, 0);
+        camera.lookAt(0, IS_MOBILE ? 0.5 : 0, IS_MOBILE ? 0.5 : 0);
         camera.layers.enable(1);
         scene.add(camera);
 
