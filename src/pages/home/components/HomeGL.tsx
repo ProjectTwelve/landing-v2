@@ -13,6 +13,8 @@ import { PageType } from '../../app/App.config';
 import { LoadingSourceType, loadingEE, usePageVisible } from '../../app/App.utils';
 import { HOME_GL_ACTIVE_DATA } from './HomeGL.config';
 import './HomeGL.less';
+import { useAtom } from 'jotai';
+import { homeActiveExtraIndexAtom } from '../../../store/home/state';
 
 export interface HomeGLRef {
     group?: THREE.Group;
@@ -21,7 +23,7 @@ export interface HomeGLRef {
 export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const groupRef = useRef<THREE.Group>();
-    const [activatedIndex, setActivatedIndex] = useState<number | null>(null);
+    const [activatedIndex, setActivatedIndex] = useAtom(homeActiveExtraIndexAtom);
 
     useImperativeHandle(
         ref,

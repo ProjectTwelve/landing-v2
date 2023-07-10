@@ -185,13 +185,15 @@
     }
 }
 
-@keyframes mouseupdownmobile {
+@keyframes mouseDownWave {
     0% {
-        transform: scale(0.3) translateY(10px);
+        transform: scale(1);
+        opacity: 1;
     }
 
     100% {
-        transform: scale(0.3) translateY(-10px);
+        transform: scale(1.5);
+        opacity: 0;
     }
 }
 
@@ -316,14 +318,42 @@
         }
 
         &__mouse-tips {
-            .bg('app/mouse-tips-mobile@2x.png');
-            animation: mouseupdownmobile 0.5s infinite alternate;
-            bottom: 0.16rem;
-            left: auto;
-            margin-left: 0;
-            right: -0.16rem;
+            background-image: none;
+            background-size: contain;
+            right: 50%;
+            width: 0.48rem;
+            height: 0.48rem;
+            transform: translate(50%, 0);
+            bottom: 0.46rem;
+            animation: none;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 100%;
+            border: 1px solid #ffffff;
+            opacity: 0.8;
+            .f-align-center();
+            &::before {
+                content: '';
+                display: block;
+                width: 0.12rem;
+                height: 0.12rem;
+                background-size: 100% 100%;
+                .bg('app/arrow@2x.png');
+                filter: brightness(3);
+            }
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                top: -0.01rem;
+                left: -0.01rem;
+                bottom: -0.01rem;
+                right: -0.01rem;
+                border-radius: 100%;
+                border: 1px solid #ffffff;
+                opacity: 0.6;
+                animation: mouseDownWave 1.2s infinite;
+            }
         }
-
         &-sub-title {
             font-size: 0.2rem;
             line-height: 0.2025rem;

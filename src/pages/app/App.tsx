@@ -12,6 +12,7 @@ import './App.less';
 import { loadingEE } from './App.utils';
 import { Navigator } from './components/navigator';
 import { SiderNav } from './components/navigator/SiderNav';
+import { homeActiveExtraIndexAtom } from '../../store/home/state';
 
 const pageTypes = CONTENT_PAGES.filter((v) => v.Content && v.type !== PageType.Loading).map((v) => v.type);
 
@@ -21,6 +22,7 @@ export const App = () => {
     const isLoading = current === PageType.Loading;
     const nextPageType = getNextPageType();
     const [pulseState, setPulseState] = useLocalStorageState('hasPulse', { defaultValue: 'pulse' });
+    const activatedHomeExtraIndex = useAtomValue(homeActiveExtraIndexAtom);
 
     const initFontSize = () => {
         if (IS_MOBILE) {
@@ -68,7 +70,12 @@ export const App = () => {
     );
 
     return (
-        <div className={classnames('app', { 'app--loading': isLoading }, `page-${current}-active`)} onWheel={handleWheel}>
+        <div
+            className={classnames('app', { 'app--loading': isLoading }, `page-${current}-active`, {
+                'home-extra-active': activatedHomeExtraIndex !== null,
+            })}
+            onWheel={handleWheel}
+        >
             {/* <AppBg /> */}
             <div className="content">
                 {CONTENT_PAGES.map((p, i) => {
