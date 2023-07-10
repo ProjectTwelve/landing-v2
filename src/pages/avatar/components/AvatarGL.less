@@ -191,34 +191,6 @@
     }
 }
 
-.body-mobile {
-    .avatar-extra {
-        padding-right: env(safe-area-inset-right);
-        padding-right: constant(safe-area-inset-right);
-        transform: translate(0, -50%) scale(0.75);
-        transform-origin: right center;
-    }
-    .avatar-mouse {
-        left: 60%;
-        top: 60%;
-        opacity: 0.8;
-        transform: scale(0.7);
-        &__dot {
-            opacity: 0;
-        }
-        &__arrow {
-            opacity: 1;
-        }
-        &__arrow-bg {
-            opacity: 1;
-        }
-    }
-    .avatar-particle-btn-wrap {
-        margin: 0;
-        .f-pseudo();
-    }
-}
-
 /** 移动端适配 */
 .body-portrait {
     .avatar__info {
@@ -249,10 +221,12 @@
             left: 0;
             position: absolute;
             pointer-events: auto;
-            transform: scaleY(7) scaleX(3);
+            transform: scaleY(7) scaleX(4) translateX(-10%);
         }
         &-wrap {
             margin-top: 1.92rem;
+            margin-left: 0.2rem;
+            margin-right: 0.3rem;
             justify-content: space-between;
         }
     }
