@@ -54,7 +54,7 @@ export const NewList = ({ onItemClick }: NewListProps) => {
         return isNaN(fontSize) ? 16 : fontSize;
     }, [document.documentElement.style.fontSize]);
     const isPortrait = useIsPortrait();
-    const scrollDist = useMemo(() => (isPortrait ? 2.5 * rootSize : 402), [isPortrait, rootSize]);
+    const scrollDist = useMemo(() => (isPortrait ? 2.67 * rootSize : 402), [isPortrait, rootSize]);
     return (
         <div className="social-news">
             <div

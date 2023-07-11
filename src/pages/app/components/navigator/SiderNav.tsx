@@ -13,7 +13,7 @@ export const SiderNav: React.FC = () => {
                     p.NavText && (
                         <div key={`${p.type}-${i}`} className={classnames('sider-nav__item', p.type === current && 'active')}>
                             <span></span>
-                            {i !== CONTENT_PAGES.length - 1 && arr6.map(() => <i></i>)}
+                            {i !== CONTENT_PAGES.length - 1 && arr6.map((_, idx) => <i key={idx}></i>)}
                         </div>
                     )
                 );
