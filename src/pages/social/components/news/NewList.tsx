@@ -1,7 +1,8 @@
+import { useMemo } from 'react';
 import { NewInfoType } from '../../../../api/news/news.type';
 import { P12_NEW_TYPE_LABEL } from '../../../../constants';
 import { useFetchNewList, useNewDateFormat } from '../../../../hooks/news';
-import { IS_MOBILE } from '../../../../utils';
+import { useIsPortrait } from '../../../../hooks/useIsPortrait';
 import './NewList.less';
 
 type NewListItemProps = {
@@ -46,18 +47,24 @@ const NewListItem = ({ data, onClick }: NewListItemProps) => {
 type NewListProps = {
     onItemClick: (newInfo: NewInfoType) => void;
 };
-const scrollDist = IS_MOBILE ? 270 : 402;
 export const NewList = ({ onItemClick }: NewListProps) => {
     const { data: newList, isLoading } = useFetchNewList();
+    const rootSize = useMemo(() => {
+        const fontSize = parseFloat(document.documentElement.style.fontSize);
+        return isNaN(fontSize) ? 16 : fontSize;
+    }, [document.documentElement.style.fontSize]);
+    const isPortrait = useIsPortrait();
+    const scrollDist = useMemo(() => (isPortrait ? 2.5 * rootSize : 402), [isPortrait, rootSize]);
     return (
         <div className="social-news">
             <div
                 className="social-pre"
                 onClick={() => {
                     const list = document?.querySelector('.social-news-list');
-                    if (!list) return;
+                    if (!newList?.length || !list) return;
+                    const scrollLeft = list.scrollLeft === 0 ? newList?.length * scrollDist : list.scrollLeft - scrollDist;
                     list.scroll({
-                        left: list.scrollLeft - scrollDist,
+                        left: scrollLeft,
                         behavior: 'smooth',
                     });
                 }}
@@ -75,8 +82,11 @@ export const NewList = ({ onItemClick }: NewListProps) => {
                 onClick={() => {
                     const list = document?.querySelector('.social-news-list');
                     if (!list) return;
+                    const innerWidth = list.scrollWidth - list.clientWidth;
+                    const isEnd = innerWidth - list.scrollLeft < 10;
+                    const scrollLeft = isEnd ? 0 : list.scrollLeft + scrollDist;
                     list.scroll({
-                        left: list.scrollLeft + scrollDist,
+                        left: scrollLeft,
                         behavior: 'smooth',
                     });
                 }}
