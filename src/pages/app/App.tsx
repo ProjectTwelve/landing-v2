@@ -35,6 +35,7 @@ export const App = () => {
             document.documentElement.style.fontSize = '135px';
             return;
         }
+        document.documentElement.style.fontSize = 'unset';
     };
 
     useEffect(() => initFontSize(), []);

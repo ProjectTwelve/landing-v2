@@ -14,7 +14,7 @@ export const PARTNERS_DATA: PartnerData[][] = [
             href: 'https://www.primavera-capital.com/',
             logo: require('../../assets/wall/partners/primavera.png'),
             style: {
-                marginTop: '-0.625rem',
+                marginTop: '-10px',
             },
         },
         {
@@ -22,7 +22,7 @@ export const PARTNERS_DATA: PartnerData[][] = [
             href: 'https://www.metaapp.cn/',
             logo: require('../../assets/wall/partners/metaapp.png'),
             style: {
-                height: '1.5rem',
+                height: '24px',
             },
             mobileStyle: {
                 height: '0.12rem',
@@ -47,7 +47,7 @@ export const PARTNERS_DATA: PartnerData[][] = [
             href: 'https://www.smrtilab.xyz/',
             logo: require('../../assets/wall/partners/smrtiLab.png'),
             style: {
-                height: '2.375rem',
+                height: '38px',
             },
             mobileStyle: {
                 height: '0.2rem',
@@ -65,7 +65,7 @@ export const PARTNERS_DATA: PartnerData[][] = [
             href: 'https://degenreborn.xyz/',
             logo: require('../../assets/wall/partners/degenReborn.png'),
             style: {
-                height: '2rem',
+                height: '32px',
             },
         },
         {
@@ -78,7 +78,7 @@ export const PARTNERS_DATA: PartnerData[][] = [
             href: 'https://degame.com/',
             logo: require('../../assets/wall/partners/degame.png'),
             style: {
-                height: '1.875rem',
+                height: '30px',
             },
         },
         {
@@ -113,7 +113,7 @@ export const PARTNERS_DATA: PartnerData[][] = [
             href: 'https://www.ambrus.studio/',
             logo: require('../../assets/wall/partners/ambrusStudio.png'),
             style: {
-                height: '3rem',
+                height: '48px',
             },
             mobileStyle: {
                 height: '0.2rem',
@@ -134,7 +134,7 @@ export const PARTNERS_DATA: PartnerData[][] = [
             href: 'https://balatroon.world/',
             logo: require('../../assets/wall/partners/WOB.png'),
             style: {
-                height: '3rem',
+                height: '48px',
             },
             mobileStyle: {
                 height: '0.25rem',
@@ -145,7 +145,7 @@ export const PARTNERS_DATA: PartnerData[][] = [
             href: 'https://www.revoland.com/',
             logo: require('../../assets/wall/partners/revoland.png'),
             style: {
-                height: '2.75rem',
+                height: '44px',
             },
             mobileStyle: {
                 height: '0.25rem',
@@ -156,7 +156,7 @@ export const PARTNERS_DATA: PartnerData[][] = [
             href: 'https://bitkeep.com/',
             logo: require('../../assets/wall/partners/bitKeep.png'),
             style: {
-                height: '2.25rem',
+                height: '36px',
             },
             mobileStyle: {
                 height: '0.25rem',
