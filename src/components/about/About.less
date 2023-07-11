@@ -347,11 +347,16 @@
                 width: 0.5rem;
                 height: 0.5rem;
                 margin: 0;
+                &.active {
+                    .about__partner-text {
+                        display: flex;
+                    }
+                }
             }
             &-text {
+                display: none;
                 position: fixed;
                 bottom: 2rem;
-                display: flex;
                 flex-direction: column;
                 width: auto;
                 height: 1.1rem;

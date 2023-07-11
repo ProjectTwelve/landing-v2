@@ -58,6 +58,7 @@ export const Navigator: React.FC = () => {
                                         onClick={() => {
                                             playClickAudio();
                                             p.type && setCurrent(p.type);
+                                            toggleMenu();
                                         }}
                                     >
                                         {p.NavText}
