@@ -1,4 +1,13 @@
-export const PARTNERS_DATA = [
+import { CSSProperties } from 'react';
+
+type PartnerData = {
+    name: string;
+    href: string;
+    logo: string;
+    style?: CSSProperties;
+    mobileStyle?: CSSProperties;
+};
+export const PARTNERS_DATA: PartnerData[][] = [
     [
         {
             name: 'primavera',
@@ -15,11 +24,18 @@ export const PARTNERS_DATA = [
             style: {
                 height: '1.5rem',
             },
+            mobileStyle: {
+                height: '0.12rem',
+                marginBottom: '-0.04rem',
+            },
         },
         {
             name: 'CCV',
             href: 'https://en.ccvcap.com/',
             logo: require('../../assets/wall/partners/CCV.png'),
+            mobileStyle: {
+                height: '0.12rem',
+            },
         },
         {
             name: 'cyber connect',
@@ -32,6 +48,9 @@ export const PARTNERS_DATA = [
             logo: require('../../assets/wall/partners/smrtiLab.png'),
             style: {
                 height: '2.375rem',
+            },
+            mobileStyle: {
+                height: '0.2rem',
             },
         },
     ],
@@ -96,6 +115,9 @@ export const PARTNERS_DATA = [
             style: {
                 height: '3rem',
             },
+            mobileStyle: {
+                height: '0.2rem',
+            },
         },
         {
             name: 'yeehaGames',
@@ -114,6 +136,9 @@ export const PARTNERS_DATA = [
             style: {
                 height: '3rem',
             },
+            mobileStyle: {
+                height: '0.25rem',
+            },
         },
         {
             name: 'revoland',
@@ -122,6 +147,9 @@ export const PARTNERS_DATA = [
             style: {
                 height: '2.75rem',
             },
+            mobileStyle: {
+                height: '0.25rem',
+            },
         },
         {
             name: 'bitKeep',
@@ -129,6 +157,9 @@ export const PARTNERS_DATA = [
             logo: require('../../assets/wall/partners/bitKeep.png'),
             style: {
                 height: '2.25rem',
+            },
+            mobileStyle: {
+                height: '0.25rem',
             },
         },
     ],

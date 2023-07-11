@@ -77,9 +77,9 @@ export const Wall: React.FC = () => {
                 <div className="wall-partners">
                     {IS_MOBILE
                         ? PARTNERS_DATA.map((arr) =>
-                              arr.map(({ name, href, logo, style }) => (
+                              arr.map(({ name, href, logo, mobileStyle }) => (
                                   <img
-                                      style={IS_MOBILE ? undefined : style}
+                                      style={mobileStyle}
                                       src={logo}
                                       key={name}
                                       alt={name}
@@ -93,7 +93,7 @@ export const Wall: React.FC = () => {
                               <div className="wall-partners__row" key={idx}>
                                   {arr.map(({ name, href, logo, style }) => (
                                       <img
-                                          style={IS_MOBILE ? undefined : style}
+                                          style={style}
                                           src={logo}
                                           key={name}
                                           alt={name}
