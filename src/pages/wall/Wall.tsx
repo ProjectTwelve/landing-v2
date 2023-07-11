@@ -2,14 +2,16 @@ import gsap from 'gsap';
 import React, { useEffect, useState } from 'react';
 import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 import { Socials } from '../../components/socials';
-import { GAevent, IS_MOBILE, requestOrientationPermission } from '../../utils';
+import { GAevent, requestOrientationPermission } from '../../utils';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
 import { FEATURED_ON_DATA, PARTNERS_DATA } from './Wall.config';
 import './Wall.less';
+import { useIsPortrait } from '../../hooks/useIsPortrait';
 
 export const Wall: React.FC = () => {
     const [isVisible, setVisible] = useState(false);
+    const isPortrait = useIsPortrait();
 
     useEffect(() => {
         const tl = gsap.timeline();
@@ -75,7 +77,7 @@ export const Wall: React.FC = () => {
                 <div className="wall__title-1">Investors &amp; Partners</div>
                 <div className="wall__dot-1"></div>
                 <div className="wall-partners">
-                    {IS_MOBILE
+                    {isPortrait
                         ? PARTNERS_DATA.map((arr) =>
                               arr.map(({ name, href, logo, mobileStyle }) => (
                                   <img
@@ -130,7 +132,7 @@ export const Wall: React.FC = () => {
                         media kit
                     </a>
                 </div>
-                {IS_MOBILE && <Socials className="wall__social-links" />}
+                {isPortrait && <Socials className="wall__social-links" />}
             </div>
         </div>
     );

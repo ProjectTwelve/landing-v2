@@ -3,10 +3,11 @@ import React, { useMemo, useState } from 'react';
 import { ABOUT_PARTNERS, CONTACT_INFO, PartnerInfo } from './About.config';
 import './About.less';
 import AboutCard from './components/AboutCard';
-import { IS_MOBILE } from '../../utils';
+import { useIsPortrait } from '../../hooks/useIsPortrait';
 
-const showNum = IS_MOBILE ? 3 : 5;
 export const About: React.FC = () => {
+    const isPortrait = useIsPortrait();
+    const showNum = isPortrait ? 3 : 5;
     const [currentPartner, setCurrentPartner] = useState(0);
     const [currentAbouts, setCurrentAbouts] = useState<PartnerInfo[]>(ABOUT_PARTNERS);
     const showingAbouts = useMemo(

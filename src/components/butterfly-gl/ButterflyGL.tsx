@@ -4,7 +4,6 @@ import { usePageVisible } from '../../pages/app/App.utils';
 import butterflyHelpers from './butterflyHelpers';
 import ResizeObserver from 'resize-observer-polyfill';
 import './ButterflyGL.less';
-import { IS_MOBILE } from '../../utils';
 
 export interface ButterflyGLProps {
     page: PageType;
@@ -12,8 +11,7 @@ export interface ButterflyGLProps {
 const ButterflyGLComponent = (props: ButterflyGLProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const currentDefaultProperties =
-        butterflyHelpers.defaultProperties[props.page];
+    const currentDefaultProperties = butterflyHelpers.defaultProperties[props.page];
 
     usePageVisible(props.page, () => {
         const canvas = canvasRef.current;
@@ -46,12 +44,7 @@ const ButterflyGLComponent = (props: ButterflyGLProps) => {
             hpgButterfly.properties.mouse.set(newInputXY.x, newInputXY.y); // x, y as in {x:  -1 to 1, y: -1 to 1 }
             if (!isMultiTouch) {
                 if (!inputXY) inputXY = newInputXY;
-                hpgButterfly.draw(
-                    inputXY.x,
-                    inputXY.y,
-                    newInputXY.x,
-                    newInputXY.y
-                );
+                hpgButterfly.draw(inputXY.x, inputXY.y, newInputXY.x, newInputXY.y);
             }
             inputXY = newInputXY;
         };
@@ -76,7 +69,7 @@ const ButterflyGLComponent = (props: ButterflyGLProps) => {
                 time,
                 isMultiTouch,
                 touchEvents,
-                multiTouchChargeToggle
+                multiTouchChargeToggle,
             );
         };
         const init = () => {
@@ -87,20 +80,11 @@ const ButterflyGLComponent = (props: ButterflyGLProps) => {
             time = +new Date() / 1000;
             // you can alter the input event as you wish to or even use some input event library.
             container!.addEventListener('mousedown', onDown);
-            container!.addEventListener(
-                'touchstart',
-                butterflyHelpers.getTouchBound(onDown, touchEvents, container)
-            );
+            container!.addEventListener('touchstart', butterflyHelpers.getTouchBound(onDown, touchEvents, container));
             container!.addEventListener('mousemove', onMove);
-            container!.addEventListener(
-                'touchmove',
-                butterflyHelpers.getTouchBound(onMove, touchEvents, container)
-            );
+            container!.addEventListener('touchmove', butterflyHelpers.getTouchBound(onMove, touchEvents, container));
             container!.addEventListener('mouseup', onUp);
-            container!.addEventListener(
-                'touchend',
-                butterflyHelpers.getTouchBound(onUp, touchEvents, container)
-            );
+            container!.addEventListener('touchend', butterflyHelpers.getTouchBound(onUp, touchEvents, container));
             container!.addEventListener('click', onClick);
             onResize();
 
@@ -109,9 +93,7 @@ const ButterflyGLComponent = (props: ButterflyGLProps) => {
             //     (elem) => elem.type === 'Object3D'
             // );
             // properties.scene.children.splice(butterflyIdx);
-            properties.scene.children = properties.scene.children.filter(
-                (v) => v.type !== 'Object3D'
-            );
+            properties.scene.children = properties.scene.children.filter((v) => v.type !== 'Object3D');
 
             for (let key in currentDefaultProperties) {
                 properties[key] = currentDefaultProperties[key];
@@ -128,13 +110,8 @@ const ButterflyGLComponent = (props: ButterflyGLProps) => {
             loop();
             timeoutId = window.setTimeout(() => {
                 intervalId = window.setInterval(
-                    butterflyHelpers.startParamDrift.bind(
-                        null,
-                        currentDefaultProperties,
-                        properties,
-                        true
-                    ),
-                    6000
+                    butterflyHelpers.startParamDrift.bind(null, currentDefaultProperties, properties, true),
+                    6000,
                 );
             }, 3000);
         };
@@ -162,11 +139,8 @@ const ButterflyGLComponent = (props: ButterflyGLProps) => {
     });
 
     return (
-        <div className='butterfly-gl' ref={containerRef}>
-            <canvas
-                className={`butterfly-canvas butterfly-canvas-${props.page}`}
-                ref={canvasRef}
-            ></canvas>
+        <div className="butterfly-gl" ref={containerRef}>
+            <canvas className={`butterfly-canvas butterfly-canvas-${props.page}`} ref={canvasRef}></canvas>
         </div>
     );
 };

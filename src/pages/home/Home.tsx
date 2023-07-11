@@ -1,13 +1,15 @@
 import { gsap } from 'gsap';
 import React, { useRef } from 'react';
-import { GAevent, IS_MOBILE } from '../../utils';
+import { GAevent } from '../../utils';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
 import './Home.less';
 import { HomeGL, HomeGLRef } from './components/HomeGL';
+import { useIsPortrait } from '../../hooks/useIsPortrait';
 
 export const Home: React.FC = () => {
     const homeGLRef = useRef<HomeGLRef>(null);
+    const isPortrait = useIsPortrait();
 
     usePageVisible(PageType.Home, () => {
         return {
@@ -113,7 +115,7 @@ export const Home: React.FC = () => {
                     Project Twelve, P12 in short, is a web3 gaming Infra
                     <br /> with sustainable economy
                 </div>
-                {IS_MOBILE ? null : (
+                {isPortrait ? null : (
                     <div className="app-small-text home__small-text-2">
                         The scope of the project covers the Editor, the Infra,
                         <br /> and the Econs

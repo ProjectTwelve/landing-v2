@@ -15,6 +15,7 @@ import { HOME_GL_ACTIVE_DATA } from './HomeGL.config';
 import './HomeGL.less';
 import { useAtom } from 'jotai';
 import { homeActiveExtraIndexAtom } from '../../../store/home/state';
+import { useIsPortrait } from '../../../hooks/useIsPortrait';
 
 export interface HomeGLRef {
     group?: THREE.Group;
@@ -24,6 +25,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const groupRef = useRef<THREE.Group>();
     const [activatedIndex, setActivatedIndex] = useAtom(homeActiveExtraIndexAtom);
+    const isPortrait = useIsPortrait();
 
     useImperativeHandle(
         ref,
@@ -65,7 +67,12 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         labelRenderer.domElement.className = 'home-label-canvas';
         container.appendChild(labelRenderer.domElement);
 
-        const camera = new THREE.PerspectiveCamera(IS_MOBILE ? 70 : 40, container.clientWidth / container.clientHeight, 1, 100);
+        const camera = new THREE.PerspectiveCamera(
+            isPortrait ? 70 : 40,
+            container.clientWidth / container.clientHeight,
+            1,
+            100,
+        );
         camera.position.set(0, 0, 3.33);
         camera.lookAt(0, 0, 0);
         camera.layers.enable(1);

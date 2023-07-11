@@ -6,18 +6,20 @@ import Swiper, { Autoplay, EffectFade } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/effect-fade';
-import { GAevent, IS_MOBILE, requestOrientationPermission } from '../../utils';
+import { GAevent } from '../../utils';
 import { About } from '../../components/about/About';
 import { PageType } from '../app/App.config';
 import { loadingEE, LoadingSourceType, usePageVisible } from '../app/App.utils';
 import { POSTER_FEATURES } from './Poster.config';
 import './Poster.less';
+import { useIsPortrait } from '../../hooks/useIsPortrait';
 Swiper.use([Autoplay, EffectFade]);
 
 export const Poster: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const bgRef = useRef<HTMLDivElement>(null);
     const containerSize = useSize(containerRef);
+    const isPortrait = useIsPortrait();
 
     usePageVisible(PageType.Poster, () => {
         if (!bgRef.current) {
@@ -104,7 +106,7 @@ export const Poster: React.FC = () => {
                     <img
                         className="poster__img"
                         alt="poster-img"
-                        src={IS_MOBILE ? require('../../assets/poster/0@0.2x.jpg') : require('../../assets/poster/0@2x.jpg')}
+                        src={isPortrait ? require('../../assets/poster/0@0.2x.jpg') : require('../../assets/poster/0@2x.jpg')}
                         onLoad={() => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_0}`, 1)}
                     />
                 </div>
@@ -112,7 +114,7 @@ export const Poster: React.FC = () => {
                     <img
                         className="poster__img"
                         alt="poster-img"
-                        src={IS_MOBILE ? require('../../assets/poster/1@0.2x.png') : require('../../assets/poster/1@2x.png')}
+                        src={isPortrait ? require('../../assets/poster/1@0.2x.png') : require('../../assets/poster/1@2x.png')}
                         onLoad={() => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_1}`, 1)}
                     />
                 </div>
@@ -120,7 +122,7 @@ export const Poster: React.FC = () => {
                     <img
                         className="poster__img"
                         alt="poster-img"
-                        src={IS_MOBILE ? require('../../assets/poster/2@0.2x.png') : require('../../assets/poster/2@2x.png')}
+                        src={isPortrait ? require('../../assets/poster/2@0.2x.png') : require('../../assets/poster/2@2x.png')}
                         onLoad={() => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_2}`, 1)}
                     />
                 </div>
@@ -128,7 +130,7 @@ export const Poster: React.FC = () => {
                     <img
                         className="poster__img"
                         alt="poster-img"
-                        src={IS_MOBILE ? require('../../assets/poster/3@0.2x.png') : require('../../assets/poster/3@2x.png')}
+                        src={isPortrait ? require('../../assets/poster/3@0.2x.png') : require('../../assets/poster/3@2x.png')}
                         onLoad={() => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_3}`, 1)}
                     />
                 </div>
@@ -136,7 +138,7 @@ export const Poster: React.FC = () => {
                     <img
                         className="poster__img"
                         alt="poster-img"
-                        src={IS_MOBILE ? require('../../assets/poster/4@0.2x.png') : require('../../assets/poster/4@2x.png')}
+                        src={isPortrait ? require('../../assets/poster/4@0.2x.png') : require('../../assets/poster/4@2x.png')}
                         onLoad={() => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_4}`, 1)}
                     />
                     <div className="poster-logos-swiper-container swiper-container">
@@ -166,7 +168,7 @@ export const Poster: React.FC = () => {
                     <img
                         className="poster__img"
                         alt="poster-img"
-                        src={IS_MOBILE ? require('../../assets/poster/5@0.2x.png') : require('../../assets/poster/5@2x.png')}
+                        src={isPortrait ? require('../../assets/poster/5@0.2x.png') : require('../../assets/poster/5@2x.png')}
                         onLoad={() => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_5}`, 1)}
                     />
                 </div>

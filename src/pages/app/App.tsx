@@ -13,6 +13,7 @@ import { loadingEE } from './App.utils';
 import { Navigator } from './components/navigator';
 import { SiderNav } from './components/navigator/SiderNav';
 import { homeActiveExtraIndexAtom } from '../../store/home/state';
+import { useIsPortrait } from '../../hooks/useIsPortrait';
 
 const pageTypes = CONTENT_PAGES.filter((v) => v.Content && v.type !== PageType.Loading).map((v) => v.type);
 
@@ -23,10 +24,16 @@ export const App = () => {
     const nextPageType = getNextPageType();
     const [pulseState, setPulseState] = useLocalStorageState('hasPulse', { defaultValue: 'pulse' });
     const activatedHomeExtraIndex = useAtomValue(homeActiveExtraIndexAtom);
+    const isPortrait = useIsPortrait();
 
     const initFontSize = () => {
         if (IS_MOBILE) {
             document.documentElement.style.fontSize = (window.innerWidth / MOBILE_BASE_WIDTH) * MOBILE_BASE_SIZE + 'px';
+            return;
+        }
+        if (isPortrait) {
+            document.documentElement.style.fontSize = '135px';
+            return;
         }
     };
 
@@ -103,7 +110,7 @@ export const App = () => {
                 }}
             ></div>
             <Navigator />
-            {IS_MOBILE && <SiderNav />}
+            {isPortrait && <SiderNav />}
             {/* <div className="nav">
                 {CONTENT_PAGES.map((p, i) => {
                     return (
@@ -152,11 +159,11 @@ export const App = () => {
                 <div className="footer__info"></div>
             </div>
             {/* pc 端只在第一页展示 */}
-            {!IS_MOBILE && current === PageType.Home && (
+            {!isPortrait && current === PageType.Home && (
                 <div className="app__mouse-tips" onClick={() => nextPageType && setCurrent(nextPageType)}></div>
             )}
             {/* 手机端一直展示 */}
-            {IS_MOBILE && nextPageType && <div className="app__mouse-tips" onClick={() => setCurrent(nextPageType)}></div>}
+            {isPortrait && nextPageType && <div className="app__mouse-tips" onClick={() => setCurrent(nextPageType)}></div>}
         </div>
     );
 

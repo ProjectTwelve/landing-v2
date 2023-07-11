@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { useAtom } from 'jotai';
 import { currentPageAtom, mobileNavMenuOpenAtom } from '../../../../store/app/state';
-import { IS_MOBILE, playClickAudio } from '../../../../utils';
+import { playClickAudio } from '../../../../utils';
 import { CONTENT_PAGES } from '../../App.config';
 import './index.less';
 import { useCallback, useRef } from 'react';
@@ -11,10 +11,13 @@ import CloseSrc from '../../../../assets/app/close.png';
 import MenuSrc from '../../../../assets/app/menu.png';
 import { usePageLockScroll } from '../../../../hooks/usePageLockScroll';
 import { Socials } from '../../../../components/socials';
+import { useIsPortrait } from '../../../../hooks/useIsPortrait';
 export const Navigator: React.FC = () => {
     const [current, setCurrent] = useAtom(currentPageAtom);
     const [menuOpen, setMenuOpen] = useAtom(mobileNavMenuOpenAtom);
     const buttonRef = useRef<HTMLImageElement>(null);
+    const isPortrait = useIsPortrait();
+
     usePageLockScroll(menuOpen); // 弹窗时阻止滚动
 
     const toggleMenu = useCallback(() => {
@@ -31,7 +34,7 @@ export const Navigator: React.FC = () => {
         });
     }, [setMenuOpen, menuOpen, buttonRef]);
 
-    return IS_MOBILE ? (
+    return isPortrait ? (
         <>
             <div className="mobile-nav">
                 <div className="mobile-nav__button" onClick={toggleMenu}>
