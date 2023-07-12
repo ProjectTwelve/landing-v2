@@ -22,9 +22,9 @@ export interface HomeGLRef {
 }
 
 const initRotation = {
-    x: 1.7,
-    y: 0.5,
-    z: 2.3,
+    x: 2,
+    y: 0.13,
+    z: 1.66,
 };
 export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -371,6 +371,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 // document.body.appendChild(gui.domElement);
             },
             onHide: () => {
+                console.log('click!', groupRef?.current?.rotation);
                 cancelAnimationFrame(frameId);
                 autoRotating = false;
                 if (IS_MOBILE) {
