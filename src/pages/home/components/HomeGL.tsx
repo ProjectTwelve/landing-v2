@@ -22,9 +22,9 @@ export interface HomeGLRef {
 }
 
 const initRotation = {
-    x: 1.96,
-    y: 0.38,
-    z: 1.06,
+    x: 1.86,
+    y: 0.18,
+    z: 1.56,
 };
 export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
