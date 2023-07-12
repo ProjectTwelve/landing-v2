@@ -21,6 +21,11 @@ export interface HomeGLRef {
     group?: THREE.Group;
 }
 
+const initRotation = {
+    x: 1.96,
+    y: 0.38,
+    z: 1.06,
+};
 export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const groupRef = useRef<THREE.Group>();
@@ -121,7 +126,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 model.position.set(0, 0, 0);
                 model.scale.set(0.1, 0.1, 0.1);
                 group.add(model);
-
                 mixer = new THREE.AnimationMixer(model);
                 mixer.clipAction(gltf.animations[0]).play();
 
@@ -322,6 +326,37 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
 
         return {
             onVisible: () => {
+                const tl = gsap.timeline();
+                tl.fromTo(
+                    group.scale,
+                    {
+                        x: 2,
+                        y: 2,
+                        z: 2,
+                    },
+                    {
+                        duration: 1,
+                        ease: 'power2.out',
+                        delay: -2,
+                        x: 1,
+                        y: 1,
+                        z: 1,
+                    },
+                );
+                tl.fromTo(
+                    [group.rotation],
+                    {
+                        x: initRotation.x + Math.PI * 0.5,
+                        y: initRotation.y,
+                        z: initRotation.z - Math.PI * 0.75,
+                    },
+                    {
+                        ...initRotation,
+                        duration: 2,
+                        delay: -2,
+                        ease: 'power2.out',
+                    },
+                );
                 animate();
                 autoRotating = true;
                 if (IS_MOBILE) {
