@@ -22,6 +22,8 @@ export const App = () => {
     const lockScroll = useAtomValue(lockScrollAtom);
     const isLoading = current === PageType.Loading;
     const nextPageType = getNextPageType();
+    const prevPageType = getPrevPageType();
+
     const [pulseState, setPulseState] = useLocalStorageState('hasPulse', { defaultValue: 'pulse' });
     const activatedHomeExtraIndex = useAtomValue(homeActiveExtraIndexAtom);
     const isPortrait = useIsPortrait();
@@ -164,14 +166,29 @@ export const App = () => {
                 <div className="app__mouse-tips" onClick={() => nextPageType && setCurrent(nextPageType)}></div>
             )}
             {/* 手机端一直展示 */}
-            {isPortrait && nextPageType && (
-                <div
-                    className={classNames('app__mouse-tips', { wave: enableMouseTipAnim })}
-                    onClick={() => {
-                        if (enableMouseTipAnim) setEnableMouseTipAnim(false);
-                        setCurrent(nextPageType);
-                    }}
-                ></div>
+            {isPortrait && (
+                <div className={classNames('app__mouse-tips', { wave: enableMouseTipAnim })}>
+                    {prevPageType && (
+                        <div
+                            className="app__mouse-tips-item app__mouse-tips-prev"
+                            onClick={() => {
+                                console.log('prev', prevPageType);
+                                if (enableMouseTipAnim) setEnableMouseTipAnim(false);
+                                setCurrent(prevPageType);
+                            }}
+                        />
+                    )}
+                    {nextPageType && (
+                        <div
+                            className="app__mouse-tips-item app__mouse-tips-next"
+                            onClick={() => {
+                                console.log('next', nextPageType);
+                                if (enableMouseTipAnim) setEnableMouseTipAnim(false);
+                                setCurrent(nextPageType);
+                            }}
+                        />
+                    )}
+                </div>
             )}
         </div>
     );

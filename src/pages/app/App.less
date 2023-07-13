@@ -294,66 +294,90 @@
             top: 0.3rem;
             left: 0.3rem;
         }
-        .badge-wrap {
-            display: none;
+        .badge {
+            &-wrap {
+                width: 0.36rem;
+                height: 0.36rem;
+                bottom: 0.3rem;
+                left: auto;
+                right: 0.3rem;
+            }
+            &-circle {
+                width: 0.36rem;
+                height: 0.36rem;
+                margin: 0;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+            }
+            &-icon {
+                width: 0.28rem;
+                height: 0.28rem;
+                margin: 0;
+                left: 0.04rem;
+                right: 0.04rem;
+                top: 0.04rem;
+                bottom: 0.04rem;
+            }
         }
         .footer {
-            pointer-events: none;
-            position: fixed;
-            bottom: 0.18rem;
-            left: 0.3rem;
-            right: 0.3rem;
-            top: auto;
-            width: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            &__info {
-                transform: none;
-                width: 100%;
-                .bg('app/mobile-footer.png');
-                background-size: contain;
-                object-fit: contain;
-            }
+            display: none;
         }
 
         &__mouse-tips {
             background-image: none;
-            background-size: contain;
+            transform: none;
+            margin: 0;
+            height: auto;
+            width: auto;
+            top: auto;
+            left: auto;
             right: 50%;
-            width: 0.48rem;
-            height: 0.48rem;
-            transform: translate(50%, 0);
-            bottom: 0.46rem;
+            transform: translateX(50%);
+            bottom: 0.2rem;
             animation: none;
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 100%;
-            border: 1px solid #ffffff;
-            opacity: 0.8;
-            .f-align-center();
-            &.wave::after {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.16rem;
+            -webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+            &.wave .app__mouse-tips-item::after {
+                display: block;
                 animation: mouseDownWave 1.2s infinite;
             }
-            &::before {
-                content: '';
-                display: block;
-                width: 0.12rem;
-                height: 0.12rem;
-                background-size: 100% 100%;
-                .bg('app/arrow@2x.png');
-                filter: brightness(3);
-            }
-            &::after {
-                content: '';
-                display: block;
-                position: absolute;
-                top: -0.01rem;
-                left: -0.01rem;
-                bottom: -0.01rem;
-                right: -0.01rem;
+            &-item {
+                width: 0.34rem;
+                height: 0.34rem;
+                background: rgba(0, 0, 0, 0.8);
                 border-radius: 100%;
-                border: 1px solid #ffffff;
-                opacity: 0.6;
+                border: 1px solid #ffffffcc;
+                opacity: 0.8;
+                position: relative;
+                .f-align-center();
+                &::before {
+                    content: '';
+                    display: block;
+                    width: 0.12rem;
+                    height: 0.12rem;
+                    background-size: 100% 100%;
+                    .bg('app/arrow@2x.png');
+                    filter: brightness(3);
+                }
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: -0.01rem;
+                    left: -0.01rem;
+                    bottom: -0.01rem;
+                    right: -0.01rem;
+                    border-radius: 100%;
+                    border: 1px solid #ffffff;
+                    opacity: 0.6;
+                }
+            }
+            &-prev {
+                transform: rotate(180deg);
             }
         }
         &-sub-title {
