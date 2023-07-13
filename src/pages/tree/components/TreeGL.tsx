@@ -4,11 +4,12 @@ import { IS_MOBILE, getPublicAssetPath } from '../../../utils';
 import { PageType } from '../../app/App.config';
 import { usePageVisible } from '../../app/App.utils';
 import './TreeGL.less';
+import { useIsPortrait } from '../../../hooks/useIsPortrait';
 
 export const TreeGL = (props) => {
     const containerRef = useRef<HTMLDivElement>(null!);
     const vidRef = useRef<HTMLVideoElement>(null!);
-
+    const isPortrait = useIsPortrait();
     const [playing, setPlaying] = useState(false);
 
     useEffect(() => {
@@ -71,7 +72,6 @@ export const TreeGL = (props) => {
             initTarget = target;
 
             const clientX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
-
             initX = clientX;
         };
         const end = () => {
@@ -81,7 +81,7 @@ export const TreeGL = (props) => {
             const clientX = e instanceof MouseEvent ? e.clientX : e.touches[0].clientX;
 
             if (controlling) {
-                target = initTarget + (clientX - initX) * 0.02;
+                target = initTarget + (clientX - initX) * (isPortrait ? 0.05 : 0.02);
             }
         };
 

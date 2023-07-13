@@ -172,7 +172,6 @@ export const App = () => {
                         <div
                             className="app__mouse-tips-item app__mouse-tips-prev"
                             onClick={() => {
-                                console.log('prev', prevPageType);
                                 if (enableMouseTipAnim) setEnableMouseTipAnim(false);
                                 setCurrent(prevPageType);
                             }}
@@ -182,7 +181,6 @@ export const App = () => {
                         <div
                             className="app__mouse-tips-item app__mouse-tips-next"
                             onClick={() => {
-                                console.log('next', nextPageType);
                                 if (enableMouseTipAnim) setEnableMouseTipAnim(false);
                                 setCurrent(nextPageType);
                             }}
