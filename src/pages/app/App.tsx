@@ -11,7 +11,6 @@ import { CONTENT_PAGES, PageBadges, PageRoute, PageType } from './App.config';
 import './App.less';
 import { loadingEE } from './App.utils';
 import { Navigator } from './components/navigator';
-import { SiderNav } from './components/navigator/SiderNav';
 import { homeActiveExtraIndexAtom } from '../../store/home/state';
 import { useIsPortrait } from '../../hooks/useIsPortrait';
 
@@ -111,7 +110,6 @@ export const App = () => {
                 }}
             ></div>
             <Navigator />
-            {isPortrait && <SiderNav />}
             {/* <div className="nav">
                 {CONTENT_PAGES.map((p, i) => {
                     return (

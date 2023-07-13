@@ -21,17 +21,23 @@ export interface HomeGLRef {
     group?: THREE.Group;
 }
 
-const initRotation = {
-    x: 2,
-    y: 0.13,
-    z: 1.66,
-};
 export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const groupRef = useRef<THREE.Group>();
     const [activatedIndex, setActivatedIndex] = useAtom(homeActiveExtraIndexAtom);
     const isPortrait = useIsPortrait();
 
+    const initRotation = isPortrait
+        ? {
+              x: 2.62,
+              y: -0.87,
+              z: 2.79,
+          }
+        : {
+              x: 1.96,
+              y: 0.38,
+              z: 1.06,
+          };
     useImperativeHandle(
         ref,
         () => ({
@@ -371,7 +377,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 // document.body.appendChild(gui.domElement);
             },
             onHide: () => {
-                console.log('click!', groupRef?.current?.rotation);
+                // console.log('click!', groupRef?.current?.rotation);
                 cancelAnimationFrame(frameId);
                 autoRotating = false;
                 if (IS_MOBILE) {
