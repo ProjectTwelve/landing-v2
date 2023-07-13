@@ -3,8 +3,8 @@ import classnames from 'classnames';
 import { useAtom, useAtomValue } from 'jotai';
 import _ from 'lodash-es';
 import React, { cloneElement, useEffect, useMemo, useState } from 'react';
-import { useEvent } from 'react-use';
-import { MOBILE_BASE_SIZE, MOBILE_BASE_WIDTH } from '../../constants';
+import { useEvent, useSessionStorage } from 'react-use';
+import { MOBILE_BASE_SIZE, MOBILE_BASE_WIDTH, STORAGE_KEY } from '../../constants';
 import { currentPageAtom, lockScrollAtom } from '../../store/app/state';
 import { IS_MOBILE, initGA, playClickAudio } from '../../utils';
 import { CONTENT_PAGES, PageBadges, PageRoute, PageType } from './App.config';
@@ -13,6 +13,7 @@ import { loadingEE } from './App.utils';
 import { Navigator } from './components/navigator';
 import { homeActiveExtraIndexAtom } from '../../store/home/state';
 import { useIsPortrait } from '../../hooks/useIsPortrait';
+import classNames from 'classnames';
 
 const pageTypes = CONTENT_PAGES.filter((v) => v.Content && v.type !== PageType.Loading).map((v) => v.type);
 
@@ -24,6 +25,7 @@ export const App = () => {
     const [pulseState, setPulseState] = useLocalStorageState('hasPulse', { defaultValue: 'pulse' });
     const activatedHomeExtraIndex = useAtomValue(homeActiveExtraIndexAtom);
     const isPortrait = useIsPortrait();
+    const [enableMouseTipAnim, setEnableMouseTipAnim] = useSessionStorage(STORAGE_KEY.ENABLE_MOUSE_TIP_ANIM, true);
 
     const initFontSize = () => {
         if (IS_MOBILE) {
@@ -162,7 +164,15 @@ export const App = () => {
                 <div className="app__mouse-tips" onClick={() => nextPageType && setCurrent(nextPageType)}></div>
             )}
             {/* 手机端一直展示 */}
-            {isPortrait && nextPageType && <div className="app__mouse-tips" onClick={() => setCurrent(nextPageType)}></div>}
+            {isPortrait && nextPageType && (
+                <div
+                    className={classNames('app__mouse-tips', { wave: enableMouseTipAnim })}
+                    onClick={() => {
+                        if (enableMouseTipAnim) setEnableMouseTipAnim(false);
+                        setCurrent(nextPageType);
+                    }}
+                ></div>
+            )}
         </div>
     );
 

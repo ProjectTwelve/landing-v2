@@ -331,6 +331,9 @@
             border: 1px solid #ffffff;
             opacity: 0.8;
             .f-align-center();
+            &.wave::after {
+                animation: mouseDownWave 1.2s infinite;
+            }
             &::before {
                 content: '';
                 display: block;
@@ -351,7 +354,6 @@
                 border-radius: 100%;
                 border: 1px solid #ffffff;
                 opacity: 0.6;
-                animation: mouseDownWave 1.2s infinite;
             }
         }
         &-sub-title {

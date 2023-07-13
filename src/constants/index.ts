@@ -15,3 +15,7 @@ export enum P12_NEW_TYPE_LABEL {
 
 export const MOBILE_BASE_SIZE = 100; // 1rem = 100px(设计稿);
 export const MOBILE_BASE_WIDTH = 375; // 设计稿 iphone SE
+
+export const STORAGE_KEY = {
+    ENABLE_MOUSE_TIP_ANIM: 'enable_mouse_tip_anim',
+};
