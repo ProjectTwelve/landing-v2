@@ -319,18 +319,26 @@
             display: none;
         }
         &__btn {
-            background-position: 50% 50%;
             border: 1px solid #ffffffcc;
             border-radius: 100%;
             height: 0.36rem;
             width: 0.36rem;
+            background: none;
             backdrop-filter: blur(1px);
+            .f-align-center();
+            &::before {
+                content: '';
+                display: block;
+                background-size: contain;
+                height: 0.12rem;
+                width: 0.12rem;
+                .bg('app/arrow@2x.png');
+            }
             &--left {
-                .bg('social/arrow-next.svg');
-                transform: rotate(180deg);
+                transform: rotate(90deg);
             }
             &--right {
-                .bg('social/arrow-next.svg');
+                transform: rotate(-90deg);
             }
         }
         &__partner {
