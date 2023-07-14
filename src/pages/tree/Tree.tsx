@@ -4,12 +4,13 @@ import { playClickAudio, GAevent } from '../../utils';
 import { PageType } from '../app/App.config';
 import { loadingEE, usePageVisible } from '../app/App.utils';
 import './Tree.less';
+import { useIsPortrait } from '../../hooks/useIsPortrait';
 
-const TreeGL = lazy(() => import('./components/TreeGL'))
+const TreeGL = lazy(() => import('./components/TreeGL'));
 
 export const Tree: React.FC = () => {
     const [ready, serReady] = useState(false);
-
+    const isPortrait = useIsPortrait();
     useEffect(() => {
         loadingEE.on('loaded', () => {
             setTimeout(() => {
@@ -21,7 +22,7 @@ export const Tree: React.FC = () => {
     usePageVisible(PageType.Tree, () => {
         return {
             onVisible: () => {
-                GAevent('webview','Econs-webview');
+                GAevent('webview', 'Econs-webview');
                 const tl = gsap.timeline();
                 tl.fromTo(
                     '.page-wrap-tree',
@@ -32,7 +33,7 @@ export const Tree: React.FC = () => {
                         duration: 0.5,
                         display: 'block',
                         opacity: 1,
-                    }
+                    },
                 );
                 return tl.then();
             },
@@ -48,7 +49,7 @@ export const Tree: React.FC = () => {
                         duration: 0.5,
                         display: 'none',
                         opacity: 0,
-                    }
+                    },
                 );
                 return tl.then();
             },
@@ -56,36 +57,40 @@ export const Tree: React.FC = () => {
         };
     });
     return (
-        <div className='tree'>
+        <div className="tree">
             {/* <div className='tree__content'></div> */}
             {ready ? <TreeGL /> : null}
-            <div className='tree__info'>
-                <div className='tree__slogan'></div>
-                <div className='app-small-title app-small-title--with-block tree__small-title'>
+            <div className="tree__info">
+                <div className="tree__slogan"></div>
+                <div className="app-small-title app-small-title--with-block tree__small-title">
                     FOR SUSTAINABILITY AND PROSPERITY
                 </div>
-                <div className='app-small-text tree__small-text-1'>
-                    A series of economic and governmental rules have been
-                    <br />
-                    implemented in the P12 Econs. Key mechanisms are:
+                <div className="app-small-text tree__small-text-1">
+                    {isPortrait ? (
+                        'Economic and governmental mechanisms for a sustainable ecosystem. For more details see'
+                    ) : (
+                        <>
+                            A series of economic and governmental rules have been
+                            <br />
+                            implemented in the P12 Econs. Key mechanisms are:
+                        </>
+                    )}
                 </div>
-                <div className='tree__details'>
-                    <div className='tree__detail'>→ Swap</div>
-                    <div className='tree__detail'>→ CastDelay</div>
-                    <div className='tree__detail'>→ Meritocracy</div>
-                    <div className='tree__detail'>→ GameMaster</div>
+                <div className="tree__details">
+                    <div className="tree__detail">→ Swap</div>
+                    <div className="tree__detail">→ CastDelay</div>
+                    <div className="tree__detail">→ Meritocracy</div>
+                    <div className="tree__detail">→ GameMaster</div>
                 </div>
             </div>
-            <div className='tree__extra'>
-                <div className='tree__extra-info'>
-                    For in-depth discussion on Econs, refer to
-                </div>
+            <div className="tree__extra">
+                <div className="tree__extra-info">For in-depth discussion on Econs, refer to</div>
                 <a
-                    className='tree__extra-link'
-                    href='https://p12.dev/whitepaper'
-                    target='_blank'
+                    className="tree__extra-link"
+                    href="https://p12.dev/whitepaper"
+                    target="_blank"
                     onClick={() => {
-                        GAevent('event','Econs-Whitepaper');
+                        GAevent('event', 'Econs-Whitepaper');
                         playClickAudio();
                     }}
                 ></a>
