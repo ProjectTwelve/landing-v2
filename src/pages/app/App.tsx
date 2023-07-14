@@ -167,7 +167,7 @@ export const App = () => {
             )}
             {/* 手机端一直展示 */}
             {isPortrait && (
-                <div className={classNames('app__mouse-tips', { wave: enableMouseTipAnim })}>
+                <div className={classNames('app__mouse-tips', { wave: enableMouseTipAnim && current === PageType.Home })}>
                     {prevPageType && (
                         <div
                             className="app__mouse-tips-item app__mouse-tips-prev"
