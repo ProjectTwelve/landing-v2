@@ -64,12 +64,13 @@ export const NewList = ({ onItemClick }: NewListProps) => {
     }, [document.documentElement.style.fontSize]);
     const isPortrait = useIsPortrait();
     const scrollDist = useMemo(() => (isPortrait ? 2.67 * rootSize : 402), [isPortrait, rootSize]);
-    useEffect(() => {
+    usePageVisible(PageType.Social, () => {
         let newsSwiper;
         if (isPortrait) {
             newsSwiper = new Swiper('.social-news-list', {
                 effect: 'coverflow',
                 grabCursor: true,
+                init: false,
                 centeredSlides: true,
                 slidesPerView: 'auto',
                 loop: true,
@@ -88,11 +89,21 @@ export const NewList = ({ onItemClick }: NewListProps) => {
                     el: '.swiper-pagination',
                 },
             });
+            console.log('----------hello-------------', { newsSwiper });
         }
-        return () => {
-            newsSwiper?.destroy();
+        return {
+            onVisible: () => {
+                console.log('-----------init------------', { newsSwiper });
+                newsSwiper?.init();
+            },
+            onDestroy: () => {
+                console.log('-----------destroy------------', { newsSwiper });
+                newsSwiper?.destroy();
+            },
         };
-    }, []);
+    });
+    console.log('-----------------1------');
+
     return isPortrait ? (
         <div className="social-news">
             <div className="social-news-list swiper">
