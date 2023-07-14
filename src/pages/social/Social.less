@@ -69,14 +69,14 @@
 .body-portrait {
     .social {
         &__wrapper {
-            height: auto;
             transform: none;
-            position: relative;
-            width: auto;
+            position: absolute;
             top: 0.8rem;
             left: 0;
             right: 0;
-            padding: 0 0.36rem;
+            padding: 0;
+            height: auto;
+            width: auto;
         }
         &__title {
             text-align: center;
@@ -92,10 +92,12 @@
         }
         &__community {
             &-container {
+                width: auto;
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
                 gap: 0.06rem;
-                margin-bottom: 0.68rem;
+                margin: 0 0.3rem;
+                margin-bottom: 0.5rem;
             }
         }
     }

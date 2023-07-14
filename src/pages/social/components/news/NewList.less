@@ -158,28 +158,48 @@
         width: auto;
         margin: 0 -0.2rem;
         gap: 0.16rem;
-        .social-next,
-        .social-pre {
-            width: 0.4rem;
-            &-icon {
-                width: 0.08rem;
-                background-size: contain;
-            }
-        }
         &-list {
             padding-top: 0;
-            width: 2.5rem;
+            width: 2.32rem;
         }
     }
     .social-news-list {
+        position: relative;
         width: 100%;
-        gap: 0.2rem;
+        height: 2.6rem;
+        justify-content: stretch;
+        .swiper-pagination {
+            bottom: 0.1rem;
+            top: auto;
+            left: 0.75rem;
+            right: 0.75rem;
+            width: auto;
+            pointer-events: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            &-bullet {
+                width: 0.04rem;
+                height: 0.04rem;
+                display: block;
+                background-color: #ffffff;
+                opacity: 0.3;
+                &-active {
+                    opacity: 1;
+                }
+            }
+        }
     }
     .social-new {
-        width: 2.5rem;
+        width: 2.8rem;
         &__cover {
-            height: 1.4rem;
+            height: auto;
             border-radius: 0.08rem 0.08rem 0 0;
+            img {
+                width: 100%;
+                height: auto;
+            }
         }
         &__content {
             padding: 0.15rem;

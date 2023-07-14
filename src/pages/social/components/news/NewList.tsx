@@ -1,13 +1,22 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import Swiper from 'swiper';
+import 'swiper/css';
+import 'swiper/css/pagination';
 import { NewInfoType } from '../../../../api/news/news.type';
 import { P12_NEW_TYPE_LABEL } from '../../../../constants';
 import { useFetchNewList, useNewDateFormat } from '../../../../hooks/news';
 import { useIsPortrait } from '../../../../hooks/useIsPortrait';
+import { PageType } from '../../../app/App.config';
+import { usePageVisible } from '../../../app/App.utils';
 import './NewList.less';
+import classNames from 'classnames';
+import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
+Swiper.use([Autoplay, EffectCoverflow, Pagination]);
 
 type NewListItemProps = {
     onClick: (newInfo: NewInfoType) => void;
     data: NewInfoType;
+    className?: string;
 };
 export const NewLabel = ({ type }) => {
     return (
@@ -23,11 +32,11 @@ export const NewLabel = ({ type }) => {
         </div>
     );
 };
-const NewListItem = ({ data, onClick }: NewListItemProps) => {
+const NewListItem = ({ data, onClick, className }: NewListItemProps) => {
     const { title, imageUrl1, createTime, text, type } = data;
     const newDate = useNewDateFormat(createTime);
     return (
-        <div className="social-new" onClick={() => onClick(data)}>
+        <div className={classNames('social-new', className)} onClick={() => onClick(data)}>
             <div className="social-new__cover">
                 <img src={imageUrl1} alt="cover" />
             </div>
@@ -55,7 +64,49 @@ export const NewList = ({ onItemClick }: NewListProps) => {
     }, [document.documentElement.style.fontSize]);
     const isPortrait = useIsPortrait();
     const scrollDist = useMemo(() => (isPortrait ? 2.67 * rootSize : 402), [isPortrait, rootSize]);
-    return (
+    useEffect(() => {
+        let newsSwiper;
+        if (isPortrait) {
+            newsSwiper = new Swiper('.social-news-list', {
+                effect: 'coverflow',
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: 'auto',
+                loop: true,
+                initialSlide: 0,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: true,
+                },
+                coverflowEffect: {
+                    rotate: 0,
+                    stretch: -20,
+                    depth: 80,
+                    modifier: 1,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+            });
+        }
+        return () => {
+            newsSwiper?.destroy();
+        };
+    }, []);
+    return isPortrait ? (
+        <div className="social-news">
+            <div className="social-news-list swiper">
+                <div className="swiper-wrapper">
+                    {newList?.length
+                        ? newList.map((item) => (
+                              <NewListItem className="swiper-slide" onClick={onItemClick} data={item} key={item.newsCode} />
+                          ))
+                        : null}
+                </div>
+                <div className="swiper-pagination"></div>
+            </div>
+        </div>
+    ) : (
         <div className="social-news">
             <div
                 className="social-pre"

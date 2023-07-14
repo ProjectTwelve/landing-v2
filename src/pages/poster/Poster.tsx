@@ -2,7 +2,9 @@ import { useSize } from 'ahooks';
 import gsap from 'gsap';
 import Parallax from 'parallax-js';
 import React, { useEffect, useRef } from 'react';
-import Swiper, { Autoplay, EffectFade } from 'swiper';
+import Swiper from 'swiper';
+import { Autoplay, EffectFade } from 'swiper/modules';
+
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/effect-fade';
@@ -13,8 +15,8 @@ import { loadingEE, LoadingSourceType, usePageVisible } from '../app/App.utils';
 import { POSTER_FEATURES } from './Poster.config';
 import './Poster.less';
 import { useIsPortrait } from '../../hooks/useIsPortrait';
-Swiper.use([Autoplay, EffectFade]);
 
+Swiper.use([Autoplay, EffectFade]);
 export const Poster: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const bgRef = useRef<HTMLDivElement>(null);
@@ -141,7 +143,7 @@ export const Poster: React.FC = () => {
                         src={isPortrait ? require('../../assets/poster/4@0.2x.png') : require('../../assets/poster/4@2x.png')}
                         onLoad={() => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_4}`, 1)}
                     />
-                    <div className="poster-logos-swiper-container swiper-container">
+                    <div className="poster-logos-swiper-container swiper">
                         <div className="swiper-wrapper">
                             <div className="swiper-slide swiper-slide--1"></div>
                             <div className="swiper-slide swiper-slide--2"></div>
@@ -185,7 +187,7 @@ export const Poster: React.FC = () => {
                     </div>
                     <div className="poster__features">
                         <div className="poster__features-title">Features</div>
-                        <div className="poster-features-swiper-container swiper-container swiper-no-swiping">
+                        <div className="poster-features-swiper-container swiper swiper-no-swiping">
                             <div className="swiper-wrapper">
                                 {POSTER_FEATURES.map((feature, i) => {
                                     return (
