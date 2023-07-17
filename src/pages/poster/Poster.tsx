@@ -35,7 +35,7 @@ export const Poster: React.FC = () => {
         () => [
             {
                 className: 'poster__img-wrap--0',
-                src: isPortrait ? require('../../assets/poster/0.jpg') : require('../../assets/poster/0@2x.jpg'),
+                src: isPortrait ? require('../../assets/poster/0.png') : require('../../assets/poster/0@2x.png'),
                 onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_0}`, 1),
             },
             {
