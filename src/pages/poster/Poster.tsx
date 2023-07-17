@@ -43,7 +43,7 @@ export const Poster: React.FC = () => {
                 src: isPortrait ? require('../../assets/poster/1.png') : require('../../assets/poster/1@2x.png'),
                 onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_1}`, 1),
                 depthX: isPortrait ? '0.1' : '0.05',
-                depthY: isPortrait ? '-0.15' : '-0.1',
+                depthY: '-0.1',
             },
             {
                 className: 'poster__img-wrap--2',
@@ -92,7 +92,7 @@ export const Poster: React.FC = () => {
                 src: isPortrait ? require('../../assets/poster/5.png') : require('../../assets/poster/5@2x.png'),
                 onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_5}`, 1),
                 depthX: isPortrait ? '0.15' : '0.08',
-                depthY: isPortrait ? '0.15' : '0.08',
+                depthY: '0.08',
             },
         ],
         [isPortrait],
