@@ -1,15 +1,10 @@
 /* eslint-disable */
-import React, { useContext, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { getPublicAssetPath, IS_MOBILE } from '../../../utils';
+import { IS_MOBILE, getPublicAssetPath } from '../../../utils';
 import { PageType } from '../../app/App.config';
-import {
-    AppContext,
-    loadingEE,
-    LoadingSourceType,
-    usePageVisible,
-} from '../../app/App.utils';
+import { LoadingSourceType, loadingEE, usePageVisible } from '../../app/App.utils';
 import './TreeGL.less';
 
 export const TreeGL = (props) => {
@@ -53,11 +48,7 @@ export const TreeGL = (props) => {
             container?.classList.add('app-container-loading');
             container?.classList.add('loading');
             const imageUrls = new Array(480).fill(0).map((_, i) => {
-                return getPublicAssetPath(
-                    `files/tree/tree-model${IS_MOBILE ? '-mobile' : ''}/${
-                        i + 1 + 1000
-                    }.jpg`
-                );
+                return getPublicAssetPath(`files/tree/tree-model${IS_MOBILE ? '-mobile' : ''}/${i + 1 + 1000}.jpg`);
             });
             const imageLoader = new THREE.ImageLoader();
             Promise.all(imageUrls.map((url) => imageLoader.load(url)))
@@ -65,10 +56,7 @@ export const TreeGL = (props) => {
                     imageDataArray = data;
                     render();
                     loaded = true;
-                    loadingEE.emit(
-                        `progress.${LoadingSourceType.TREE_MODEL}`,
-                        1
-                    );
+                    loadingEE.emit(`progress.${LoadingSourceType.TREE_MODEL}`, 1);
                 })
                 .finally(() => {
                     loading = false;
@@ -81,11 +69,8 @@ export const TreeGL = (props) => {
             }
             controls.update();
             const index = Math.floor(
-                (((controls.getAzimuthalAngle() / Math.PI + 1) / 2) *
-                    imageDataArray.length +
-                    imageDataArray.length +
-                    0) %
-                    imageDataArray.length
+                (((controls.getAzimuthalAngle() / Math.PI + 1) / 2) * imageDataArray.length + imageDataArray.length + 0) %
+                    imageDataArray.length,
             );
             // console.log(index);
             if (renderedImageIndex !== index && context) {
@@ -114,8 +99,8 @@ export const TreeGL = (props) => {
     });
 
     return (
-        <div className='tree-gl' ref={containerRef}>
-            <canvas className='tree-gl-canvas' ref={canvasRef} />
+        <div className="tree-gl" ref={containerRef}>
+            <canvas className="tree-gl-canvas" ref={canvasRef} />
         </div>
     );
 };

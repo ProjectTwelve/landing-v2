@@ -6,10 +6,10 @@ import { usePageLockScroll } from '../../hooks/usePageLockScroll';
 import { GAevent, requestOrientationPermission } from '../../utils';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
+import './Social.less';
+import { SocialItem } from './components/SocialItem';
 import NewInfoDialog from './components/news/NewInfoDialog';
 import { NewList } from './components/news/NewList';
-import { SocialItem } from './components/SocialItem';
-import './Social.less';
 
 export const Social: React.FC = () => {
     const [newModalOpen, setOpen] = useState(false);
@@ -111,7 +111,7 @@ export const Social: React.FC = () => {
                         <SocialItem
                             className="whitepaper"
                             href="https://p12.dev/whitepaper"
-                            icon={<img src={require('../../assets/social/github.png')} alt="whitepaper" />}
+                            icon={require('../../assets/social/github.png')}
                             title="Whitepaper"
                         />
                         <SocialItem

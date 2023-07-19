@@ -11,6 +11,26 @@ import styles from './avatar.module.css';
 import AvatarMesh from './AvatarMesh';
 import AvatarCircle from './AvatarCircle';
 
+// 没有 extraNode 的默认循环 123 文案， defaultExtraNodes[idx % 3]
+const defaultExtraNodes = [
+    <>
+        <div className="avatar-extra-subtitle">GameArtefact API</div>
+        <div className="avatar-extra-text">→ For NFT</div>
+        <div className="avatar-extra-subtitle">GameCoin API</div>
+        <div className="avatar-extra-text">→ For tokenomics</div>
+    </>,
+    <>
+        <div className="avatar-extra-subtitle">Server DevOps</div>
+        <div className="avatar-extra-subtitle">Data Analytics</div>
+        <div className="avatar-extra-subtitle">Community / Social</div>
+    </>,
+    <>
+        <div className="avatar-extra-subtitle">SecretShop</div>
+        <div className="avatar-extra-text">→ The marketplace</div>
+        <div className="avatar-extra-subtitle">GameMaster</div>
+        <div className="avatar-extra-text">→ The governance</div>
+    </>,
+];
 export interface AvatarGLRef {
     switchTo: (index: AvatarType, currentPage?: PageType) => void;
     stopTimeout: () => void;
@@ -168,7 +188,7 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                 <div className="avatar-mouse__arrow"></div>
             </div>
             <div className="avatar-extra">
-                {AVATAR_GL_KEYS.map((key) => {
+                {AVATAR_GL_KEYS.map((key, idx) => {
                     const info = AVATAR_GL_INFO_MAP[key];
                     if (info && info.extraNode) {
                         return (
@@ -182,7 +202,16 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                             </div>
                         );
                     } else {
-                        return null;
+                        return (
+                            <div
+                                className={classnames('avatar-extra-item', {
+                                    active: props.avatar === key,
+                                })}
+                                key={key}
+                            >
+                                {defaultExtraNodes[idx % 3]}
+                            </div>
+                        );
                     }
                 })}
             </div>

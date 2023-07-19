@@ -1,14 +1,17 @@
 import gsap from 'gsap';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
+import { Socials } from '../../components/socials';
+import { GAevent, requestOrientationPermission } from '../../utils';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
-import { GAevent, requestOrientationPermission } from '../../utils';
 import { FEATURED_ON_DATA, PARTNERS_DATA } from './Wall.config';
 import './Wall.less';
+import { useIsPortrait } from '../../hooks/useIsPortrait';
 
 export const Wall: React.FC = () => {
     const [isVisible, setVisible] = useState(false);
+    const isPortrait = useIsPortrait();
 
     useEffect(() => {
         const tl = gsap.timeline();
@@ -74,21 +77,35 @@ export const Wall: React.FC = () => {
                 <div className="wall__title-1">Investors &amp; Partners</div>
                 <div className="wall__dot-1"></div>
                 <div className="wall-partners">
-                    {PARTNERS_DATA.map((arr, idx) => (
-                        <div className="wall-partners__row" key={idx}>
-                            {arr.map(({ name, href, logo, style }) => (
-                                <img
-                                    style={style}
-                                    src={logo}
-                                    key={name}
-                                    alt={name}
-                                    onClick={() => {
-                                        window.open(href, '_blank');
-                                    }}
-                                />
-                            ))}
-                        </div>
-                    ))}
+                    {isPortrait
+                        ? PARTNERS_DATA.map((arr) =>
+                              arr.map(({ name, href, logo, mobileStyle }) => (
+                                  <img
+                                      style={mobileStyle}
+                                      src={logo}
+                                      key={name}
+                                      alt={name}
+                                      onClick={() => {
+                                          window.open(href, '_blank');
+                                      }}
+                                  />
+                              )),
+                          )
+                        : PARTNERS_DATA.map((arr, idx) => (
+                              <div className="wall-partners__row" key={idx}>
+                                  {arr.map(({ name, href, logo, style }) => (
+                                      <img
+                                          style={style}
+                                          src={logo}
+                                          key={name}
+                                          alt={name}
+                                          onClick={() => {
+                                              window.open(href, '_blank');
+                                          }}
+                                      />
+                                  ))}
+                              </div>
+                          ))}
                 </div>
                 <div className="wall__title-2">Featured on</div>
                 <div className="wall__dot-2"></div>
@@ -115,6 +132,7 @@ export const Wall: React.FC = () => {
                         media kit
                     </a>
                 </div>
+                {isPortrait && <Socials className="wall__social-links" />}
             </div>
         </div>
     );

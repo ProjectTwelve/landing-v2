@@ -1,37 +1,21 @@
-import React, {
-    useRef,
-    useEffect,
-    forwardRef,
-    useState,
-    useImperativeHandle,
-} from 'react';
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import * as THREE from 'three';
-import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 // import { ObjectControls } from 'threejs-object-controls';
-import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
-import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
-import {
-    CSS2DObject,
-    CSS2DRenderer,
-} from 'three/examples/jsm/renderers/CSS2DRenderer';
-import { getPublicAssetPath, IS_MOBILE, toRadians, GAevent } from '../../../utils';
-import { gsap } from 'gsap';
-import './HomeGL.less';
-import {
-    loadingEE,
-    LoadingSourceType,
-    usePageVisible,
-} from '../../app/App.utils';
-import { PageType } from '../../app/App.config';
-import { HOME_GL_ACTIVE_DATA } from './HomeGL.config';
 import classnames from 'classnames';
-import { GUI } from 'dat.gui';
+import { gsap } from 'gsap';
 import { Vector3 } from 'three';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import { CSS2DObject, CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer';
+import { GAevent, IS_MOBILE, getPublicAssetPath, toRadians } from '../../../utils';
+import { PageType } from '../../app/App.config';
+import { LoadingSourceType, loadingEE, usePageVisible } from '../../app/App.utils';
+import { HOME_GL_ACTIVE_DATA } from './HomeGL.config';
+import './HomeGL.less';
+import { useAtom } from 'jotai';
+import { homeActiveExtraIndexAtom } from '../../../store/home/state';
+import { useIsPortrait } from '../../../hooks/useIsPortrait';
 
 export interface HomeGLRef {
     group?: THREE.Group;
@@ -40,14 +24,26 @@ export interface HomeGLRef {
 export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const groupRef = useRef<THREE.Group>();
-    const [activatedIndex, setActivatedIndex] = useState<number | null>(null);
+    const [activatedIndex, setActivatedIndex] = useAtom(homeActiveExtraIndexAtom);
+    const isPortrait = useIsPortrait();
 
+    const initRotation = isPortrait
+        ? {
+              x: 2.62,
+              y: -0.87,
+              z: 2.79,
+          }
+        : {
+              x: 1.96,
+              y: 0.38,
+              z: 1.06,
+          };
     useImperativeHandle(
         ref,
         () => ({
             group: groupRef.current,
         }),
-        [groupRef.current]
+        [groupRef.current],
     );
 
     usePageVisible(PageType.Home, () => {
@@ -83,10 +79,10 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         container.appendChild(labelRenderer.domElement);
 
         const camera = new THREE.PerspectiveCamera(
-            40,
+            isPortrait ? 70 : 40,
             container.clientWidth / container.clientHeight,
             1,
-            100
+            100,
         );
         camera.position.set(0, 0, 3.33);
         camera.lookAt(0, 0, 0);
@@ -121,7 +117,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         dracoLoader.setDecoderPath(getPublicAssetPath('files/home/gltf'));
 
         const loader = new GLTFLoader();
-        loader.setDRACOLoader( dracoLoader );
+        loader.setDRACOLoader(dracoLoader);
         loader.load(
             getPublicAssetPath('files/home/qiu_6_.gltf'),
             function (gltf) {
@@ -136,7 +132,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 model.position.set(0, 0, 0);
                 model.scale.set(0.1, 0.1, 0.1);
                 group.add(model);
-
                 mixer = new THREE.AnimationMixer(model);
                 mixer.clipAction(gltf.animations[0]).play();
 
@@ -146,12 +141,9 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             (event) => {
                 loadingEE.emit(
                     `progress.${LoadingSourceType.HOME_GLTF}`,
-                    Math.min(
-                        event.loaded / (event.total || 1024 * 1024 * 25),
-                        0.95
-                    )
+                    Math.min(event.loaded / (event.total || 1024 * 1024 * 25), 0.95),
                 );
-            }
+            },
         );
 
         function resize() {
@@ -161,10 +153,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             camera.aspect = container.clientWidth / container.clientHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(container.clientWidth, container.clientHeight);
-            labelRenderer.setSize(
-                container.clientWidth,
-                container.clientHeight
-            );
+            labelRenderer.setSize(container.clientWidth, container.clientHeight);
         }
 
         let oldGroupRot = group.rotation.clone();
@@ -192,10 +181,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                     autoRotating = true;
                 },
             });
-            labelRenderer.domElement.removeEventListener(
-                'pointerup',
-                handleResetCamera
-            );
+            labelRenderer.domElement.removeEventListener('pointerup', handleResetCamera);
         }
 
         function getHandleMouseClick(index: number) {
@@ -204,14 +190,11 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 setActivatedIndex(index);
                 if (index === 0) {
                     GAevent('event', 'Vision-dragon');
-                }
-                else if (index === 1) {
+                } else if (index === 1) {
                     GAevent('event', 'Vision-cat');
-                }
-                else if (index === 2) {
+                } else if (index === 2) {
                     GAevent('event', 'Vision-car');
-                }
-                else if (index === 3) {
+                } else if (index === 3) {
                     GAevent('event', 'Vision-econ');
                 }
                 oldGroupRot = group.rotation.clone();
@@ -235,10 +218,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                     y: data.groupPos.y,
                     z: data.groupPos.z,
                     onComplete: () => {
-                        labelRenderer.domElement.addEventListener(
-                            'pointerup',
-                            handleResetCamera
-                        );
+                        labelRenderer.domElement.addEventListener('pointerup', handleResetCamera);
                     },
                 });
             };
@@ -264,7 +244,9 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             const handle = getHandleMouseClick(index);
             btn.addEventListener('mousedown', handle);
             return {
-                label, btn, btnInner
+                label,
+                btn,
+                btnInner,
             };
         });
 
@@ -311,17 +293,9 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                     y: y - previousMousePosition.y,
                 };
                 const deltaRotationQuaternion = new THREE.Quaternion().setFromEuler(
-                    new THREE.Euler(
-                        toRadians(deltaMove.y * 1 * 0.3),
-                        toRadians(deltaMove.x * 1 * 0.3),
-                        0,
-                        'XYZ'
-                    )
+                    new THREE.Euler(toRadians(deltaMove.y * 1 * 0.3), toRadians(deltaMove.x * 1 * 0.3), 0, 'XYZ'),
                 );
-                group.quaternion.multiplyQuaternions(
-                    deltaRotationQuaternion,
-                    group.quaternion
-                );
+                group.quaternion.multiplyQuaternions(deltaRotationQuaternion, group.quaternion);
             }
             previousMousePosition = {
                 x: x,
@@ -334,10 +308,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             const delta = clock.getDelta();
             mixer?.update?.(delta);
             if (autoRotating && !isDragging) {
-                group.rotation.y =
-                    (group.rotation.y +
-                        ((2 * Math.PI) / 60 / 60) * delta * 30) %
-                    (2 * Math.PI);
+                group.rotation.y = (group.rotation.y + ((2 * Math.PI) / 60 / 60) * delta * 30) % (2 * Math.PI);
             }
 
             renderer.render(scene, camera);
@@ -361,6 +332,37 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
 
         return {
             onVisible: () => {
+                const tl = gsap.timeline();
+                tl.fromTo(
+                    group.scale,
+                    {
+                        x: 2,
+                        y: 2,
+                        z: 2,
+                    },
+                    {
+                        duration: 1,
+                        ease: 'power2.out',
+                        delay: -2,
+                        x: 1,
+                        y: 1,
+                        z: 1,
+                    },
+                );
+                tl.fromTo(
+                    [group.rotation],
+                    {
+                        x: initRotation.x + Math.PI * 0.5,
+                        y: initRotation.y,
+                        z: initRotation.z - Math.PI * 0.75,
+                    },
+                    {
+                        ...initRotation,
+                        duration: 2,
+                        delay: -2,
+                        ease: 'power2.out',
+                    },
+                );
                 animate();
                 autoRotating = true;
                 if (IS_MOBILE) {
@@ -375,6 +377,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 // document.body.appendChild(gui.domElement);
             },
             onHide: () => {
+                // console.log('click!', groupRef?.current?.rotation);
                 cancelAnimationFrame(frameId);
                 autoRotating = false;
                 if (IS_MOBILE) {
@@ -391,10 +394,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             },
             onDestroy: () => {
                 observer.disconnect();
-                labelRenderer.domElement.removeEventListener(
-                    'pointerup',
-                    handleResetCamera
-                );
+                labelRenderer.domElement.removeEventListener('pointerup', handleResetCamera);
                 container.removeChild(renderer.domElement);
                 container.removeChild(labelRenderer.domElement);
             },
@@ -402,8 +402,8 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
     });
 
     return (
-        <div className='home-gl' ref={containerRef}>
-            <div data-nosnippet={true} className='home-extra'>
+        <div className="home-gl" ref={containerRef}>
+            <div data-nosnippet={true} className="home-extra">
                 {HOME_GL_ACTIVE_DATA.map((data, index) => {
                     return (
                         <div
@@ -412,12 +412,8 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                             })}
                             key={index}
                         >
-                            <div className='home-extra-item__title'>
-                                {data.info.title}
-                            </div>
-                            <div className='home-extra-item__desc'>
-                                {data.info.desc}
-                            </div>
+                            <div className="home-extra-item__title">{data.info.title}</div>
+                            <div className="home-extra-item__desc">{data.info.desc}</div>
                         </div>
                     );
                 })}

@@ -59,22 +59,6 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         },
     },
     {
-        img: require('../../assets/about/partner-members/10.png'),
-        name: 'Dongbo',
-        desc: (
-            <>
-                Game addict for 2 decades;
-                <br />
-                Guild master
-            </>
-        ),
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null,
-        },
-    },
-    {
         img: require('../../assets/about/partner-members/12.png'),
         name: 'Noy',
         desc: (
@@ -120,38 +104,6 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         img: require('../../assets/about/partner-members/HH.png'),
         name: 'HH',
         desc: <>Econ Research in P12; former quant developer, banker</>,
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null,
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/9.png'),
-        name: 'River',
-        desc: (
-            <>
-                Favorite game: WOW;
-                <br />
-                Owner of all soul beasts
-            </>
-        ),
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: 'https://github.com/zh19910202',
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/5.png'),
-        name: 'Garden',
-        desc: (
-            <>
-                RPG lover, Mixed-race baby,
-                <br />
-                Linguistics & football enthusiast
-            </>
-        ),
         links: {
             linkedin: null,
             twitter: null,
@@ -307,16 +259,6 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         },
     },
     {
-        img: require('../../assets/about/partner-members/26.png'),
-        name: 'Jane Liu',
-        desc: <>An Explorer</>,
-        links: {
-            linkedin: 'https://www.linkedin.com/in/',
-            twitter: null,
-            github: null,
-        },
-    },
-    {
         img: require('../../assets/about/partner-members/Larkloss.png'),
         name: 'Larkloss',
         desc: <>Not Employment Embattled Team Operator</>,
@@ -346,7 +288,7 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
             github: null,
         },
     },
-
+    // Leave
     {
         img: require('../../assets/about/partner-members/2.png'),
         name: 'Maciej Burno',
@@ -426,32 +368,6 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         },
     },
     {
-        img: require('../../assets/about/partner-members/Akira.png'),
-        name: 'Akira',
-        desc: <>ACGholic; Start from here, start from now</>,
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null,
-        },
-    },
-    {
-        img: require('../../assets/about/partner-members/19.png'),
-        name: 'Ramping',
-        desc: (
-            <>
-                Psychologically Revacholian;
-                <br />
-                TRUE Godardiste
-            </>
-        ),
-        links: {
-            linkedin: null,
-            twitter: null,
-            github: null,
-        },
-    },
-    {
         img: require('../../assets/about/partner-members/16.png'),
         name: 'Grace.J',
         desc: (
@@ -513,6 +429,90 @@ export const ABOUT_PARTNERS: PartnerInfo[] = [
         desc: <>Veteran fans of the Warring States period in Japan.</>,
         links: {
             linkedin: null,
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/10.png'),
+        name: 'Dongbo',
+        desc: (
+            <>
+                Game addict for 2 decades;
+                <br />
+                Guild master
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/9.png'),
+        name: 'River',
+        desc: (
+            <>
+                Favorite game: WOW;
+                <br />
+                Owner of all soul beasts
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: 'https://github.com/zh19910202',
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/5.png'),
+        name: 'Garden',
+        desc: (
+            <>
+                RPG lover, Mixed-race baby,
+                <br />
+                Linguistics & football enthusiast
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/Akira.png'),
+        name: 'Akira',
+        desc: <>ACGholic; Start from here, start from now</>,
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/19.png'),
+        name: 'Ramping',
+        desc: (
+            <>
+                Psychologically Revacholian;
+                <br />
+                TRUE Godardiste
+            </>
+        ),
+        links: {
+            linkedin: null,
+            twitter: null,
+            github: null,
+        },
+    },
+    {
+        img: require('../../assets/about/partner-members/26.png'),
+        name: 'Jane Liu',
+        desc: <>An Explorer</>,
+        links: {
+            linkedin: 'https://www.linkedin.com/in/',
             twitter: null,
             github: null,
         },

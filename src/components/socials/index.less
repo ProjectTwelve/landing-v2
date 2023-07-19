@@ -1,0 +1,32 @@
+.social-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 0.4rem;
+    pointer-events: auto;
+    a {
+        display: flex;
+        align-items: center;
+        height: 0.2rem;
+        &::after {
+            content: '';
+            display: block;
+            margin: 0 0.16rem;
+            background-color: #ffffff33;
+            height: 0.14rem;
+            width: 2px;
+        }
+        &:last-child {
+            border-right: none;
+            padding-right: 0;
+            &::after {
+                display: none;
+            }
+        }
+    }
+    img {
+        display: block;
+        height: 100%;
+        object-fit: contain;
+    }
+}

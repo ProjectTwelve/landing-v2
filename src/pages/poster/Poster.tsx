@@ -1,23 +1,102 @@
 import { useSize } from 'ahooks';
 import gsap from 'gsap';
 import Parallax from 'parallax-js';
-import React, { useEffect, useRef } from 'react';
-import Swiper, { Autoplay, EffectFade } from 'swiper';
+import React, { useEffect, useMemo, useRef } from 'react';
+import Swiper from 'swiper';
+import { Autoplay, EffectFade } from 'swiper/modules';
+
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/effect-fade';
-import { GAevent, IS_MOBILE, requestOrientationPermission } from '../../utils';
+import { GAevent } from '../../utils';
 import { About } from '../../components/about/About';
 import { PageType } from '../app/App.config';
 import { loadingEE, LoadingSourceType, usePageVisible } from '../app/App.utils';
 import { POSTER_FEATURES } from './Poster.config';
 import './Poster.less';
-Swiper.use([Autoplay, EffectFade]);
+import { useIsPortrait } from '../../hooks/useIsPortrait';
+import classNames from 'classnames';
 
+Swiper.use([Autoplay, EffectFade]);
 export const Poster: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const bgRef = useRef<HTMLDivElement>(null);
     const containerSize = useSize(containerRef);
+    const isPortrait = useIsPortrait();
+
+    const posterBgConfig: {
+        className?: string;
+        src: string;
+        onLoad?: () => void;
+        depthX?: string;
+        depthY?: string;
+        children?: JSX.Element;
+    }[] = useMemo(
+        () => [
+            {
+                className: 'poster__img-wrap--0',
+                src: isPortrait ? require('../../assets/poster/0.webp') : require('../../assets/poster/0@2x.png'),
+                onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_0}`, 1),
+            },
+            {
+                className: 'poster__img-wrap--1',
+                src: isPortrait ? require('../../assets/poster/1.webp') : require('../../assets/poster/1@2x.png'),
+                onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_1}`, 1),
+                depthX: isPortrait ? '0.1' : '0.05',
+                depthY: '-0.1',
+            },
+            {
+                className: 'poster__img-wrap--2',
+                src: isPortrait ? require('../../assets/poster/2.webp') : require('../../assets/poster/2@2x.png'),
+                onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_2}`, 1),
+                depthX: isPortrait ? '-0.1' : '-0.05',
+            },
+            {
+                className: 'poster__img-wrap--3',
+                src: isPortrait ? require('../../assets/poster/3.webp') : require('../../assets/poster/3@2x.png'),
+                onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_3}`, 1),
+                depthX: isPortrait ? '0.15' : '0.1',
+            },
+            {
+                className: 'poster__img-wrap--4',
+                src: isPortrait ? require('../../assets/poster/4.webp') : require('../../assets/poster/4@2x.png'),
+                onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_4}`, 1),
+                depthX: isPortrait ? '-0.15' : '-0.08',
+                children: (
+                    <div className="poster-logos-swiper-container swiper">
+                        <div className="swiper-wrapper">
+                            <div className="swiper-slide swiper-slide--1"></div>
+                            <div className="swiper-slide swiper-slide--2"></div>
+                            <div className="swiper-slide swiper-slide--3"></div>
+                            <div className="swiper-slide swiper-slide--4"></div>
+                            <div className="swiper-slide swiper-slide--5"></div>
+                            <div className="swiper-slide swiper-slide--6"></div>
+                            <div className="swiper-slide swiper-slide--7"></div>
+                            <div className="swiper-slide swiper-slide--8"></div>
+                            <div className="swiper-slide swiper-slide--9"></div>
+                            <div className="swiper-slide swiper-slide--10"></div>
+                            <div className="swiper-slide swiper-slide--11"></div>
+                            <div className="swiper-slide swiper-slide--12"></div>
+                            <div className="swiper-slide swiper-slide--13"></div>
+                            <div className="swiper-slide swiper-slide--14"></div>
+                            <div className="swiper-slide swiper-slide--15"></div>
+                            <div className="swiper-slide swiper-slide--16"></div>
+                            <div className="swiper-slide swiper-slide--17"></div>
+                        </div>
+                        <div className="swiper-pagination"></div>
+                    </div>
+                ),
+            },
+            {
+                className: 'poster__img-wrap--5',
+                src: isPortrait ? require('../../assets/poster/5.webp') : require('../../assets/poster/5@2x.png'),
+                onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_5}`, 1),
+                depthX: isPortrait ? '0.15' : '0.08',
+                depthY: '0.08',
+            },
+        ],
+        [isPortrait],
+    );
 
     usePageVisible(PageType.Poster, () => {
         if (!bgRef.current) {
@@ -100,76 +179,17 @@ export const Poster: React.FC = () => {
     return (
         <div className="poster" ref={containerRef}>
             <div className="poster__bg" ref={bgRef}>
-                <div className="poster__img-wrap poster__img-wrap--0">
-                    <img
-                        className="poster__img"
-                        alt="poster-img"
-                        src={IS_MOBILE ? require('../../assets/poster/0@0.2x.jpg') : require('../../assets/poster/0@2x.jpg')}
-                        onLoad={() => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_0}`, 1)}
-                    />
-                </div>
-                <div data-depth-x="0.05" data-depth-y="-0.1" className="poster__img-wrap poster__img-wrap--1">
-                    <img
-                        className="poster__img"
-                        alt="poster-img"
-                        src={IS_MOBILE ? require('../../assets/poster/1@0.2x.png') : require('../../assets/poster/1@2x.png')}
-                        onLoad={() => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_1}`, 1)}
-                    />
-                </div>
-                <div data-depth-x="-0.05" className="poster__img-wrap poster__img-wrap--2">
-                    <img
-                        className="poster__img"
-                        alt="poster-img"
-                        src={IS_MOBILE ? require('../../assets/poster/2@0.2x.png') : require('../../assets/poster/2@2x.png')}
-                        onLoad={() => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_2}`, 1)}
-                    />
-                </div>
-                <div data-depth-x="0.1" className="poster__img-wrap poster__img-wrap--3">
-                    <img
-                        className="poster__img"
-                        alt="poster-img"
-                        src={IS_MOBILE ? require('../../assets/poster/3@0.2x.png') : require('../../assets/poster/3@2x.png')}
-                        onLoad={() => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_3}`, 1)}
-                    />
-                </div>
-                <div data-depth="-0.08" className="poster__img-wrap poster__img-wrap--4">
-                    <img
-                        className="poster__img"
-                        alt="poster-img"
-                        src={IS_MOBILE ? require('../../assets/poster/4@0.2x.png') : require('../../assets/poster/4@2x.png')}
-                        onLoad={() => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_4}`, 1)}
-                    />
-                    <div className="poster-logos-swiper-container swiper-container">
-                        <div className="swiper-wrapper">
-                            <div className="swiper-slide swiper-slide--1"></div>
-                            <div className="swiper-slide swiper-slide--2"></div>
-                            <div className="swiper-slide swiper-slide--3"></div>
-                            <div className="swiper-slide swiper-slide--4"></div>
-                            <div className="swiper-slide swiper-slide--5"></div>
-                            <div className="swiper-slide swiper-slide--6"></div>
-                            <div className="swiper-slide swiper-slide--7"></div>
-                            <div className="swiper-slide swiper-slide--8"></div>
-                            <div className="swiper-slide swiper-slide--9"></div>
-                            <div className="swiper-slide swiper-slide--10"></div>
-                            <div className="swiper-slide swiper-slide--11"></div>
-                            <div className="swiper-slide swiper-slide--12"></div>
-                            <div className="swiper-slide swiper-slide--13"></div>
-                            <div className="swiper-slide swiper-slide--14"></div>
-                            <div className="swiper-slide swiper-slide--15"></div>
-                            <div className="swiper-slide swiper-slide--16"></div>
-                            <div className="swiper-slide swiper-slide--17"></div>
-                        </div>
-                        <div className="swiper-pagination"></div>
+                {posterBgConfig.map(({ className, src, children, onLoad, depthX, depthY }, idx) => (
+                    <div
+                        className={classNames('poster__img-wrap', className)}
+                        key={idx}
+                        data-depth-x={depthX}
+                        data-depth-y={depthY}
+                    >
+                        <img className="poster__img" alt="poster-img" src={src} onLoad={onLoad} />
+                        {children}
                     </div>
-                </div>
-                <div data-depth-x="0.08" data-depth-y="0.08" className="poster__img-wrap poster__img-wrap--5">
-                    <img
-                        className="poster__img"
-                        alt="poster-img"
-                        src={IS_MOBILE ? require('../../assets/poster/5@0.2x.png') : require('../../assets/poster/5@2x.png')}
-                        onLoad={() => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_5}`, 1)}
-                    />
-                </div>
+                ))}
             </div>
             <div className="poster__info-wrap">
                 <div className="poster__info">
@@ -183,7 +203,7 @@ export const Poster: React.FC = () => {
                     </div>
                     <div className="poster__features">
                         <div className="poster__features-title">Features</div>
-                        <div className="poster-features-swiper-container swiper-container swiper-no-swiping">
+                        <div className="poster-features-swiper-container swiper swiper-no-swiping">
                             <div className="swiper-wrapper">
                                 {POSTER_FEATURES.map((feature, i) => {
                                     return (
@@ -199,7 +219,7 @@ export const Poster: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <About />
+            {/* <About /> */}
         </div>
     );
 
@@ -212,7 +232,7 @@ export const Poster: React.FC = () => {
         let top = 0;
         let width = 0;
         let height = 0;
-        const ratio = 4196 / 2160;
+        const ratio = isPortrait ? 1 : 4196 / 2160;
         const containerW = containerSize?.width || rootDom?.offsetWidth || window.innerWidth || 1;
         const containerH = containerSize?.height || rootDom?.offsetHeight || window.innerHeight || 1;
         if (containerW / containerH >= ratio) {

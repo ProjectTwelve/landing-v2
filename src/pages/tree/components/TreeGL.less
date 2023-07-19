@@ -1,17 +1,27 @@
 @import '../../../styles/variables.less';
 
 .tree-gl {
-  .f-pseudo();
-  transform: translate(0, 20px);
+    .f-pseudo();
+    transform: translate(0, 20px);
 
-  .tree-gl-canvas {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0);
-    top: auto;
-    bottom: 0;
-    width: auto;
-    height: 100%;
-    pointer-events: none;
-  }
+    .tree-gl-canvas {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        top: auto;
+        bottom: 0;
+        width: auto;
+        height: 100%;
+        pointer-events: none;
+    }
+}
+
+/** 移动端适配 */
+.body-portrait {
+    .tree-gl-canvas {
+        width: auto;
+        height: 5.3rem;
+        top: 0;
+        bottom: auto;
+    }
 }
