@@ -35,31 +35,31 @@ export const Poster: React.FC = () => {
         () => [
             {
                 className: 'poster__img-wrap--0',
-                src: isPortrait ? require('../../assets/poster/0.png') : require('../../assets/poster/0@2x.png'),
+                src: isPortrait ? require('../../assets/poster/0.webp') : require('../../assets/poster/0@2x.png'),
                 onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_0}`, 1),
             },
             {
                 className: 'poster__img-wrap--1',
-                src: isPortrait ? require('../../assets/poster/1.png') : require('../../assets/poster/1@2x.png'),
+                src: isPortrait ? require('../../assets/poster/1.webp') : require('../../assets/poster/1@2x.png'),
                 onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_1}`, 1),
                 depthX: isPortrait ? '0.1' : '0.05',
                 depthY: '-0.1',
             },
             {
                 className: 'poster__img-wrap--2',
-                src: isPortrait ? require('../../assets/poster/2.png') : require('../../assets/poster/2@2x.png'),
+                src: isPortrait ? require('../../assets/poster/2.webp') : require('../../assets/poster/2@2x.png'),
                 onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_2}`, 1),
                 depthX: isPortrait ? '-0.1' : '-0.05',
             },
             {
                 className: 'poster__img-wrap--3',
-                src: isPortrait ? require('../../assets/poster/3.png') : require('../../assets/poster/3@2x.png'),
+                src: isPortrait ? require('../../assets/poster/3.webp') : require('../../assets/poster/3@2x.png'),
                 onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_3}`, 1),
                 depthX: isPortrait ? '0.15' : '0.1',
             },
             {
                 className: 'poster__img-wrap--4',
-                src: isPortrait ? require('../../assets/poster/4.png') : require('../../assets/poster/4@2x.png'),
+                src: isPortrait ? require('../../assets/poster/4.webp') : require('../../assets/poster/4@2x.png'),
                 onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_4}`, 1),
                 depthX: isPortrait ? '-0.15' : '-0.08',
                 children: (
@@ -89,7 +89,7 @@ export const Poster: React.FC = () => {
             },
             {
                 className: 'poster__img-wrap--5',
-                src: isPortrait ? require('../../assets/poster/5.png') : require('../../assets/poster/5@2x.png'),
+                src: isPortrait ? require('../../assets/poster/5.webp') : require('../../assets/poster/5@2x.png'),
                 onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_5}`, 1),
                 depthX: isPortrait ? '0.15' : '0.08',
                 depthY: '0.08',
