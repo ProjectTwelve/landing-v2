@@ -219,7 +219,7 @@ export const Poster: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <About />
+            {/* <About /> */}
         </div>
     );
 
