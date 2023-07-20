@@ -18,15 +18,7 @@ export enum PageType {
     Social = 'social',
 }
 
-export const PageBadges = [
-    PageType.Home,
-    PageType.Avatar,
-    PageType.Tree,
-    PageType.Poster,
-    PageType.About,
-    PageType.Wall,
-    PageType.Social,
-];
+export const PageBadges = [PageType.Home, PageType.Social, PageType.Avatar, PageType.Tree, PageType.Poster, PageType.Wall];
 
 export const PageRoute = {
     home: PageType.Home,

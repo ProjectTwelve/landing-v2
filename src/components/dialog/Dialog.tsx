@@ -13,9 +13,10 @@ type DialogProps = {
     content?: string | React.ReactNode;
     extraHeader?: React.ReactNode;
     className?: string;
+    id?: string;
 };
 
-const Dialog = ({ open, onClose, extraHeader, author, title, subtitle, content, className, children }: DialogProps) => {
+const Dialog = ({ open, onClose, extraHeader, author, title, subtitle, content, className, children, id }: DialogProps) => {
     return createPortal(
         <div>
             <div
@@ -25,17 +26,17 @@ const Dialog = ({ open, onClose, extraHeader, author, title, subtitle, content, 
                     e.nativeEvent.stopImmediatePropagation();
                 }}
             >
-                <div className="dialog__close" onClick={onClose}></div>
+                <div className={classNames('dialog__close', `${id}__close`)} onClick={onClose}></div>
                 {extraHeader}
                 {!children && (
                     <div
-                        className="dialog__container"
+                        className={classNames('dialog__container', `${id}__container`)}
                         onWheel={(e) => {
                             const targetDom: Element = e.target as Element;
                             targetDom.scrollTop = targetDom.scrollTop + e.deltaY;
                         }}
                     >
-                        <div className="dialog__header">
+                        <div className={classNames('dialog__header', `${id}__header`)}>
                             {author && <div className="dialog__header-left">{author}</div>}
                             <div className="dialog__header-right">
                                 {title && <div className="dialog__title">{title}</div>}
@@ -43,7 +44,7 @@ const Dialog = ({ open, onClose, extraHeader, author, title, subtitle, content, 
                             </div>
                         </div>
 
-                        {content && <div className="dialog__content">{content}</div>}
+                        {content && <div className={classNames('dialog__content', `${id}__content`)}>{content}</div>}
                     </div>
                 )}
                 {children}

@@ -52,8 +52,7 @@
     }
   }
 
-  &__info {
-    pointer-events: none;
+  &__info { 
     position: absolute;
     z-index: 10;
     top: 50%;
@@ -78,8 +77,7 @@
   }
 
   &__btn {
-    pointer-events: all;
-    .bgFull2x('avatar/arrow-1@2x.png');
+     .bgFull2x('avatar/arrow-1@2x.png');
     cursor: pointer;
 
     &--right {
@@ -93,31 +91,11 @@
 
     &-wrap {
       display: flex;
+			position: auto;
     }
   }
 
   .butterfly-canvas-avatar {
     opacity: 0.1;
   }
-}
-
-.body-mobile {
-    .avatar {
-        &::after {
-            height: 70px;
-        }
-        &__nav {
-            padding-right: env(safe-area-inset-right);
-            padding-right: constant(safe-area-inset-right);
-        }
-        &__info {
-            padding-left: env(safe-area-inset-left);
-            padding-left: constant(safe-area-inset-left);
-            transform: translate(0, -50%) scale(0.5);
-            transform-origin: left center;
-        }
-        &__small-text-1 {
-            margin-bottom: 18px;
-        }
-    }
 }

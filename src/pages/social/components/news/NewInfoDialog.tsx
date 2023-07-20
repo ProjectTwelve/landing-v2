@@ -15,6 +15,7 @@ const NewInfoDialog = ({ newInfo, open, onClose }: NewInfoDialogProps) => {
         <Dialog
             open={open}
             onClose={onClose}
+            id="new-dialog"
             className="new-dialog"
             extraHeader={<div className="new-dialog__title"></div>}
             author={<img src={P12_AUTHOR_AVATOR} alt={'P12'} />}

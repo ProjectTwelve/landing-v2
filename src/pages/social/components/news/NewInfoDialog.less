@@ -25,7 +25,10 @@
         font-size: 14px;
         line-height: 21px;
         color: #ffffff;
-        margin-bottom: 0.75rem;
+        margin-bottom: 12px;
+        img {
+            width: 100%; // 图片 默认铺满
+        }
     }
     s {
         text-decoration: line-through;
@@ -43,5 +46,68 @@
     }
     ol {
         list-style: decimal inside;
+    }
+}
+
+/** 移动端适配 */
+.body-portrait {
+    .new-dialog {
+        display: flex;
+        flex-direction: column;
+        max-height: none;
+        translate: 0;
+        width: calc(100% - 0.6rem);
+        height: calc(100% - 0.6rem);
+        &__title {
+            height: 0.2rem;
+        }
+        &__subtitle {
+        }
+        &__close {
+            height: 0.16rem;
+            width: 0.16rem;
+        }
+        &__container {
+            flex-grow: 1;
+            padding: 0;
+            padding-top: 0.16rem;
+            margin-top: 0.12rem;
+            gap: 0.16rem;
+        }
+        &__header {
+            height: 0.5rem;
+            .dialog__header-left {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0.04rem;
+                img {
+                    width: 0.36rem;
+                    height: 0.36rem;
+                }
+            }
+            .dialog__header-right {
+                gap: 0.04rem;
+            }
+            .dialog__title {
+                font-size: 0.16rem;
+                line-height: 0.16rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+            .dialog__subtitle {
+                font-size: 0.12rem;
+                line-height: 0.12rem;
+            }
+        }
+    }
+    .new-dialog__reset {
+        p {
+            font-size: 0.12rem;
+            line-height: 0.18rem;
+        }
     }
 }

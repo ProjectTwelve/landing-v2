@@ -3,12 +3,15 @@ import React, { useMemo, useState } from 'react';
 import { ABOUT_PARTNERS, CONTACT_INFO, PartnerInfo } from './About.config';
 import './About.less';
 import AboutCard from './components/AboutCard';
+import { useIsPortrait } from '../../hooks/useIsPortrait';
 
 export const About: React.FC = () => {
+    const isPortrait = useIsPortrait();
+    const showNum = isPortrait ? 3 : 5;
     const [currentPartner, setCurrentPartner] = useState(0);
     const [currentAbouts, setCurrentAbouts] = useState<PartnerInfo[]>(ABOUT_PARTNERS);
     const showingAbouts = useMemo(
-        () => (currentAbouts.length > 5 ? currentAbouts.slice(0, 5) : currentAbouts),
+        () => (currentAbouts.length > showNum ? currentAbouts.slice(0, showNum) : currentAbouts),
         [currentAbouts],
     );
 

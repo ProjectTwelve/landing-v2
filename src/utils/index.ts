@@ -1,4 +1,3 @@
-import gsap from 'gsap';
 import { Howl } from 'howler';
 import { throttle } from 'lodash-es';
 import ReactGA from 'react-ga4';
