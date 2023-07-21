@@ -132,7 +132,6 @@ export const Wall: React.FC = () => {
                         media kit
                     </a>
                 </div>
-                {isPortrait && <Socials className="wall__social-links" />}
             </div>
         </div>
     );
