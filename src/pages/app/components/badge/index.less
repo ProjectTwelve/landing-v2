@@ -14,16 +14,11 @@
         bottom: (44 / @designHeight * 100%);
         left: (60 / @designWidth * 100%);
         z-index: 99;
-        &:hover {
-            .badge-circle {
-                animation-play-state: running;
-            }
-        }
     }
     &-circle {
         .f-alignImg2x('app/badges/badge-circle@2x.png');
         animation: badgecircle 16s infinite linear;
-        animation-play-state: paused;
+        animation-play-state: running;
     }
     &-swiper-container {
         position: absolute;
