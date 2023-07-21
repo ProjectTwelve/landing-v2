@@ -2,18 +2,19 @@ import { useLocalStorageState } from 'ahooks';
 import classnames from 'classnames';
 import { useAtom, useAtomValue } from 'jotai';
 import _ from 'lodash-es';
-import React, { cloneElement, useEffect, useMemo, useState } from 'react';
+import React, { cloneElement, useEffect, useMemo } from 'react';
 import { useEvent, useSessionStorage } from 'react-use';
 import { MOBILE_BASE_SIZE, MOBILE_BASE_WIDTH, STORAGE_KEY } from '../../constants';
 import { currentPageAtom, lockScrollAtom } from '../../store/app/state';
-import { IS_MOBILE, initGA, playClickAudio } from '../../utils';
-import { CONTENT_PAGES, PageBadges, PageRoute, PageType } from './App.config';
+import { IS_MOBILE, initGA } from '../../utils';
+import { CONTENT_PAGES, PageRoute, PageType } from './App.config';
 import './App.less';
 import { loadingEE } from './App.utils';
 import { Navigator } from './components/navigator';
 import { homeActiveExtraIndexAtom } from '../../store/home/state';
 import { useIsPortrait } from '../../hooks/useIsPortrait';
 import classNames from 'classnames';
+import Badge from './components/badge';
 
 const pageTypes = CONTENT_PAGES.filter((v) => v.Content && v.type !== PageType.Loading).map((v) => v.type);
 
@@ -137,21 +138,7 @@ export const App = () => {
                     );
                 })}
             </div> */}
-            {PageBadges.includes(current) && (
-                <div className="badge-wrap">
-                    <div className="badge-circle"></div>
-                    {PageBadges.map((v, i) => (
-                        <div
-                            key={v}
-                            style={{
-                                opacity: v === current ? 1 : 0,
-                                zIndex: v === current ? 2 : 1,
-                            }}
-                            className={classnames(['badge-icon', `badge-icon--${i + 1}`])}
-                        ></div>
-                    ))}
-                </div>
-            )}
+            <Badge current={current} />
             <div
                 className={classnames(['coming-btn', pulseState])}
                 onClick={() => window.open('https://airdrop.p12.games', '_blank')}
