@@ -1,0 +1,60 @@
+@import '../../../../styles//variables.less';
+
+@keyframes badgecircle {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.badge {
+    &-wrap {
+        position: absolute;
+        .bgFull2x('app/badges/badge-circle@2x.png');
+        background: none;
+        bottom: (44 / @designHeight * 100%);
+        left: (60 / @designWidth * 100%);
+        z-index: 99;
+    }
+    &-circle {
+        .f-alignImg2x('app/badges/badge-circle@2x.png');
+        animation: badgecircle 16s infinite linear;
+        animation-play-state: running;
+    }
+    &-swiper-container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 54px;
+        height: 54px;
+        margin: -27px 0 0 -27px;
+    }
+}
+/** 移动端适配 */
+.body-portrait {
+    .badge {
+        &-wrap {
+            width: 0.36rem;
+            height: 0.36rem;
+            bottom: 0.3rem;
+            left: auto;
+            right: 0.3rem;
+        }
+        &-circle {
+            width: 0.36rem;
+            height: 0.36rem;
+            margin: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+        &-swiper-container {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0.28rem;
+            height: 0.28rem;
+            margin: 0.04rem 0 0 0.04rem;
+        }
+    }
+}

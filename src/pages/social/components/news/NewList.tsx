@@ -89,20 +89,16 @@ export const NewList = ({ onItemClick }: NewListProps) => {
                     el: '.swiper-pagination',
                 },
             });
-            console.log('----------hello-------------', { newsSwiper });
         }
         return {
             onVisible: () => {
-                console.log('-----------init------------', { newsSwiper });
                 newsSwiper?.init();
             },
             onDestroy: () => {
-                console.log('-----------destroy------------', { newsSwiper });
                 newsSwiper?.destroy();
             },
         };
     });
-    console.log('-----------------1------');
 
     return isPortrait ? (
         <div className="social-news">

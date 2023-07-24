@@ -38,48 +38,6 @@
         cursor: pointer;
     }
 
-    .badge-wrap {
-        position: absolute;
-        .bgFull2x('app/badge-circle@2x.png');
-        background: none;
-        bottom: (44 / @designHeight * 100%);
-        left: (60 / @designWidth * 100%);
-        z-index: 99;
-
-        .badge-circle {
-            .f-alignImg2x('app/badge-circle@2x.png');
-            animation: badgecircle 16s infinite linear;
-            animation-play-state: paused;
-        }
-        &:hover {
-            .badge-circle {
-                animation-play-state: running;
-            }
-        }
-        .badge-icon {
-            .f-alignImg2x('app/badge-h1@2x.png');
-            transition: opacity 0.3s;
-            &--1 {
-                .bg('app/badge-h1@2x.png');
-            }
-            &--2 {
-                .bg('app/badge-h2@2x.png');
-            }
-            &--3 {
-                .bg('app/badge-h3@2x.png');
-            }
-            &--4 {
-                .bg('app/badge-h4@2x.png');
-            }
-            &--5 {
-                .bg('app/badge-h5@2x.png');
-            }
-            &--6 {
-                .bg('app/badge-h6@2x.png');
-            }
-        }
-    }
-
     .coming-btn {
         position: absolute;
         .bgFull2x('app/corners@2x.png');
@@ -206,12 +164,6 @@
     }
 }
 
-@keyframes badgecircle {
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
 .app-sub-title {
     .f-font-tt;
     font-size: 40px;
@@ -296,33 +248,6 @@
             height: 0.2175rem;
             top: 0.3rem;
             left: 0.3rem;
-        }
-        .badge {
-            &-wrap {
-                width: 0.36rem;
-                height: 0.36rem;
-                bottom: 0.3rem;
-                left: auto;
-                right: 0.3rem;
-            }
-            &-circle {
-                width: 0.36rem;
-                height: 0.36rem;
-                margin: 0;
-                left: 0;
-                right: 0;
-                top: 0;
-                bottom: 0;
-            }
-            &-icon {
-                width: 0.28rem;
-                height: 0.28rem;
-                margin: 0;
-                left: 0.04rem;
-                right: 0.04rem;
-                top: 0.04rem;
-                bottom: 0.04rem;
-            }
         }
         .footer {
             display: none;
