@@ -125,7 +125,7 @@ export const Wall: React.FC = () => {
 
                 <div className="wall__media_btn">
                     <a
-                        href="https://drive.google.com/drive/folders/17NBZIRDajpkaaz2kiqIVaHmIm9wXmyE3"
+                        href="https://drive.google.com/drive/folders/1Jcil3TvIY0auAV7w0zq7zIRMTcIpepma"
                         target="_blank"
                         rel="noreferrer"
                     >
