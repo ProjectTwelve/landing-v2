@@ -109,6 +109,10 @@
 /** 移动端适配 */
 .body-portrait {
     .tree {
+        display: flex;
+        flex-direction: column;
+        gap: 0.16rem;
+
         &::after {
             display: none;
         }
@@ -117,10 +121,10 @@
         }
         &__info {
             transform: none;
-            top: auto;
-            bottom: 1.42rem;
+            position: relative;
+            top: 0;
             left: 0.3rem;
-            right: 0.3rem;
+            margin-top: calc(3rem + 20vh);
         }
         &__small-title {
             margin: 0.1rem 0 0.06rem;
@@ -136,10 +140,9 @@
         }
         &__extra {
             transform: none;
-            top: auto;
-            bottom: 0.72rem;
+            position: relative;
+            top: 0;
             left: 0.3rem;
-            right: 0.3rem;
             &::before {
                 height: 1px;
                 content: '';
