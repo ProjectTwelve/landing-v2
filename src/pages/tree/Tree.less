@@ -111,20 +111,26 @@
     .tree {
         display: flex;
         flex-direction: column;
+        justify-content: center;
         gap: 0.16rem;
-
+        padding-bottom: 1rem;
+        transform: translateY(-0.25rem);
         &::after {
             display: none;
         }
         &-gl {
             transform: none;
+            position: relative;
+            height: 5.3rem;
+            top: auto;
+            left: auto;
         }
         &__info {
             transform: none;
             position: relative;
             top: 0;
             left: 0.3rem;
-            margin-top: calc(3rem + 20vh);
+            margin-top: -1.2rem;
         }
         &__small-title {
             margin: 0.1rem 0 0.06rem;
