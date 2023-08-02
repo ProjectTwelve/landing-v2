@@ -27,6 +27,7 @@
         // backdrop-filter: blur(3px);
         border-radius: 12px;
         position: relative;
+        transform: rotate(180deg);
         // mobile increased touchable area
         &::before {
             content: '';
@@ -42,8 +43,10 @@
             display: block;
             width: 15.74px;
             height: 15.34px;
-            .bg('social/arrow-next.svg');
-            background-position: 50% 50%;
+            .bg('avatar/arrow-left.png');
+            width: 15px;
+            height: 20px;
+            background-size: contain;
         }
         border: 1px solid #959799;
         border-radius: 50%;
@@ -57,7 +60,7 @@
     }
     .social-pre {
         .social-next();
-        transform: rotate(180deg);
+        transform: none;
     }
 }
 
