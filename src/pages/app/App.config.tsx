@@ -19,12 +19,12 @@ export enum PageType {
 }
 
 export const PageBadges = {
-    [PageType.Home]: [1],
-    [PageType.Social]: [11, 12, 13],
-    [PageType.Avatar]: [2, 7, 5, 3],
-    [PageType.Tree]: [8, 9, 10],
-    [PageType.Poster]: [4, 6],
-    [PageType.Wall]: [14, 15, 16, 17, 18],
+    [PageType.Home]: 1,
+    [PageType.Social]: 11,
+    [PageType.Avatar]: 2,
+    [PageType.Tree]: 8,
+    [PageType.Poster]: 4,
+    [PageType.Wall]: 14,
 };
 
 export const PageRoute = {

@@ -1,24 +1,25 @@
 import classnames from 'classnames';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import Swiper from 'swiper';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import { PageBadges, PageType } from '../../App.config';
 import './index.less';
+import _ from 'lodash-es';
 
 type BadgeProps = {
     current: PageType;
 };
 Swiper.use([Autoplay, EffectFade]);
 const Badge = ({ current }: BadgeProps) => {
-    const currentBadges = useMemo(() => {
-        if (!current || !PageBadges[current]?.length) return [];
+    const currentDefaultBadge = useMemo(() => {
+        if (!current || !PageBadges[current]) return null;
         return PageBadges[current];
     }, [current]);
+    const swiperRef = useRef<Swiper | null>(null);
+
     const initSwiper = useCallback(() => {
         let swiper = new Swiper('.badge-swiper-container', {
-            autoplay: {
-                delay: 3000,
-            },
+            autoplay: false,
             init: false,
             loop: true,
             mousewheel: false,
@@ -26,26 +27,57 @@ const Badge = ({ current }: BadgeProps) => {
             fadeEffect: {
                 crossFade: true,
             },
+            initialSlide: currentDefaultBadge ? currentDefaultBadge - 1 : 0, // 设置初始项
         });
+        swiperRef.current = swiper;
         return swiper;
-    }, []);
+    }, [currentDefaultBadge]);
 
     useEffect(() => {
         let swiper = initSwiper();
         swiper?.init();
-        return () => swiper?.destroy();
+        // 自动切换
+        const switchSlide = () => {
+            let nextSlide;
+            do {
+                nextSlide = _.random(0, 17);
+            } while (nextSlide === swiper.activeIndex); // 确保下一个随机项与当前项不同
+            swiper?.slideTo(nextSlide);
+        };
+        let intervalId: NodeJS.Timer | null = null; // 单独存储定时器 ID
+
+        // 第一项停留 8 秒，之后的项每 3 秒切换一次
+        const timeoutId = setTimeout(() => {
+            switchSlide();
+            intervalId = setInterval(switchSlide, 3000); // 存储定时器 ID
+        }, 8000);
+
+        return () => {
+            swiper?.destroy();
+            clearTimeout(timeoutId); // 清除定时器
+            if (intervalId) clearInterval(intervalId); // 清除定时器
+        };
     }, [current]);
 
+    // 点击切换
+    const handleClick = () => {
+        let nextSlide;
+        do {
+            nextSlide = _.random(0, 17);
+        } while (nextSlide === swiperRef.current?.activeIndex); // 确保下一个随机项与当前项不同
+        swiperRef.current?.slideTo(nextSlide);
+    };
     return (
-        <div className="badge-wrap">
+        <div className="badge-wrap" onClick={handleClick}>
             <div className="badge-circle"></div>
             <div className="badge-swiper-container swiper">
                 <div className="swiper-wrapper">
-                    {currentBadges.map((v, i) => (
+                    {/* badge 1 - badge 18 */}
+                    {_.range(1, 19).map((v, i) => (
                         <img
                             key={v}
                             src={require(`../../../../assets/app/badges/badge-h${v}@2x.png`)}
-                            alt={i}
+                            alt={`badge${i}`}
                             className={classnames('swiper-slide badge-icon')}
                         />
                     ))}
