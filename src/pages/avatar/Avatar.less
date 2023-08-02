@@ -77,17 +77,33 @@
   }
 
   &__btn {
-     .bgFull2x('avatar/arrow-1@2x.png');
     cursor: pointer;
-
+		width: 58px;
+		height: 58px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid #fff;
+		border-radius: 100%;
+		opacity: 0.8;
+		&::after {
+			display: block;
+			content: "";
+			.bg('avatar/arrow-left.png');
+			width: 15px;
+			height: 20px;
+			background-size: contain; 
+		}
     &--right {
       transform: rotate(180deg);
       margin-left: 28px;
     }
 
     &:hover {
-      .bgFull2x('avatar/arrow-2@2x.png');
-    }
+			border-color: white;
+			background-color: white;
+			filter: invert(100%);
+     }
 
     &-wrap {
       display: flex;
