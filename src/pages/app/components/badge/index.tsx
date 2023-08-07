@@ -16,6 +16,7 @@ const Badge = ({ current }: BadgeProps) => {
         return PageBadges[current];
     }, [current]);
     const swiperRef = useRef<Swiper | null>(null);
+    const intervalId = useRef<NodeJS.Timer | null>(null);
 
     const initSwiper = useCallback(() => {
         let swiper = new Swiper('.badge-swiper-container', {
@@ -33,29 +34,29 @@ const Badge = ({ current }: BadgeProps) => {
         return swiper;
     }, [currentDefaultBadge]);
 
+    // 自动切换
+    const switchSlide = () => {
+        if (!swiperRef?.current) return;
+        let nextSlide;
+        do {
+            nextSlide = _.random(0, 17);
+        } while (nextSlide === swiperRef.current.activeIndex); // 确保下一个随机项与当前项不同
+        swiperRef.current.slideTo(nextSlide);
+    };
+
     useEffect(() => {
         let swiper = initSwiper();
         swiper?.init();
-        // 自动切换
-        const switchSlide = () => {
-            let nextSlide;
-            do {
-                nextSlide = _.random(0, 17);
-            } while (nextSlide === swiper.activeIndex); // 确保下一个随机项与当前项不同
-            swiper?.slideTo(nextSlide);
-        };
-        let intervalId: NodeJS.Timer | null = null; // 单独存储定时器 ID
-
         // 第一项停留 8 秒，之后的项每 3 秒切换一次
         const timeoutId = setTimeout(() => {
             switchSlide();
-            intervalId = setInterval(switchSlide, 3000); // 存储定时器 ID
+            intervalId.current = setInterval(switchSlide, 3000); // 存储定时器 ID
         }, 8000);
 
         return () => {
             swiper?.destroy();
             clearTimeout(timeoutId); // 清除定时器
-            if (intervalId) clearInterval(intervalId); // 清除定时器
+            if (intervalId?.current) clearInterval(intervalId.current); // 清除定时器
         };
     }, [current]);
 
@@ -66,6 +67,8 @@ const Badge = ({ current }: BadgeProps) => {
             nextSlide = _.random(0, 17);
         } while (nextSlide === swiperRef.current?.activeIndex); // 确保下一个随机项与当前项不同
         swiperRef.current?.slideTo(nextSlide);
+        if (intervalId?.current) clearInterval(intervalId.current); // 重置定时器
+        intervalId.current = setInterval(switchSlide, 3000);
     };
     return (
         <div className="badge-wrap" onClick={handleClick}>
