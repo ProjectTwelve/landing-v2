@@ -255,7 +255,6 @@
 
         &__mouse-tips {
             background-image: none;
-            transform: none;
             margin: 0;
             height: auto;
             width: auto;
@@ -283,15 +282,15 @@
                 border: 1px solid #ffffffcc;
                 opacity: 0.8;
                 position: relative;
+                transform: rotate(-90deg);
                 .f-align-center();
                 &::before {
                     content: '';
                     display: block;
-                    width: 0.12rem;
-                    height: 0.12rem;
-                    background-size: 100% 100%;
-                    .bg('app/arrow@2x.png');
-                    filter: brightness(3);
+                    width: 0.06rem;
+                    height: 0.1rem;
+                    background-size: contain;
+                    .bg('avatar/arrow-left.svg');
                 }
                 &::after {
                     content: '';
@@ -305,8 +304,9 @@
                     opacity: 0.6;
                 }
             }
+
             &-prev {
-                transform: rotate(180deg);
+                transform: rotate(90deg);
             }
         }
         &-sub-title {

@@ -211,9 +211,17 @@
         position: relative;
         height: 0.16rem;
         width: 0.16rem;
-        .bg('avatar/arrow-left-mobile.png');
+        .bg('avatar/arrow-left.svg');
         background-size: contain;
         opacity: 0.8;
+        border: none;
+        &:hover {
+            filter: none;
+            background-color: transparent;
+        }
+        &::after {
+            display: none;
+        }
         &::before {
             content: '';
             display: block;
