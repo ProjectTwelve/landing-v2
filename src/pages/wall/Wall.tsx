@@ -1,13 +1,12 @@
 import gsap from 'gsap';
 import React, { useEffect, useState } from 'react';
 import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
-import { Socials } from '../../components/socials';
+import { useIsPortrait } from '../../hooks/useIsPortrait';
 import { GAevent, requestOrientationPermission } from '../../utils';
 import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
-import { FEATURED_ON_DATA, PARTNERS_DATA } from './Wall.config';
+import { FEATURED_ON_DATA, INVESTORS_DATA, PARTNERS_DATA } from './Wall.config';
 import './Wall.less';
-import { useIsPortrait } from '../../hooks/useIsPortrait';
 
 export const Wall: React.FC = () => {
     const [isVisible, setVisible] = useState(false);
@@ -74,7 +73,40 @@ export const Wall: React.FC = () => {
         <div className={`wall ${isVisible ? null : ' hidden'}`}>
             <ButterflyGL page={PageType.Wall} />
             <div className="wall__info">
-                <div className="wall__title-1">Investors &amp; Partners</div>
+                <div className="wall__title-1">Investors</div>
+                <div className="wall__dot-1"></div>
+                <div className="wall-partners">
+                    {isPortrait
+                        ? INVESTORS_DATA.map((arr) =>
+                              arr.map(({ name, href, logo, mobileStyle }) => (
+                                  <img
+                                      style={mobileStyle}
+                                      src={logo}
+                                      key={name}
+                                      alt={name}
+                                      onClick={() => {
+                                          if (href) window.open(href, '_blank');
+                                      }}
+                                  />
+                              )),
+                          )
+                        : INVESTORS_DATA.map((arr, idx) => (
+                              <div className="wall-partners__row" key={idx}>
+                                  {arr.map(({ name, href, logo, style }) => (
+                                      <img
+                                          style={style}
+                                          src={logo}
+                                          key={name}
+                                          alt={name}
+                                          onClick={() => {
+                                              if (href) window.open(href, '_blank');
+                                          }}
+                                      />
+                                  ))}
+                              </div>
+                          ))}
+                </div>
+                <div className="wall__title-1">Partners</div>
                 <div className="wall__dot-1"></div>
                 <div className="wall-partners">
                     {isPortrait
@@ -86,7 +118,7 @@ export const Wall: React.FC = () => {
                                       key={name}
                                       alt={name}
                                       onClick={() => {
-                                          window.open(href, '_blank');
+                                          if (href) window.open(href, '_blank');
                                       }}
                                   />
                               )),
@@ -100,26 +132,18 @@ export const Wall: React.FC = () => {
                                           key={name}
                                           alt={name}
                                           onClick={() => {
-                                              window.open(href, '_blank');
+                                              if (href) window.open(href, '_blank');
                                           }}
                                       />
                                   ))}
                               </div>
                           ))}
                 </div>
-                <div className="wall__title-2">Featured on</div>
+                <div className="wall__title-2">Media</div>
                 <div className="wall__dot-2"></div>
                 <div className="wall__featured-on">
                     {FEATURED_ON_DATA.map((item, index) => {
-                        return (
-                            <div
-                                key={item.name}
-                                className={`wall__featured-on-${index + 1} wall__featured-on-item`}
-                                onClick={() => {
-                                    window.open(item.href, '_blank');
-                                }}
-                            ></div>
-                        );
+                        return <div key={item.name} className={`wall__featured-on-${index + 1} wall__featured-on-item`}></div>;
                     })}
                 </div>
 

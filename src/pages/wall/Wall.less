@@ -42,7 +42,7 @@
         flex-direction: column;
         align-items: center;
         gap: 32px;
-        margin-bottom: 64px;
+        margin-bottom: 80px;
         &__row {
             display: flex;
             justify-content: center;
@@ -52,7 +52,7 @@
             gap: 24px;
             img {
                 height: 100%;
-                cursor: pointer;
+                // cursor: pointer;
                 object-fit: contain;
                 pointer-events: auto;
             }
@@ -65,7 +65,7 @@
         pointer-events: auto;
         &-item {
             margin: 0 8px;
-            cursor: pointer;
+            // cursor: pointer;
         }
         &-1 {
             .bgFull2x('wall/featured/bloomberg@2x.png');
@@ -76,22 +76,11 @@
             .bgFull2x('wall/featured/yahoo_finance@2x.png');
         }
         &-3 {
-            .bgFull2x('wall/featured/market_watch@2x.png');
-        }
-        &-4 {
-            .bgFull2x('wall/featured/finanzen_net@2x.png');
-        }
-        &-5 {
             .bgFull2x('wall/featured/seeking_alpha@2x.png');
         }
-        &-6 {
+        &-4 {
             .bgFull2x('wall/featured/benzinga@2x.png');
-        }
-        &-7 {
-            .bgFull2x('wall/featured/morning_star@2x.png');
-        }
-        &-8 {
-            .bgFull2x('wall/featured/just_games@2x.png');
+            margin-top: 4px;
         }
     }
 
@@ -141,11 +130,13 @@
             right: 0.4rem;
             pointer-events: auto;
         }
-        &__title-1 {
+        &__title-1,
+        &__title-2 {
             font-size: 0.1458rem;
             line-height: 0.1458rem;
         }
-        &__dot-1 {
+        &__dot-1,
+        &__dot-2 {
             margin-top: 0.12rem;
             margin-bottom: 0.24rem;
         }
@@ -154,6 +145,7 @@
             flex-direction: row;
             justify-content: center;
             flex-wrap: wrap;
+
             row-gap: 0.28rem;
             column-gap: 0.2rem;
             margin-bottom: 0.64rem;
@@ -161,10 +153,21 @@
                 height: 0.14rem;
             }
         }
-        &__featured-on,
-        &__title-2,
-        &__dot-2 {
-            display: none;
+        &__featured-on {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.2rem;
+            margin-bottom: 0.64rem;
+            &-item {
+                margin: 0;
+                width: 0.9rem;
+                background-size: contain;
+            }
+            &-4 {
+                margin-top: 6px;
+            }
         }
 
         &__media_btn {
