@@ -12,4 +12,5 @@ export type NewInfoType = {
     author: string;
     createTime: number;
     updateTime: number;
+    showOrder?: number;
 };

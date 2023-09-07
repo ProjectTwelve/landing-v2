@@ -11,6 +11,7 @@ import { usePageVisible } from '../../../app/App.utils';
 import './NewList.less';
 import classNames from 'classnames';
 import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
+import { PinSvg } from '../../../../components/svg/PinSvg';
 Swiper.use([Autoplay, EffectCoverflow, Pagination]);
 
 type NewListItemProps = {
@@ -33,10 +34,15 @@ export const NewLabel = ({ type }) => {
     );
 };
 const NewListItem = ({ data, onClick, className }: NewListItemProps) => {
-    const { title, imageUrl1, createTime, text, type } = data;
+    const { title, imageUrl1, createTime, text, type, showOrder } = data;
     const newDate = useNewDateFormat(createTime);
     return (
         <div className={classNames('social-new', className)} onClick={() => onClick(data)}>
+            {showOrder ? (
+                <div className="social-new__pin">
+                    Pin <PinSvg />
+                </div>
+            ) : null}
             <div className="social-new__cover">
                 <img src={imageUrl1} alt="cover" />
             </div>
@@ -64,6 +70,19 @@ export const NewList = ({ onItemClick }: NewListProps) => {
     }, [document.documentElement.style.fontSize]);
     const isPortrait = useIsPortrait();
     const scrollDist = useMemo(() => (isPortrait ? 2.67 * rootSize : 402), [isPortrait, rootSize]);
+
+    const { pinList, restList } = useMemo(() => {
+        if (!newList?.length)
+            return {
+                pinList: [],
+                restList: [],
+            };
+        return {
+            pinList: newList.filter((item) => item.showOrder),
+            restList: newList.filter((item) => !item.showOrder),
+        };
+    }, [newList]);
+
     usePageVisible(PageType.Social, () => {
         let newsSwiper;
         if (isPortrait) {
@@ -131,8 +150,11 @@ export const NewList = ({ onItemClick }: NewListProps) => {
             </div>
             {isLoading && <div>Loading...</div>}
             <div className="social-news-list">
-                {newList?.length
-                    ? newList.map((item) => <NewListItem onClick={onItemClick} data={item} key={item.newsCode} />)
+                {pinList?.length
+                    ? pinList.map((item) => <NewListItem onClick={onItemClick} data={item} key={item.newsCode} />)
+                    : null}
+                {restList?.length
+                    ? restList.map((item) => <NewListItem onClick={onItemClick} data={item} key={item.newsCode} />)
                     : null}
             </div>
             <div

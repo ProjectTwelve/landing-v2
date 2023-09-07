@@ -65,6 +65,7 @@
 }
 
 .social-new {
+    position: relative;
     cursor: pointer;
     pointer-events: auto;
     display: flex;
@@ -74,6 +75,25 @@
     transition: all 0.1s linear;
     &:hover {
         transform: translate(0, -5px);
+    }
+    &__pin {
+        border-radius: 50px;
+        border: 0.8px solid rgba(255, 255, 255, 0.5);
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(24px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        position: absolute;
+        left: 16px;
+        top: 16px;
+        padding: 6px 10px;
+        z-index: 10;
+        fill: white;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 12px;
     }
     &__cover {
         border-radius: 12px 12px 0 0;
