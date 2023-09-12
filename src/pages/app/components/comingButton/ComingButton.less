@@ -1,0 +1,86 @@
+@import '../../../../styles/variables.less';
+
+.coming-btn {
+    // .bgFull2x('app/corners@2x.png');
+    // background-size: 100% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: (45 / @designHeight * 100%);
+    right: (40 / @designWidth * 100%);
+    z-index: 99;
+    transform: scale(0.9);
+    cursor: pointer;
+}
+
+.coming-btn {
+    position: absolute;
+    top: (45 / @designHeight * 100%);
+    right: (40 / @designWidth * 100%);
+    width: 165px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+    opacity: 0.8;
+
+    .f-font-tt;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px; /* 142.857% */
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    .f-hover-opa(0.5);
+
+    &:before,
+    &:after,
+    & > :first-child:before,
+    & > :first-child:after {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-color: white;
+        border-style: solid;
+        content: '';
+    }
+    &:before {
+        top: -1px;
+        left: -1px;
+        border-width: 2px 0 0 2px;
+    }
+    &:after {
+        top: -1px;
+        right: -1px;
+        border-width: 2px 2px 0 0;
+    }
+    & > :first-child:before {
+        bottom: -1px;
+        right: -1px;
+        border-width: 0 2px 2px 0;
+    }
+    & > :first-child:after {
+        bottom: -1px;
+        left: -1px;
+        border-width: 0 0 2px 2px;
+    }
+    @keyframes pulse {
+        50% {
+            transform: scale(0.95);
+        }
+    }
+
+    &.pulse {
+        animation: pulse 1s ease infinite;
+    }
+}
+
+/** 移动端适配 */
+.body-portrait {
+    .coming-btn {
+        display: none;
+    }
+}

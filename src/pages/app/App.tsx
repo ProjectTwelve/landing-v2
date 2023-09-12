@@ -15,6 +15,7 @@ import { homeActiveExtraIndexAtom } from '../../store/home/state';
 import { useIsPortrait } from '../../hooks/useIsPortrait';
 import classNames from 'classnames';
 import Badge from './components/badge';
+import ComingButton from './components/comingButton/ComingButton';
 
 const pageTypes = CONTENT_PAGES.filter((v) => v.Content && v.type !== PageType.Loading).map((v) => v.type);
 
@@ -25,7 +26,6 @@ export const App = () => {
     const nextPageType = getNextPageType();
     const prevPageType = getPrevPageType();
 
-    const [pulseState, setPulseState] = useLocalStorageState('hasPulse', { defaultValue: 'pulse' });
     const activatedHomeExtraIndex = useAtomValue(homeActiveExtraIndexAtom);
     const isPortrait = useIsPortrait();
     const [enableMouseTipAnim, setEnableMouseTipAnim] = useSessionStorage(STORAGE_KEY.ENABLE_MOUSE_TIP_ANIM, true);
@@ -139,12 +139,7 @@ export const App = () => {
                 })}
             </div> */}
             <Badge current={current} />
-            <div
-                className={classnames(['coming-btn', pulseState])}
-                onClick={() => window.open('https://airdrop.p12.games', '_blank')}
-            >
-                <div className="coming-btn__item" onMouseEnter={() => setPulseState('')}></div>
-            </div>
+            <ComingButton />
             <div className="footer">
                 <div className="footer__info"></div>
             </div>
