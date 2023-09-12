@@ -38,34 +38,6 @@
         cursor: pointer;
     }
 
-    .coming-btn {
-        position: absolute;
-        .bgFull2x('app/corners@2x.png');
-        background-size: 100% 100%;
-        width: 128px;
-        top: (45 / @designHeight * 100%);
-        right: (40 / @designWidth * 100%);
-        z-index: 99;
-        .f-hover-opa;
-        transform: scale(0.9);
-        cursor: pointer;
-
-        &__item {
-            .bgFull2x('app/coming-info@2x.png');
-            margin: 20px auto;
-        }
-
-        @keyframes pulse {
-            50% {
-                transform: scale(0.95);
-            }
-        }
-
-        &.pulse {
-            animation: pulse 1s ease infinite;
-        }
-    }
-
     .footer {
         position: absolute;
         bottom: (40 / @designHeight * 100%);
@@ -333,8 +305,5 @@
                 margin: 0;
             }
         }
-    }
-    .coming-btn {
-        display: none;
     }
 }
