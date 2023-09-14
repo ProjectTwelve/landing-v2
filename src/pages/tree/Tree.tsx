@@ -93,7 +93,21 @@ export const Tree: React.FC = () => {
                         GAevent('event', 'Econs-Whitepaper');
                         playClickAudio();
                     }}
-                ></a>
+                >
+                    <span>P12 Economic Whitepaper</span>
+                </a>
+                <div className="tree__extra-info">For a thorough review of P12 smart contract security, refer to</div>
+                <a
+                    className="tree__extra-link"
+                    href="https://github.com/Secure3Audit/P12_Audit_Contest/blob/main/audit_report/Secure3_P12_security_audit_report.pdf"
+                    target="_blank"
+                    onClick={() => {
+                        GAevent('event', 'Audit-Report');
+                        playClickAudio();
+                    }}
+                >
+                    <span>Audit Report by Secure3</span>
+                </a>
             </div>
         </div>
     );
