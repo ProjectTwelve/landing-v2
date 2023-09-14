@@ -123,8 +123,13 @@ export const NewList = ({ onItemClick }: NewListProps) => {
         <div className="social-news">
             <div className="social-news-list swiper">
                 <div className="swiper-wrapper">
-                    {newList?.length
-                        ? newList.map((item) => (
+                    {pinList?.length
+                        ? pinList.map((item) => (
+                              <NewListItem className="swiper-slide" onClick={onItemClick} data={item} key={item.newsCode} />
+                          ))
+                        : null}
+                    {restList?.length
+                        ? restList.map((item) => (
                               <NewListItem className="swiper-slide" onClick={onItemClick} data={item} key={item.newsCode} />
                           ))
                         : null}
