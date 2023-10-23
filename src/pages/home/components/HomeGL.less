@@ -126,6 +126,18 @@
     }
 }
 
+@media screen and (max-height: 420px) and (orientation: landscape) {
+    .home-extra-item {
+        transform: scale(0.6) translate(100px, -200px);
+    }
+}
+
+@media screen and (min-height: 420px) and (max-height: 600px) and (orientation: landscape) {
+    .home-extra-item {
+        transform: scale(0.75) translate(100px, -200px);
+    }
+}
+
 @keyframes glpointer {
     100% {
         transform: scale(4, 4);
