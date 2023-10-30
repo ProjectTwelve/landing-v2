@@ -289,3 +289,15 @@
         transform: rotate3d(0, 0, 1, 310deg);
     }
 }
+
+@media screen and (max-height: 425px) and (orientation: landscape) {
+    .avatar__info {
+        transform: scale(0.6) translate(-25%, -90%);
+    }
+}
+
+@media screen and (max-height: 260px) and (orientation: landscape) {
+    .avatar__info {
+        transform: scale(0.45) translate(-25%, -105%);
+    }
+}

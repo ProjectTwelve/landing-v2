@@ -86,7 +86,7 @@ export const NewList = ({ onItemClick }: NewListProps) => {
     usePageVisible(PageType.Social, () => {
         let newsSwiper;
         if (isPortrait) {
-            newsSwiper = new Swiper('.social-news-list', {
+            newsSwiper = new Swiper('#new-swiper', {
                 effect: 'coverflow',
                 grabCursor: true,
                 init: false,
@@ -119,65 +119,67 @@ export const NewList = ({ onItemClick }: NewListProps) => {
         };
     });
 
-    return isPortrait ? (
-        <div className="social-news">
-            <div className="social-news-list swiper">
-                <div className="swiper-wrapper">
+    return (
+        <>
+            {/* Prevent rotating back to the rotator in landscape error */}
+            <div className={classNames('social-news', { 'f-clip-hidden': !isPortrait })}>
+                <div id="new-swiper" className={'social-news-list swiper'}>
+                    <div className="swiper-wrapper">
+                        {pinList?.length
+                            ? pinList.map((item) => (
+                                  <NewListItem className="swiper-slide" onClick={onItemClick} data={item} key={item.newsCode} />
+                              ))
+                            : null}
+                        {restList?.length
+                            ? restList.map((item) => (
+                                  <NewListItem className="swiper-slide" onClick={onItemClick} data={item} key={item.newsCode} />
+                              ))
+                            : null}
+                    </div>
+                    <div className="swiper-pagination"></div>
+                </div>
+            </div>
+            <div className={classNames('social-news', { 'f-clip-hidden': isPortrait })}>
+                <div
+                    className="social-pre"
+                    onClick={() => {
+                        const list = document?.querySelector('.social-news-list');
+                        if (!newList?.length || !list) return;
+                        const scrollLeft = list.scrollLeft === 0 ? newList?.length * scrollDist : list.scrollLeft - scrollDist;
+                        list.scroll({
+                            left: scrollLeft,
+                            behavior: 'smooth',
+                        });
+                    }}
+                >
+                    <i className="social-next-icon"></i>
+                </div>
+                {isLoading && <div>Loading...</div>}
+                <div className="social-news-list">
                     {pinList?.length
-                        ? pinList.map((item) => (
-                              <NewListItem className="swiper-slide" onClick={onItemClick} data={item} key={item.newsCode} />
-                          ))
+                        ? pinList.map((item) => <NewListItem onClick={onItemClick} data={item} key={item.newsCode} />)
                         : null}
                     {restList?.length
-                        ? restList.map((item) => (
-                              <NewListItem className="swiper-slide" onClick={onItemClick} data={item} key={item.newsCode} />
-                          ))
+                        ? restList.map((item) => <NewListItem onClick={onItemClick} data={item} key={item.newsCode} />)
                         : null}
                 </div>
-                <div className="swiper-pagination"></div>
+                <div
+                    className="social-next"
+                    onClick={() => {
+                        const list = document?.querySelector('.social-news-list');
+                        if (!list) return;
+                        const innerWidth = list.scrollWidth - list.clientWidth;
+                        const isEnd = innerWidth - list.scrollLeft < 10;
+                        const scrollLeft = isEnd ? 0 : list.scrollLeft + scrollDist;
+                        list.scroll({
+                            left: scrollLeft,
+                            behavior: 'smooth',
+                        });
+                    }}
+                >
+                    <i className="social-next-icon"></i>
+                </div>
             </div>
-        </div>
-    ) : (
-        <div className="social-news">
-            <div
-                className="social-pre"
-                onClick={() => {
-                    const list = document?.querySelector('.social-news-list');
-                    if (!newList?.length || !list) return;
-                    const scrollLeft = list.scrollLeft === 0 ? newList?.length * scrollDist : list.scrollLeft - scrollDist;
-                    list.scroll({
-                        left: scrollLeft,
-                        behavior: 'smooth',
-                    });
-                }}
-            >
-                <i className="social-next-icon"></i>
-            </div>
-            {isLoading && <div>Loading...</div>}
-            <div className="social-news-list">
-                {pinList?.length
-                    ? pinList.map((item) => <NewListItem onClick={onItemClick} data={item} key={item.newsCode} />)
-                    : null}
-                {restList?.length
-                    ? restList.map((item) => <NewListItem onClick={onItemClick} data={item} key={item.newsCode} />)
-                    : null}
-            </div>
-            <div
-                className="social-next"
-                onClick={() => {
-                    const list = document?.querySelector('.social-news-list');
-                    if (!list) return;
-                    const innerWidth = list.scrollWidth - list.clientWidth;
-                    const isEnd = innerWidth - list.scrollLeft < 10;
-                    const scrollLeft = isEnd ? 0 : list.scrollLeft + scrollDist;
-                    list.scroll({
-                        left: scrollLeft,
-                        behavior: 'smooth',
-                    });
-                }}
-            >
-                <i className="social-next-icon"></i>
-            </div>
-        </div>
+        </>
     );
 };

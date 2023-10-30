@@ -76,3 +76,19 @@
         }
     }
 }
+
+@media screen and (max-height: 420px) and (orientation: landscape) {
+    .home {
+        &__info {
+            transform: scale(0.6) translateY(-350px);
+        }
+    }
+}
+
+@media screen and (min-height: 420px) and (max-height: 600px) and (orientation: landscape) {
+    .home {
+        &__info {
+            transform: scale(0.75) translateY(-350px);
+        }
+    }
+}
