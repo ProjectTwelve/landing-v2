@@ -13,7 +13,7 @@
         top: 50%;
         left: 50%;
         padding: 0 110px;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, calc(80px - 50%));
         width: 80%;
         max-width: 1192px;
         display: flex;
@@ -108,7 +108,7 @@
 @media screen and (max-height: 620px) and (orientation: landscape) {
     .social {
         &__wrapper {
-            transform: scale(0.6) translate(-80%, -78%);
+            transform: scale(0.6) translate(-80%, calc(20px - 80%));
             width: 120%;
             height: 140%;
         }
