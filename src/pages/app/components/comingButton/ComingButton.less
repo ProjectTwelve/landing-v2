@@ -1,8 +1,6 @@
 @import '../../../../styles/variables.less';
 
 .coming-btn {
-    // .bgFull2x('app/corners@2x.png');
-    // background-size: 100% 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,38 +33,8 @@
     text-transform: uppercase;
 
     .f-hover-opa(0.5);
+    .f-rect-corner(8px);
 
-    &:before,
-    &:after,
-    & > :first-child:before,
-    & > :first-child:after {
-        position: absolute;
-        width: 8px;
-        height: 8px;
-        border-color: white;
-        border-style: solid;
-        content: '';
-    }
-    &:before {
-        top: -1px;
-        left: -1px;
-        border-width: 2px 0 0 2px;
-    }
-    &:after {
-        top: -1px;
-        right: -1px;
-        border-width: 2px 2px 0 0;
-    }
-    & > :first-child:before {
-        bottom: -1px;
-        right: -1px;
-        border-width: 0 2px 2px 0;
-    }
-    & > :first-child:after {
-        bottom: -1px;
-        left: -1px;
-        border-width: 0 0 2px 2px;
-    }
     @keyframes pulse {
         50% {
             transform: scale(0.95);
@@ -81,6 +49,18 @@
 /** 移动端适配 */
 .body-portrait {
     .coming-btn {
-        display: none;
+        top: 0.28rem;
+        right: 0.86rem;
+        width: 0.82rem;
+        height: 0.25rem;
+        .f-rect-corner(4px);
+        p {
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 10px; /* 83.333% */
+            letter-spacing: 0.714px;
+            text-transform: uppercase;
+        }
     }
 }

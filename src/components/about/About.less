@@ -224,39 +224,7 @@
             background: rgba(0, 0, 0, 0.3);
             left: 0;
             bottom: 125%;
-
-            &:before,
-            &:after,
-            & > :first-child:before,
-            & > :first-child:after {
-                position: absolute;
-                width: 9.9px;
-                height: 9.9px;
-                border-color: #ffffffb3;
-                border-style: solid;
-                content: ' ';
-            }
-            &:before {
-                top: -1px;
-                left: -1px;
-                border-width: 2px 0 0 2px;
-            }
-            &:after {
-                top: -1px;
-                right: -1px;
-                border-width: 2px 2px 0 0;
-            }
-            & > :first-child:before {
-                bottom: -1px;
-                right: -1px;
-                border-width: 0 2px 2px 0;
-            }
-            & > :first-child:after {
-                bottom: -1px;
-                left: -1px;
-                border-width: 0 0 2px 2px;
-            }
-
+            .f-rect-corner(10px);
             &-name {
                 font-size: 20px;
                 line-height: 26px;
