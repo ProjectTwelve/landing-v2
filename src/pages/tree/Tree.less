@@ -110,38 +110,7 @@
             font-weight: 600;
 
             .f-hover-opa(0.5);
-
-            &:before,
-            &:after,
-            & > :first-child:before,
-            & > :first-child:after {
-                position: absolute;
-                width: 5px;
-                height: 5px;
-                border-color: #979797;
-                border-style: solid;
-                content: '';
-            }
-            &:before {
-                top: -1px;
-                left: -1px;
-                border-width: 2px 0 0 2px;
-            }
-            &:after {
-                top: -1px;
-                right: -1px;
-                border-width: 2px 2px 0 0;
-            }
-            & > :first-child:before {
-                bottom: -1px;
-                right: -1px;
-                border-width: 0 2px 2px 0;
-            }
-            & > :first-child:after {
-                bottom: -1px;
-                left: -1px;
-                border-width: 0 0 2px 2px;
-            }
+            .f-rect-corner(5px);
         }
     }
 }
