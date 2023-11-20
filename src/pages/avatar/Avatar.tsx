@@ -125,9 +125,7 @@ export const Avatar = (props) => {
                     IDENTITY IN THE P12 ECOSYSTEM
                 </div>
                 <div className="app-small-text avatar__small-text-1">
-                    The Assets consists of P12 Gamer SBT, P12 Developer SBT,
-                    <br />
-                    P12 Power Level, and P12 Badges
+                    The Assets consists of P12 Gamer SBT, P12 Developer SBT, P12 Power Level, and P12 Badges
                 </div>
                 <div className="avatar__btn-wrap">
                     <div
