@@ -51,14 +51,6 @@ export const AVATAR_GL_INFO_MAP = {
     [AvatarType.Dokv]: {
         name: AvatarType.Dokv,
         GLTFURL: 'files/avatar/pose/Dokv/Dokv.gltf',
-        extraNode: (
-            <>
-                <div className="avatar-extra-subtitle">GameArtefact API</div>
-                <div className="avatar-extra-text">→ For NFT</div>
-                <div className="avatar-extra-subtitle">GameCoin API</div>
-                <div className="avatar-extra-text">→ For tokenomics</div>
-            </>
-        ),
         HDensity: 30, // 小的粒子密度：
         LDensity: 40, // 大的粒子密度：
         TDensity: 20, // 三角密度：
@@ -75,13 +67,6 @@ export const AVATAR_GL_INFO_MAP = {
     [AvatarType.Cartoon]: {
         name: AvatarType.Cartoon,
         GLTFURL: 'files/avatar/pose/Cartoon/Cartoon.gltf',
-        extraNode: (
-            <>
-                <div className="avatar-extra-subtitle">Server DevOps</div>
-                <div className="avatar-extra-subtitle">Data Analytics</div>
-                <div className="avatar-extra-subtitle">Community / Social</div>
-            </>
-        ),
         HDensity: 40,
         LDensity: 40, //大的粒子密度：
         TDensity: 20,
@@ -97,14 +82,6 @@ export const AVATAR_GL_INFO_MAP = {
     [AvatarType.Lowpoly]: {
         name: AvatarType.Lowpoly,
         GLTFURL: 'files/avatar/pose/Lowpoly_1/SK_Lowpoly_01.gltf',
-        extraNode: (
-            <>
-                <div className="avatar-extra-subtitle">SecretShop</div>
-                <div className="avatar-extra-text">→ The marketplace</div>
-                <div className="avatar-extra-subtitle">GameMaster</div>
-                <div className="avatar-extra-text">→ The governance</div>
-            </>
-        ),
         HDensity: 20,
         LDensity: 20,
         TDensity: 20,

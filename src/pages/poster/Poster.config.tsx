@@ -1,43 +1,41 @@
-import React from 'react';
-
 export const POSTER_FEATURES = [
     {
-        title: 'StyleFusion',
+        title: 'Graphical User Interface',
         desc: (
             <>
-                Styles co-exist in one Metaverse
+                Pioneers the transition from a Command Line Interface
                 <br />
-                Aesthetical inclusivity for diverse user base
+                (CLI) to a user-friendly Graphical User Interface (GUI)
             </>
         ),
     },
     {
-        title: 'Non-voxel',
+        title: 'Onchain Engine',
         desc: (
             <>
-                Supports external 3D models
+                Integrate onchain engines and frameworks
                 <br />
-                Enables diverse style and full expressiveness
+                like MUD and Dojo
             </>
         ),
     },
     {
-        title: 'Full-programmability',
+        title: 'Intuitive',
         desc: (
             <>
-                Full-fledged scripting support for complex gameplay
+                Streamlined templates and prefabs
                 <br />
-                Runtime PC + Mobile support from day 1
+                for easier game creation
             </>
         ),
     },
     {
-        title: 'Lego-like',
+        title: 'Compatible',
         desc: (
             <>
-                Reusability for code templates,
+                Style Fusion, Mobile + PC, Non-Voxel,
                 <br />
-                graphic assets, and even tokenomics boilerplates
+                Composability & Reuse
             </>
         ),
     },

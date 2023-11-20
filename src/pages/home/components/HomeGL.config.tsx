@@ -9,12 +9,16 @@ export const HOME_GL_ACTIVE_DATA = [
         groupPos: new THREE.Vector3(0, IS_MOBILE ? -0.8 : -1.5, 0),
         groupSca: new THREE.Vector3(1.3, 1.3, 1.3),
         info: {
-            title: 'The Editor',
+            title: 'UGC Ecosystem',
             desc: (
                 <>
-                    A full-featured Metaverse content engine
+                    Effortlessly create games using the P12
                     <br />
-                    for building game worlds; best in its kind
+                    Editor. Inspired, diverse, and voluntary game
+                    <br />
+                    creations contributed by the P12
+                    <br />
+                    Community
                 </>
             ),
         },
@@ -26,15 +30,15 @@ export const HOME_GL_ACTIVE_DATA = [
         groupPos: new THREE.Vector3(0, IS_MOBILE ? -1 : -1.39, 0),
         groupSca: new THREE.Vector3(1.3, 1.3, 1.3),
         info: {
-            title: 'Empowering Metaworlds',
+            title: (
+                <>
+                    Empowering <br /> Onchain Games
+                </>
+            ),
             desc: (
                 <>
-                    A Metaverse platform where
-                    <br />
-                    Web2 and Web3 users co-exist in harmony
-                    <br />
-                    <br />
-                    An open ecosystem with sustainable economy
+                    P12 will empower the emergence of <br /> thousands of onchain games, paving the way
+                    <br /> for a breakout in onchain gaming landscape
                 </>
             ),
         },
@@ -46,14 +50,16 @@ export const HOME_GL_ACTIVE_DATA = [
         groupPos: new THREE.Vector3(0, IS_MOBILE ? -1 : -1.28, 0),
         groupSca: new THREE.Vector3(1.3, 1.3, 1.3),
         info: {
-            title: 'The Infra',
+            title: 'P12 GPark Editor',
             desc: (
                 <>
-                    A set of API / SDK and developer portals
+                    The first and only onchain engine that
                     <br />
-                    for bridging game content on-chain;
+                    pioneers the transition from a Command
                     <br />
-                    tokenomics and NFT made easy
+                    Line Interface (CLI) to a user-friendly
+                    <br />
+                    Graphical User Interface (GUI).
                 </>
             ),
         },
@@ -66,14 +72,16 @@ export const HOME_GL_ACTIVE_DATA = [
         groupSca: new THREE.Vector3(1.52, 1.52, 1.52),
         // 文案 todo 补充
         info: {
-            title: 'The Econs',
+            title: 'Expanding The Player Base',
             desc: (
                 <>
-                    A set of economic and governmental rules
+                    P12 pioneers the successful approach to
                     <br />
-                    and mechanisms implemented in smart
+                    onboard Web2 gamers to Web3 by linking
                     <br />
-                    contracts; for prosperity and sustainability
+                    onchain Soulbound NFTs with STEAM
+                    <br />
+                    credentials
                 </>
             ),
         },

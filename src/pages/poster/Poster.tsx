@@ -196,12 +196,11 @@ export const Poster: React.FC = () => {
             <div className="poster__info-wrap">
                 <div className="poster__info">
                     <div className="poster__slogan"></div>
-                    <div className="app-sub-title poster__sub-title">BEST METAVERSE EDITOR IN WEB3</div>
+                    <div className="app-sub-title poster__sub-title">THE FIRST AND ONLY GUI ONCHAIN ENGINE</div>
                     <div className="app-small-text poster__small-text-1">
-                        by a top R&amp;D team with 500+ people that built a 12 million DAU gaming platform
-                    </div>
-                    <div className="app-small-text poster__small-text-2">
-                        The Editor is backed by a strong R&amp;D team with proven track record in gaming.
+                        Empowers developers to achieve composable games creation,
+                        <br />
+                        seamless assets deployment and permissionless open economies.
                     </div>
                     <div className="poster__features">
                         <div className="poster__features-title">Features</div>
