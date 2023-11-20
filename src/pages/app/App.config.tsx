@@ -57,7 +57,7 @@ export const CONTENT_PAGES = [
     },
     {
         type: PageType.Avatar,
-        NavText: <>Infra</>,
+        NavText: <>Assets</>,
         Content: <Avatar />,
         dropdown: false,
     },
