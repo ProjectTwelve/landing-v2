@@ -20,7 +20,7 @@ export function SocialItem({ href, title, icon, className, onClick }: CollabSoci
         >
             <div className="social-item__icon">
                 {typeof icon === 'string' ? <img src={icon} alt={title || 'icon'}></img> : icon}
-            </div>{' '}
+            </div>
             <div className="social-item__content">{title && <div className="social-item__content-title">{title}</div>}</div>
         </div>
     );

@@ -14,21 +14,26 @@ import AvatarCircle from './AvatarCircle';
 // 没有 extraNode 的默认循环 123 文案， defaultExtraNodes[idx % 3]
 const defaultExtraNodes = [
     <>
-        <div className="avatar-extra-subtitle">GameArtefact API</div>
-        <div className="avatar-extra-text">→ For NFT</div>
-        <div className="avatar-extra-subtitle">GameCoin API</div>
-        <div className="avatar-extra-text">→ For tokenomics</div>
+        <div className="avatar-extra-subtitle">P12 Gamer SBT</div>
+        <div className="avatar-extra-text">→ For gamers</div>
+        <div className="avatar-extra-subtitle">P12 Developer SBT</div>
+        <div className="avatar-extra-text">→ For creators</div>
     </>,
     <>
-        <div className="avatar-extra-subtitle">Server DevOps</div>
-        <div className="avatar-extra-subtitle">Data Analytics</div>
-        <div className="avatar-extra-subtitle">Community / Social</div>
+        <div className="avatar-extra-subtitle">P12 Power Level</div>
+        <div className="avatar-extra-text">→ Points to upgrade the SBTs</div>
+        <div className="avatar-extra-subtitle">P12 Badges</div>
+        <div className="avatar-extra-text">
+            → Community badges that <br /> can boost Power Level
+        </div>
     </>,
     <>
-        <div className="avatar-extra-subtitle">SecretShop</div>
-        <div className="avatar-extra-text">→ The marketplace</div>
-        <div className="avatar-extra-subtitle">GameMaster</div>
-        <div className="avatar-extra-text">→ The governance</div>
+        <div className="avatar-extra-subtitle">Upgradeable SBT</div>
+        <div className="avatar-extra-text">→ in 5 different rarities</div>
+        <div className="avatar-extra-subtitle">Lifetime Steam Data</div>
+        <div className="avatar-extra-text">
+            → serve as credentials for <br /> game distribution
+        </div>
     </>,
 ];
 export interface AvatarGLRef {
@@ -188,32 +193,16 @@ export const AvatarGL = forwardRef<AvatarGLRef, AvatarGLProps>((props, ref) => {
                 <div className="avatar-mouse__arrow"></div>
             </div>
             <div className="avatar-extra">
-                {AVATAR_GL_KEYS.map((key, idx) => {
-                    const info = AVATAR_GL_INFO_MAP[key];
-                    if (info && info.extraNode) {
-                        return (
-                            <div
-                                className={classnames('avatar-extra-item', {
-                                    active: props.avatar === key,
-                                })}
-                                key={key}
-                            >
-                                {info.extraNode}
-                            </div>
-                        );
-                    } else {
-                        return (
-                            <div
-                                className={classnames('avatar-extra-item', {
-                                    active: props.avatar === key,
-                                })}
-                                key={key}
-                            >
-                                {defaultExtraNodes[idx % 3]}
-                            </div>
-                        );
-                    }
-                })}
+                {AVATAR_GL_KEYS.map((key, idx) => (
+                    <div
+                        className={classnames('avatar-extra-item', {
+                            active: props.avatar === key,
+                        })}
+                        key={key}
+                    >
+                        {defaultExtraNodes[idx % 3]}
+                    </div>
+                ))}
             </div>
         </div>
     );

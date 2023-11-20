@@ -114,18 +114,18 @@ export const Avatar = (props) => {
 
     return (
         <div className="avatar">
-            {ready ? <AvatarGL ref={avatarGLRef} allLoaded={allLoaded} avatar={currentAvatar} currentPage={currentPage}/> : null}
+            {ready ? (
+                <AvatarGL ref={avatarGLRef} allLoaded={allLoaded} avatar={currentAvatar} currentPage={currentPage} />
+            ) : null}
 
             {/* <AGL /> */}
             <div className="avatar__info">
                 <div className="avatar__slogan"></div>
                 <div className="app-small-title app-small-title--with-block avatar__small-title">
-                    TOKENOMICS AND NFT MADE EASY
+                    IDENTITY IN THE P12 ECOSYSTEM
                 </div>
                 <div className="app-small-text avatar__small-text-1">
-                    The Infra consists of a set of API / SDK and developer
-                    <br />
-                    portals for bridging game content on-chain
+                    The Assets consists of P12 Gamer SBT, P12 Developer SBT, P12 Power Level, and P12 Badges
                 </div>
                 <div className="avatar__btn-wrap">
                     <div

@@ -5,11 +5,9 @@ import { PageType } from '../app/App.config';
 import { usePageVisible } from '../app/App.utils';
 import './Home.less';
 import { HomeGL, HomeGLRef } from './components/HomeGL';
-import { useIsPortrait } from '../../hooks/useIsPortrait';
 
 export const Home: React.FC = () => {
     const homeGLRef = useRef<HomeGLRef>(null);
-    const isPortrait = useIsPortrait();
 
     usePageVisible(PageType.Home, () => {
         return {
@@ -106,21 +104,10 @@ export const Home: React.FC = () => {
             <HomeGL ref={homeGLRef} />
             <div className="home__info">
                 <div className="home__slogan"></div>
-                <div className="app-sub-title home__sub-title">
-                    EDITOR<i className="app-sub-title__block"></i>INFRA
-                    <i className="app-sub-title__block"></i>ECONS
-                </div>
-                <div className="app-small-title app-small-title--with-block home__small-title">Empowering Metaworlds</div>
+                <div className="app-small-title app-small-title--with-block home__small-title">GUI Onchain Engine</div>
                 <div className="app-small-text home__small-text-1">
-                    Project Twelve, P12 in short, is a web3 gaming Infra
-                    <br /> with sustainable economy
+                    P12 is building the first and only GUI Onchain Engine <br /> for onchain games and autonomous worlds
                 </div>
-                {isPortrait ? null : (
-                    <div className="app-small-text home__small-text-2">
-                        The scope of the project covers the Editor, the Infra,
-                        <br /> and the Econs
-                    </div>
-                )}
             </div>
         </div>
     );
