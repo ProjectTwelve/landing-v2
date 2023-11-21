@@ -1,11 +1,9 @@
-import React, { useRef, useEffect } from 'react';
-import './PosterBg.less';
+import React, { useRef } from 'react';
 import { getPublicAssetPath } from '../../../utils';
+import './PosterBg.less';
 
 export const PosterBg: React.FC = () => {
     const vidRef = useRef<HTMLVideoElement>(null);
-
-    useEffect(() => {}, []);
 
     return (
         <video
