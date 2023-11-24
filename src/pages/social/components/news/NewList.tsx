@@ -143,7 +143,7 @@ export const NewList = ({ onItemClick }: NewListProps) => {
                 <div
                     className="social-pre"
                     onClick={() => {
-                        const list = document?.querySelector('.social-news-list');
+                        const list = document?.querySelector('#new-scroll-container');
                         if (!newList?.length || !list) return;
                         const scrollLeft = list.scrollLeft === 0 ? newList?.length * scrollDist : list.scrollLeft - scrollDist;
                         list.scroll({
@@ -155,7 +155,7 @@ export const NewList = ({ onItemClick }: NewListProps) => {
                     <i className="social-next-icon"></i>
                 </div>
                 {isLoading && <div>Loading...</div>}
-                <div className="social-news-list">
+                <div id="new-scroll-container" className="social-news-list">
                     {pinList?.length
                         ? pinList.map((item) => <NewListItem onClick={onItemClick} data={item} key={item.newsCode} />)
                         : null}
@@ -166,7 +166,7 @@ export const NewList = ({ onItemClick }: NewListProps) => {
                 <div
                     className="social-next"
                     onClick={() => {
-                        const list = document?.querySelector('.social-news-list');
+                        const list = document?.querySelector('#new-scroll-container');
                         if (!list) return;
                         const innerWidth = list.scrollWidth - list.clientWidth;
                         const isEnd = innerWidth - list.scrollLeft < 10;
