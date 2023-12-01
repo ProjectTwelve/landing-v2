@@ -56,7 +56,7 @@ export const TreeGL = (props) => {
                     imageDataArray = data;
                     render();
                     loaded = true;
-                    loadingEE.emit(`progress.${LoadingSourceType.TREE_MODEL}`, 1);
+                    // loadingEE.emit(`progress.${LoadingSourceType.TREE_MODEL}`, 1);
                 })
                 .finally(() => {
                     loading = false;

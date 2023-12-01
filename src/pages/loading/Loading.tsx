@@ -27,8 +27,8 @@ export const Loading: React.FC = () => {
         return {
             onVisible: () => {
                 GAevent('webview', 'loadin-webview');
-                handleProgress(0.6, 5);
-                loadingEE.on('loaded', () => handleProgress(1, 2));
+                handleProgress(0.6, 1);
+                loadingEE.on('loaded', () => handleProgress(1, 1));
                 gsap.set('.page-wrap-loading', {
                     display: 'block',
                     opacity: 1,

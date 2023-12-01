@@ -5,17 +5,19 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 // import { ObjectControls } from 'threejs-object-controls';
 import classnames from 'classnames';
 import { gsap } from 'gsap';
+import { useAtom } from 'jotai';
 import { Vector3 } from 'three';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { CSS2DObject, CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer';
+import { useIsPortrait } from '../../../hooks/useIsPortrait';
+import { homeActiveExtraIndexAtom } from '../../../store/home/state';
 import { GAevent, IS_MOBILE, getPublicAssetPath, toRadians } from '../../../utils';
 import { PageType } from '../../app/App.config';
-import { LoadingSourceType, loadingEE, usePageVisible } from '../../app/App.utils';
+import { usePageVisible } from '../../app/App.utils';
+import { createParticleSystem } from '../utils/createParticleSystem';
 import { HOME_GL_ACTIVE_DATA } from './HomeGL.config';
 import './HomeGL.less';
-import { useAtom } from 'jotai';
-import { homeActiveExtraIndexAtom } from '../../../store/home/state';
-import { useIsPortrait } from '../../../hooks/useIsPortrait';
+import { GUI } from 'dat.gui';
 
 export interface HomeGLRef {
     group?: THREE.Group;
@@ -26,6 +28,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
     const groupRef = useRef<THREE.Group>();
     const [activatedIndex, setActivatedIndex] = useAtom(homeActiveExtraIndexAtom);
     const isPortrait = useIsPortrait();
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const initRotation = isPortrait
         ? {
@@ -45,7 +48,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         }),
         [groupRef.current],
     );
-
     usePageVisible(PageType.Home, () => {
         const container = containerRef.current;
         if (!container) {
@@ -95,9 +97,15 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         directionalLight.position.set(0.5, 0, 0.866); // ~60º
         camera.add(directionalLight);
 
-        const axesHelper = new THREE.AxesHelper(10);
+        // const axesHelper = new THREE.AxesHelper(10);
         // scene.add(axesHelper);
 
+        const particleConfig = {
+            outerCount: 2500,
+            outerRadius: 1.1,
+            innerCount: 1000,
+            innerRadius: 0.55,
+        };
         // const gui = new GUI();
         // const folderRotation = gui.addFolder('group.rotation');
         // folderRotation.add(group.rotation, 'x').step(0.01);
@@ -110,41 +118,63 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         // const folderScale = gui.addFolder('group.scale');
         // folderScale.add(group.scale, 'x').step(0.01);
         // folderScale.add(group.scale, 'y').step(0.01);
-        // folderScale.add(group.scale, 'z').step(0.01);
+        // const folderScale = gui.addFolder('group.scale');
+        // const folderParticle = gui.addFolder('particleConfig');
+        // folderParticle.add(particleConfig, 'outerCount', 1500, 4000).step(10);
+        // folderParticle.add(particleConfig, 'outerRadius', 0.3, 1).step(0.05);
+        // folderParticle.add(particleConfig, 'innerCount', 500, 3000).step(10);
+        // folderParticle.add(particleConfig, 'innerRadius', 0.5, 2).step(0.05);
         // gui.domElement.id = 'home-gl-gui';
 
         const dracoLoader = new DRACOLoader();
         dracoLoader.setDecoderPath(getPublicAssetPath('files/home/gltf'));
+        const outerParticleSystem = createParticleSystem({
+            radius: particleConfig.outerRadius,
+            particleCount: particleConfig.outerCount,
+            particleSize: 0.01,
+        });
+        const innerParticleSystem = createParticleSystem({
+            radius: particleConfig.innerRadius,
+            particleCount: particleConfig.innerCount,
+            particleSize: 0.01,
+        });
+        if (!isLoaded) {
+            // 如果模型未加载，渲染粒子星球
+            group.add(outerParticleSystem);
+            group.add(innerParticleSystem);
+        }
+        // const loader = new GLTFLoader();
+        // loader.setDRACOLoader(dracoLoader);
+        // loader.load(
+        //     getPublicAssetPath('files/home/qiu_6_.gltf'),
+        //     function (gltf) {
+        //         console.log('gltf', gltf);
+        //         const model = gltf.scene;
+        //         // model.traverse((node: any) => {
+        //         //     if (node.isMesh) {
+        //         //         node.castShadow = true;
+        //         //         node.receiveShadow = true;
+        //         //     }
+        //         // });
+        //         model.position.set(0, 0, 0);
+        //         model.scale.set(0.1, 0.1, 0.1);
+        //         group.add(model);
+        //         mixer = new THREE.AnimationMixer(model);
+        //         mixer.clipAction(gltf.animations[0]).play();
 
-        const loader = new GLTFLoader();
-        loader.setDRACOLoader(dracoLoader);
-        loader.load(
-            getPublicAssetPath('files/home/qiu_6_.gltf'),
-            function (gltf) {
-                console.log('gltf', gltf);
-                const model = gltf.scene;
-                // model.traverse((node: any) => {
-                //     if (node.isMesh) {
-                //         node.castShadow = true;
-                //         node.receiveShadow = true;
-                //     }
-                // });
-                model.position.set(0, 0, 0);
-                model.scale.set(0.1, 0.1, 0.1);
-                group.add(model);
-                mixer = new THREE.AnimationMixer(model);
-                mixer.clipAction(gltf.animations[0]).play();
-
-                render();
-                loadingEE.emit(`progress.${LoadingSourceType.HOME_GLTF}`, 1);
-            },
-            (event) => {
-                loadingEE.emit(
-                    `progress.${LoadingSourceType.HOME_GLTF}`,
-                    Math.min(event.loaded / (event.total || 1024 * 1024 * 25), 0.95),
-                );
-            },
-        );
+        //         render();
+        //         setIsLoaded(true); // 设置模型为已加载
+        //         group.remove(particleSystem);
+        //         group.remove(innerParticleSystem);
+        //         // loadingEE.emit(`progress.${LoadingSourceType.HOME_GLTF}`, 1);
+        //     },
+        //     (event) => {
+        //         // loadingEE.emit(
+        //         //     `progress.${LoadingSourceType.HOME_GLTF}`,
+        //         //     Math.min(event.loaded / (event.total || 1024 * 1024 * 25), 0.95),
+        //         // );
+        //     },
+        // );
 
         function resize() {
             if (!container) {
@@ -309,6 +339,8 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             mixer?.update?.(delta);
             if (autoRotating && !isDragging) {
                 group.rotation.y = (group.rotation.y + ((2 * Math.PI) / 60 / 60) * delta * 30) % (2 * Math.PI);
+                innerParticleSystem.rotation.x -= 0.001;
+                innerParticleSystem.rotation.y -= 0.001;
             }
 
             renderer.render(scene, camera);
