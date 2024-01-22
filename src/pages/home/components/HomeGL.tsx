@@ -22,7 +22,7 @@ import { GUI } from 'dat.gui';
 const particlesData = [];
 const maxParticleCount = 500;
 let particleCount = 400;
-const r = 1.6;
+const r = 1.8;
 const rHalf = r / 2;
 
 const effectController = {
@@ -254,27 +254,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             // 粒子向外溢散的动画
             const particleScatterTimeline = gsap.timeline();
 
-            // // Animate particle positions and fade out points and lines
-            // particleScatterTimeline.to(
-            //     pMaterial,
-            //     {
-            //         opacity: 0, // Fade out the points
-            //         duration: 3,
-            //         ease: 'power2.in',
-            //     },
-            //     0,
-            // );
-
-            // particleScatterTimeline.to(
-            //     linesMesh.material,
-            //     {
-            //         opacity: 0, // Fade out the lines
-            //         duration: 3,
-            //         ease: 'power2.in',
-            //     },
-            //     0,
-            // );
-
             for (let i = 0; i < maxParticleCount; i++) {
                 const direction = new THREE.Vector3(
                     (-0.5 + Math.random()) * 2,
@@ -287,7 +266,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 particleScatterTimeline.to(
                     particlePositions,
                     {
-                        duration: 2,
+                        duration: 3,
                         ease: 'power2.out',
                         [i * 3]: particlePositions[i * 3] + direction.x * distance,
                         [i * 3 + 1]: particlePositions[i * 3 + 1] + direction.y * distance,
@@ -301,7 +280,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             }
             // 星球模型渐隐出现的动画
             const modelAppearance = gsap.timeline({
-                delay: -1,
+                delay: -1.7,
                 onStart: () => {
                     groupPointGlobe.visible = false;
                     group.remove(groupPointGlobe);

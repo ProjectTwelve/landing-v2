@@ -1,5 +1,7 @@
 import gsap from 'gsap';
+import { useSetAtom } from 'jotai';
 import React, { useRef } from 'react';
+import { currentPageAtom } from '../../store/app/state';
 import { GAevent } from '../../utils';
 import { PageType } from '../app/App.config';
 import { loadingEE, usePageVisible } from '../app/App.utils';
@@ -11,24 +13,39 @@ const loadingProgressObj = { num: 0 };
 export const Loading: React.FC = () => {
     const progressTextRef = useRef<HTMLSpanElement>(null);
     let tween: gsap.core.Tween;
+    const setCurrent = useSetAtom(currentPageAtom);
+
+    const handleProgress = (progress, dur = 0.6) => {
+        tween?.kill();
+        tween = gsap.to(loadingProgressObj, {
+            duration: dur,
+            num: progress * 100,
+            onUpdate: function () {
+                progressTextRef.current!.innerHTML = `${Math.floor(loadingProgressObj.num)}`;
+            },
+            onComplete: function () {
+                setCurrent(PageType.Home);
+            },
+        });
+    };
 
     usePageVisible(PageType.Loading, () => {
-        const handleProgress = (progress, dur = 0.6) => {
-            tween?.kill();
-            tween = gsap.to(loadingProgressObj, {
-                duration: dur,
-                num: progress * 100,
-                onUpdate: function () {
-                    progressTextRef.current!.innerHTML = `${Math.floor(loadingProgressObj.num)}`;
-                },
-            });
-        };
-
         return {
             onVisible: () => {
                 GAevent('webview', 'loadin-webview');
-                handleProgress(0.6, 1);
-                loadingEE.on('loaded', () => handleProgress(1, 1));
+                handleProgress(1, 12);
+                console.log(`( handleProgress 1, 12 )===============>`);
+                loadingEE.on('loaded', () => {
+                    console.log('loaded!');
+                    if (loadingProgressObj.num === 100) return;
+                    console.log(`( loadingProgressObj )===============>`, loadingProgressObj);
+                    // 提前结束则用 2秒 = 100% 的速度 (20ms = 1%) 涨到100%
+                    const currentProgress = loadingProgressObj.num / 100;
+                    console.log(`( currentProgress )===============>`, currentProgress);
+                    const remainingTime = 2 * (1 - currentProgress); // Calculate remaining time to reach 100%
+                    console.log(`( remainingTime )===============>`, remainingTime);
+                    handleProgress(1, remainingTime);
+                });
                 gsap.set('.page-wrap-loading', {
                     display: 'block',
                     opacity: 1,
@@ -47,6 +64,16 @@ export const Loading: React.FC = () => {
         };
     });
 
+    const handleSkip = () => {
+        console.log('skip!');
+        // 提前结束则用 2秒 = 100% 的速度 (20ms = 1%) 涨到100%
+        const currentProgress = loadingProgressObj.num / 100;
+        console.log(`( currentProgress )===============>`, currentProgress);
+        const remainingTime = 2 * (1 - currentProgress); // Calculate remaining time to reach 100%
+        console.log(`( remainingTime )===============>`, remainingTime);
+        handleProgress(1, 2); // Immediately go to 100% in 2 seconds
+    };
+
     return (
         <div className="loading">
             <LoadingGL />
@@ -64,6 +91,9 @@ export const Loading: React.FC = () => {
                 <div className="loading__progress-dot loading__progress-dot--4"></div>
                 <div className="loading__progress-dot loading__progress-dot--5"></div>
                 <div className="loading__progress-dot loading__progress-dot--6"></div>
+            </div>
+            <div className="loading__skip" onClick={handleSkip}>
+                Skip
             </div>
             <div className="loading__logo">
                 <img id="loading-icon" src={require('../../assets/loading/loading-icon.png')} alt="P12" />
