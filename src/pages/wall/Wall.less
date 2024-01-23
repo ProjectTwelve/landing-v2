@@ -104,9 +104,9 @@
             .f-font-tt;
             cursor: pointer;
             color: #fff;
-            opacity: 0.8;
+
             font-weight: 600;
-            font-size: 12px;
+            font-size: 16px;
             text-transform: uppercase;
         }
     }
@@ -119,6 +119,30 @@
     }
 }
 
+#particle-control {
+    z-index: 100;
+    top: 40px;
+    left: 0;
+    position: absolute;
+    display: none;
+}
+#particle-container {
+    pointer-events: none;
+    opacity: 0;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%) scale(2.8);
+    &.active {
+        opacity: 100;
+        pointer-events: auto;
+    }
+    .particle-mask {
+        background-color: rgba(0, 0, 0, 0.65);
+        position: absolute;
+        inset: 0;
+    }
+}
 /** 移动端适配 */
 .body-portrait {
     .wall {

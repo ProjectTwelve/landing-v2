@@ -1,6 +1,5 @@
 import gsap from 'gsap';
 import React, { useEffect, useState } from 'react';
-import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 import { useIsPortrait } from '../../hooks/useIsPortrait';
 import { GAevent, requestOrientationPermission } from '../../utils';
 import { PageType } from '../app/App.config';
@@ -34,6 +33,7 @@ export const Wall: React.FC = () => {
         return {
             onVisible: () => {
                 setVisible(true);
+                document.getElementById('particle-container')?.classList.add('active');
                 GAevent('webview', 'Partners-webview');
                 requestOrientationPermission();
                 const tl = gsap.timeline();
@@ -52,6 +52,7 @@ export const Wall: React.FC = () => {
             },
             onHide: () => {
                 setVisible(false);
+                document.getElementById('particle-container')?.classList.remove('active');
                 const tl = gsap.timeline();
                 tl.fromTo(
                     '.page-wrap-wall',
@@ -71,7 +72,12 @@ export const Wall: React.FC = () => {
     });
     return (
         <div className={`wall ${isVisible ? null : ' hidden'}`}>
-            <ButterflyGL page={PageType.Wall} />
+            {/* <ButterflyGL page={PageType.Wall} /> */}
+            <div id="particle-control"></div>
+            <div id="particle-container">
+                <div className="particle-mask"></div>
+            </div>
+
             <div className="wall__info">
                 <div className="wall__title-1">Investors</div>
                 <div className="wall__dot-1"></div>
