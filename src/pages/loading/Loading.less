@@ -8,6 +8,7 @@
     background: #000;
     &__progress {
         .f-align(100%, 100px);
+        top: 40%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -41,9 +42,54 @@
             .f-font-tt;
         }
     }
+    &__logo {
+        pointer-events: none;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -155%);
+        user-select: none;
+
+        > img {
+            cursor: pointer;
+        }
+    }
+
+    &__rotate {
+        display: none;
+    }
+    
+
+    &__links {
+        pointer-events: none;
+        position: absolute;
+        bottom: 30%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: row;
+        width: 80%;
+        max-width: 1200px;
+
+        path {
+            fill: white;
+        }
+    }
+    &__icon-link {
+        pointer-events: auto;
+        width: 5%;
+        max-width: 60px;
+    }
+
     &__skip {
         position: absolute; 
-        bottom: 0; 
+        bottom: 10%; 
         left: 50%;
         transform: translateX(-50%);
         cursor: pointer;
@@ -58,27 +104,6 @@
         width: 92px;
         .f-font-tt;
     }
-
-    &__logo {
-        pointer-events: none;
-        position: absolute;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -155%);
-        user-select: none;
-
-        > img {
-            cursor: pointer;
-        }
-    }
-
-    &__rotate {
-        display: none;
-    }
 }
 
 .body-mobile {
@@ -86,10 +111,26 @@
         &__logo {
             transform: translate(-50%, -155%) scale(0.7);
         }
+        &__links {
+            max-width: unset;
+        }
+        &__icon-link {
+            max-width: unset;
+            width: 34px;
+        }
     }
     &.body-portrait {
         .loading {
             pointer-events: auto;
+            &__links {
+                width: 65%;
+                bottom: auto;
+                top: 50%;
+                margin-top: -25px;
+            }
+            &__icon-link {
+                width: 30px;
+            }
             &__progress {
                 transform: scale(0.6);
                 top: auto;
@@ -106,6 +147,9 @@
             &__progress {
                 transform: scale(0.75);
                 margin-top: -10px;
+            }
+            &__links {
+                bottom: 8%;
             }
         }
     }

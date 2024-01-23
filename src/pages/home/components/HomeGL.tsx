@@ -28,11 +28,11 @@ const rHalf = r / 2;
 const effectController = {
     showDots: true,
     showLines: true,
-    minDistance: 0.25,
+    minDistance: 0.2,
     limitConnections: false,
-    maxConnections: 35,
-    perturbationStrength: 0.08, // New property for perturbation strength
-    particleSize: 4,
+    maxConnections: 25,
+    perturbationStrength: 0.06, // New property for perturbation strength
+    particleSize: 3,
     particleColor: 0xffffff, // This is a hexadecimal value
     lineColor: 0xffffff, // This is a hexadecimal value
 };
