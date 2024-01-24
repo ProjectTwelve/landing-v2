@@ -127,6 +127,18 @@ export const Avatar = (props) => {
                 <div className="app-small-text avatar__small-text-1">
                     The Assets consists of P12 Gamer SBT, P12 Developer SBT, P12 Power Level, and P12 Badges
                 </div>
+                <div className="avatar__p12-btn-group ">
+                    <div className="avatar__p12btn">
+                        <a href="https://assets.p12.games/" target="_blank" rel="noreferrer">
+                            P12 Assets
+                        </a>
+                    </div>
+                    <div className="avatar__p12btn">
+                        <a href="https://galaxy.eco/P12/" target="_blank" rel="noreferrer">
+                            P12 Badge
+                        </a>
+                    </div>
+                </div>
                 <div className="avatar__btn-wrap">
                     <div
                         className="avatar__btn avatar__btn--left"

@@ -61,12 +61,12 @@ export const CONTENT_PAGES = [
         Content: <Avatar />,
         dropdown: false,
     },
-    {
-        type: PageType.Tree,
-        NavText: <>Econs</>,
-        Content: <Tree />,
-        dropdown: false,
-    },
+    // {
+    //     type: PageType.Tree,
+    //     NavText: <>Econs</>,
+    //     Content: <Tree />,
+    //     dropdown: false,
+    // },
     {
         type: PageType.Poster,
         NavText: <>Editor</>,

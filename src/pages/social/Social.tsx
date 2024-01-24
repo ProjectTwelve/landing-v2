@@ -115,16 +115,64 @@ export const Social: React.FC = () => {
                             title="Youtube"
                         />
                         <SocialItem
-                            className="assets"
+                            className="p12"
                             href="https://assets.p12.games/"
-                            icon={require('../../assets/social/assets.png')}
+                            icon={require('../../assets/social/p12.png')}
                             title="Assets"
                         />
                         <SocialItem
-                            className="badge"
+                            className="p12"
+                            href="https://arcana.p12.games/"
+                            icon={require('../../assets/social/p12.png')}
+                            title="Arcana"
+                        />
+                        <SocialItem
+                            className="p12"
+                            href="https://assets.p12.games/arcana"
+                            icon={require('../../assets/social/p12.png')}
+                            title="Arcana @ TI11"
+                        />
+                        <SocialItem
+                            className="p12"
                             href="https://galaxy.eco/P12/"
-                            icon={require('../../assets/social/badge.png')}
+                            icon={require('../../assets/social/p12.png')}
                             title="Badge"
+                        />
+                        <SocialItem
+                            className="github"
+                            href="https://github.com/ProjectTwelve/"
+                            icon={require('../../assets/social/github.png')}
+                            title="Github"
+                        />
+                        <SocialItem
+                            className="github"
+                            href="https://github.com/ProjectTwelve/whitepaper/blob/main/P12-Whitepaper-v0.1.pdf"
+                            icon={require('../../assets/social/github.png')}
+                            title="Whitepaper"
+                        />
+                        <SocialItem
+                            className="github"
+                            href="https://github.com/ProjectTwelve/contracts/tree/main/audits"
+                            icon={require('../../assets/social/github.png')}
+                            title="Audit Report"
+                        />
+                        <SocialItem
+                            className="github"
+                            href="https://dragonverseneo.mobox.app/"
+                            icon={require('../../assets/social/dragonverse.png')}
+                            title="Dragonverse Neo"
+                        />
+                        <SocialItem
+                            className="degen"
+                            href="https://degenreborn.xyz/"
+                            icon={require('../../assets/social/degen.png')}
+                            title="Degenreborn"
+                        />
+                        <SocialItem
+                            className="degen"
+                            href="https://degen2009.club/"
+                            icon={require('../../assets/social/degen.png')}
+                            title="Degen2009"
                         />
                     </div>
                 </div>
