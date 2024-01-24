@@ -14,6 +14,7 @@ export const Loading: React.FC = () => {
     const progressTextRef = useRef<HTMLSpanElement>(null);
     let tween: gsap.core.Tween;
     const setCurrent = useSetAtom(currentPageAtom);
+    let animationStartTime: number; // 记录动画开始时间
 
     const handleProgress = (progress, dur = 0.6) => {
         tween?.kill();
@@ -24,6 +25,9 @@ export const Loading: React.FC = () => {
                 progressTextRef.current!.innerHTML = `${Math.floor(loadingProgressObj.num)}`;
             },
             onComplete: function () {
+                const animationEndTime = Date.now(); // 动画完成时记录时间戳
+                const animationDuration = (animationEndTime - animationStartTime) / 1000; // 计算动画持续时间（秒）
+                console.log(`Animation duration: ${animationDuration} seconds`); // 打印动画持续时间
                 setCurrent(PageType.Home);
             },
         });
@@ -33,6 +37,7 @@ export const Loading: React.FC = () => {
         return {
             onVisible: () => {
                 GAevent('webview', 'loadin-webview');
+                animationStartTime = Date.now(); // 动画开始时记录时间戳
                 handleProgress(1, 12);
                 console.log(`( handleProgress 1, 12 )===============>`);
                 loadingEE.on('loaded', () => {
