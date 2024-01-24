@@ -96,7 +96,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         const labelRenderer = new CSS2DRenderer();
         labelRenderer.setSize(container.clientWidth, container.clientHeight);
         labelRenderer.domElement.className = 'home-label-canvas';
-        container.appendChild(labelRenderer.domElement);
 
         const camera = new THREE.PerspectiveCamera(
             isPortrait ? 70 : 40,
@@ -146,6 +145,8 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         loader.load(
             getPublicAssetPath('files/home/qiu_6_.gltf'),
             function (gltf) {
+                container.appendChild(labelRenderer.domElement);
+
                 console.log('gltf', gltf);
                 const model = gltf.scene;
                 // model.traverse((node: any) => {

@@ -28,7 +28,7 @@ function SliderLayout(label, minValue, maxValue, defaultValue, steps, posx, posy
     };
 }
 
-let scaleRatio = 2.8;
+let scaleRatio = 2.5;
 let isAnimating = false;
 /**
                               particle.js
