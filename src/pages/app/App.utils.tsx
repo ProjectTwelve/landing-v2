@@ -64,7 +64,7 @@ export const usePageVisible = function (key: PageType, effectFun: () => VisibleH
 
 /** 需要所有需要加载的资源类型 */
 export enum LoadingSourceType {
-    // HOME_GLTF = 'HOME_GLTF',
+    HOME_GLTF = 'HOME_GLTF',
     // AVATAR_GLTF_LOWPOLY = 'AVATAR_GLTF_LOWPOLY',
     // AVATAR_GLTF_LOWPOLY_PARTICLE = 'AVATAR_GLTF_LOWPOLY_PARTICLE',
     // AVATAR_GLTF_CARTOON = 'AVATAR_GLTF_CARTOON',
@@ -83,7 +83,7 @@ const LoadingSourceTypeArray = Object.values(LoadingSourceType);
 
 /** 参与 全局loading 进度计算的类型 */
 const GlobalProgressTypes = [
-    // LoadingSourceType.HOME_GLTF,
+    LoadingSourceType.HOME_GLTF,
     // LoadingSourceType.AVATAR_GLTF_LOWPOLY,
     // LoadingSourceType.AVATAR_GLTF_LOWPOLY_PARTICLE,
     // LoadingSourceType.AVATAR_GLTF_CARTOON,

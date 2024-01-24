@@ -13,7 +13,7 @@ import { useIsPortrait } from '../../../hooks/useIsPortrait';
 import { homeActiveExtraIndexAtom } from '../../../store/home/state';
 import { GAevent, IS_MOBILE, getPublicAssetPath, toRadians } from '../../../utils';
 import { PageType } from '../../app/App.config';
-import { usePageVisible } from '../../app/App.utils';
+import { LoadingSourceType, loadingEE, usePageVisible } from '../../app/App.utils';
 import { createParticleSystem } from '../utils/createParticleSystem';
 import { HOME_GL_ACTIVE_DATA } from './HomeGL.config';
 import './HomeGL.less';
@@ -141,81 +141,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         const dracoLoader = new DRACOLoader();
         dracoLoader.setDecoderPath(getPublicAssetPath('files/home/gltf'));
 
-        // -------------globe
-        const groupPointGlobe = new THREE.Group();
-
-        const particlesData: any[] = [];
-        let positions, colors;
-        let particles;
-        let pointCloud;
-        let particlePositions;
-        let linesMesh;
-        const segments = maxParticleCount * maxParticleCount;
-
-        positions = new Float32Array(segments * 3);
-        colors = new Float32Array(segments * 3);
-
-        const pMaterial = new THREE.PointsMaterial({
-            color: effectController.particleColor,
-            size: effectController.particleSize,
-            blending: THREE.AdditiveBlending,
-            transparent: true,
-            sizeAttenuation: false,
-        });
-
-        particles = new THREE.BufferGeometry();
-        particlePositions = new Float32Array(maxParticleCount * 3);
-
-        for (let i = 0; i < maxParticleCount; i++) {
-            const phi = Math.acos(-1 + (2 * i) / maxParticleCount);
-            const theta = Math.sqrt(maxParticleCount * Math.PI) * phi;
-
-            particlePositions[i * 3] = rHalf * Math.cos(theta) * Math.sin(phi);
-            particlePositions[i * 3 + 1] = rHalf * Math.sin(theta) * Math.sin(phi);
-            particlePositions[i * 3 + 2] = rHalf * Math.cos(phi);
-
-            particlesData.push({
-                velocity: new THREE.Vector3(
-                    (-0.5 + Math.random()) * 0.05,
-                    (-0.5 + Math.random()) * 0.05,
-                    (-0.5 + Math.random()) * 0.05,
-                ).normalize(),
-                numConnections: 0,
-            });
-        }
-
-        particles.setDrawRange(0, particleCount);
-        particles.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3).setUsage(THREE.DynamicDrawUsage));
-
-        pointCloud = new THREE.Points(particles, pMaterial);
-        groupPointGlobe.add(pointCloud);
-
-        const geometry = new THREE.BufferGeometry();
-
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3).setUsage(THREE.DynamicDrawUsage));
-        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3).setUsage(THREE.DynamicDrawUsage));
-
-        geometry.computeBoundingSphere();
-
-        geometry.setDrawRange(0, 0);
-
-        const material = new THREE.LineBasicMaterial({
-            vertexColors: true,
-            color: effectController.lineColor,
-            blending: THREE.AdditiveBlending,
-            transparent: true,
-        });
-
-        linesMesh = new THREE.LineSegments(geometry, material);
-
-        groupPointGlobe.add(linesMesh);
-
-        // -----------------
-
-        if (!isLoaded) {
-            // 如果模型未加载，渲染粒子星球
-            group.add(groupPointGlobe);
-        }
         const loader = new GLTFLoader();
         loader.setDRACOLoader(dracoLoader);
         loader.load(
@@ -231,88 +156,22 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 // });
                 model.position.set(0, 0, 0);
                 model.scale.set(0.1, 0.1, 0.1);
-                model.visible = false; // 初始时模型不可见
+                model.visible = true; // 初始时模型不可见
                 group.add(model);
                 mixer = new THREE.AnimationMixer(model);
                 mixer.clipAction(gltf.animations[0]).play();
 
                 render();
                 setIsLoaded(true); // 设置模型为已加载
-                startTransitionAnimation(model);
-                // // 过渡效果添加
-                // loadingEE.emit(`progress.${LoadingSourceType.HOME_GLTF}`, 1);
+                loadingEE.emit(`progress.${LoadingSourceType.HOME_GLTF}`, 1);
             },
             (event) => {
-                // loadingEE.emit(
-                //     `progress.${LoadingSourceType.HOME_GLTF}`,
-                //     Math.min(event.loaded / (event.total || 1024 * 1024 * 25), 0.95),
-                // );
+                loadingEE.emit(
+                    `progress.${LoadingSourceType.HOME_GLTF}`,
+                    Math.min(event.loaded / (event.total || 1024 * 1024 * 25), 0.95),
+                );
             },
         );
-
-        function startTransitionAnimation(model) {
-            // 粒子向外溢散的动画
-            const particleScatterTimeline = gsap.timeline();
-
-            for (let i = 0; i < maxParticleCount; i++) {
-                const direction = new THREE.Vector3(
-                    (-0.5 + Math.random()) * 2,
-                    (-0.5 + Math.random()) * 2,
-                    (-0.5 + Math.random()) * 2,
-                );
-                const distance = 2 + Math.random() * 2;
-
-                // Animate particle positions
-                particleScatterTimeline.to(
-                    particlePositions,
-                    {
-                        duration: 3,
-                        ease: 'power2.out',
-                        [i * 3]: particlePositions[i * 3] + direction.x * distance,
-                        [i * 3 + 1]: particlePositions[i * 3 + 1] + direction.y * distance,
-                        [i * 3 + 2]: particlePositions[i * 3 + 2] + direction.z * distance,
-                        onUpdate: () => {
-                            pointCloud.geometry.attributes.position.needsUpdate = true;
-                        },
-                    },
-                    0,
-                );
-            }
-            // 星球模型渐隐出现的动画
-            const modelAppearance = gsap.timeline({
-                delay: -1.7,
-                onStart: () => {
-                    groupPointGlobe.visible = false;
-                    group.remove(groupPointGlobe);
-                    model.visible = true; // 在动画开始前设置模型可见
-                    // 确保模型的每个部件及其材质都支持透明度变化
-                    model.traverse((child) => {
-                        if (child.isMesh && child.material) {
-                            child.material.transparent = true;
-                            child.material.opacity = 0;
-                        }
-                    });
-                },
-            });
-
-            // 渐隐动画，透明度从 0 变为 1
-            model.traverse((child) => {
-                if (child.isMesh && child.material) {
-                    modelAppearance.to(
-                        child.material,
-                        {
-                            opacity: 1,
-                            duration: 0.5,
-                            ease: 'power2.inOut',
-                        },
-                        '<',
-                    );
-                }
-            });
-            particleScatterTimeline.add(modelAppearance);
-            // 控制模型出现的时间，在粒子开始溢散后一段时间
-            // modelAppearance.delay(0);
-        }
 
         function resize() {
             if (!container) {
@@ -494,87 +353,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         }
 
         function animate() {
-            const delta = clock.getDelta(); // 获取两次调用之间的时间差
-            const moveSpeed = 0.8; // 移动速度因子，可以根据需要调整
-            let vertexpos = 0;
-            let colorpos = 0;
-            let numConnected = 0;
-
-            for (let i = 0; i < particleCount; i++) particlesData[i].numConnections = 0;
-
-            for (let i = 0; i < particleCount; i++) {
-                const particleData = particlesData[i];
-
-                // Update positions based on velocity
-                particlePositions[i * 3] += particleData.velocity.x * delta * moveSpeed;
-                particlePositions[i * 3 + 1] += particleData.velocity.y * delta * moveSpeed;
-                particlePositions[i * 3 + 2] += particleData.velocity.z * delta * moveSpeed;
-
-                // Project back onto the sphere
-                const projected = new THREE.Vector3(
-                    particlePositions[i * 3],
-                    particlePositions[i * 3 + 1],
-                    particlePositions[i * 3 + 2],
-                )
-                    .normalize()
-                    .multiplyScalar(rHalf);
-
-                particlePositions[i * 3] = projected.x;
-                particlePositions[i * 3 + 1] = projected.y;
-                particlePositions[i * 3 + 2] = projected.z;
-
-                // Introduce a small perturbation to the velocity
-                particleData.velocity.x += (0.5 - Math.random()) * effectController.perturbationStrength;
-                particleData.velocity.y += (0.5 - Math.random()) * effectController.perturbationStrength;
-                particleData.velocity.z += (0.5 - Math.random()) * effectController.perturbationStrength;
-                particleData.velocity.normalize(); // Ensure the velocity's magnitude stays constant
-
-                if (effectController.limitConnections && particleData.numConnections >= effectController.maxConnections)
-                    continue;
-
-                for (let j = i + 1; j < particleCount; j++) {
-                    const particleDataB = particlesData[j];
-                    if (effectController.limitConnections && particleDataB.numConnections >= effectController.maxConnections)
-                        continue;
-
-                    const dx = particlePositions[i * 3] - particlePositions[j * 3];
-                    const dy = particlePositions[i * 3 + 1] - particlePositions[j * 3 + 1];
-                    const dz = particlePositions[i * 3 + 2] - particlePositions[j * 3 + 2];
-                    const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-                    if (dist < effectController.minDistance) {
-                        particleData.numConnections++;
-                        particleDataB.numConnections++;
-
-                        const alpha = 1.0 - dist / effectController.minDistance;
-
-                        positions[vertexpos++] = particlePositions[i * 3];
-                        positions[vertexpos++] = particlePositions[i * 3 + 1];
-                        positions[vertexpos++] = particlePositions[i * 3 + 2];
-
-                        positions[vertexpos++] = particlePositions[j * 3];
-                        positions[vertexpos++] = particlePositions[j * 3 + 1];
-                        positions[vertexpos++] = particlePositions[j * 3 + 2];
-
-                        colors[colorpos++] = alpha;
-                        colors[colorpos++] = alpha;
-                        colors[colorpos++] = alpha;
-
-                        colors[colorpos++] = alpha;
-                        colors[colorpos++] = alpha;
-                        colors[colorpos++] = alpha;
-
-                        numConnected++;
-                    }
-                }
-            }
-
-            linesMesh.geometry.setDrawRange(0, numConnected * 2);
-            linesMesh.geometry.attributes.position.needsUpdate = true;
-            linesMesh.geometry.attributes.color.needsUpdate = true;
-
-            pointCloud.geometry.attributes.position.needsUpdate = true;
-
             frameId = requestAnimationFrame(animate);
 
             render();
