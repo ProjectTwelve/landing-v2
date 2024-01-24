@@ -160,13 +160,13 @@ export const Social: React.FC = () => {
                             className="github"
                             href="https://dragonverseneo.mobox.app/"
                             icon={require('../../assets/social/dragonverse.png')}
-                            title="Dragonverse Neo"
+                            title="Dragonverse NEO"
                         />
                         <SocialItem
                             className="degen"
                             href="https://degenreborn.xyz/"
                             icon={require('../../assets/social/degen.png')}
-                            title="Degenreborn"
+                            title="DegenReborn"
                         />
                         <SocialItem
                             className="degen"
