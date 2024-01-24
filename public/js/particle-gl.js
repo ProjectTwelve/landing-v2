@@ -29,6 +29,7 @@ function SliderLayout(label, minValue, maxValue, defaultValue, steps, posx, posy
 }
 
 let scaleRatio = 2.8;
+let isAnimating = false;
 /**
                               particle.js
                               A particle that uses a seek behaviour to move to its target.
@@ -78,7 +79,7 @@ function Particle(x, y) {
 
         let scaledMouseX = mouseX / scaleRatio;
         let scaledMouseY = mouseY / scaleRatio;
-        // console.log({ scaledMouseX, scaledMouseY, width, height, mouseX, mouseY });
+
         var mouseDist = dist(this.pos.x, this.pos.y, scaledMouseX, scaledMouseY);
 
         // Interact with mouse.
@@ -105,6 +106,7 @@ function Particle(x, y) {
     };
 
     this.draw = function () {
+        if (!isAnimating) return;
         this.currentColor = lerpColor(this.currentColor, this.endColor, this.colorBlendRate);
         stroke(this.currentColor);
 
@@ -141,13 +143,13 @@ function Particle(x, y) {
 }
 
 /**
-                              util.js
-                                  Randomly uses an angle and magnitude from supplied position to get a new position.
-                                  @param {number} x
-                                  @param {number} y
-                                  @param {number} mag
-                                  @return {p5.Vector}
-                              */
+    util.js
+    Randomly uses an angle and magnitude from supplied position to get a new position.
+    @param {number} x
+    @param {number} y
+    @param {number} mag
+    @return {p5.Vector}
+*/
 function generateRandomPos(x, y, mag) {
     var pos = new p5.Vector(x, y);
 
@@ -223,22 +225,21 @@ function nextImage() {
 }
 
 /*
-                                  Particles to image
-                  
-                                  Particles seek a target to make up an image. 
-                                  They get bigger the closer they get to their target.
-                  
-                                  Controls:
-                                      - Move the mouse to interact.
-                                      - Hold down the mouse button pull particles in.
-                                      - Press any key to change to the next image.
-                                      - Use the on-screen controls to change settings.
-                  
-                                  Thank's for original Author: Jason Labbe - jasonlabbe3d.com
-                                      
-                                  Fork for a case study of an art instalation. j_espanca_bacelar 2020
-                                      
-                                  */
+    Particles to image
+
+    Particles seek a target to make up an image. 
+    They get bigger the closer they get to their target.
+
+    Controls:
+        - Move the mouse to interact.
+        - Hold down the mouse button pull particles in.
+        - Press any key to change to the next image.
+        - Use the on-screen controls to change settings.
+
+    Thank's for original Author: Jason Labbe - jasonlabbe3d.com
+        
+    Fork for a case study of an art instalation. j_espanca_bacelar 2020
+*/
 
 var imgs = [];
 var imgNames = ['https://cdn1.p12.games/landing/p12-logo.png'];
@@ -270,6 +271,19 @@ function setup() {
         imgs[i].resize(imgs[i].width * scaleNum, imgs[i].height * scaleNum);
     }
 
+    // 选择容器元素并设置 MutationObserver 来监听 className 的变化
+    const containerElement = document.getElementById('particle-container');
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.attributeName === 'class') {
+                const currentClass = mutation.target.className;
+                // 当 className 包含 'active' 时继续动画，否则停止
+                isAnimating = currentClass.includes('active');
+            }
+        });
+    });
+    observer.observe(containerElement, { attributes: true });
+
     // Create on-screen controls and attach them to the 'particle-control' div
     let controlsDiv = select('#particle-control'); // Select the div where the controls will be placed
 
@@ -297,6 +311,7 @@ function setup() {
 }
 
 function draw() {
+    if (!isAnimating) return;
     background(0);
 
     for (var i = allParticles.length - 1; i > -1; i--) {
