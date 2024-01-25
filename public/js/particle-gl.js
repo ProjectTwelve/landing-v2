@@ -1,15 +1,17 @@
+p5.disableFriendlyErrors = true; // disables FES
+
 // https://openprocessing.org/sketch/2097742
 /**
-			slider_layout.js
-				A slider with labels for its title and value.
-				@param {string} label
-				@param {number} minValue
-				@param {number} maxValue
-				@param {number} defaultValue
-				@param {number} steps
-				@param {number} posx
-				@param {number} posy
-				*/
+slider_layout.js
+  A slider with labels for its title and value.
+  @param {string} label
+  @param {number} minValue
+  @param {number} maxValue
+  @param {number} defaultValue
+  @param {number} steps
+  @param {number} posx
+  @param {number} posy
+  */
 function SliderLayout(label, minValue, maxValue, defaultValue, steps, posx, posy) {
     this.label = label;
     this.slider = createSlider(minValue, maxValue, defaultValue, steps);
@@ -31,11 +33,11 @@ function SliderLayout(label, minValue, maxValue, defaultValue, steps, posx, posy
 let scaleRatio = 3;
 let isAnimating = false;
 /**
-                              particle.js
-                              A particle that uses a seek behaviour to move to its target.
-                              @param {number} x
-                              @param {number} y
-                              */
+    particle.js
+    A particle that uses a seek behaviour to move to its target.
+    @param {number} x
+    @param {number} y
+    */
 function Particle(x, y) {
     this.pos = new p5.Vector(x, y);
     this.vel = new p5.Vector(0, 0);
@@ -70,8 +72,7 @@ function Particle(x, y) {
 
         // Steer towards its target.
         if (this.distToTarget > 1) {
-            var steer = new p5.Vector(this.target.x, this.target.y);
-            steer.sub(this.pos);
+            var steer = p5.Vector.sub(this.target, this.pos);
             steer.normalize();
             steer.mult(this.maxSpeed * proximityMult * speedSlider.slider.value());
             this.acc.add(steer);
@@ -149,7 +150,7 @@ function Particle(x, y) {
     @param {number} y
     @param {number} mag
     @return {p5.Vector}
-*/
+  */
 function generateRandomPos(x, y, mag) {
     var pos = new p5.Vector(x, y);
 
@@ -164,15 +165,11 @@ function generateRandomPos(x, y, mag) {
 }
 
 /**
-                                  Dynamically adds/removes particles to make up the next image.
-                                  */
-function nextImage() {
-    // Switch index to next image.
-    imgIndex++;
-    if (imgIndex > imgs.length - 1) {
-        imgIndex = 0;
-    }
-    imgs[imgIndex].loadPixels();
+    Dynamically adds/removes particles to make up the next image.
+    */
+function resetImage() {
+    const img = imgs[imgIndex];
+    img.loadPixels();
 
     // Create an array of indexes from particle array.
     var particleIndexes = [];
@@ -182,16 +179,16 @@ function nextImage() {
 
     var pixelIndex = 0;
 
+    const imgWidth = img.width,
+        imgHeight = img.height;
     // Go through each pixel of the image.
-    for (var y = 0; y < imgs[imgIndex].height; y++) {
-        for (var x = 0; x < imgs[imgIndex].width; x++) {
+    for (var y = 0; y < imgHeight; y++) {
+        for (var x = 0; x < imgWidth; x++) {
             // Get the pixel's color.
-            var pixelR = imgs[imgIndex].pixels[pixelIndex];
-            var pixelG = imgs[imgIndex].pixels[pixelIndex + 1];
-            var pixelB = imgs[imgIndex].pixels[pixelIndex + 2];
-            var pixelA = imgs[imgIndex].pixels[pixelIndex + 3];
-
-            pixelIndex += 4;
+            var pixelR = img.pixels[pixelIndex++];
+            var pixelG = img.pixels[pixelIndex++];
+            var pixelB = img.pixels[pixelIndex++];
+            var pixelA = img.pixels[pixelIndex++];
 
             // Give it small odds that we'll assign a particle to this pixel.
             if (random(1.0) > loadPercentage * resSlider.slider.value()) {
@@ -210,8 +207,8 @@ function nextImage() {
                 allParticles.push(newParticle);
             }
 
-            newParticle.target.x = x + width / 2 - imgs[imgIndex].width / 2;
-            newParticle.target.y = y + height / 2 - imgs[imgIndex].height / 2;
+            newParticle.target.x = x + width / 2 - img.width / 2;
+            newParticle.target.y = y + height / 2 - img.height / 2;
             newParticle.endColor = pixelColor;
         }
     }
@@ -226,27 +223,28 @@ function nextImage() {
 
 /*
     Particles to image
-
+  
     Particles seek a target to make up an image. 
     They get bigger the closer they get to their target.
-
+  
     Controls:
         - Move the mouse to interact.
         - Hold down the mouse button pull particles in.
         - Press any key to change to the next image.
         - Use the on-screen controls to change settings.
-
+  
     Thank's for original Author: Jason Labbe - jasonlabbe3d.com
         
     Fork for a case study of an art instalation. j_espanca_bacelar 2020
-*/
+  */
 
 var imgs = [];
+const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 var imgNames = ['https://cdn1.p12.games/landing/p12-logo.png'];
-var scaleNum = 0.37;
-var imgIndex = -1;
+var scaleNum = IS_MOBILE ? 0.25 : 0.37;
+var imgIndex = 0;
 var loadPercentage = 0.045; // 0 to 1.0
-var closeEnoughTarget = 50;
+var closeEnoughTarget = IS_MOBILE ? 10 : 100;
 
 var allParticles = [];
 
@@ -257,7 +255,7 @@ var resSlider;
 
 function preload() {
     // Pre-load all images.
-    for (var i = 0; i < imgNames.length; i++) {
+    for (var i = 0; i < imgNames?.length; i++) {
         var newImg = loadImage(imgNames[i]);
         newImg.resize(200, 200);
         imgs.push(newImg);
@@ -267,7 +265,7 @@ function preload() {
 function setup() {
     const canvas = createCanvas(420, 420);
     canvas.parent('particle-container');
-    for (var i = 0; i < imgNames.length; i++) {
+    for (var i = 0; i < imgNames?.length; i++) {
         imgs[i].resize(imgs[i].width * scaleNum, imgs[i].height * scaleNum);
     }
 
@@ -288,7 +286,7 @@ function setup() {
             }
         });
     });
-    observer.observe(containerElement, { attributes: true });
+    observer.observe(containerElement, { attributes: true, attributeFilter: ['class', 'data-scale'] });
     // Create on-screen controls and attach them to the 'particle-control' div
     let controlsDiv = select('#particle-control'); // Select the div where the controls will be placed
 
@@ -312,7 +310,7 @@ function setup() {
     resSlider = new SliderLayout('Count multiplier (on next image)', 0.1, 2, 2, 0.1, 100, speedSlider.slider.position().y + 70);
     resSlider.slider.parent(controlsDiv);
     // Change to first image.
-    nextImage();
+    resetImage();
 }
 
 function draw() {
@@ -329,12 +327,4 @@ function draw() {
             }
         }
     }
-
-    // these are commented out, because they were visible in the screen capture
-    // I used createElement commands so that they are not captured
-    // Display slider labels.
-    // mouseSizeSlider.display();
-    // particleSizeSlider.display();
-    // speedSlider.display();
-    // resSlider.display();
 }

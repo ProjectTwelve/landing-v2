@@ -11,7 +11,6 @@ export const Wall: React.FC = () => {
     const [isVisible, setVisible] = useState(false);
     const isPortrait = useIsPortrait();
     const [scaleRatio, setScaleRatio] = useState(3);
-
     useEffect(() => {
         const tl = gsap.timeline();
         tl.fromTo(
@@ -45,7 +44,7 @@ export const Wall: React.FC = () => {
             onVisible: () => {
                 setVisible(true);
                 document.getElementById('particle-container')?.classList.add('active');
-                const scaleNum = isPortrait ? 1.2 : 3;
+                const scaleNum = isPortrait ? 2 : 3;
                 setScaleRatio(scaleNum);
                 updateScale(scaleNum);
                 GAevent('webview', 'Partners-webview');
