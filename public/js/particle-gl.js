@@ -28,7 +28,7 @@ function SliderLayout(label, minValue, maxValue, defaultValue, steps, posx, posy
     };
 }
 
-let scaleRatio = 2.5;
+let scaleRatio = 3;
 let isAnimating = false;
 /**
                               particle.js
@@ -243,7 +243,7 @@ function nextImage() {
 
 var imgs = [];
 var imgNames = ['https://cdn1.p12.games/landing/p12-logo.png'];
-var scaleNum = 0.4;
+var scaleNum = 0.37;
 var imgIndex = -1;
 var loadPercentage = 0.045; // 0 to 1.0
 var closeEnoughTarget = 50;
@@ -280,16 +280,21 @@ function setup() {
                 // 当 className 包含 'active' 时继续动画，否则停止
                 isAnimating = currentClass.includes('active');
             }
+            // 监听 data-scale 属性的变化
+            if (mutation.attributeName === 'data-scale') {
+                const newDataScale = mutation.target.getAttribute('data-scale');
+                // 将 scaleRatio 设置为新的值，确保转换为数字类型
+                scaleRatio = parseFloat(newDataScale);
+            }
         });
     });
     observer.observe(containerElement, { attributes: true });
-
     // Create on-screen controls and attach them to the 'particle-control' div
     let controlsDiv = select('#particle-control'); // Select the div where the controls will be placed
 
     e = createElement('h3', 'Mouse Size').style('color', '#fff').parent(controlsDiv);
     e.position(105, 60);
-    mouseSizeSlider = new SliderLayout('Mouse size', 10, 200, 40, 1, 100, 100);
+    mouseSizeSlider = new SliderLayout('Mouse size', 10, 200, 50, 1, 100, 100);
     mouseSizeSlider.slider.parent(controlsDiv); // Make the slider a child of the controls div
 
     e = createElement('h3', 'Particle Size').style('color', '#fff').parent(controlsDiv);
@@ -299,7 +304,7 @@ function setup() {
 
     e = createElement('h3', 'Speed').style('color', '#fff').parent(controlsDiv);
     e.position(105, 200);
-    speedSlider = new SliderLayout('Speed', 0, 5, 5, 0.5, 100, particleSizeSlider.slider.position().y + 70);
+    speedSlider = new SliderLayout('Speed', 0, 5, 3, 0.5, 100, particleSizeSlider.slider.position().y + 70);
     speedSlider.slider.parent(controlsDiv);
 
     e = createElement('h3', 'Resolution').style('color', '#fff').parent(controlsDiv);

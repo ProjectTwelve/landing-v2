@@ -10,6 +10,7 @@ import './Wall.less';
 export const Wall: React.FC = () => {
     const [isVisible, setVisible] = useState(false);
     const isPortrait = useIsPortrait();
+    const [scaleRatio, setScaleRatio] = useState(3);
 
     useEffect(() => {
         const tl = gsap.timeline();
@@ -29,11 +30,24 @@ export const Wall: React.FC = () => {
             tl.then();
         };
     }, []);
+
+    function updateScale(scaleNum) {
+        const particleContainer = document.getElementById('particle-container');
+        if (!particleContainer) return;
+        // 获取data-scale属性的值
+        const scale = particleContainer.getAttribute('data-scale');
+
+        // 设置transform样式，包括获取的scale值
+        particleContainer.style.transform = `translateX(-50%) translateY(-50%) scale(${scaleNum})`;
+    }
     usePageVisible(PageType.Wall, () => {
         return {
             onVisible: () => {
                 setVisible(true);
                 document.getElementById('particle-container')?.classList.add('active');
+                const scaleNum = isPortrait ? 1.2 : 3;
+                setScaleRatio(scaleNum);
+                updateScale(scaleNum);
                 GAevent('webview', 'Partners-webview');
                 requestOrientationPermission();
                 const tl = gsap.timeline();
@@ -74,7 +88,7 @@ export const Wall: React.FC = () => {
         <div className={`wall ${isVisible ? null : ' hidden'}`}>
             {/* <ButterflyGL page={PageType.Wall} /> */}
             <div id="particle-control"></div>
-            <div id="particle-container">
+            <div id="particle-container" data-scale={scaleRatio}>
                 <div className="particle-mask"></div>
             </div>
 

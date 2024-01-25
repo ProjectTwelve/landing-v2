@@ -6,7 +6,7 @@
     position: relative;
     overflow: hidden;
     background: #000;
-
+    user-select: none;
     &__info {
         .f-pal50;
         top: 50%;
@@ -132,13 +132,13 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translateX(-50%) translateY(-50%) scale(2.5);
+    transform: translateX(-50%) translateY(-50%) scale(3);
     &.active {
         opacity: 100;
         pointer-events: auto;
     }
     .particle-mask {
-        background-color: rgba(0, 0, 0, 0.65);
+        background-color: rgba(0, 0, 0, 0.6);
         position: absolute;
         inset: 0;
     }
@@ -149,7 +149,7 @@
         &__info {
             transform: none;
             top: 15vh;
-            bottom: 1rem;
+            bottom: 1.5rem;
             left: 0.4rem;
             right: 0.4rem;
             pointer-events: auto;
@@ -161,8 +161,8 @@
         }
         &__dot-1,
         &__dot-2 {
-            margin-top: 0.12rem;
-            margin-bottom: 0.24rem;
+            margin-top: 0.06rem;
+            margin-bottom: 0.12rem;
         }
         &-partners {
             display: flex;
@@ -172,7 +172,7 @@
 
             row-gap: 0.28rem;
             column-gap: 0.2rem;
-            margin-bottom: 0.64rem;
+            margin-bottom: 0.3rem;
             img {
                 height: 0.14rem;
             }
@@ -183,7 +183,7 @@
             justify-content: center;
             flex-wrap: wrap;
             gap: 0.2rem;
-            margin-bottom: 0.64rem;
+            margin-bottom: 0.3rem;
             &-item {
                 margin: 0;
                 width: 0.9rem;
