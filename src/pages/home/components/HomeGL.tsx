@@ -1,13 +1,12 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-// import { ObjectControls } from 'threejs-object-controls';
 import classnames from 'classnames';
 import { gsap } from 'gsap';
 import { useAtom } from 'jotai';
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import ResizeObserver from 'resize-observer-polyfill';
+import * as THREE from 'three';
 import { Vector3 } from 'three';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { CSS2DObject, CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer';
 import { useIsPortrait } from '../../../hooks/useIsPortrait';
 import { homeActiveExtraIndexAtom } from '../../../store/home/state';
@@ -17,25 +16,6 @@ import { LoadingSourceType, loadingEE, usePageVisible } from '../../app/App.util
 import { createParticleSystem } from '../utils/createParticleSystem';
 import { HOME_GL_ACTIVE_DATA } from './HomeGL.config';
 import './HomeGL.less';
-import { GUI } from 'dat.gui';
-
-const particlesData = [];
-const maxParticleCount = 500;
-let particleCount = 400;
-const r = 1.8;
-const rHalf = r / 2;
-
-const effectController = {
-    showDots: true,
-    showLines: true,
-    minDistance: 0.2,
-    limitConnections: false,
-    maxConnections: 25,
-    perturbationStrength: 0.06, // New property for perturbation strength
-    particleSize: 3,
-    particleColor: 0xffffff, // This is a hexadecimal value
-    lineColor: 0xffffff, // This is a hexadecimal value
-};
 
 export interface HomeGLRef {
     group?: THREE.Group;
@@ -116,7 +96,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
 
         // const axesHelper = new THREE.AxesHelper(10);
         // scene.add(axesHelper);
-
         // const gui = new GUI();
         // const folderRotation = gui.addFolder('group.rotation');
         // folderRotation.add(group.rotation, 'x').step(0.01);
@@ -139,28 +118,66 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
 
         const dracoLoader = new DRACOLoader();
         dracoLoader.setDecoderPath(getPublicAssetPath('files/home/gltf'));
-
+        const { groupParticleGlobe, tara, gu } = createParticleSystem();
+        if (!isLoaded) {
+            // 如果模型未加载，渲染粒子星球
+            group.add(groupParticleGlobe);
+        }
         const loader = new GLTFLoader();
         loader.setDRACOLoader(dracoLoader);
         loader.load(
             getPublicAssetPath('files/home/qiu_6_.gltf'),
             function (gltf) {
                 container.appendChild(labelRenderer.domElement);
-
                 console.log('gltf', gltf);
                 const model = gltf.scene;
-                // model.traverse((node: any) => {
-                //     if (node.isMesh) {
-                //         node.castShadow = true;
-                //         node.receiveShadow = true;
-                //     }
-                // });
+                model.visible = false;
                 model.position.set(0, 0, 0);
-                model.scale.set(0.1, 0.1, 0.1);
-                model.visible = true; // 初始时模型不可见
+                // model.scale.set(0.1, 0.1, 0.1);
+                groupParticleGlobe.renderOrder = 0; // Default value
+                model.renderOrder = 1; // Render after the groupParticleGlobe
                 group.add(model);
                 mixer = new THREE.AnimationMixer(model);
                 mixer.clipAction(gltf.animations[0]).play();
+
+                model.visible = true;
+
+                // 过渡效果，从groupParticleGlobe 过渡到该星球模型
+                const timeline = gsap.timeline();
+
+                groupParticleGlobe.traverse((object: any) => {
+                    if (object?.scale) {
+                        timeline.to(
+                            object.scale,
+                            {
+                                x: 1.3,
+                                y: 1.3,
+                                z: 1.3,
+                                duration: 1.2,
+                                ease: 'power2.inOut',
+                                onComplete: () => {
+                                    object.visible = false; // 动画完成后隐藏对象
+                                    group?.remove(groupParticleGlobe);
+                                },
+                            },
+                            '<',
+                        ); // 同时发生
+                    }
+                });
+                model.scale.x = 0.03;
+                model.scale.y = 0.03;
+                model.scale.z = 0.03;
+                timeline.to(
+                    model.scale,
+                    {
+                        x: 0.1,
+                        y: 0.1,
+                        z: 0.1,
+                        duration: 0.7,
+                        ease: 'power2.inOut',
+                    },
+                    '<+0.2',
+                );
 
                 render();
                 setIsLoaded(true); // 设置模型为已加载
@@ -332,16 +349,21 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
             // console.log(previousMousePosition);
         }
 
+        let t = 0;
         function render() {
             const delta = clock.getDelta();
+
+            t += delta;
+            gu.time.value = t;
+            tara.quaternion.copy(camera.quaternion);
             mixer?.update?.(delta);
+
             if (autoRotating && !isDragging) {
                 group.rotation.y = (group.rotation.y + ((2 * Math.PI) / 60 / 60) * delta * 30) % (2 * Math.PI);
             }
 
             renderer.render(scene, camera);
             labelRenderer.render(scene, camera);
-
             // gui.updateDisplay();
             // 更新触摸点的大小样式
             pointersData.forEach(({ label, btnInner }, i) => {
