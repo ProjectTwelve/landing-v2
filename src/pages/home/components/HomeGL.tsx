@@ -5,17 +5,37 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 // import { ObjectControls } from 'threejs-object-controls';
 import classnames from 'classnames';
 import { gsap } from 'gsap';
+import { useAtom } from 'jotai';
 import { Vector3 } from 'three';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { CSS2DObject, CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer';
+import { useIsPortrait } from '../../../hooks/useIsPortrait';
+import { homeActiveExtraIndexAtom } from '../../../store/home/state';
 import { GAevent, IS_MOBILE, getPublicAssetPath, toRadians } from '../../../utils';
 import { PageType } from '../../app/App.config';
 import { LoadingSourceType, loadingEE, usePageVisible } from '../../app/App.utils';
+import { createParticleSystem } from '../utils/createParticleSystem';
 import { HOME_GL_ACTIVE_DATA } from './HomeGL.config';
 import './HomeGL.less';
-import { useAtom } from 'jotai';
-import { homeActiveExtraIndexAtom } from '../../../store/home/state';
-import { useIsPortrait } from '../../../hooks/useIsPortrait';
+import { GUI } from 'dat.gui';
+
+const particlesData = [];
+const maxParticleCount = 500;
+let particleCount = 400;
+const r = 1.8;
+const rHalf = r / 2;
+
+const effectController = {
+    showDots: true,
+    showLines: true,
+    minDistance: 0.2,
+    limitConnections: false,
+    maxConnections: 25,
+    perturbationStrength: 0.06, // New property for perturbation strength
+    particleSize: 3,
+    particleColor: 0xffffff, // This is a hexadecimal value
+    lineColor: 0xffffff, // This is a hexadecimal value
+};
 
 export interface HomeGLRef {
     group?: THREE.Group;
@@ -26,6 +46,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
     const groupRef = useRef<THREE.Group>();
     const [activatedIndex, setActivatedIndex] = useAtom(homeActiveExtraIndexAtom);
     const isPortrait = useIsPortrait();
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const initRotation = isPortrait
         ? {
@@ -45,7 +66,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         }),
         [groupRef.current],
     );
-
     usePageVisible(PageType.Home, () => {
         const container = containerRef.current;
         if (!container) {
@@ -76,7 +96,6 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         const labelRenderer = new CSS2DRenderer();
         labelRenderer.setSize(container.clientWidth, container.clientHeight);
         labelRenderer.domElement.className = 'home-label-canvas';
-        container.appendChild(labelRenderer.domElement);
 
         const camera = new THREE.PerspectiveCamera(
             isPortrait ? 70 : 40,
@@ -95,7 +114,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         directionalLight.position.set(0.5, 0, 0.866); // ~60º
         camera.add(directionalLight);
 
-        const axesHelper = new THREE.AxesHelper(10);
+        // const axesHelper = new THREE.AxesHelper(10);
         // scene.add(axesHelper);
 
         // const gui = new GUI();
@@ -110,7 +129,12 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         // const folderScale = gui.addFolder('group.scale');
         // folderScale.add(group.scale, 'x').step(0.01);
         // folderScale.add(group.scale, 'y').step(0.01);
-        // folderScale.add(group.scale, 'z').step(0.01);
+        // const folderScale = gui.addFolder('group.scale');
+        // const folderParticle = gui.addFolder('particleConfig');
+        // folderParticle.add(particleConfig, 'outerCount', 1500, 4000).step(10);
+        // folderParticle.add(particleConfig, 'outerRadius', 0.3, 1).step(0.05);
+        // folderParticle.add(particleConfig, 'innerCount', 500, 3000).step(10);
+        // folderParticle.add(particleConfig, 'innerRadius', 0.5, 2).step(0.05);
         // gui.domElement.id = 'home-gl-gui';
 
         const dracoLoader = new DRACOLoader();
@@ -121,6 +145,8 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
         loader.load(
             getPublicAssetPath('files/home/qiu_6_.gltf'),
             function (gltf) {
+                container.appendChild(labelRenderer.domElement);
+
                 console.log('gltf', gltf);
                 const model = gltf.scene;
                 // model.traverse((node: any) => {
@@ -131,11 +157,13 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
                 // });
                 model.position.set(0, 0, 0);
                 model.scale.set(0.1, 0.1, 0.1);
+                model.visible = true; // 初始时模型不可见
                 group.add(model);
                 mixer = new THREE.AnimationMixer(model);
                 mixer.clipAction(gltf.animations[0]).play();
 
                 render();
+                setIsLoaded(true); // 设置模型为已加载
                 loadingEE.emit(`progress.${LoadingSourceType.HOME_GLTF}`, 1);
             },
             (event) => {
@@ -327,6 +355,7 @@ export const HomeGL = forwardRef<HomeGLRef>((props, ref) => {
 
         function animate() {
             frameId = requestAnimationFrame(animate);
+
             render();
         }
 

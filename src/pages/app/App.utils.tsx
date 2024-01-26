@@ -71,7 +71,7 @@ export enum LoadingSourceType {
     // AVATAR_GLTF_CARTOON_PARTICLE = 'AVATAR_GLTF_CARTOON_PARTICLE',
     // AVATAR_GLTF_DOKV = 'AVATAR_GLTF_DOKV',
     // AVATAR_GLTF_DOKV_PARTICLE = 'AVATAR_GLTF_DOKV_PARTICLE',
-    TREE_MODEL = 'TREE_MODEL',
+    // TREE_MODEL = 'TREE_MODEL',
     POSTER_IMG_0 = 'POSTER_IMG_0',
     POSTER_IMG_1 = 'POSTER_IMG_1',
     POSTER_IMG_2 = 'POSTER_IMG_2',
@@ -89,12 +89,12 @@ const GlobalProgressTypes = [
     // LoadingSourceType.AVATAR_GLTF_CARTOON,
     // LoadingSourceType.AVATAR_GLTF_DOKV,
     // LoadingSourceType.TREE_MODEL,
-    // LoadingSourceType.POSTER_IMG_0,
-    // LoadingSourceType.POSTER_IMG_1,
-    // LoadingSourceType.POSTER_IMG_2,
-    // LoadingSourceType.POSTER_IMG_3,
-    // LoadingSourceType.POSTER_IMG_4,
-    // LoadingSourceType.POSTER_IMG_5,
+    LoadingSourceType.POSTER_IMG_0,
+    LoadingSourceType.POSTER_IMG_1,
+    LoadingSourceType.POSTER_IMG_2,
+    LoadingSourceType.POSTER_IMG_3,
+    LoadingSourceType.POSTER_IMG_4,
+    LoadingSourceType.POSTER_IMG_5,
 ];
 
 /** 全局 loading 数据，进度为 0-1 0 */

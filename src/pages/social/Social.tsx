@@ -115,16 +115,40 @@ export const Social: React.FC = () => {
                             title="Youtube"
                         />
                         <SocialItem
-                            className="assets"
+                            className="p12"
                             href="https://assets.p12.games/"
-                            icon={require('../../assets/social/assets.png')}
+                            icon="https://cdn1.p12.games/landing/p12-logo.png"
                             title="Assets"
                         />
                         <SocialItem
-                            className="badge"
+                            className="p12"
+                            href="https://arcana.p12.games/"
+                            icon="https://cdn1.p12.games/landing/p12-logo.png"
+                            title="Arcana"
+                        />
+                        <SocialItem
+                            className="p12"
+                            href="https://assets.p12.games/arcana"
+                            icon="https://cdn1.p12.games/landing/p12-logo.png"
+                            title="Arcana @ TI11"
+                        />
+                        <SocialItem
+                            className="p12"
                             href="https://galaxy.eco/P12/"
-                            icon={require('../../assets/social/badge.png')}
+                            icon="https://cdn1.p12.games/landing/p12-logo.png"
                             title="Badge"
+                        />
+                        <SocialItem
+                            className="github"
+                            href="https://github.com/ProjectTwelve/contracts/tree/main/audits"
+                            icon={require('../../assets/social/github.png')}
+                            title="Audit Reports"
+                        />
+                        <SocialItem
+                            className="github"
+                            href="https://dragonverseneo.mobox.app/"
+                            icon={require('../../assets/social/dragonverse.png')}
+                            title="Dragonverse NEO"
                         />
                     </div>
                 </div>

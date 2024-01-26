@@ -1,21 +1,18 @@
-import { useLocalStorageState } from 'ahooks';
-import classnames from 'classnames';
+import { default as classNames, default as classnames } from 'classnames';
 import { useAtom, useAtomValue } from 'jotai';
 import _ from 'lodash-es';
 import React, { cloneElement, useEffect, useMemo } from 'react';
 import { useEvent, useSessionStorage } from 'react-use';
 import { MOBILE_BASE_SIZE, MOBILE_BASE_WIDTH, STORAGE_KEY } from '../../constants';
+import { useIsPortrait } from '../../hooks/useIsPortrait';
 import { currentPageAtom, lockScrollAtom } from '../../store/app/state';
+import { homeActiveExtraIndexAtom } from '../../store/home/state';
 import { IS_MOBILE, initGA } from '../../utils';
 import { CONTENT_PAGES, PageRoute, PageType } from './App.config';
 import './App.less';
-import { loadingEE } from './App.utils';
-import { Navigator } from './components/navigator';
-import { homeActiveExtraIndexAtom } from '../../store/home/state';
-import { useIsPortrait } from '../../hooks/useIsPortrait';
-import classNames from 'classnames';
 import Badge from './components/badge';
 import ComingButton from './components/comingButton/ComingButton';
+import { Navigator } from './components/navigator';
 
 const pageTypes = CONTENT_PAGES.filter((v) => v.Content && v.type !== PageType.Loading).map((v) => v.type);
 
@@ -47,23 +44,7 @@ export const App = () => {
 
     useEffect(() => {
         initGA();
-
-        const handleProgress = (progress) => {
-            // 当前是 loading 界面 且 loading 完成
-            if (progress >= 1) {
-                setTimeout(() => {
-                    setCurrent(PageType.Home);
-                }, 2000);
-            }
-        };
-        if (isLoading) {
-            loadingEE.on('progress', handleProgress);
-        }
-
-        return () => {
-            loadingEE.off('progress', handleProgress);
-        };
-    }, [isLoading, current]);
+    }, []);
 
     // 链接跳转
     useEffect(() => {

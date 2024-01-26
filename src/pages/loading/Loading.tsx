@@ -1,5 +1,7 @@
 import gsap from 'gsap';
+import { useSetAtom } from 'jotai';
 import React, { useRef } from 'react';
+import { currentPageAtom } from '../../store/app/state';
 import { GAevent } from '../../utils';
 import { PageType } from '../app/App.config';
 import { loadingEE, usePageVisible } from '../app/App.utils';
@@ -11,24 +13,44 @@ const loadingProgressObj = { num: 0 };
 export const Loading: React.FC = () => {
     const progressTextRef = useRef<HTMLSpanElement>(null);
     let tween: gsap.core.Tween;
+    const setCurrent = useSetAtom(currentPageAtom);
+    let animationStartTime: number; // 记录动画开始时间
+
+    const handleProgress = (progress, dur = 0.6) => {
+        tween?.kill();
+        tween = gsap.to(loadingProgressObj, {
+            duration: dur,
+            num: progress * 100,
+            onUpdate: function () {
+                progressTextRef.current!.innerHTML = `${Math.floor(loadingProgressObj.num)}`;
+            },
+            onComplete: function () {
+                const animationEndTime = Date.now(); // 动画完成时记录时间戳
+                const animationDuration = (animationEndTime - animationStartTime) / 1000; // 计算动画持续时间（秒）
+                console.log(`Animation duration: ${animationDuration} seconds`); // 打印动画持续时间
+                setCurrent(PageType.Home);
+            },
+        });
+    };
 
     usePageVisible(PageType.Loading, () => {
-        const handleProgress = (progress, dur = 0.6) => {
-            tween?.kill();
-            tween = gsap.to(loadingProgressObj, {
-                duration: dur,
-                num: progress * 100,
-                onUpdate: function () {
-                    progressTextRef.current!.innerHTML = `${Math.floor(loadingProgressObj.num)}`;
-                },
-            });
-        };
-
         return {
             onVisible: () => {
                 GAevent('webview', 'loadin-webview');
-                handleProgress(0.6, 5);
-                loadingEE.on('loaded', () => handleProgress(1, 2));
+                animationStartTime = Date.now(); // 动画开始时记录时间戳
+                handleProgress(1, 12);
+                console.log(`( handleProgress 1, 12 )===============>`);
+                loadingEE.on('loaded', () => {
+                    console.log('loaded!');
+                    if (loadingProgressObj.num === 100) return;
+                    console.log(`( loadingProgressObj )===============>`, loadingProgressObj);
+                    // 提前结束则用 2秒 = 100% 的速度 (20ms = 1%) 涨到100%
+                    const currentProgress = loadingProgressObj.num / 100;
+                    console.log(`( currentProgress )===============>`, currentProgress);
+                    const remainingTime = 2 * (1 - currentProgress); // Calculate remaining time to reach 100%
+                    console.log(`( remainingTime )===============>`, remainingTime);
+                    handleProgress(1, remainingTime);
+                });
                 gsap.set('.page-wrap-loading', {
                     display: 'block',
                     opacity: 1,
@@ -46,6 +68,16 @@ export const Loading: React.FC = () => {
             onDestroy: () => {},
         };
     });
+
+    const handleSkip = () => {
+        console.log('skip!');
+        // 提前结束则用 2秒 = 100% 的速度 (20ms = 1%) 涨到100%
+        const currentProgress = loadingProgressObj.num / 100;
+        console.log(`( currentProgress )===============>`, currentProgress);
+        const remainingTime = 2 * (1 - currentProgress); // Calculate remaining time to reach 100%
+        console.log(`( remainingTime )===============>`, remainingTime);
+        handleProgress(1, 2); // Immediately go to 100% in 2 seconds
+    };
 
     return (
         <div className="loading">
@@ -65,9 +97,13 @@ export const Loading: React.FC = () => {
                 <div className="loading__progress-dot loading__progress-dot--5"></div>
                 <div className="loading__progress-dot loading__progress-dot--6"></div>
             </div>
+            <div className="loading__skip" onClick={handleSkip}>
+                Skip →
+            </div>
             <div className="loading__logo">
                 <img id="loading-icon" src={require('../../assets/loading/loading-icon.png')} alt="P12" />
             </div>
+
             <div className="loading__links">
                 <a className="loading__icon-link" target="_blank" href="https://mirror.xyz/p12.eth" rel="noreferrer">
                     <svg
@@ -89,8 +125,11 @@ export const Loading: React.FC = () => {
                     href="https://twitter.com/_p12_"
                     onClick={() => GAevent('event', 'loadin-twi')}
                 >
-                    <svg className="twitter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                        <path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z" />
+                    <svg className="twitter-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M17.1761 4H19.9362L13.9061 10.7774L21 20H15.4456L11.0951 14.4066L6.11723 20H3.35544L9.80517 12.7508L3 4H8.69545L12.6279 9.11262L17.1761 4ZM16.2073 18.3754H17.7368L7.86441 5.53928H6.2232L16.2073 18.3754Z"
+                            fill="white"
+                        />
                     </svg>
                 </a>
                 <a

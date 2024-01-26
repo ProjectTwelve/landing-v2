@@ -30,9 +30,10 @@
         flex-direction: column;
         &-container {
             width: 100%;
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
             gap: 12px;
-            margin-bottom: 76px;
+            margin-bottom: 40px;
             align-items: stretch;
         }
     }
@@ -47,7 +48,7 @@
         line-height: 26px;
         text-transform: uppercase;
         color: #fff;
-        margin-bottom: 24px;
+        margin-bottom: 12px;
         &::after {
             content: '';
             display: inline-block;
@@ -99,7 +100,7 @@
                 grid-template-columns: repeat(3, 1fr);
                 gap: 0.06rem;
                 margin: 0 0.3rem;
-                margin-bottom: 0.5rem;
+                margin-bottom: 0.25rem;
             }
         }
     }

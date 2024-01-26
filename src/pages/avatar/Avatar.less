@@ -72,10 +72,39 @@
   &__small-text-1 {
 		max-width: 460px;
     line-height: 22px;
-    margin-bottom: 44px;
     pointer-events: none;
   }
+  &__p12-btn-group {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 44px;
+    margin-top: 24px; 
+  }
+  &__p12btn {
+    cursor: pointer;
+    .bg('app/corners@2x.png');
+    background-size: 100% 100%;
+    .f-hover-opa;
+    text-align: center;
+    pointer-events: auto;
+    background-color: #ffffff1a;
+    a {
+        padding: 10px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
 
+        .f-font-tt;
+        cursor: pointer;
+        color: #fff;
+
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+  }
   &__btn {
     cursor: pointer;
 		width: 58px;
