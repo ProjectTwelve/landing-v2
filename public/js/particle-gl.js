@@ -1,39 +1,41 @@
 p5.disableFriendlyErrors = true; // disables FES
 
-// https://openprocessing.org/sketch/2097742
-/**
-slider_layout.js
-  A slider with labels for its title and value.
-  @param {string} label
-  @param {number} minValue
-  @param {number} maxValue
-  @param {number} defaultValue
-  @param {number} steps
-  @param {number} posx
-  @param {number} posy
+/*
+    Particles to image
+  
+    Particles seek a target to make up an image. 
+    They get bigger the closer they get to their target.
+  
+    Controls:
+        - Move the mouse to interact.
+        - Hold down the mouse button pull particles in.
+        - Press any key to change to the next image.
+        - Use the on-screen controls to change settings.
+  
+    Thank's for original Author: Jason Labbe - jasonlabbe3d.com
+        
+    Fork for a case study of an art instalation. j_espanca_bacelar 2020
   */
-function SliderLayout(label, minValue, maxValue, defaultValue, steps, posx, posy) {
-    this.label = label;
-    this.slider = createSlider(minValue, maxValue, defaultValue, steps);
-    this.slider.position(posx, posy);
 
-    this.display = function () {
-        var sliderPos = this.slider.position();
+var imgs = [];
+var imgNames = ['https://cdn1.p12.games/landing/p12-logo.png'];
 
-        noStroke();
-        fill(0);
-        textSize(15);
-        text(this.label, sliderPos.x, sliderPos.y - 10);
-
-        fill(0);
-        text(this.slider.value(), sliderPos.x + this.slider.width + 10, sliderPos.y + 10);
-    };
-}
-
-let scaleRatio = 3;
+const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+var scaleNum = IS_MOBILE ? 0.45 : 1.05;
+var imgIndex = 0;
+var loadPercentage = 0.001; // 0 to 1.0
+var closeEnoughTarget = 100;
+let resolution = IS_MOBILE ? 20 : 12;
+let speed = 3;
+let particleSize = 6;
+let mouseSize = 50;
+let scaleRatio = 1;
 let isAnimating = false;
+
+var allParticles = [];
+
 /**
-    particle.js
+    particle.js https://openprocessing.org/sketch/2097742 
     A particle that uses a seek behaviour to move to its target.
     @param {number} x
     @param {number} y
@@ -74,7 +76,7 @@ function Particle(x, y) {
         if (this.distToTarget > 1) {
             var steer = p5.Vector.sub(this.target, this.pos);
             steer.normalize();
-            steer.mult(this.maxSpeed * proximityMult * speedSlider.slider.value());
+            steer.mult(this.maxSpeed * proximityMult * speed);
             this.acc.add(steer);
         }
 
@@ -84,7 +86,7 @@ function Particle(x, y) {
         var mouseDist = dist(this.pos.x, this.pos.y, scaledMouseX, scaledMouseY);
 
         // Interact with mouse.
-        if (mouseDist < mouseSizeSlider.slider.value()) {
+        if (mouseDist < mouseSize) {
             if (mouseIsPressed) {
                 // Push towards mouse.
                 var push = new p5.Vector(scaledMouseX, scaledMouseY);
@@ -95,13 +97,13 @@ function Particle(x, y) {
                 push.sub(new p5.Vector(scaledMouseX, scaledMouseY));
             }
             push.normalize();
-            push.mult((mouseSizeSlider.slider.value() - mouseDist) * 0.05);
+            push.mult((mouseSize - mouseDist) * 0.05);
             this.acc.add(push);
         }
 
         // Move it.
         this.vel.add(this.acc);
-        this.vel.limit(this.maxForce * speedSlider.slider.value());
+        this.vel.limit(this.maxForce * speed);
         this.pos.add(this.vel);
         this.acc.mult(0);
     };
@@ -113,13 +115,7 @@ function Particle(x, y) {
 
         if (!this.isKilled) {
             // Size is bigger the closer it is to its target.
-            var targetSize = map(
-                min(this.distToTarget, closeEnoughTarget),
-                closeEnoughTarget,
-                0,
-                0,
-                particleSizeSlider.slider.value(),
-            );
+            var targetSize = map(min(this.distToTarget, closeEnoughTarget), closeEnoughTarget, 0, 0, particleSize);
         } else {
             var targetSize = 2;
         }
@@ -191,7 +187,7 @@ function resetImage() {
             var pixelA = img.pixels[pixelIndex++];
 
             // Give it small odds that we'll assign a particle to this pixel.
-            if (random(1.0) > loadPercentage * resSlider.slider.value()) {
+            if (random(1.0) > loadPercentage * resolution) {
                 continue;
             }
 
@@ -221,38 +217,6 @@ function resetImage() {
     }
 }
 
-/*
-    Particles to image
-  
-    Particles seek a target to make up an image. 
-    They get bigger the closer they get to their target.
-  
-    Controls:
-        - Move the mouse to interact.
-        - Hold down the mouse button pull particles in.
-        - Press any key to change to the next image.
-        - Use the on-screen controls to change settings.
-  
-    Thank's for original Author: Jason Labbe - jasonlabbe3d.com
-        
-    Fork for a case study of an art instalation. j_espanca_bacelar 2020
-  */
-
-var imgs = [];
-const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-var imgNames = ['https://cdn1.p12.games/landing/p12-logo.png'];
-var scaleNum = IS_MOBILE ? 0.25 : 0.37;
-var imgIndex = 0;
-var loadPercentage = 0.045; // 0 to 1.0
-var closeEnoughTarget = IS_MOBILE ? 10 : 100;
-
-var allParticles = [];
-
-var mouseSizeSlider;
-var particleSizeSlider;
-var speedSlider;
-var resSlider;
-
 function preload() {
     // Pre-load all images.
     for (var i = 0; i < imgNames?.length; i++) {
@@ -263,7 +227,7 @@ function preload() {
 }
 
 function setup() {
-    const canvas = createCanvas(420, 420);
+    const canvas = createCanvas(1000, 1000);
     canvas.parent('particle-container');
     for (var i = 0; i < imgNames?.length; i++) {
         imgs[i].resize(imgs[i].width * scaleNum, imgs[i].height * scaleNum);
@@ -278,38 +242,10 @@ function setup() {
                 // 当 className 包含 'active' 时继续动画，否则停止
                 isAnimating = currentClass.includes('active');
             }
-            // 监听 data-scale 属性的变化
-            if (mutation.attributeName === 'data-scale') {
-                const newDataScale = mutation.target.getAttribute('data-scale');
-                // 将 scaleRatio 设置为新的值，确保转换为数字类型
-                scaleRatio = parseFloat(newDataScale);
-            }
         });
     });
-    observer.observe(containerElement, { attributes: true, attributeFilter: ['class', 'data-scale'] });
-    // Create on-screen controls and attach them to the 'particle-control' div
-    let controlsDiv = select('#particle-control'); // Select the div where the controls will be placed
+    observer.observe(containerElement, { attributes: true, attributeFilter: ['class'] });
 
-    e = createElement('h3', 'Mouse Size').style('color', '#fff').parent(controlsDiv);
-    e.position(105, 60);
-    mouseSizeSlider = new SliderLayout('Mouse size', 10, 200, 50, 1, 100, 100);
-    mouseSizeSlider.slider.parent(controlsDiv); // Make the slider a child of the controls div
-
-    e = createElement('h3', 'Particle Size').style('color', '#fff').parent(controlsDiv);
-    e.position(105, 130);
-    particleSizeSlider = new SliderLayout('Particle size', 1, 20, 3, 1, 100, mouseSizeSlider.slider.position().y + 70);
-    particleSizeSlider.slider.parent(controlsDiv);
-
-    e = createElement('h3', 'Speed').style('color', '#fff').parent(controlsDiv);
-    e.position(105, 200);
-    speedSlider = new SliderLayout('Speed', 0, 5, 3, 0.5, 100, particleSizeSlider.slider.position().y + 70);
-    speedSlider.slider.parent(controlsDiv);
-
-    e = createElement('h3', 'Resolution').style('color', '#fff').parent(controlsDiv);
-    e.position(105, 270);
-    resSlider = new SliderLayout('Count multiplier (on next image)', 0.1, 2, 2, 0.1, 100, speedSlider.slider.position().y + 70);
-    resSlider.slider.parent(controlsDiv);
-    // Change to first image.
     resetImage();
 }
 

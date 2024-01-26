@@ -1,4 +1,4 @@
-import TwitterSrc from '../../assets/app/icon-twitter@2x.png';
+import TwitterSrc from '../../assets/app/x.svg';
 import MirrorSrc from '../../assets/app/icon-mirror@2x.png';
 import DiscordSrc from '../../assets/app/icon-discord@2x.png';
 import './index.less';
@@ -13,7 +13,7 @@ const socialLinks = [
     {
         name: 'twitter',
         iconSrc: TwitterSrc,
-        href: 'https://twitter.com/https://twitter.com/_p12',
+        href: 'https://twitter.com/_p12',
     },
     {
         name: 'discord',
