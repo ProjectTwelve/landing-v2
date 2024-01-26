@@ -125,7 +125,7 @@ export const App = () => {
                 <div className="footer__info"></div>
             </div>
             {/* pc 端只在第一页展示 */}
-            {!isPortrait && current === PageType.Home && (
+            {!isPortrait && current !== PageType.Wall && (
                 <div className="app__mouse-tips" onClick={() => nextPageType && setCurrent(nextPageType)}></div>
             )}
             {/* 手机端一直展示 */}
