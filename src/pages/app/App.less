@@ -94,27 +94,65 @@
             }
         }
     }
-
     &__mouse-tips {
-        .f-alignImg2x('app/mouse-tips-pc@2x.png');
-        transform-origin: bottom center;
-        transform: scale(0.4);
+        z-index: 10;
+        position: absolute;
+        background-image: none;
+        margin: 0;
+        height: auto;
+        width: auto;
         top: auto;
-        margin-top: 0;
-        z-index: 20;
-        bottom: 30px;
-        animation: mouseupdownpc 0.5s infinite alternate;
-        cursor: pointer;
-    }
-}
+        left: auto;
+        right: 50%;
+        transform: translateX(50%);
+        bottom: 20px;
+        animation: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        -webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+        &.wave .app__mouse-tips-item::after {
+            display: block;
+            animation: mouseDownWave 1.2s infinite;
+        }
+        &-item {
+            cursor: pointer;
+            width: 34px;
+            height: 34px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(1px);
+            border-radius: 100%;
+            border: 1px solid #ffffffcc;
+            opacity: 0.8;
+            position: relative;
+            transform: rotate(-90deg);
+            .f-align-center();
+            &::before {
+                content: '';
+                display: block;
+                width: 10px;
+                height: 16px;
+                background-size: contain;
+                .bg('avatar/arrow-left.svg');
+            }
+            &::after {
+                z-index: 10;
+                content: '';
+                position: absolute;
+                top: -1px;
+                left: -1px;
+                bottom: -1px;
+                right: -1px;
+                border-radius: 100%;
+                border: 1px solid #ffffff;
+                opacity: 0.6;
+            }
+        }
 
-@keyframes mouseupdownpc {
-    0% {
-        transform: scale(0.4) translateY(10px);
-    }
-
-    100% {
-        transform: scale(0.4) translateY(-10px);
+        &-prev {
+            transform: rotate(90deg);
+        }
     }
 }
 

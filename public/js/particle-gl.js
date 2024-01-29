@@ -59,7 +59,18 @@ function Particle(x, y) {
     // Saving as class var so it doesn't need to calculate twice.
     this.distToTarget = 0;
 
+    this.noiseOffsetX = random(1000); // 噪声偏移量X
+    this.noiseOffsetY = random(1000); // 噪声偏移量Y
+
     this.move = function () {
+        // 添加基于噪声的轻微扰动
+        let noiseScale = 0.005; // 噪声的缩放系数
+        let noiseStrength = 0.6; // 噪声的强度
+        this.acc.add(
+            noise(this.noiseOffsetX + this.pos.x * noiseScale, this.pos.y * noiseScale) * noiseStrength - noiseStrength / 2,
+            noise(this.noiseOffsetY + this.pos.y * noiseScale, this.pos.x * noiseScale) * noiseStrength - noiseStrength / 2,
+        );
+
         this.distToTarget = dist(this.pos.x, this.pos.y, this.target.x, this.target.y);
 
         // If it's close enough to its target, the slower it'll get
@@ -106,6 +117,8 @@ function Particle(x, y) {
         this.vel.limit(this.maxForce * speed);
         this.pos.add(this.vel);
         this.acc.mult(0);
+        this.noiseOffsetX += 0.01;
+        this.noiseOffsetY += 0.01;
     };
 
     this.draw = function () {

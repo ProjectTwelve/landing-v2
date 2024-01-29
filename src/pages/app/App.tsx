@@ -125,32 +125,32 @@ export const App = () => {
                 <div className="footer__info"></div>
             </div>
             {/* pc 端只在第一页展示 */}
-            {!isPortrait && current === PageType.Home && (
+            {/* {!isPortrait && current !== PageType.Wall && (
                 <div className="app__mouse-tips" onClick={() => nextPageType && setCurrent(nextPageType)}></div>
-            )}
+            )} */}
             {/* 手机端一直展示 */}
-            {isPortrait && (
-                <div className={classNames('app__mouse-tips', { wave: enableMouseTipAnim && current === PageType.Home })}>
-                    {prevPageType && (
-                        <div
-                            className="app__mouse-tips-item app__mouse-tips-prev"
-                            onClick={() => {
-                                if (enableMouseTipAnim) setEnableMouseTipAnim(false);
-                                setCurrent(prevPageType);
-                            }}
-                        />
-                    )}
-                    {nextPageType && (
-                        <div
-                            className="app__mouse-tips-item app__mouse-tips-next"
-                            onClick={() => {
-                                if (enableMouseTipAnim) setEnableMouseTipAnim(false);
-                                setCurrent(nextPageType);
-                            }}
-                        />
-                    )}
-                </div>
-            )}
+            {/* {isPortrait && ( */}
+            <div className={classNames('app__mouse-tips', { wave: enableMouseTipAnim && current === PageType.Home })}>
+                {prevPageType && (
+                    <div
+                        className="app__mouse-tips-item app__mouse-tips-prev"
+                        onClick={() => {
+                            if (enableMouseTipAnim) setEnableMouseTipAnim(false);
+                            setCurrent(prevPageType);
+                        }}
+                    />
+                )}
+                {nextPageType && (
+                    <div
+                        className="app__mouse-tips-item app__mouse-tips-next"
+                        onClick={() => {
+                            if (enableMouseTipAnim) setEnableMouseTipAnim(false);
+                            setCurrent(nextPageType);
+                        }}
+                    />
+                )}
+            </div>
+            {/* )} */}
         </div>
     );
 
