@@ -17,7 +17,39 @@
     &__img {
         .f-pseudo();
     }
+    
+    // 定义脉冲动画
+    @keyframes pointPulse {
+        0% {
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(1.5);
+            opacity: 0;
+        }
+    }
+    &__point {
+        cursor: pointer;
+        position: absolute;
+        pointer-events: auto;
+        background: #fff;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        box-shadow: 0 0 0 0 rgba(#fff, .5);
+        animation: pointPulse 2s infinite;
+    }
 
+    @keyframes pointPulse {
+        0% {}
+        70% {
+           box-shadow: 0 0 0 30px rgba(#fff, 0);
+        }
+          100% {
+           box-shadow: 0 0 0 0 rgba(#fff, 0);
+        }
+      }
     &__info {
         position: absolute;
         z-index: 10;
@@ -29,6 +61,7 @@
 
         &-wrap {
             .f-pseudo();
+            pointer-events: none;
         }
     }
     &__slogan {

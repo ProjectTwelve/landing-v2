@@ -32,6 +32,8 @@ export const Poster: React.FC = () => {
         depthX?: string;
         depthY?: string;
         children?: JSX.Element;
+        dotX?: string;
+        dotY?: string;
     }[] = useMemo(
         () => [
             {
@@ -45,6 +47,8 @@ export const Poster: React.FC = () => {
                 onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_1}`, 1),
                 depthX: '0.05',
                 depthY: '-0.1',
+                dotX: '53%',
+                dotY: '20%',
             },
             {
                 className: 'poster__img-wrap--2',
@@ -87,6 +91,8 @@ export const Poster: React.FC = () => {
                         <div className="swiper-pagination"></div>
                     </div>
                 ),
+                dotX: '52%',
+                dotY: '77%',
             },
             {
                 className: 'poster__img-wrap--5',
@@ -94,6 +100,8 @@ export const Poster: React.FC = () => {
                 onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_5}`, 1),
                 depthX: '0.08',
                 depthY: '0.08',
+                dotX: '28%',
+                dotY: '20%',
             },
         ],
         [],
@@ -181,7 +189,7 @@ export const Poster: React.FC = () => {
         <div className="poster" ref={containerRef}>
             {isPortrait && <PosterBg />}
             <div className="poster__bg" ref={bgRef}>
-                {posterBgConfig.map(({ className, src, children, onLoad, depthX, depthY }, idx) => (
+                {posterBgConfig.map(({ className, src, children, onLoad, depthX, depthY, dotX, dotY }, idx) => (
                     <div
                         className={classNames('poster__img-wrap', className)}
                         key={idx}
@@ -190,6 +198,7 @@ export const Poster: React.FC = () => {
                     >
                         <img className="poster__img" alt="poster-img" src={src} onLoad={onLoad} />
                         {children}
+                        {dotX || dotY ? <div className="poster__point" style={{ left: dotX, top: dotY }}></div> : null}
                     </div>
                 ))}
             </div>
