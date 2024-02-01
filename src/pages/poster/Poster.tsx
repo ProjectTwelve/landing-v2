@@ -5,18 +5,21 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import Swiper from 'swiper';
 import { Autoplay, EffectFade } from 'swiper/modules';
 
+import { Placement } from '@floating-ui/react';
+import classNames from 'classnames';
+import YouTube from 'react-youtube';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/effect-fade';
+import Popover from '../../components/popover';
+import { useIsPortrait } from '../../hooks/useIsPortrait';
 import { GAevent } from '../../utils';
-import { About } from '../../components/about/About';
 import { PageType } from '../app/App.config';
 import { loadingEE, LoadingSourceType, usePageVisible } from '../app/App.utils';
+import { PosterBg } from './components/PosterBg';
 import { POSTER_FEATURES } from './Poster.config';
 import './Poster.less';
-import { useIsPortrait } from '../../hooks/useIsPortrait';
-import classNames from 'classnames';
-import { PosterBg } from './components/PosterBg';
+import PosterDialog from '../../components/dialog/PosterDialog';
 
 Swiper.use([Autoplay, EffectFade]);
 export const Poster: React.FC = () => {
@@ -32,8 +35,13 @@ export const Poster: React.FC = () => {
         depthX?: string;
         depthY?: string;
         children?: JSX.Element;
-        dotX?: string;
-        dotY?: string;
+        dots?: {
+            dotX?: string;
+            dotY?: string;
+            type?: 'dialog' | 'popover';
+            placement?: Placement;
+            render?: (data: { close: () => void }) => React.ReactNode;
+        }[];
     }[] = useMemo(
         () => [
             {
@@ -47,14 +55,25 @@ export const Poster: React.FC = () => {
                 onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_1}`, 1),
                 depthX: '0.05',
                 depthY: '-0.1',
-                dotX: '53%',
-                dotY: '20%',
+                dots: [
+                    // {
+                    //     dotX: '53%',
+                    //     dotY: '20%',
+                    //     render: ({ close }) => <div>Developers: 3645</div>,
+                    // },
+                ],
             },
             {
                 className: 'poster__img-wrap--2',
                 src: require('../../assets/poster/2@2x.png'),
                 onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_2}`, 1),
                 depthX: '-0.05',
+                dots: [
+                    // {
+                    //     dotX: '39%',
+                    //     dotY: '52%',
+                    // },
+                ],
             },
             {
                 className: 'poster__img-wrap--3',
@@ -91,8 +110,12 @@ export const Poster: React.FC = () => {
                         <div className="swiper-pagination"></div>
                     </div>
                 ),
-                dotX: '52%',
-                dotY: '77%',
+                dots: [
+                    // {
+                    //     dotX: '52%',
+                    //     dotY: '77%',
+                    // },
+                ],
             },
             {
                 className: 'poster__img-wrap--5',
@@ -100,8 +123,14 @@ export const Poster: React.FC = () => {
                 onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_5}`, 1),
                 depthX: '0.08',
                 depthY: '0.08',
-                dotX: '28%',
-                dotY: '20%',
+                dots: [
+                    {
+                        dotX: '17%',
+                        dotY: '45%',
+                        type: 'dialog',
+                        render: ({ close }) => <YouTube className="poster__video" videoId={'wZ5KAc-M4Oc'} />,
+                    },
+                ],
             },
         ],
         [],
@@ -189,18 +218,36 @@ export const Poster: React.FC = () => {
         <div className="poster" ref={containerRef}>
             {isPortrait && <PosterBg />}
             <div className="poster__bg" ref={bgRef}>
-                {posterBgConfig.map(({ className, src, children, onLoad, depthX, depthY, dotX, dotY }, idx) => (
-                    <div
-                        className={classNames('poster__img-wrap', className)}
-                        key={idx}
-                        data-depth-x={depthX}
-                        data-depth-y={depthY}
-                    >
-                        <img className="poster__img" alt="poster-img" src={src} onLoad={onLoad} />
-                        {children}
-                        {dotX || dotY ? <div className="poster__point" style={{ left: dotX, top: dotY }}></div> : null}
-                    </div>
-                ))}
+                {posterBgConfig.map(({ className, src, children, onLoad, depthX, depthY, dots }, idx) => {
+                    return (
+                        <div
+                            className={classNames('poster__img-wrap', className)}
+                            key={idx}
+                            data-depth-x={depthX}
+                            data-depth-y={depthY}
+                        >
+                            <img className="poster__img" alt="poster-img" src={src} onLoad={onLoad} />
+                            {children}
+                            {dots?.length
+                                ? dots.map(({ dotX, dotY, type, render, placement }, i) =>
+                                      render ? (
+                                          type === 'dialog' ? (
+                                              <PosterDialog render={render}>
+                                                  <div className="poster__point" style={{ left: dotX, top: dotY }}></div>
+                                              </PosterDialog>
+                                          ) : (
+                                              <Popover key={i} placement={placement} render={render}>
+                                                  <div className="poster__point" style={{ left: dotX, top: dotY }}></div>
+                                              </Popover>
+                                          )
+                                      ) : (
+                                          <div key={i} className="poster__point" style={{ left: dotX, top: dotY }}></div>
+                                      ),
+                                  )
+                                : null}
+                        </div>
+                    );
+                })}
             </div>
             <div className="poster__info-wrap">
                 <div className="poster__info">

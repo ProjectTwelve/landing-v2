@@ -33,23 +33,31 @@
         cursor: pointer;
         position: absolute;
         pointer-events: auto;
-        background: #fff;
-        width: 32px;
-        height: 32px;
+        background: rgba(#fff, .9);
+        width: 22px;
+        height: 22px;
         border-radius: 50%;
         box-shadow: 0 0 0 0 rgba(#fff, .5);
-        animation: pointPulse 2s infinite;
+        animation: pointPulse 1.75s infinite;
     }
-
     @keyframes pointPulse {
         0% {}
         70% {
-           box-shadow: 0 0 0 30px rgba(#fff, 0);
+           box-shadow: 0 0 0 24px rgba(#fff, 0);
         }
           100% {
            box-shadow: 0 0 0 0 rgba(#fff, 0);
         }
-      }
+    }
+    &__video {
+        background-color: rgba(0,0,0);
+        width: 100%;
+        height: 100%;
+        iframe {
+            width: 100%;
+            height: 100%;
+        }
+    }
     &__info {
         position: absolute;
         z-index: 10;
@@ -229,6 +237,10 @@
 
 /** 移动端适配 */
 .body-portrait {
+    .poster-features-swiper-container {
+        width: auto;
+        height: 1rem;
+    }
     .poster {
         &__info {
             transform: none;
@@ -264,7 +276,6 @@
             }
             &-swiper-container {
                 background-color: gray;
-                height: auto;
             }
             &-item {
                 display: flex;
@@ -292,6 +303,19 @@
                         left: -0.12rem;
                     }
                 }
+            }
+        }
+        
+        &__point {
+            width: 0.22rem;
+            height: 0.22rem;
+            z-index: 10;
+            left: 0.5rem;
+            bottom: 1.5rem;
+        }
+        &__video {
+            iframe{
+                height: 2.1rem;
             }
         }
         &__slogan {
