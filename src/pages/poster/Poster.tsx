@@ -20,6 +20,9 @@ import { POSTER_FEATURES } from './Poster.config';
 import './Poster.less';
 import { PosterBg } from './components/PosterBg';
 import PosterSummary from './components/PosterSummary';
+import { useFetchUserAndGameCount } from '../../hooks/p12/useFetchUserAndGameCount';
+import { useSetAtom } from 'jotai';
+import { posterSummaryAtom } from '../../store/poster/state';
 
 Swiper.use([Autoplay, EffectFade]);
 export const Poster: React.FC = () => {
@@ -27,6 +30,7 @@ export const Poster: React.FC = () => {
     const bgRef = useRef<HTMLDivElement>(null);
     const containerSize = useSize(containerRef);
     const isPortrait = useIsPortrait();
+    useFetchUserAndGameCount();
 
     const posterBgConfig: {
         className?: string;
