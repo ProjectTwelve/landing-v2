@@ -3,9 +3,10 @@ export const SENTRY_DSN =
 
 export const SENTRY_TRACES_SAMPLE_RATE = 0.2;
 
-export const P12_API_PREFIX = process.env.REACT_APP_P12_API_PREFIX || 'https://news.p12.games';
+export const P12_API_PREFIX = process.env.REACT_APP_P12_API_PREFIX || 'https://platform-api.p12.games';
+export const P12_MARS_API_PREFIX = process.env.REACT_APP_P12_MARS_API_PREFIX || 'https://news.p12.games';
 
-export const P12_AUTHOR_AVATOR = 'https://cdn1.p12.games/p12-news/LWKDfU6Vyj56Y8Mf';
+export const P12_AUTHOR_AVATAR = 'https://cdn1.p12.games/p12-news/LWKDfU6Vyj56Y8Mf';
 
 export enum P12_NEW_TYPE_LABEL {
     Collab = '#43BBFF',

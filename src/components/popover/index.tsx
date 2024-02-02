@@ -1,6 +1,8 @@
 import {
+    FloatingArrow,
     FloatingFocusManager,
     Placement,
+    arrow,
     autoUpdate,
     flip,
     offset,
@@ -8,11 +10,12 @@ import {
     useClick,
     useDismiss,
     useFloating,
+    useHover,
     useInteractions,
     useRole,
 } from '@floating-ui/react';
 import classNames from 'classnames';
-import React, { cloneElement, useEffect, useState } from 'react';
+import React, { cloneElement, useEffect, useRef, useState } from 'react';
 import './index.less';
 
 type PopoverProps = {
@@ -23,6 +26,7 @@ type PopoverProps = {
     children: React.JSX.Element;
     className?: string;
     offset?: number;
+    hoverOpen?: boolean;
 };
 
 function Popover({
@@ -33,8 +37,11 @@ function Popover({
     onOpenChange,
     className,
     offset: offsetNum,
+    hoverOpen,
 }: React.PropsWithChildren<PopoverProps>) {
     const [isOpen, setIsOpen] = useState(passedOpen);
+
+    const arrowRef = useRef(null);
 
     useEffect(() => {
         if (passedOpen === undefined) return;
@@ -51,12 +58,22 @@ function Popover({
         transform: false,
         onOpenChange: onChange,
         placement,
-        middleware: [offset(offsetNum ?? 10), flip({ fallbackAxisSideDirection: 'end' }), shift()],
+        middleware: [
+            offset(offsetNum ?? 10),
+            flip({ fallbackAxisSideDirection: 'end' }),
+            shift(),
+            arrow({ element: arrowRef }), // 添加箭头中间件
+        ],
         whileElementsMounted: autoUpdate,
     });
 
     const { setReference, setFloating } = refs;
-    const { getReferenceProps, getFloatingProps } = useInteractions([useClick(context), useDismiss(context), useRole(context)]);
+    const { getReferenceProps, getFloatingProps } = useInteractions([
+        useHover(context, { enabled: hoverOpen, restMs: 20, delay: { close: 60 } }),
+        useClick(context),
+        useDismiss(context),
+        useRole(context),
+    ]);
 
     return (
         <>
@@ -69,6 +86,7 @@ function Popover({
                         {...getFloatingProps({ ref: setFloating })}
                     >
                         {render({ close: () => onChange(false) })}
+                        <FloatingArrow fill="#00000066" ref={arrowRef} context={context} className="p12-popover__arrow" />
                     </div>
                 </FloatingFocusManager>
             )}

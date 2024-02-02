@@ -1,17 +1,17 @@
-import { useEffect, useMemo } from 'react';
+import classNames from 'classnames';
+import { useMemo } from 'react';
 import Swiper from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { NewInfoType } from '../../../../api/news/news.type';
+import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
+import { NewInfoType } from '../../../../api/types/mars';
+import { PinSvg } from '../../../../components/svg/PinSvg';
 import { P12_NEW_TYPE_LABEL } from '../../../../constants';
 import { useFetchNewList, useNewDateFormat } from '../../../../hooks/news';
 import { useIsPortrait } from '../../../../hooks/useIsPortrait';
 import { PageType } from '../../../app/App.config';
 import { usePageVisible } from '../../../app/App.utils';
 import './NewList.less';
-import classNames from 'classnames';
-import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
-import { PinSvg } from '../../../../components/svg/PinSvg';
 Swiper.use([Autoplay, EffectCoverflow, Pagination]);
 
 type NewListItemProps = {

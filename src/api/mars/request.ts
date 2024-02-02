@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { P12_API_PREFIX } from '../constants';
+import { P12_MARS_API_PREFIX } from '../../constants';
 
 const BaseConfig = {
-    baseURL: P12_API_PREFIX,
+    baseURL: P12_MARS_API_PREFIX,
     timeout: 10000, // 请求超时时间
 };
 export const instance = axios.create(BaseConfig);
