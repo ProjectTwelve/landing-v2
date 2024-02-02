@@ -1,7 +1,7 @@
 .p12-popover {
     z-index: 10;
     outline: none;
-    border-radius: .5rem;  
+    border-radius: 8px;  
     color: white;
     background-color: rgba(0,0,0, .4);
     backdrop-filter: blur(24px);
@@ -9,4 +9,12 @@
     font-weight: 600;
     line-height: 20px;
     pointer-events: auto;
+}
+/** 移动端适配 */
+.body-portrait {
+    .p12-popover {
+        max-width: 100%;
+        font-size: 0.14rem;
+        line-height: 0.2rem;
+    }
 }

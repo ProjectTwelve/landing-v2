@@ -1,6 +1,7 @@
 import {
     FloatingArrow,
     FloatingFocusManager,
+    FloatingPortal,
     Placement,
     arrow,
     autoUpdate,
@@ -37,7 +38,7 @@ function Popover({
     onOpenChange,
     className,
     offset: offsetNum,
-    hoverOpen,
+    hoverOpen = false,
 }: React.PropsWithChildren<PopoverProps>) {
     const [isOpen, setIsOpen] = useState(passedOpen);
 
@@ -79,16 +80,18 @@ function Popover({
         <>
             {cloneElement(children, getReferenceProps({ ref: setReference, ...children.props }))}
             {isOpen && (
-                <FloatingFocusManager context={context} modal={false}>
-                    <div
-                        className={classNames('p12-popover', className)}
-                        style={{ ...floatingStyles }}
-                        {...getFloatingProps({ ref: setFloating })}
-                    >
-                        {render({ close: () => onChange(false) })}
-                        <FloatingArrow fill="#00000066" ref={arrowRef} context={context} className="p12-popover__arrow" />
-                    </div>
-                </FloatingFocusManager>
+                <FloatingPortal>
+                    <FloatingFocusManager context={context} modal={false}>
+                        <div
+                            className={classNames('p12-popover', className)}
+                            style={{ ...floatingStyles }}
+                            {...getFloatingProps({ ref: setFloating })}
+                        >
+                            {render({ close: () => onChange(false) })}
+                            <FloatingArrow fill="#00000066" ref={arrowRef} context={context} className="p12-popover__arrow" />
+                        </div>
+                    </FloatingFocusManager>
+                </FloatingPortal>
             )}
         </>
     );

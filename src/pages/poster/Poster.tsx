@@ -12,17 +12,17 @@ import 'swiper/css/effect-fade';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import PosterDialog from '../../components/dialog/PosterDialog';
 import Popover from '../../components/popover';
+import { useFetchP12RecommendList } from '../../hooks/p12/useFetchP12RecommendList';
+import { useFetchUserAndGameCount } from '../../hooks/p12/useFetchUserAndGameCount';
 import { useIsPortrait } from '../../hooks/useIsPortrait';
 import { GAevent } from '../../utils';
 import { PageType } from '../app/App.config';
 import { LoadingSourceType, loadingEE, usePageVisible } from '../app/App.utils';
 import { POSTER_FEATURES } from './Poster.config';
 import './Poster.less';
+import PosterArcanaWorks from './components/PosterArcanaWorks';
 import { PosterBg } from './components/PosterBg';
 import PosterSummary from './components/PosterSummary';
-import { useFetchUserAndGameCount } from '../../hooks/p12/useFetchUserAndGameCount';
-import { useSetAtom } from 'jotai';
-import { posterSummaryAtom } from '../../store/poster/state';
 
 Swiper.use([Autoplay, EffectFade]);
 export const Poster: React.FC = () => {
@@ -31,6 +31,7 @@ export const Poster: React.FC = () => {
     const containerSize = useSize(containerRef);
     const isPortrait = useIsPortrait();
     useFetchUserAndGameCount();
+    useFetchP12RecommendList();
 
     const posterBgConfig: {
         className?: string;
@@ -45,6 +46,7 @@ export const Poster: React.FC = () => {
             type?: 'dialog' | 'popover';
             placement?: Placement;
             render?: (data: { close: () => void }) => React.ReactNode;
+            hoverOpen?: boolean;
         }[];
     }[] = useMemo(
         () => [
@@ -60,11 +62,14 @@ export const Poster: React.FC = () => {
                 depthX: '0.05',
                 depthY: '-0.1',
                 dots: [
-                    // {
-                    //     dotX: '53%',
-                    //     dotY: '20%',
-                    //     render: ({ close }) => <div>Developers: 3645</div>,
-                    // },
+                    {
+                        dotX: '53%',
+                        dotY: '20%',
+                        type: 'popover',
+                        placement: 'bottom',
+                        hoverOpen: false,
+                        render: ({ close }) => <PosterArcanaWorks />,
+                    },
                 ],
             },
             {
@@ -78,6 +83,7 @@ export const Poster: React.FC = () => {
                         dotY: '52%',
                         type: 'popover',
                         placement: 'top',
+                        hoverOpen: true,
                         render: ({ close }) => <PosterSummary />,
                     },
                 ],
@@ -236,14 +242,14 @@ export const Poster: React.FC = () => {
                             <img className="poster__img" alt="poster-img" src={src} onLoad={onLoad} />
                             {children}
                             {dots?.length
-                                ? dots.map(({ dotX, dotY, type, render, placement }, i) =>
+                                ? dots.map(({ dotX, dotY, type, render, placement, hoverOpen }, i) =>
                                       render ? (
                                           type === 'dialog' ? (
                                               <PosterDialog key={i} render={render}>
                                                   <div className="poster__point" style={{ left: dotX, top: dotY }}></div>
                                               </PosterDialog>
                                           ) : (
-                                              <Popover key={i} placement={placement} render={render} hoverOpen>
+                                              <Popover key={i} placement={placement} render={render} hoverOpen={hoverOpen}>
                                                   <div className="poster__point" style={{ left: dotX, top: dotY }}></div>
                                               </Popover>
                                           )

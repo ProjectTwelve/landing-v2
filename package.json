@@ -39,7 +39,8 @@
         "resize-observer-polyfill": "^1.5.1",
         "s3-sync-client": "^3.0.2",
         "swiper": "^10.0.4",
-        "three": "^0.139.1"
+        "three": "^0.139.1",
+        "viem": "^2.7.1"
     },
     "scripts": {
         "start": "react-app-rewired start",
