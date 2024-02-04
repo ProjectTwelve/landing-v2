@@ -45,9 +45,11 @@ export default function PosterArcanaWorks() {
                         : null}
                 </div>
             </div>
-            <div className={classNames('poster-arcana-works__swiper', { 'f-clip-hidden': isPortrait })}>
-                {premiumItems?.length ? premiumItems.map((item) => <ArcanaGame key={item.id} data={item} />) : null}
-            </div>
+            {!isPortrait && (
+                <div className={classNames('poster-arcana-works__swiper')}>
+                    {premiumItems?.length ? premiumItems.map((item) => <ArcanaGame key={item.id} data={item} />) : null}
+                </div>
+            )}
         </div>
     );
 }
