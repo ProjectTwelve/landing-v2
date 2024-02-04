@@ -13,7 +13,7 @@ Swiper.use([Autoplay, EffectCoverflow]);
 
 export default function PosterArcanaWorks() {
     const data = useAtomValue(premiumListAtom);
-    const premiumItems = useMemo(() => _.sampleSize(data, 12), [data]);
+    const premiumItems = useMemo(() => _.shuffle(data), [data]);
     const isPortrait = useIsPortrait();
     useEffect(() => {
         let arcanaSwiper = new Swiper('#arcana-game-swiper', {
@@ -24,10 +24,6 @@ export default function PosterArcanaWorks() {
             loop: true,
             initialSlide: 2,
             slidesPerView: 'auto',
-            autoplay: {
-                delay: 2000,
-                disableOnInteraction: true,
-            },
             coverflowEffect: {
                 rotate: 0,
                 stretch: 3,

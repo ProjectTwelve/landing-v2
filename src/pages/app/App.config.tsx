@@ -55,12 +55,6 @@ export const CONTENT_PAGES = [
         Content: <Social />,
         dropdown: false,
     },
-    {
-        type: PageType.Avatar,
-        NavText: <>Assets</>,
-        Content: <Avatar />,
-        dropdown: false,
-    },
     // {
     //     type: PageType.Tree,
     //     NavText: <>Econs</>,
@@ -71,6 +65,12 @@ export const CONTENT_PAGES = [
         type: PageType.Poster,
         NavText: <>Editor</>,
         Content: <Poster />,
+        dropdown: false,
+    },
+    {
+        type: PageType.Avatar,
+        NavText: <>Assets</>,
+        Content: <Avatar />,
         dropdown: false,
     },
     {
