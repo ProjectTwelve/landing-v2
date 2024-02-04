@@ -11,6 +11,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    height: 680px;
+    overflow: auto;
 
     h1 {
         text-align: center;
@@ -20,12 +22,12 @@
     }
 
     .poster-arcana-works__swiper {
-        max-height: 640px;
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 26px;
         row-gap: 30px;
         overflow: auto;
+        .hiddenScrollBar();
     }
 }
 
