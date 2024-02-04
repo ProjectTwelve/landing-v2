@@ -21,7 +21,7 @@ export default function PosterArcanaWorks() {
             centeredSlides: true,
             loop: true,
             slidesPerView: 'auto',
-            freeMode: { enabled: true, minimumVelocity: 0.001, momentumBounceRatio: 1.2 },
+            freeMode: { enabled: true, minimumVelocity: 0.001, sticky: true },
             spaceBetween: 20,
         });
 
