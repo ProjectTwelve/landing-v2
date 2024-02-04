@@ -10,6 +10,7 @@ import {
 } from '@floating-ui/react';
 import classNames from 'classnames';
 import { ReactNode, cloneElement, memo, useEffect, useState } from 'react';
+import { usePageLockScroll } from '../../hooks/usePageLockScroll';
 import './PosterDialog.less';
 
 type DialogProps = {
@@ -44,6 +45,7 @@ function PosterDialog({
         setIsOpen(status);
         onOpenChange?.(status);
     };
+    usePageLockScroll(isOpen); // 弹窗时阻止滚动
 
     const { refs, context } = useFloating({ open: isOpen, onOpenChange: onChange });
     const { setReference, setFloating } = refs;

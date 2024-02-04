@@ -1,6 +1,6 @@
-import { NewInfoType } from '../../../../api/news/news.type';
+import { NewInfoType } from '../../../../api/types/mars';
 import Dialog from '../../../../components/dialog/Dialog';
-import { P12_AUTHOR_AVATOR } from '../../../../constants';
+import { P12_AUTHOR_AVATAR } from '../../../../constants';
 import { useNewDateFormat } from '../../../../hooks/news';
 import './NewInfoDialog.less';
 
@@ -18,7 +18,7 @@ const NewInfoDialog = ({ newInfo, open, onClose }: NewInfoDialogProps) => {
             id="new-dialog"
             className="new-dialog"
             extraHeader={<div className="new-dialog__title"></div>}
-            author={<img src={P12_AUTHOR_AVATOR} alt={'P12'} />}
+            author={<img src={P12_AUTHOR_AVATAR} alt={'P12'} />}
             title={newInfo?.title}
             subtitle={newDate}
             content={

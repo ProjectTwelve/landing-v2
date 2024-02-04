@@ -1,25 +1,30 @@
+import { Placement } from '@floating-ui/react';
 import { useSize } from 'ahooks';
+import classNames from 'classnames';
 import gsap from 'gsap';
 import Parallax from 'parallax-js';
 import React, { useEffect, useMemo, useRef } from 'react';
-import Swiper from 'swiper';
-import { Autoplay, EffectFade } from 'swiper/modules';
-
-import { Placement } from '@floating-ui/react';
-import classNames from 'classnames';
 import YouTube from 'react-youtube';
+import Swiper from 'swiper';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/effect-fade';
+import { Autoplay, EffectFade } from 'swiper/modules';
+import PosterDialog from '../../components/dialog/PosterDialog';
 import Popover from '../../components/popover';
+import { useFetchP12RecommendList } from '../../hooks/p12/useFetchP12RecommendList';
+import { useFetchUserAndGameCount } from '../../hooks/p12/useFetchUserAndGameCount';
 import { useIsPortrait } from '../../hooks/useIsPortrait';
 import { GAevent } from '../../utils';
 import { PageType } from '../app/App.config';
-import { loadingEE, LoadingSourceType, usePageVisible } from '../app/App.utils';
-import { PosterBg } from './components/PosterBg';
+import { LoadingSourceType, loadingEE, usePageVisible } from '../app/App.utils';
 import { POSTER_FEATURES } from './Poster.config';
 import './Poster.less';
-import PosterDialog from '../../components/dialog/PosterDialog';
+import PosterArcanaWorks from './components/PosterArcanaWorks';
+import { PosterBg } from './components/PosterBg';
+import PosterSummary from './components/PosterSummary';
+import { currentPageAtom } from '../../store/app/state';
+import { useAtomValue } from 'jotai';
 
 Swiper.use([Autoplay, EffectFade]);
 export const Poster: React.FC = () => {
@@ -27,6 +32,11 @@ export const Poster: React.FC = () => {
     const bgRef = useRef<HTMLDivElement>(null);
     const containerSize = useSize(containerRef);
     const isPortrait = useIsPortrait();
+    const currentPage = useAtomValue(currentPageAtom);
+    const isVisible = currentPage === PageType.Poster;
+
+    useFetchUserAndGameCount();
+    useFetchP12RecommendList();
 
     const posterBgConfig: {
         className?: string;
@@ -41,6 +51,7 @@ export const Poster: React.FC = () => {
             type?: 'dialog' | 'popover';
             placement?: Placement;
             render?: (data: { close: () => void }) => React.ReactNode;
+            hoverOpen?: boolean;
         }[];
     }[] = useMemo(
         () => [
@@ -56,11 +67,12 @@ export const Poster: React.FC = () => {
                 depthX: '0.05',
                 depthY: '-0.1',
                 dots: [
-                    // {
-                    //     dotX: '53%',
-                    //     dotY: '20%',
-                    //     render: ({ close }) => <div>Developers: 3645</div>,
-                    // },
+                    {
+                        dotX: '53%',
+                        dotY: '20%',
+                        type: 'dialog',
+                        render: ({ close }) => <PosterArcanaWorks />,
+                    },
                 ],
             },
             {
@@ -69,10 +81,14 @@ export const Poster: React.FC = () => {
                 onLoad: () => loadingEE.emit(`progress.${LoadingSourceType.POSTER_IMG_2}`, 1),
                 depthX: '-0.05',
                 dots: [
-                    // {
-                    //     dotX: '39%',
-                    //     dotY: '52%',
-                    // },
+                    {
+                        dotX: '39%',
+                        dotY: '52%',
+                        type: 'popover',
+                        placement: 'top',
+                        hoverOpen: true,
+                        render: ({ close }) => <PosterSummary />,
+                    },
                 ],
             },
             {
@@ -216,7 +232,7 @@ export const Poster: React.FC = () => {
 
     return (
         <div className="poster" ref={containerRef}>
-            {isPortrait && <PosterBg />}
+            {isPortrait && <PosterBg className={classNames({ 'f-clip-hidden': !isVisible })} />}
             <div className="poster__bg" ref={bgRef}>
                 {posterBgConfig.map(({ className, src, children, onLoad, depthX, depthY, dots }, idx) => {
                     return (
@@ -228,15 +244,15 @@ export const Poster: React.FC = () => {
                         >
                             <img className="poster__img" alt="poster-img" src={src} onLoad={onLoad} />
                             {children}
-                            {dots?.length
-                                ? dots.map(({ dotX, dotY, type, render, placement }, i) =>
+                            {isVisible && dots?.length
+                                ? dots.map(({ dotX, dotY, type, render, placement, hoverOpen }, i) =>
                                       render ? (
                                           type === 'dialog' ? (
-                                              <PosterDialog render={render}>
+                                              <PosterDialog key={i} render={render}>
                                                   <div className="poster__point" style={{ left: dotX, top: dotY }}></div>
                                               </PosterDialog>
                                           ) : (
-                                              <Popover key={i} placement={placement} render={render}>
+                                              <Popover key={i} placement={placement} render={render} hoverOpen={hoverOpen}>
                                                   <div className="poster__point" style={{ left: dotX, top: dotY }}></div>
                                               </Popover>
                                           )

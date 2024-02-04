@@ -1,0 +1,52 @@
+@import '../../../styles/variables.less';
+
+.poster-arcana-works {
+    padding: 20px 24px;
+    color: white;
+    background-color: #2d2d2d40;
+    border-radius: 10px;
+    backdrop-filter: blur(24px);
+    user-select: none;
+    .f-font-tt();
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 680px;
+    overflow: auto;
+
+    h1 {
+        text-align: center;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 18px;
+    }
+
+    .poster-arcana-works__swiper {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 26px;
+        row-gap: 30px;
+        overflow: auto;
+        .hiddenScrollBar();
+    }
+}
+
+/** 移动端适配 */
+.body-portrait {
+    .poster-arcana-works {
+        padding: 0.2rem 0;
+        gap: 0.2rem;
+        height: auto;
+
+        h1 {
+            font-size: 0.24rem;
+            line-height: 0.18rem;
+        }
+
+        .poster-arcana-works__swiper {
+            height: auto;
+            width: 100%;
+            display: flex;
+        }
+    }
+}

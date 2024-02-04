@@ -124,3 +124,8 @@ export const GAevent = (category: string, action: string, value = -1) => {
         GAtiming.calcTiming(action);
     }
 };
+
+export const openLink = (url: string) => {
+    if (!window) return;
+    window.open(url, '_blank');
+};

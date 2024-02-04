@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
-import { fetchNewList } from '../api/news';
+import { fetchNewList } from '../api/mars';
 import dayjs from 'dayjs';
 
 export const useFetchNewList = () => {

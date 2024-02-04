@@ -1,6 +1,5 @@
 import gsap from 'gsap';
 import { useCallback, useState } from 'react';
-import { NewInfoType } from '../../api/news/news.type';
 import { ButterflyGL } from '../../components/butterfly-gl/ButterflyGL';
 import { usePageLockScroll } from '../../hooks/usePageLockScroll';
 import { GAevent, requestOrientationPermission } from '../../utils';
@@ -10,6 +9,7 @@ import './Social.less';
 import { SocialItem } from './components/SocialItem';
 import NewInfoDialog from './components/news/NewInfoDialog';
 import { NewList } from './components/news/NewList';
+import { NewInfoType } from '../../api/types/mars';
 
 export const Social: React.FC = () => {
     const [newModalOpen, setOpen] = useState(false);

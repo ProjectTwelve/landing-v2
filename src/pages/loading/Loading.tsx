@@ -44,10 +44,10 @@ export const Loading: React.FC = () => {
                     console.log('loaded!');
                     if (loadingProgressObj.num === 100) return;
                     console.log(`( loadingProgressObj )===============>`, loadingProgressObj);
-                    // 提前结束则用 2秒 = 100% 的速度 (20ms = 1%) 涨到100%
+                    // 提前结束则用 1秒 = 100% 的速度涨到100%
                     const currentProgress = loadingProgressObj.num / 100;
                     console.log(`( currentProgress )===============>`, currentProgress);
-                    const remainingTime = 2 * (1 - currentProgress); // Calculate remaining time to reach 100%
+                    const remainingTime = 1 * (1 - currentProgress); // Calculate remaining time to reach 100%
                     console.log(`( remainingTime )===============>`, remainingTime);
                     handleProgress(1, remainingTime);
                 });
@@ -71,12 +71,12 @@ export const Loading: React.FC = () => {
 
     const handleSkip = () => {
         console.log('skip!');
-        // 提前结束则用 2秒 = 100% 的速度 (20ms = 1%) 涨到100%
+        // 提前结束则用 1秒 = 100% 的速度涨到100%
         const currentProgress = loadingProgressObj.num / 100;
         console.log(`( currentProgress )===============>`, currentProgress);
-        const remainingTime = 2 * (1 - currentProgress); // Calculate remaining time to reach 100%
+        const remainingTime = 1 * (1 - currentProgress); // Calculate remaining time to reach 100%
         console.log(`( remainingTime )===============>`, remainingTime);
-        handleProgress(1, 2); // Immediately go to 100% in 2 seconds
+        handleProgress(1, remainingTime); // Immediately go to 100% in 2 seconds
     };
 
     return (
