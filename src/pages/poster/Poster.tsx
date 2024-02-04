@@ -23,6 +23,8 @@ import './Poster.less';
 import PosterArcanaWorks from './components/PosterArcanaWorks';
 import { PosterBg } from './components/PosterBg';
 import PosterSummary from './components/PosterSummary';
+import { currentPageAtom } from '../../store/app/state';
+import { useAtomValue } from 'jotai';
 
 Swiper.use([Autoplay, EffectFade]);
 export const Poster: React.FC = () => {
@@ -30,6 +32,9 @@ export const Poster: React.FC = () => {
     const bgRef = useRef<HTMLDivElement>(null);
     const containerSize = useSize(containerRef);
     const isPortrait = useIsPortrait();
+    const currentPage = useAtomValue(currentPageAtom);
+    const isVisible = currentPage === PageType.Poster;
+
     useFetchUserAndGameCount();
     useFetchP12RecommendList();
 
@@ -65,9 +70,7 @@ export const Poster: React.FC = () => {
                     {
                         dotX: '53%',
                         dotY: '20%',
-                        type: 'popover',
-                        placement: 'bottom',
-                        hoverOpen: false,
+                        type: 'dialog',
                         render: ({ close }) => <PosterArcanaWorks />,
                     },
                 ],
@@ -229,7 +232,7 @@ export const Poster: React.FC = () => {
 
     return (
         <div className="poster" ref={containerRef}>
-            {isPortrait && <PosterBg />}
+            {isPortrait && <PosterBg className={classNames({ 'f-clip-hidden': !isVisible })} />}
             <div className="poster__bg" ref={bgRef}>
                 {posterBgConfig.map(({ className, src, children, onLoad, depthX, depthY, dots }, idx) => {
                     return (
@@ -241,7 +244,7 @@ export const Poster: React.FC = () => {
                         >
                             <img className="poster__img" alt="poster-img" src={src} onLoad={onLoad} />
                             {children}
-                            {dots?.length
+                            {isVisible && dots?.length
                                 ? dots.map(({ dotX, dotY, type, render, placement, hoverOpen }, i) =>
                                       render ? (
                                           type === 'dialog' ? (

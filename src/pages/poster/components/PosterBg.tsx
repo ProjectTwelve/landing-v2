@@ -1,17 +1,17 @@
-import React, { useRef } from 'react';
-import { getPublicAssetPath } from '../../../utils';
-import './PosterBg.less';
-import Popover from '../../../components/popover';
+import { useRef } from 'react';
 import YouTube from 'react-youtube';
 import PosterDialog from '../../../components/dialog/PosterDialog';
-import PosterSummary from './PosterSummary';
+import Popover from '../../../components/popover';
+import { getPublicAssetPath } from '../../../utils';
 import PosterArcanaWorks from './PosterArcanaWorks';
+import './PosterBg.less';
+import PosterSummary from './PosterSummary';
 
-export const PosterBg: React.FC = () => {
+export const PosterBg = ({ className }: { className?: string }) => {
     const vidRef = useRef<HTMLVideoElement>(null);
 
     return (
-        <>
+        <div className={className}>
             <video
                 ref={vidRef}
                 className="poster-mobile-bg"
@@ -27,9 +27,9 @@ export const PosterBg: React.FC = () => {
             <Popover placement="top" render={({ close }) => <PosterSummary />} hoverOpen>
                 <div className="poster__point" style={{ left: '2.05rem', bottom: '2rem' }}></div>
             </Popover>
-            <Popover placement="top" render={({ close }) => <PosterArcanaWorks />} hoverOpen>
+            <PosterDialog render={({ close }) => <PosterArcanaWorks />}>
                 <div className="poster__point" style={{ left: '3rem', bottom: '1rem' }}></div>
-            </Popover>
-        </>
+            </PosterDialog>
+        </div>
     );
 };

@@ -8,11 +8,12 @@ import { useIsPortrait } from '../../../hooks/useIsPortrait';
 import { premiumListAtom } from '../../../store/poster/state';
 import ArcanaGame from './ArcanaGame';
 import './PosterArcanaWorks.less';
+import classNames from 'classnames';
 Swiper.use([Autoplay, EffectCoverflow]);
 
 export default function PosterArcanaWorks() {
     const data = useAtomValue(premiumListAtom);
-    const premiumItems = useMemo(() => _.sampleSize(data, 6), [data]);
+    const premiumItems = useMemo(() => _.sampleSize(data, 12), [data]);
     const isPortrait = useIsPortrait();
     useEffect(() => {
         let arcanaSwiper = new Swiper('#arcana-game-swiper', {
@@ -45,12 +46,20 @@ export default function PosterArcanaWorks() {
         <div className="poster-arcana-works">
             <h1>Featured Creations</h1>
             {/* {isLoading && <LoadingSvg color="white" className="poster-arcana-works__loading" />} */}
-            <div id="arcana-game-swiper" className={'poster-arcana-works__swiper swiper'}>
+            <div
+                id="arcana-game-swiper"
+                className={classNames('poster-arcana-works__swiper swiper', { 'f-clip-hidden': !isPortrait })}
+            >
                 <div className="swiper-wrapper">
                     {premiumItems?.length
                         ? premiumItems.map((item) => <ArcanaGame className="swiper-slide" key={item.id} data={item} />)
                         : null}
                 </div>
+            </div>
+            <div className={classNames('poster-arcana-works__swiper swiper', { 'f-clip-hidden': isPortrait })}>
+                {premiumItems?.length
+                    ? premiumItems.map((item) => <ArcanaGame className="swiper-slide" key={item.id} data={item} />)
+                    : null}
             </div>
         </div>
     );

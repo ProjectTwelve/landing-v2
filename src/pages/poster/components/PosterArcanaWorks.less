@@ -1,7 +1,11 @@
 @import '../../../styles/variables.less';
 
 .poster-arcana-works {
-    padding: 20px 16px;
+    padding: 20px 24px;
+    color: white;
+    background-color: #2D2D2D40;
+    border-radius: 10px;
+    backdrop-filter: blur(24px);
     user-select: none;
     overflow: hidden;
     .f-font-tt();
@@ -15,7 +19,10 @@
         line-height: 18px;
     }
     .poster-arcana-works__swiper {
-        width: 720px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 26px;
+        row-gap: 30px;
     }
 }
 
