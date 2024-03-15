@@ -152,11 +152,7 @@ export const Wall: React.FC = () => {
                 </div>
 
                 <div className="wall__media_btn">
-                    <a
-                        href="https://drive.google.com/drive/folders/17NBZIRDajpkaaz2kiqIVaHmIm9wXmyE3"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
+                    <a href="https://p12.dev/brand" target="_blank" rel="noreferrer">
                         media kit
                     </a>
                 </div>
