@@ -13,7 +13,7 @@ const socialLinks = [
     {
         name: 'twitter',
         iconSrc: TwitterSrc,
-        href: 'https://twitter.com/_p12',
+        href: 'https://twitter.com/_p12_',
     },
     {
         name: 'discord',
