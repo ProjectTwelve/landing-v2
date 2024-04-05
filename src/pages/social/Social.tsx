@@ -144,12 +144,6 @@ export const Social: React.FC = () => {
                             icon={require('../../assets/social/github.png')}
                             title="Audit Reports"
                         />
-                        <SocialItem
-                            className="github"
-                            href="https://dragonverseneo.mobox.app/"
-                            icon={require('../../assets/social/dragonverse.png')}
-                            title="Dragonverse NEO"
-                        />
                     </div>
                 </div>
                 <div className="social__news">
