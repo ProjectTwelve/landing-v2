@@ -24,7 +24,7 @@ type PopoverProps = {
     onOpenChange?: (open: boolean) => void;
     render: (data: { close: () => void }) => React.ReactNode;
     placement?: Placement;
-    children: React.JSX.Element;
+    children: JSX.Element;
     className?: string;
     offset?: number;
     hoverOpen?: boolean;
